@@ -95,6 +95,12 @@ Settings -> SSH and GPG keys -> New SSH key
 ssh -T git@github.com
 --> Hi chengyi01! You've successfully authenticated, but GitHub does not provide shell access.
 
+## 提交代码
+git config --global user.email "8351840@qq.com"
+git add .
+git commit -m 'add node'
+git push origin main
+
 
 # 过程日志
 # 查看 Killed 日志
