@@ -99,6 +99,7 @@ ssh -T git@github.com
 git config --global user.email "8351840@qq.com"
 git add .
 git commit -m 'add node'
+git pull --rebase
 git push origin main
 
 
