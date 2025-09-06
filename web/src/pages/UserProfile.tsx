@@ -68,7 +68,7 @@ const UserProfile = observer(() => {
   };
 
   return (
-    <section className="w-full max-w-3xl mx-auto min-h-full flex flex-col justify-start items-center pb-8">
+    <section className="w-full max-w-3xl min-h-full flex flex-col justify-start items-center pb-8">
       <div className="w-full flex flex-col justify-start items-center max-w-2xl">
         {!loadingState.isLoading &&
           (user ? (

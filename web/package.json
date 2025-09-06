@@ -1,9 +1,13 @@
 {
   "name": "memos",
+  "version": "0.0.1",
+  "cdnUrl": "",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "package": "vite build --outDir=dist/release --emptyOutDir",
+    "pre_release": "vite build --outDir=../server/router/frontend/dist --emptyOutDir",
     "release": "vite build --mode release --outDir=../server/router/frontend/dist --emptyOutDir",
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .js,.ts,.tsx, src"
   },
