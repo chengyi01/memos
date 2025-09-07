@@ -45172,7 +45172,7 @@ const ShortcutsSection = observer(() => {
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "span",
               {
-                className: cn("truncate cursor-pointer text-muted-foreground", selected && "text-primary font-medium"),
+                className: cn("truncate cursor-pointer text-muted-foreground", selected && "text-primary font-bold"),
                 onClick: () => selected ? memoFilterStore.setShortcut(void 0) : memoFilterStore.setShortcut(shortcutId),
                 children: [
                   emoji && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base mr-1", children: emoji }),
