@@ -1,0 +1,286 @@
+github.com/aws/aws-sdk-go-v2/service/s3: /usr/local/go/pkg/tool/linux_amd64/compile: signal: killed
+2025/09/07 18:41:01 ERROR failed to check dsn data="" error="unable to access data folder /var/opt/memos: stat /var/opt/memos: no such file or directory"
+panic: unable to access data folder /var/opt/memos: stat /var/opt/memos: no such file or directory
+
+goroutine 1 [running]:
+main.init.func1(0xc000149400?, {0x1845d5c?, 0x4?, 0x1845d60?})
+	/root/memos/bin/memos/main.go:50 +0x84a
+github.com/spf13/cobra.(*Command).execute(0x32dd420, {0xc000136010, 0x8, 0x8})
+	/root/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1019 +0xa7b
+github.com/spf13/cobra.(*Command).ExecuteC(0x32dd420)
+	/root/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1148 +0x40c
+github.com/spf13/cobra.(*Command).Execute(...)
+	/root/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1071
+main.main()
+	/root/memos/bin/memos/main.go:184 +0x1a
+exit status 2
+2025/09/07 18:41:50 INFO background runners started goroutines=16
+---
+Server profile
+version: 0.25.0
+data: /var/opt/memos
+addr: 
+port: 5230
+unix-sock: 
+mode: prod
+driver: mysql
+---
+
+███╗   ███╗███████╗███╗   ███╗ ██████╗ ███████╗
+████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔════╝
+██╔████╔██║█████╗  ██╔████╔██║██║   ██║███████╗
+██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║╚════██║
+██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝███████║
+╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+Version 0.25.0 has been started on port 5230
+---
+See more in:
+👉Website: https://usememos.com
+👉GitHub: https://github.com/usememos/memos
+---
+2025/09/07 18:43:12 INFO server shutting down
+2025/09/07 18:43:12 ERROR mux server listen error error="accept tcp [::]:5230: use of closed network connection"
+2025/09/07 18:43:12 INFO s3presign runner stopped
+2025/09/07 18:43:12 ERROR failed to start echo server error="http: Server closed"
+2025/09/07 18:43:12 INFO memos stopped properly
+2025/09/07 18:48:19 INFO background runners started goroutines=16
+---
+Server profile
+version: 0.25.0
+data: /var/opt/memos
+addr: 
+port: 5230
+unix-sock: 
+mode: prod
+driver: mysql
+---
+
+███╗   ███╗███████╗███╗   ███╗ ██████╗ ███████╗
+████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔════╝
+██╔████╔██║█████╗  ██╔████╔██║██║   ██║███████╗
+██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║╚════██║
+██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝███████║
+╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+Version 0.25.0 has been started on port 5230
+---
+See more in:
+👉Website: https://usememos.com
+👉GitHub: https://github.com/usememos/memos
+---
+2025/09/07 18:49:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 18:49:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 18:49:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 18:49:34 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 18:49:35 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 18:49:41 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 18:49:42 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:01:33 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:01:33 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:01:33 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:02:10 INFO OK method=/memos.api.v1.IdentityProviderService/ListIdentityProviders
+2025/09/07 19:03:01 INFO OK method=/memos.api.v1.AuthService/DeleteSession
+2025/09/07 19:03:01 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:03:01 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:03:02 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:03:02 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:03:02 INFO OK method=/memos.api.v1.IdentityProviderService/ListIdentityProviders
+2025/09/07 19:03:09 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:13 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:26 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:32 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:35 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:44 ERROR unknown error method=/memos.api.v1.AuthService/CreateSession error="rpc error: code = InvalidArgument desc = unmatched username and password"
+2025/09/07 19:03:53 INFO OK method=/memos.api.v1.AuthService/CreateSession
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:03:54 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:04:01 INFO OK method=/memos.api.v1.AuthService/DeleteSession
+2025/09/07 19:04:01 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:04:01 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:04:01 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:04:01 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:04:01 INFO OK method=/memos.api.v1.IdentityProviderService/ListIdentityProviders
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.AuthService/CreateSession
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:04:14 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:05:12 INFO OK method=/memos.api.v1.AuthService/DeleteSession
+2025/09/07 19:05:12 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:05:12 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:05:12 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:05:12 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:05:12 INFO OK method=/memos.api.v1.IdentityProviderService/ListIdentityProviders
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.AuthService/CreateSession
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:05:22 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:05:23 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:05:23 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:05:23 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.AuthService/CreateSession
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:06:17 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:06:18 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:06:18 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:06:19 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:06:35 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:06:35 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:06:38 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:06:38 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:07:02 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:07:02 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:07:02 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:07:02 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:07:05 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:07:05 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:07:05 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:07:05 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:07:12 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:07:12 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:08:34 INFO OK method=/memos.api.v1.AttachmentService/ListAttachments
+2025/09/07 19:08:34 INFO OK method=/memos.api.v1.MemoService/GetMemo
+2025/09/07 19:08:34 INFO OK method=/memos.api.v1.AttachmentService/GetAttachmentBinary
+2025/09/07 19:08:36 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:08:45 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:08:46 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:08:46 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:08:46 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:09:08 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:09:08 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:28:27 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:28:27 INFO client error method=/memos.api.v1.AuthService/GetCurrentSession error="rpc error: code = Unauthenticated desc = user not found"
+2025/09/07 19:28:27 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:28:50 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 19:28:51 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 19:29:20 INFO OK method=/memos.api.v1.IdentityProviderService/ListIdentityProviders
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.AuthService/CreateSession
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:29:23 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:29:24 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:29:29 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 19:29:29 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:44:52 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:45:03 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:45:15 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:45:54 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:54:53 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:55:06 INFO OK method=/memos.api.v1.MemoService/UpdateMemo
+2025/09/07 19:55:06 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:56:20 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:56:52 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:57:07 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 19:57:27 INFO OK method=/memos.api.v1.MemoService/UpdateMemo
+2025/09/07 19:57:27 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 19:58:14 INFO OK method=/memos.api.v1.MemoService/UpdateMemo
+2025/09/07 19:58:14 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 20:09:33 INFO OK method=/memos.api.v1.MarkdownService/ParseMarkdown
+2025/09/07 20:09:54 INFO OK method=/memos.api.v1.MemoService/UpdateMemo
+2025/09/07 20:09:55 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 20:15:25 INFO OK method=/memos.api.v1.MemoService/UpdateMemo
+2025/09/07 20:15:26 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 20:15:34 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 20:15:35 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 20:15:40 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 20:15:40 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:07:28 INFO OK method=/memos.api.v1.ShortcutService/CreateShortcut
+2025/09/07 22:07:28 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 22:07:28 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 22:07:31 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:07:32 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:07:41 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:07:41 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:07:47 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:07:47 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:07:56 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:07:57 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:07:59 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:07:59 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:08:32 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:08:32 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:08:34 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:08:35 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 22:08:36 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 22:08:37 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:32:29 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:32:29 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:32:32 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:32:33 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 23:32:42 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 23:32:43 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:32:43 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:32:43 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:04 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceProfile
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.WorkspaceService/GetWorkspaceSetting
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.AuthService/GetCurrentSession
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.InboxService/ListInboxes
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.UserService/ListUserSettings
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.UserService/GetUserAvatar
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.ShortcutService/ListShortcuts
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:05 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:35:06 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:08 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:35:08 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:12 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:35:12 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:18 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:35:19 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:35:23 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:35:23 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:36:11 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:36:11 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:54:42 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:54:42 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:54:44 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:54:44 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:54:55 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:54:55 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/07 23:55:04 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/07 23:55:05 INFO OK method=/memos.api.v1.UserService/GetUserStats
+2025/09/08 00:06:58 INFO OK method=/memos.api.v1.MemoService/ListMemos
+2025/09/08 00:06:58 INFO OK method=/memos.api.v1.UserService/GetUserStats

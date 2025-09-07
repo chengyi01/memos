@@ -82,7 +82,7 @@ const ShortcutsSection = observer(() => {
               className="shrink-0 w-full text-sm rounded-md leading-6 flex flex-row justify-between items-center select-none gap-2 text-muted-foreground"
             >
               <span
-                className={cn("truncate cursor-pointer text-muted-foreground", selected && "text-primary font-medium")}
+                className={cn("truncate cursor-pointer text-muted-foreground", selected && "text-primary font-bold")}
                 onClick={() => (selected ? memoFilterStore.setShortcut(undefined) : memoFilterStore.setShortcut(shortcutId))}
               >
                 {emoji && <span className="text-base mr-1">{emoji}</span>}
