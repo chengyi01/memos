@@ -1050,36 +1050,25 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /api/v1/memos/{memo}/tags/{tag}:
-        delete:
+    /api/v1/memos/{memo}/tags:delete:
+        post:
             tags:
                 - MemoService
             description: DeleteMemoTag deletes a tag for a memo.
             operationId: MemoService_DeleteMemoTag
             parameters:
-                - name: tag
-                  in: path
-                  description: Required. The tag name to delete.
-                  required: true
-                  schema:
-                    type: string
                 - name: memo
                   in: path
                   description: The memo id.
                   required: true
                   schema:
                     type: string
-                - name: tag
-                  in: path
-                  description: The tag id.
-                  required: true
-                  schema:
-                    type: string
-                - name: deleteRelatedMemos
-                  in: query
-                  description: Optional. Whether to delete related memos.
-                  schema:
-                    type: boolean
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeleteMemoTagRequest'
+                required: true
             responses:
                 "200":
                     description: OK
@@ -2309,6 +2298,21 @@ components:
                     type: string
                     description: "Last time the session was accessed.\r\n Used for sliding expiration calculation (last_accessed_time + 2 weeks)."
                     format: date-time
+        DeleteMemoTagRequest:
+            required:
+                - parent
+                - tag
+            type: object
+            properties:
+                parent:
+                    type: string
+                    description: "Required. The parent, who owns the tags.\r\n Format: memos/{memo}. Use \"memos/-\" to delete all tags."
+                tag:
+                    type: string
+                    description: Required. The tag name to delete.
+                deleteRelatedMemos:
+                    type: boolean
+                    description: Optional. Whether to delete related memos.
         EmbeddedContentNode:
             type: object
             properties:
@@ -2344,8 +2348,6 @@ components:
                 logoUrl:
                     type: string
                 locale:
-                    type: string
-                appearance:
                     type: string
             description: Custom profile configuration for workspace branding.
         GetCurrentSessionResponse:
@@ -3451,9 +3453,6 @@ components:
                 locale:
                     type: string
                     description: The preferred locale of the user.
-                appearance:
-                    type: string
-                    description: The preferred appearance of the user.
                 memoVisibility:
                     type: string
                     description: The default visibility of the memo.
