@@ -7,10 +7,12 @@ import {
   CopyIcon,
   Edit3Icon,
   MoreVerticalIcon,
+  ShareIcon,
   TrashIcon,
   SquareCheckIcon,
 } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import { markdownServiceClient } from "@/grpcweb";
@@ -21,6 +23,8 @@ import { State } from "@/types/proto/api/v1/common";
 import { NodeType } from "@/types/proto/api/v1/markdown_service";
 import { Memo } from "@/types/proto/api/v1/memo_service";
 import { useTranslate } from "@/utils/i18n";
+import { generateMemoImage } from "@/utils/imageGenerator";
+import ShareMemoImageDialog from "./ShareMemoImageDialog";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
@@ -53,6 +57,11 @@ const MemoActionMenu = observer((props: Props) => {
   const isInMemoDetailPage = location.pathname.startsWith(`/${memo.name}`);
   const isComment = Boolean(memo.parent);
   const isArchived = memo.state === State.ARCHIVED;
+
+  // Share image dialog state
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
 
   const memoUpdatedCallback = () => {
     // Refresh user stats.
@@ -123,6 +132,22 @@ const MemoActionMenu = observer((props: Props) => {
     toast.success(t("message.succeed-copy-link"));
   };
 
+  const handleShareClick = async () => {
+    setIsGenerating(true);
+    setShareDialogOpen(true);
+    try {
+      const { imageUrl } = await generateMemoImage(memo);
+      setGeneratedImageUrl(imageUrl);
+      toast.success(t("message.share-image-ready"));
+    } catch (error) {
+      console.error("Failed to generate share image:", error);
+      toast.error(t("message.failed-to-generate-image"));
+      setShareDialogOpen(false);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const handleDeleteMemoClick = async () => {
     const confirmed = window.confirm(t("memo.delete-confirm"));
     if (confirmed) {
@@ -168,55 +193,72 @@ const MemoActionMenu = observer((props: Props) => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="size-4">
-          <MoreVerticalIcon className="text-muted-foreground" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" sideOffset={2}>
-        {!readonly && !isArchived && (
-          <>
-            {!isComment && (
-              <DropdownMenuItem onClick={handleTogglePinMemoBtnClick}>
-                {memo.pinned ? <BookmarkMinusIcon className="w-4 h-auto" /> : <BookmarkPlusIcon className="w-4 h-auto" />}
-                {memo.pinned ? t("common.unpin") : t("common.pin")}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-4">
+            <MoreVerticalIcon className="text-muted-foreground" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={2}>
+          {!readonly && !isArchived && (
+            <>
+              {!isComment && (
+                <DropdownMenuItem onClick={handleTogglePinMemoBtnClick}>
+                  {memo.pinned ? <BookmarkMinusIcon className="w-4 h-auto" /> : <BookmarkPlusIcon className="w-4 h-auto" />}
+                  {memo.pinned ? t("common.unpin") : t("common.pin")}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={handleEditMemoClick}>
+                <Edit3Icon className="w-4 h-auto" />
+                {t("common.edit")}
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem onClick={handleEditMemoClick}>
-              <Edit3Icon className="w-4 h-auto" />
-              {t("common.edit")}
-            </DropdownMenuItem>
-          </>
-        )}
-        {!isArchived && (
-          <DropdownMenuItem onClick={handleCopyLink}>
-            <CopyIcon className="w-4 h-auto" />
-            {t("memo.copy-link")}
-          </DropdownMenuItem>
-        )}
-        {!readonly && (
-          <>
-            {!isArchived && !isComment && hasCompletedTaskList && (
-              <DropdownMenuItem onClick={handleRemoveCompletedTaskListItemsClick}>
-                <SquareCheckIcon className="w-4 h-auto" />
-                {t("memo.remove-completed-task-list-items")}
+            </>
+          )}
+          {!isArchived && (
+            <>
+              <DropdownMenuItem onClick={handleShareClick} disabled={isGenerating}>
+                <ShareIcon className="w-4 h-auto" />
+                {isGenerating ? t("message.generating-share-image") : t("common.share")}
               </DropdownMenuItem>
-            )}
-            {!isComment && (
-              <DropdownMenuItem onClick={handleToggleMemoStatusClick}>
-                {isArchived ? <ArchiveRestoreIcon className="w-4 h-auto" /> : <ArchiveIcon className="w-4 h-auto" />}
-                {isArchived ? t("common.restore") : t("common.archive")}
+              <DropdownMenuItem onClick={handleCopyLink}>
+                <CopyIcon className="w-4 h-auto" />
+                {t("memo.copy-link")}
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem onClick={handleDeleteMemoClick}>
-              <TrashIcon className="w-4 h-auto" />
-              {t("common.delete")}
-            </DropdownMenuItem>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            </>
+          )}
+          {!readonly && (
+            <>
+              {!isArchived && !isComment && hasCompletedTaskList && (
+                <DropdownMenuItem onClick={handleRemoveCompletedTaskListItemsClick}>
+                  <SquareCheckIcon className="w-4 h-auto" />
+                  {t("memo.remove-completed-task-list-items")}
+                </DropdownMenuItem>
+              )}
+              {!isComment && (
+                <DropdownMenuItem onClick={handleToggleMemoStatusClick}>
+                  {isArchived ? <ArchiveRestoreIcon className="w-4 h-auto" /> : <ArchiveIcon className="w-4 h-auto" />}
+                  {isArchived ? t("common.restore") : t("common.archive")}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={handleDeleteMemoClick}>
+                <TrashIcon className="w-4 h-auto" />
+                {t("common.delete")}
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Share dialog */}
+      <ShareMemoImageDialog
+        open={shareDialogOpen}
+        onOpenChange={setShareDialogOpen}
+        imageUrl={generatedImageUrl}
+        memo={memo}
+        isGenerating={isGenerating}
+      />
+    </>
   );
 });
 

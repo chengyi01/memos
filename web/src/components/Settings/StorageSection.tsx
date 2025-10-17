@@ -339,10 +339,7 @@ const StorageSection = observer(() => {
           </div>
           <div className="w-full flex flex-row justify-between items-center">
             <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-use-ssl")}</span>
-            <Switch
-              checked={workspaceStorageSetting.ossConfig?.useSsl !== false}
-              onCheckedChange={handleOSSConfigUseSSLChanged}
-            />
+            <Switch checked={workspaceStorageSetting.ossConfig?.useSsl !== false} onCheckedChange={handleOSSConfigUseSSLChanged} />
           </div>
         </>
       )}
