@@ -1,17 +1,1145 @@
-import{p as K}from"./chunk-4BX2VUAB.js";import{I as Y}from"./chunk-QZHKN3VN.js";import{_ as l,v as U,t as V,s as X,g as J,a as Q,b as Z,l as m,c as rr,e as er,u as tr,F as ar,A as sr,m as C,G as nr,H as or,I as cr,K as ir}from"./mermaid-vendor.js";import{p as dr}from"./treemap-75Q7IDZK.js";import"./utils-vendor.js";var p={NORMAL:0,REVERSE:1,HIGHLIGHT:2,MERGE:3,CHERRY_PICK:4},hr=cr.gitGraph,I=l(()=>nr({...hr,...or().gitGraph}),"getConfig"),c=new Y(()=>{const t=I(),r=t.mainBranchName,s=t.mainBranchOrder;return{mainBranchName:r,commits:new Map,head:null,branchConfig:new Map([[r,{name:r,order:s}]]),branches:new Map([[r,null]]),currBranch:r,direction:"LR",seq:0,options:{}}});function q(){return ir({length:7})}l(q,"getID");function z(t,r){const s=Object.create(null);return t.reduce((n,e)=>{const a=r(e);return s[a]||(s[a]=!0,n.push(e)),n},[])}l(z,"uniqBy");var lr=l(function(t){c.records.direction=t},"setDirection"),$r=l(function(t){m.debug("options str",t),t=t?.trim(),t=t||"{}";try{c.records.options=JSON.parse(t)}catch(r){m.error("error while parsing gitGraph options",r.message)}},"setOptions"),fr=l(function(){return c.records.options},"getOptions"),gr=l(function(t){let r=t.msg,s=t.id;const n=t.type;let e=t.tags;m.info("commit",r,s,n,e),m.debug("Entering commit:",r,s,n,e);const a=I();s=C.sanitizeText(s,a),r=C.sanitizeText(r,a),e=e?.map(o=>C.sanitizeText(o,a));const d={id:s||c.records.seq+"-"+q(),message:r,seq:c.records.seq++,type:n??p.NORMAL,tags:e??[],parents:c.records.head==null?[]:[c.records.head.id],branch:c.records.currBranch};c.records.head=d,m.info("main branch",a.mainBranchName),c.records.commits.has(d.id)&&m.warn(`Commit ID ${d.id} already exists`),c.records.commits.set(d.id,d),c.records.branches.set(c.records.currBranch,d.id),m.debug("in pushCommit "+d.id)},"commit"),yr=l(function(t){let r=t.name;const s=t.order;if(r=C.sanitizeText(r,I()),c.records.branches.has(r))throw new Error(`Trying to create an existing branch. (Help: Either use a new name if you want create a new branch or try using "checkout ${r}")`);c.records.branches.set(r,c.records.head!=null?c.records.head.id:null),c.records.branchConfig.set(r,{name:r,order:s}),D(r),m.debug("in createBranch")},"branch"),ur=l(t=>{let r=t.branch,s=t.id;const n=t.type,e=t.tags,a=I();r=C.sanitizeText(r,a),s&&(s=C.sanitizeText(s,a));const d=c.records.branches.get(c.records.currBranch),o=c.records.branches.get(r),f=d?c.records.commits.get(d):void 0,h=o?c.records.commits.get(o):void 0;if(f&&h&&f.branch===r)throw new Error(`Cannot merge branch '${r}' into itself.`);if(c.records.currBranch===r){const i=new Error('Incorrect usage of "merge". Cannot merge a branch to itself');throw i.hash={text:`merge ${r}`,token:`merge ${r}`,expected:["branch abc"]},i}if(f===void 0||!f){const i=new Error(`Incorrect usage of "merge". Current branch (${c.records.currBranch})has no commits`);throw i.hash={text:`merge ${r}`,token:`merge ${r}`,expected:["commit"]},i}if(!c.records.branches.has(r)){const i=new Error('Incorrect usage of "merge". Branch to be merged ('+r+") does not exist");throw i.hash={text:`merge ${r}`,token:`merge ${r}`,expected:[`branch ${r}`]},i}if(h===void 0||!h){const i=new Error('Incorrect usage of "merge". Branch to be merged ('+r+") has no commits");throw i.hash={text:`merge ${r}`,token:`merge ${r}`,expected:['"commit"']},i}if(f===h){const i=new Error('Incorrect usage of "merge". Both branches have same head');throw i.hash={text:`merge ${r}`,token:`merge ${r}`,expected:["branch abc"]},i}if(s&&c.records.commits.has(s)){const i=new Error('Incorrect usage of "merge". Commit with id:'+s+" already exists, use different custom id");throw i.hash={text:`merge ${r} ${s} ${n} ${e?.join(" ")}`,token:`merge ${r} ${s} ${n} ${e?.join(" ")}`,expected:[`merge ${r} ${s}_UNIQUE ${n} ${e?.join(" ")}`]},i}const $=o||"",g={id:s||`${c.records.seq}-${q()}`,message:`merged branch ${r} into ${c.records.currBranch}`,seq:c.records.seq++,parents:c.records.head==null?[]:[c.records.head.id,$],branch:c.records.currBranch,type:p.MERGE,customType:n,customId:!!s,tags:e??[]};c.records.head=g,c.records.commits.set(g.id,g),c.records.branches.set(c.records.currBranch,g.id),m.debug(c.records.branches),m.debug("in mergeBranch")},"merge"),xr=l(function(t){let r=t.id,s=t.targetId,n=t.tags,e=t.parent;m.debug("Entering cherryPick:",r,s,n);const a=I();if(r=C.sanitizeText(r,a),s=C.sanitizeText(s,a),n=n?.map(f=>C.sanitizeText(f,a)),e=C.sanitizeText(e,a),!r||!c.records.commits.has(r)){const f=new Error('Incorrect usage of "cherryPick". Source commit id should exist and provided');throw f.hash={text:`cherryPick ${r} ${s}`,token:`cherryPick ${r} ${s}`,expected:["cherry-pick abc"]},f}const d=c.records.commits.get(r);if(d===void 0||!d)throw new Error('Incorrect usage of "cherryPick". Source commit id should exist and provided');if(e&&!(Array.isArray(d.parents)&&d.parents.includes(e)))throw new Error("Invalid operation: The specified parent commit is not an immediate parent of the cherry-picked commit.");const o=d.branch;if(d.type===p.MERGE&&!e)throw new Error("Incorrect usage of cherry-pick: If the source commit is a merge commit, an immediate parent commit must be specified.");if(!s||!c.records.commits.has(s)){if(o===c.records.currBranch){const g=new Error('Incorrect usage of "cherryPick". Source commit is already on current branch');throw g.hash={text:`cherryPick ${r} ${s}`,token:`cherryPick ${r} ${s}`,expected:["cherry-pick abc"]},g}const f=c.records.branches.get(c.records.currBranch);if(f===void 0||!f){const g=new Error(`Incorrect usage of "cherry-pick". Current branch (${c.records.currBranch})has no commits`);throw g.hash={text:`cherryPick ${r} ${s}`,token:`cherryPick ${r} ${s}`,expected:["cherry-pick abc"]},g}const h=c.records.commits.get(f);if(h===void 0||!h){const g=new Error(`Incorrect usage of "cherry-pick". Current branch (${c.records.currBranch})has no commits`);throw g.hash={text:`cherryPick ${r} ${s}`,token:`cherryPick ${r} ${s}`,expected:["cherry-pick abc"]},g}const $={id:c.records.seq+"-"+q(),message:`cherry-picked ${d?.message} into ${c.records.currBranch}`,seq:c.records.seq++,parents:c.records.head==null?[]:[c.records.head.id,d.id],branch:c.records.currBranch,type:p.CHERRY_PICK,tags:n?n.filter(Boolean):[`cherry-pick:${d.id}${d.type===p.MERGE?`|parent:${e}`:""}`]};c.records.head=$,c.records.commits.set($.id,$),c.records.branches.set(c.records.currBranch,$.id),m.debug(c.records.branches),m.debug("in cherryPick")}},"cherryPick"),D=l(function(t){if(t=C.sanitizeText(t,I()),c.records.branches.has(t)){c.records.currBranch=t;const r=c.records.branches.get(c.records.currBranch);r===void 0||!r?c.records.head=null:c.records.head=c.records.commits.get(r)??null}else{const r=new Error(`Trying to checkout branch which is not yet created. (Help try using "branch ${t}")`);throw r.hash={text:`checkout ${t}`,token:`checkout ${t}`,expected:[`branch ${t}`]},r}},"checkout");function _(t,r,s){const n=t.indexOf(r);n===-1?t.push(s):t.splice(n,1,s)}l(_,"upsert");function P(t){const r=t.reduce((e,a)=>e.seq>a.seq?e:a,t[0]);let s="";t.forEach(function(e){e===r?s+="	*":s+="	|"});const n=[s,r.id,r.seq];for(const e in c.records.branches)c.records.branches.get(e)===r.id&&n.push(e);if(m.debug(n.join(" ")),r.parents&&r.parents.length==2&&r.parents[0]&&r.parents[1]){const e=c.records.commits.get(r.parents[0]);_(t,r,e),r.parents[1]&&t.push(c.records.commits.get(r.parents[1]))}else{if(r.parents.length==0)return;if(r.parents[0]){const e=c.records.commits.get(r.parents[0]);_(t,r,e)}}t=z(t,e=>e.id),P(t)}l(P,"prettyPrintCommitHistory");var pr=l(function(){m.debug(c.records.commits);const t=N()[0];P([t])},"prettyPrint"),mr=l(function(){c.reset(),sr()},"clear"),br=l(function(){return[...c.records.branchConfig.values()].map((r,s)=>r.order!==null&&r.order!==void 0?r:{...r,order:parseFloat(`0.${s}`)}).sort((r,s)=>(r.order??0)-(s.order??0)).map(({name:r})=>({name:r}))},"getBranchesAsObjArray"),wr=l(function(){return c.records.branches},"getBranches"),vr=l(function(){return c.records.commits},"getCommits"),N=l(function(){const t=[...c.records.commits.values()];return t.forEach(function(r){m.debug(r.id)}),t.sort((r,s)=>r.seq-s.seq),t},"getCommitsArray"),Cr=l(function(){return c.records.currBranch},"getCurrentBranch"),Er=l(function(){return c.records.direction},"getDirection"),Tr=l(function(){return c.records.head},"getHead"),S={commitType:p,getConfig:I,setDirection:lr,setOptions:$r,getOptions:fr,commit:gr,branch:yr,merge:ur,cherryPick:xr,checkout:D,prettyPrint:pr,clear:mr,getBranchesAsObjArray:br,getBranches:wr,getCommits:vr,getCommitsArray:N,getCurrentBranch:Cr,getDirection:Er,getHead:Tr,setAccTitle:Z,getAccTitle:Q,getAccDescription:J,setAccDescription:X,setDiagramTitle:V,getDiagramTitle:U},Br=l((t,r)=>{K(t,r),t.dir&&r.setDirection(t.dir);for(const s of t.statements)Lr(s,r)},"populate"),Lr=l((t,r)=>{const n={Commit:l(e=>r.commit(kr(e)),"Commit"),Branch:l(e=>r.branch(Mr(e)),"Branch"),Merge:l(e=>r.merge(Ir(e)),"Merge"),Checkout:l(e=>r.checkout(Rr(e)),"Checkout"),CherryPicking:l(e=>r.cherryPick(Gr(e)),"CherryPicking")}[t.$type];n?n(t):m.error(`Unknown statement type: ${t.$type}`)},"parseStatement"),kr=l(t=>({id:t.id,msg:t.message??"",type:t.type!==void 0?p[t.type]:p.NORMAL,tags:t.tags??void 0}),"parseCommit"),Mr=l(t=>({name:t.name,order:t.order??0}),"parseBranch"),Ir=l(t=>({branch:t.branch,id:t.id??"",type:t.type!==void 0?p[t.type]:void 0,tags:t.tags??void 0}),"parseMerge"),Rr=l(t=>t.branch,"parseCheckout"),Gr=l(t=>({id:t.id,targetId:"",tags:t.tags?.length===0?void 0:t.tags,parent:t.parent}),"parseCherryPicking"),Or={parse:l(async t=>{const r=await dr("gitGraph",t);m.debug(r),Br(r,S)},"parse")},Ar=rr(),v=Ar?.gitGraph,L=10,k=40,E=4,T=2,M=8,b=new Map,w=new Map,O=30,R=new Map,A=[],B=0,u="LR",qr=l(()=>{b.clear(),w.clear(),R.clear(),B=0,A=[],u="LR"},"clear"),W=l(t=>{const r=document.createElementNS("http://www.w3.org/2000/svg","text");return(typeof t=="string"?t.split(/\\n|\n|<br\s*\/?>/gi):t).forEach(n=>{const e=document.createElementNS("http://www.w3.org/2000/svg","tspan");e.setAttributeNS("http://www.w3.org/XML/1998/namespace","xml:space","preserve"),e.setAttribute("dy","1em"),e.setAttribute("x","0"),e.setAttribute("class","row"),e.textContent=n.trim(),r.appendChild(e)}),r},"drawText"),j=l(t=>{let r,s,n;return u==="BT"?(s=l((e,a)=>e<=a,"comparisonFunc"),n=1/0):(s=l((e,a)=>e>=a,"comparisonFunc"),n=0),t.forEach(e=>{const a=u==="TB"||u=="BT"?w.get(e)?.y:w.get(e)?.x;a!==void 0&&s(a,n)&&(r=e,n=a)}),r},"findClosestParent"),Hr=l(t=>{let r="",s=1/0;return t.forEach(n=>{const e=w.get(n).y;e<=s&&(r=n,s=e)}),r||void 0},"findClosestParentBT"),_r=l((t,r,s)=>{let n=s,e=s;const a=[];t.forEach(d=>{const o=r.get(d);if(!o)throw new Error(`Commit not found for key ${d}`);o.parents.length?(n=Fr(o),e=Math.max(n,e)):a.push(o),zr(o,n)}),n=e,a.forEach(d=>{Dr(d,n,s)}),t.forEach(d=>{const o=r.get(d);if(o?.parents.length){const f=Hr(o.parents);n=w.get(f).y-k,n<=e&&(e=n);const h=b.get(o.branch).pos,$=n-L;w.set(o.id,{x:h,y:$})}})},"setParallelBTPos"),Pr=l(t=>{const r=j(t.parents.filter(n=>n!==null));if(!r)throw new Error(`Closest parent not found for commit ${t.id}`);const s=w.get(r)?.y;if(s===void 0)throw new Error(`Closest parent position not found for commit ${t.id}`);return s},"findClosestParentPos"),Fr=l(t=>Pr(t)+k,"calculateCommitPosition"),zr=l((t,r)=>{const s=b.get(t.branch);if(!s)throw new Error(`Branch not found for commit ${t.id}`);const n=s.pos,e=r+L;return w.set(t.id,{x:n,y:e}),{x:n,y:e}},"setCommitPosition"),Dr=l((t,r,s)=>{const n=b.get(t.branch);if(!n)throw new Error(`Branch not found for commit ${t.id}`);const e=r+s,a=n.pos;w.set(t.id,{x:a,y:e})},"setRootPosition"),Nr=l((t,r,s,n,e,a)=>{if(a===p.HIGHLIGHT)t.append("rect").attr("x",s.x-10).attr("y",s.y-10).attr("width",20).attr("height",20).attr("class",`commit ${r.id} commit-highlight${e%M} ${n}-outer`),t.append("rect").attr("x",s.x-6).attr("y",s.y-6).attr("width",12).attr("height",12).attr("class",`commit ${r.id} commit${e%M} ${n}-inner`);else if(a===p.CHERRY_PICK)t.append("circle").attr("cx",s.x).attr("cy",s.y).attr("r",10).attr("class",`commit ${r.id} ${n}`),t.append("circle").attr("cx",s.x-3).attr("cy",s.y+2).attr("r",2.75).attr("fill","#fff").attr("class",`commit ${r.id} ${n}`),t.append("circle").attr("cx",s.x+3).attr("cy",s.y+2).attr("r",2.75).attr("fill","#fff").attr("class",`commit ${r.id} ${n}`),t.append("line").attr("x1",s.x+3).attr("y1",s.y+1).attr("x2",s.x).attr("y2",s.y-5).attr("stroke","#fff").attr("class",`commit ${r.id} ${n}`),t.append("line").attr("x1",s.x-3).attr("y1",s.y+1).attr("x2",s.x).attr("y2",s.y-5).attr("stroke","#fff").attr("class",`commit ${r.id} ${n}`);else{const d=t.append("circle");if(d.attr("cx",s.x),d.attr("cy",s.y),d.attr("r",r.type===p.MERGE?9:10),d.attr("class",`commit ${r.id} commit${e%M}`),a===p.MERGE){const o=t.append("circle");o.attr("cx",s.x),o.attr("cy",s.y),o.attr("r",6),o.attr("class",`commit ${n} ${r.id} commit${e%M}`)}a===p.REVERSE&&t.append("path").attr("d",`M ${s.x-5},${s.y-5}L${s.x+5},${s.y+5}M${s.x-5},${s.y+5}L${s.x+5},${s.y-5}`).attr("class",`commit ${n} ${r.id} commit${e%M}`)}},"drawCommitBullet"),Sr=l((t,r,s,n)=>{if(r.type!==p.CHERRY_PICK&&(r.customId&&r.type===p.MERGE||r.type!==p.MERGE)&&v?.showCommitLabel){const e=t.append("g"),a=e.insert("rect").attr("class","commit-label-bkg"),d=e.append("text").attr("x",n).attr("y",s.y+25).attr("class","commit-label").text(r.id),o=d.node()?.getBBox();if(o&&(a.attr("x",s.posWithOffset-o.width/2-T).attr("y",s.y+13.5).attr("width",o.width+2*T).attr("height",o.height+2*T),u==="TB"||u==="BT"?(a.attr("x",s.x-(o.width+4*E+5)).attr("y",s.y-12),d.attr("x",s.x-(o.width+4*E)).attr("y",s.y+o.height-12)):d.attr("x",s.posWithOffset-o.width/2),v.rotateCommitLabel))if(u==="TB"||u==="BT")d.attr("transform","rotate(-45, "+s.x+", "+s.y+")"),a.attr("transform","rotate(-45, "+s.x+", "+s.y+")");else{const f=-7.5-(o.width+10)/25*9.5,h=10+o.width/25*8.5;e.attr("transform","translate("+f+", "+h+") rotate(-45, "+n+", "+s.y+")")}}},"drawCommitLabel"),Wr=l((t,r,s,n)=>{if(r.tags.length>0){let e=0,a=0,d=0;const o=[];for(const f of r.tags.reverse()){const h=t.insert("polygon"),$=t.append("circle"),g=t.append("text").attr("y",s.y-16-e).attr("class","tag-label").text(f),i=g.node()?.getBBox();if(!i)throw new Error("Tag bbox not found");a=Math.max(a,i.width),d=Math.max(d,i.height),g.attr("x",s.posWithOffset-i.width/2),o.push({tag:g,hole:$,rect:h,yOffset:e}),e+=20}for(const{tag:f,hole:h,rect:$,yOffset:g}of o){const i=d/2,y=s.y-19.2-g;if($.attr("class","tag-label-bkg").attr("points",`
-      ${n-a/2-E/2},${y+T}  
-      ${n-a/2-E/2},${y-T}
-      ${s.posWithOffset-a/2-E},${y-i-T}
-      ${s.posWithOffset+a/2+E},${y-i-T}
-      ${s.posWithOffset+a/2+E},${y+i+T}
-      ${s.posWithOffset-a/2-E},${y+i+T}`),h.attr("cy",y).attr("cx",n-a/2+E/2).attr("r",1.5).attr("class","tag-hole"),u==="TB"||u==="BT"){const x=n+g;$.attr("class","tag-label-bkg").attr("points",`
-        ${s.x},${x+2}
-        ${s.x},${x-2}
-        ${s.x+L},${x-i-2}
-        ${s.x+L+a+4},${x-i-2}
-        ${s.x+L+a+4},${x+i+2}
-        ${s.x+L},${x+i+2}`).attr("transform","translate(12,12) rotate(45, "+s.x+","+n+")"),h.attr("cx",s.x+E/2).attr("cy",x).attr("transform","translate(12,12) rotate(45, "+s.x+","+n+")"),f.attr("x",s.x+5).attr("y",x+3).attr("transform","translate(14,14) rotate(45, "+s.x+","+n+")")}}}},"drawCommitTags"),jr=l(t=>{switch(t.customType??t.type){case p.NORMAL:return"commit-normal";case p.REVERSE:return"commit-reverse";case p.HIGHLIGHT:return"commit-highlight";case p.MERGE:return"commit-merge";case p.CHERRY_PICK:return"commit-cherry-pick";default:return"commit-normal"}},"getCommitClassType"),Kr=l((t,r,s,n)=>{const e={x:0,y:0};if(t.parents.length>0){const a=j(t.parents);if(a){const d=n.get(a)??e;return r==="TB"?d.y+k:r==="BT"?(n.get(t.id)??e).y-k:d.x+k}}else return r==="TB"?O:r==="BT"?(n.get(t.id)??e).y-k:0;return 0},"calculatePosition"),Yr=l((t,r,s)=>{const n=u==="BT"&&s?r:r+L,e=u==="TB"||u==="BT"?n:b.get(t.branch)?.pos,a=u==="TB"||u==="BT"?b.get(t.branch)?.pos:n;if(a===void 0||e===void 0)throw new Error(`Position were undefined for commit ${t.id}`);return{x:a,y:e,posWithOffset:n}},"getCommitPosition"),F=l((t,r,s)=>{if(!v)throw new Error("GitGraph config not found");const n=t.append("g").attr("class","commit-bullets"),e=t.append("g").attr("class","commit-labels");let a=u==="TB"||u==="BT"?O:0;const d=[...r.keys()],o=v?.parallelCommits??!1,f=l(($,g)=>{const i=r.get($)?.seq,y=r.get(g)?.seq;return i!==void 0&&y!==void 0?i-y:0},"sortKeys");let h=d.sort(f);u==="BT"&&(o&&_r(h,r,a),h=h.reverse()),h.forEach($=>{const g=r.get($);if(!g)throw new Error(`Commit not found for key ${$}`);o&&(a=Kr(g,u,a,w));const i=Yr(g,a,o);if(s){const y=jr(g),x=g.customType??g.type,H=b.get(g.branch)?.index??0;Nr(n,g,i,y,H,x),Sr(e,g,i,a),Wr(e,g,i,a)}u==="TB"||u==="BT"?w.set(g.id,{x:i.x,y:i.posWithOffset}):w.set(g.id,{x:i.posWithOffset,y:i.y}),a=u==="BT"&&o?a+k:a+k+L,a>B&&(B=a)})},"drawCommits"),Ur=l((t,r,s,n,e)=>{const d=(u==="TB"||u==="BT"?s.x<n.x:s.y<n.y)?r.branch:t.branch,o=l(h=>h.branch===d,"isOnBranchToGetCurve"),f=l(h=>h.seq>t.seq&&h.seq<r.seq,"isBetweenCommits");return[...e.values()].some(h=>f(h)&&o(h))},"shouldRerouteArrow"),G=l((t,r,s=0)=>{const n=t+Math.abs(t-r)/2;if(s>5)return n;if(A.every(d=>Math.abs(d-n)>=10))return A.push(n),n;const a=Math.abs(t-r);return G(t,r-a/5,s+1)},"findLane"),Vr=l((t,r,s,n)=>{const e=w.get(r.id),a=w.get(s.id);if(e===void 0||a===void 0)throw new Error(`Commit positions not found for commits ${r.id} and ${s.id}`);const d=Ur(r,s,e,a,n);let o="",f="",h=0,$=0,g=b.get(s.branch)?.index;s.type===p.MERGE&&r.id!==s.parents[0]&&(g=b.get(r.branch)?.index);let i;if(d){o="A 10 10, 0, 0, 0,",f="A 10 10, 0, 0, 1,",h=10,$=10;const y=e.y<a.y?G(e.y,a.y):G(a.y,e.y),x=e.x<a.x?G(e.x,a.x):G(a.x,e.x);u==="TB"?e.x<a.x?i=`M ${e.x} ${e.y} L ${x-h} ${e.y} ${f} ${x} ${e.y+$} L ${x} ${a.y-h} ${o} ${x+$} ${a.y} L ${a.x} ${a.y}`:(g=b.get(r.branch)?.index,i=`M ${e.x} ${e.y} L ${x+h} ${e.y} ${o} ${x} ${e.y+$} L ${x} ${a.y-h} ${f} ${x-$} ${a.y} L ${a.x} ${a.y}`):u==="BT"?e.x<a.x?i=`M ${e.x} ${e.y} L ${x-h} ${e.y} ${o} ${x} ${e.y-$} L ${x} ${a.y+h} ${f} ${x+$} ${a.y} L ${a.x} ${a.y}`:(g=b.get(r.branch)?.index,i=`M ${e.x} ${e.y} L ${x+h} ${e.y} ${f} ${x} ${e.y-$} L ${x} ${a.y+h} ${o} ${x-$} ${a.y} L ${a.x} ${a.y}`):e.y<a.y?i=`M ${e.x} ${e.y} L ${e.x} ${y-h} ${o} ${e.x+$} ${y} L ${a.x-h} ${y} ${f} ${a.x} ${y+$} L ${a.x} ${a.y}`:(g=b.get(r.branch)?.index,i=`M ${e.x} ${e.y} L ${e.x} ${y+h} ${f} ${e.x+$} ${y} L ${a.x-h} ${y} ${o} ${a.x} ${y-$} L ${a.x} ${a.y}`)}else o="A 20 20, 0, 0, 0,",f="A 20 20, 0, 0, 1,",h=20,$=20,u==="TB"?(e.x<a.x&&(s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${e.x} ${a.y-h} ${o} ${e.x+$} ${a.y} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${a.x-h} ${e.y} ${f} ${a.x} ${e.y+$} L ${a.x} ${a.y}`),e.x>a.x&&(o="A 20 20, 0, 0, 0,",f="A 20 20, 0, 0, 1,",h=20,$=20,s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${e.x} ${a.y-h} ${f} ${e.x-$} ${a.y} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${a.x+h} ${e.y} ${o} ${a.x} ${e.y+$} L ${a.x} ${a.y}`),e.x===a.x&&(i=`M ${e.x} ${e.y} L ${a.x} ${a.y}`)):u==="BT"?(e.x<a.x&&(s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${e.x} ${a.y+h} ${f} ${e.x+$} ${a.y} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${a.x-h} ${e.y} ${o} ${a.x} ${e.y-$} L ${a.x} ${a.y}`),e.x>a.x&&(o="A 20 20, 0, 0, 0,",f="A 20 20, 0, 0, 1,",h=20,$=20,s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${e.x} ${a.y+h} ${o} ${e.x-$} ${a.y} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${a.x-h} ${e.y} ${o} ${a.x} ${e.y-$} L ${a.x} ${a.y}`),e.x===a.x&&(i=`M ${e.x} ${e.y} L ${a.x} ${a.y}`)):(e.y<a.y&&(s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${a.x-h} ${e.y} ${f} ${a.x} ${e.y+$} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${e.x} ${a.y-h} ${o} ${e.x+$} ${a.y} L ${a.x} ${a.y}`),e.y>a.y&&(s.type===p.MERGE&&r.id!==s.parents[0]?i=`M ${e.x} ${e.y} L ${a.x-h} ${e.y} ${o} ${a.x} ${e.y-$} L ${a.x} ${a.y}`:i=`M ${e.x} ${e.y} L ${e.x} ${a.y+h} ${f} ${e.x+$} ${a.y} L ${a.x} ${a.y}`),e.y===a.y&&(i=`M ${e.x} ${e.y} L ${a.x} ${a.y}`));if(i===void 0)throw new Error("Line definition not found");t.append("path").attr("d",i).attr("class","arrow arrow"+g%M)},"drawArrow"),Xr=l((t,r)=>{const s=t.append("g").attr("class","commit-arrows");[...r.keys()].forEach(n=>{const e=r.get(n);e.parents&&e.parents.length>0&&e.parents.forEach(a=>{Vr(s,r.get(a),e,r)})})},"drawArrows"),Jr=l((t,r)=>{const s=t.append("g");r.forEach((n,e)=>{const a=e%M,d=b.get(n.name)?.pos;if(d===void 0)throw new Error(`Position not found for branch ${n.name}`);const o=s.append("line");o.attr("x1",0),o.attr("y1",d),o.attr("x2",B),o.attr("y2",d),o.attr("class","branch branch"+a),u==="TB"?(o.attr("y1",O),o.attr("x1",d),o.attr("y2",B),o.attr("x2",d)):u==="BT"&&(o.attr("y1",B),o.attr("x1",d),o.attr("y2",O),o.attr("x2",d)),A.push(d);const f=n.name,h=W(f),$=s.insert("rect"),i=s.insert("g").attr("class","branchLabel").insert("g").attr("class","label branch-label"+a);i.node().appendChild(h);const y=h.getBBox();$.attr("class","branchLabelBkg label"+a).attr("rx",4).attr("ry",4).attr("x",-y.width-4-(v?.rotateCommitLabel===!0?30:0)).attr("y",-y.height/2+8).attr("width",y.width+18).attr("height",y.height+4),i.attr("transform","translate("+(-y.width-14-(v?.rotateCommitLabel===!0?30:0))+", "+(d-y.height/2-1)+")"),u==="TB"?($.attr("x",d-y.width/2-10).attr("y",0),i.attr("transform","translate("+(d-y.width/2-5)+", 0)")):u==="BT"?($.attr("x",d-y.width/2-10).attr("y",B),i.attr("transform","translate("+(d-y.width/2-5)+", "+B+")")):$.attr("transform","translate(-19, "+(d-y.height/2)+")")})},"drawBranches"),Qr=l(function(t,r,s,n,e){return b.set(t,{pos:r,index:s}),r+=50+(e?40:0)+(u==="TB"||u==="BT"?n.width/2:0),r},"setBranchPosition"),Zr=l(function(t,r,s,n){if(qr(),m.debug("in gitgraph renderer",t+`
-`,"id:",r,s),!v)throw new Error("GitGraph config not found");const e=v.rotateCommitLabel??!1,a=n.db;R=a.getCommits();const d=a.getBranchesAsObjArray();u=a.getDirection();const o=er(`[id="${r}"]`);let f=0;d.forEach((h,$)=>{const g=W(h.name),i=o.append("g"),y=i.insert("g").attr("class","branchLabel"),x=y.insert("g").attr("class","label branch-label");x.node()?.appendChild(g);const H=g.getBBox();f=Qr(h.name,f,$,H,e),x.remove(),y.remove(),i.remove()}),F(o,R,!1),v.showBranches&&Jr(o,d),Xr(o,R),F(o,R,!0),tr.insertTitle(o,"gitTitleText",v.titleTopMargin??0,a.getDiagramTitle()),ar(void 0,o,v.diagramPadding,v.useMaxWidth)},"draw"),re={draw:Zr},ee=l(t=>`
+import { p as populateCommonDb } from "./chunk-4BX2VUAB.js";
+import { I as ImperativeState } from "./chunk-QZHKN3VN.js";
+import { _ as __name, v as getDiagramTitle, t as setDiagramTitle, s as setAccDescription, g as getAccDescription, a as getAccTitle, b as setAccTitle, l as log, c as getConfig2, e as select, u as utils_default, F as setupGraphViewbox2, A as clear, m as common_default, G as cleanAndMerge, H as getConfig, I as defaultConfig_default, K as random } from "./mermaid-vendor.js";
+import { p as parse } from "./treemap-75Q7IDZK.js";
+import "./utils-vendor.js";
+var commitType = {
+  NORMAL: 0,
+  REVERSE: 1,
+  HIGHLIGHT: 2,
+  MERGE: 3,
+  CHERRY_PICK: 4
+};
+var DEFAULT_GITGRAPH_CONFIG = defaultConfig_default.gitGraph;
+var getConfig3 = /* @__PURE__ */ __name(() => {
+  const config = cleanAndMerge({
+    ...DEFAULT_GITGRAPH_CONFIG,
+    ...getConfig().gitGraph
+  });
+  return config;
+}, "getConfig");
+var state = new ImperativeState(() => {
+  const config = getConfig3();
+  const mainBranchName = config.mainBranchName;
+  const mainBranchOrder = config.mainBranchOrder;
+  return {
+    mainBranchName,
+    commits: /* @__PURE__ */ new Map(),
+    head: null,
+    branchConfig: /* @__PURE__ */ new Map([[mainBranchName, { name: mainBranchName, order: mainBranchOrder }]]),
+    branches: /* @__PURE__ */ new Map([[mainBranchName, null]]),
+    currBranch: mainBranchName,
+    direction: "LR",
+    seq: 0,
+    options: {}
+  };
+});
+function getID() {
+  return random({ length: 7 });
+}
+__name(getID, "getID");
+function uniqBy(list, fn) {
+  const recordMap = /* @__PURE__ */ Object.create(null);
+  return list.reduce((out, item) => {
+    const key = fn(item);
+    if (!recordMap[key]) {
+      recordMap[key] = true;
+      out.push(item);
+    }
+    return out;
+  }, []);
+}
+__name(uniqBy, "uniqBy");
+var setDirection = /* @__PURE__ */ __name(function(dir2) {
+  state.records.direction = dir2;
+}, "setDirection");
+var setOptions = /* @__PURE__ */ __name(function(rawOptString) {
+  log.debug("options str", rawOptString);
+  rawOptString = rawOptString?.trim();
+  rawOptString = rawOptString || "{}";
+  try {
+    state.records.options = JSON.parse(rawOptString);
+  } catch (e) {
+    log.error("error while parsing gitGraph options", e.message);
+  }
+}, "setOptions");
+var getOptions = /* @__PURE__ */ __name(function() {
+  return state.records.options;
+}, "getOptions");
+var commit = /* @__PURE__ */ __name(function(commitDB) {
+  let msg = commitDB.msg;
+  let id = commitDB.id;
+  const type = commitDB.type;
+  let tags = commitDB.tags;
+  log.info("commit", msg, id, type, tags);
+  log.debug("Entering commit:", msg, id, type, tags);
+  const config = getConfig3();
+  id = common_default.sanitizeText(id, config);
+  msg = common_default.sanitizeText(msg, config);
+  tags = tags?.map((tag) => common_default.sanitizeText(tag, config));
+  const newCommit = {
+    id: id ? id : state.records.seq + "-" + getID(),
+    message: msg,
+    seq: state.records.seq++,
+    type: type ?? commitType.NORMAL,
+    tags: tags ?? [],
+    parents: state.records.head == null ? [] : [state.records.head.id],
+    branch: state.records.currBranch
+  };
+  state.records.head = newCommit;
+  log.info("main branch", config.mainBranchName);
+  if (state.records.commits.has(newCommit.id)) {
+    log.warn(`Commit ID ${newCommit.id} already exists`);
+  }
+  state.records.commits.set(newCommit.id, newCommit);
+  state.records.branches.set(state.records.currBranch, newCommit.id);
+  log.debug("in pushCommit " + newCommit.id);
+}, "commit");
+var branch = /* @__PURE__ */ __name(function(branchDB) {
+  let name = branchDB.name;
+  const order = branchDB.order;
+  name = common_default.sanitizeText(name, getConfig3());
+  if (state.records.branches.has(name)) {
+    throw new Error(
+      `Trying to create an existing branch. (Help: Either use a new name if you want create a new branch or try using "checkout ${name}")`
+    );
+  }
+  state.records.branches.set(name, state.records.head != null ? state.records.head.id : null);
+  state.records.branchConfig.set(name, { name, order });
+  checkout(name);
+  log.debug("in createBranch");
+}, "branch");
+var merge = /* @__PURE__ */ __name((mergeDB) => {
+  let otherBranch = mergeDB.branch;
+  let customId = mergeDB.id;
+  const overrideType = mergeDB.type;
+  const customTags = mergeDB.tags;
+  const config = getConfig3();
+  otherBranch = common_default.sanitizeText(otherBranch, config);
+  if (customId) {
+    customId = common_default.sanitizeText(customId, config);
+  }
+  const currentBranchCheck = state.records.branches.get(state.records.currBranch);
+  const otherBranchCheck = state.records.branches.get(otherBranch);
+  const currentCommit = currentBranchCheck ? state.records.commits.get(currentBranchCheck) : void 0;
+  const otherCommit = otherBranchCheck ? state.records.commits.get(otherBranchCheck) : void 0;
+  if (currentCommit && otherCommit && currentCommit.branch === otherBranch) {
+    throw new Error(`Cannot merge branch '${otherBranch}' into itself.`);
+  }
+  if (state.records.currBranch === otherBranch) {
+    const error = new Error('Incorrect usage of "merge". Cannot merge a branch to itself');
+    error.hash = {
+      text: `merge ${otherBranch}`,
+      token: `merge ${otherBranch}`,
+      expected: ["branch abc"]
+    };
+    throw error;
+  }
+  if (currentCommit === void 0 || !currentCommit) {
+    const error = new Error(
+      `Incorrect usage of "merge". Current branch (${state.records.currBranch})has no commits`
+    );
+    error.hash = {
+      text: `merge ${otherBranch}`,
+      token: `merge ${otherBranch}`,
+      expected: ["commit"]
+    };
+    throw error;
+  }
+  if (!state.records.branches.has(otherBranch)) {
+    const error = new Error(
+      'Incorrect usage of "merge". Branch to be merged (' + otherBranch + ") does not exist"
+    );
+    error.hash = {
+      text: `merge ${otherBranch}`,
+      token: `merge ${otherBranch}`,
+      expected: [`branch ${otherBranch}`]
+    };
+    throw error;
+  }
+  if (otherCommit === void 0 || !otherCommit) {
+    const error = new Error(
+      'Incorrect usage of "merge". Branch to be merged (' + otherBranch + ") has no commits"
+    );
+    error.hash = {
+      text: `merge ${otherBranch}`,
+      token: `merge ${otherBranch}`,
+      expected: ['"commit"']
+    };
+    throw error;
+  }
+  if (currentCommit === otherCommit) {
+    const error = new Error('Incorrect usage of "merge". Both branches have same head');
+    error.hash = {
+      text: `merge ${otherBranch}`,
+      token: `merge ${otherBranch}`,
+      expected: ["branch abc"]
+    };
+    throw error;
+  }
+  if (customId && state.records.commits.has(customId)) {
+    const error = new Error(
+      'Incorrect usage of "merge". Commit with id:' + customId + " already exists, use different custom id"
+    );
+    error.hash = {
+      text: `merge ${otherBranch} ${customId} ${overrideType} ${customTags?.join(" ")}`,
+      token: `merge ${otherBranch} ${customId} ${overrideType} ${customTags?.join(" ")}`,
+      expected: [
+        `merge ${otherBranch} ${customId}_UNIQUE ${overrideType} ${customTags?.join(" ")}`
+      ]
+    };
+    throw error;
+  }
+  const verifiedBranch = otherBranchCheck ? otherBranchCheck : "";
+  const commit2 = {
+    id: customId || `${state.records.seq}-${getID()}`,
+    message: `merged branch ${otherBranch} into ${state.records.currBranch}`,
+    seq: state.records.seq++,
+    parents: state.records.head == null ? [] : [state.records.head.id, verifiedBranch],
+    branch: state.records.currBranch,
+    type: commitType.MERGE,
+    customType: overrideType,
+    customId: customId ? true : false,
+    tags: customTags ?? []
+  };
+  state.records.head = commit2;
+  state.records.commits.set(commit2.id, commit2);
+  state.records.branches.set(state.records.currBranch, commit2.id);
+  log.debug(state.records.branches);
+  log.debug("in mergeBranch");
+}, "merge");
+var cherryPick = /* @__PURE__ */ __name(function(cherryPickDB) {
+  let sourceId = cherryPickDB.id;
+  let targetId = cherryPickDB.targetId;
+  let tags = cherryPickDB.tags;
+  let parentCommitId = cherryPickDB.parent;
+  log.debug("Entering cherryPick:", sourceId, targetId, tags);
+  const config = getConfig3();
+  sourceId = common_default.sanitizeText(sourceId, config);
+  targetId = common_default.sanitizeText(targetId, config);
+  tags = tags?.map((tag) => common_default.sanitizeText(tag, config));
+  parentCommitId = common_default.sanitizeText(parentCommitId, config);
+  if (!sourceId || !state.records.commits.has(sourceId)) {
+    const error = new Error(
+      'Incorrect usage of "cherryPick". Source commit id should exist and provided'
+    );
+    error.hash = {
+      text: `cherryPick ${sourceId} ${targetId}`,
+      token: `cherryPick ${sourceId} ${targetId}`,
+      expected: ["cherry-pick abc"]
+    };
+    throw error;
+  }
+  const sourceCommit = state.records.commits.get(sourceId);
+  if (sourceCommit === void 0 || !sourceCommit) {
+    throw new Error('Incorrect usage of "cherryPick". Source commit id should exist and provided');
+  }
+  if (parentCommitId && !(Array.isArray(sourceCommit.parents) && sourceCommit.parents.includes(parentCommitId))) {
+    const error = new Error(
+      "Invalid operation: The specified parent commit is not an immediate parent of the cherry-picked commit."
+    );
+    throw error;
+  }
+  const sourceCommitBranch = sourceCommit.branch;
+  if (sourceCommit.type === commitType.MERGE && !parentCommitId) {
+    const error = new Error(
+      "Incorrect usage of cherry-pick: If the source commit is a merge commit, an immediate parent commit must be specified."
+    );
+    throw error;
+  }
+  if (!targetId || !state.records.commits.has(targetId)) {
+    if (sourceCommitBranch === state.records.currBranch) {
+      const error = new Error(
+        'Incorrect usage of "cherryPick". Source commit is already on current branch'
+      );
+      error.hash = {
+        text: `cherryPick ${sourceId} ${targetId}`,
+        token: `cherryPick ${sourceId} ${targetId}`,
+        expected: ["cherry-pick abc"]
+      };
+      throw error;
+    }
+    const currentCommitId = state.records.branches.get(state.records.currBranch);
+    if (currentCommitId === void 0 || !currentCommitId) {
+      const error = new Error(
+        `Incorrect usage of "cherry-pick". Current branch (${state.records.currBranch})has no commits`
+      );
+      error.hash = {
+        text: `cherryPick ${sourceId} ${targetId}`,
+        token: `cherryPick ${sourceId} ${targetId}`,
+        expected: ["cherry-pick abc"]
+      };
+      throw error;
+    }
+    const currentCommit = state.records.commits.get(currentCommitId);
+    if (currentCommit === void 0 || !currentCommit) {
+      const error = new Error(
+        `Incorrect usage of "cherry-pick". Current branch (${state.records.currBranch})has no commits`
+      );
+      error.hash = {
+        text: `cherryPick ${sourceId} ${targetId}`,
+        token: `cherryPick ${sourceId} ${targetId}`,
+        expected: ["cherry-pick abc"]
+      };
+      throw error;
+    }
+    const commit2 = {
+      id: state.records.seq + "-" + getID(),
+      message: `cherry-picked ${sourceCommit?.message} into ${state.records.currBranch}`,
+      seq: state.records.seq++,
+      parents: state.records.head == null ? [] : [state.records.head.id, sourceCommit.id],
+      branch: state.records.currBranch,
+      type: commitType.CHERRY_PICK,
+      tags: tags ? tags.filter(Boolean) : [
+        `cherry-pick:${sourceCommit.id}${sourceCommit.type === commitType.MERGE ? `|parent:${parentCommitId}` : ""}`
+      ]
+    };
+    state.records.head = commit2;
+    state.records.commits.set(commit2.id, commit2);
+    state.records.branches.set(state.records.currBranch, commit2.id);
+    log.debug(state.records.branches);
+    log.debug("in cherryPick");
+  }
+}, "cherryPick");
+var checkout = /* @__PURE__ */ __name(function(branch2) {
+  branch2 = common_default.sanitizeText(branch2, getConfig3());
+  if (!state.records.branches.has(branch2)) {
+    const error = new Error(
+      `Trying to checkout branch which is not yet created. (Help try using "branch ${branch2}")`
+    );
+    error.hash = {
+      text: `checkout ${branch2}`,
+      token: `checkout ${branch2}`,
+      expected: [`branch ${branch2}`]
+    };
+    throw error;
+  } else {
+    state.records.currBranch = branch2;
+    const id = state.records.branches.get(state.records.currBranch);
+    if (id === void 0 || !id) {
+      state.records.head = null;
+    } else {
+      state.records.head = state.records.commits.get(id) ?? null;
+    }
+  }
+}, "checkout");
+function upsert(arr, key, newVal) {
+  const index = arr.indexOf(key);
+  if (index === -1) {
+    arr.push(newVal);
+  } else {
+    arr.splice(index, 1, newVal);
+  }
+}
+__name(upsert, "upsert");
+function prettyPrintCommitHistory(commitArr) {
+  const commit2 = commitArr.reduce((out, commit3) => {
+    if (out.seq > commit3.seq) {
+      return out;
+    }
+    return commit3;
+  }, commitArr[0]);
+  let line = "";
+  commitArr.forEach(function(c) {
+    if (c === commit2) {
+      line += "	*";
+    } else {
+      line += "	|";
+    }
+  });
+  const label = [line, commit2.id, commit2.seq];
+  for (const branch2 in state.records.branches) {
+    if (state.records.branches.get(branch2) === commit2.id) {
+      label.push(branch2);
+    }
+  }
+  log.debug(label.join(" "));
+  if (commit2.parents && commit2.parents.length == 2 && commit2.parents[0] && commit2.parents[1]) {
+    const newCommit = state.records.commits.get(commit2.parents[0]);
+    upsert(commitArr, commit2, newCommit);
+    if (commit2.parents[1]) {
+      commitArr.push(state.records.commits.get(commit2.parents[1]));
+    }
+  } else if (commit2.parents.length == 0) {
+    return;
+  } else {
+    if (commit2.parents[0]) {
+      const newCommit = state.records.commits.get(commit2.parents[0]);
+      upsert(commitArr, commit2, newCommit);
+    }
+  }
+  commitArr = uniqBy(commitArr, (c) => c.id);
+  prettyPrintCommitHistory(commitArr);
+}
+__name(prettyPrintCommitHistory, "prettyPrintCommitHistory");
+var prettyPrint = /* @__PURE__ */ __name(function() {
+  log.debug(state.records.commits);
+  const node = getCommitsArray()[0];
+  prettyPrintCommitHistory([node]);
+}, "prettyPrint");
+var clear2 = /* @__PURE__ */ __name(function() {
+  state.reset();
+  clear();
+}, "clear");
+var getBranchesAsObjArray = /* @__PURE__ */ __name(function() {
+  const branchesArray = [...state.records.branchConfig.values()].map((branchConfig, i) => {
+    if (branchConfig.order !== null && branchConfig.order !== void 0) {
+      return branchConfig;
+    }
+    return {
+      ...branchConfig,
+      order: parseFloat(`0.${i}`)
+    };
+  }).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map(({ name }) => ({ name }));
+  return branchesArray;
+}, "getBranchesAsObjArray");
+var getBranches = /* @__PURE__ */ __name(function() {
+  return state.records.branches;
+}, "getBranches");
+var getCommits = /* @__PURE__ */ __name(function() {
+  return state.records.commits;
+}, "getCommits");
+var getCommitsArray = /* @__PURE__ */ __name(function() {
+  const commitArr = [...state.records.commits.values()];
+  commitArr.forEach(function(o) {
+    log.debug(o.id);
+  });
+  commitArr.sort((a, b) => a.seq - b.seq);
+  return commitArr;
+}, "getCommitsArray");
+var getCurrentBranch = /* @__PURE__ */ __name(function() {
+  return state.records.currBranch;
+}, "getCurrentBranch");
+var getDirection = /* @__PURE__ */ __name(function() {
+  return state.records.direction;
+}, "getDirection");
+var getHead = /* @__PURE__ */ __name(function() {
+  return state.records.head;
+}, "getHead");
+var db = {
+  commitType,
+  getConfig: getConfig3,
+  setDirection,
+  setOptions,
+  getOptions,
+  commit,
+  branch,
+  merge,
+  cherryPick,
+  checkout,
+  //reset,
+  prettyPrint,
+  clear: clear2,
+  getBranchesAsObjArray,
+  getBranches,
+  getCommits,
+  getCommitsArray,
+  getCurrentBranch,
+  getDirection,
+  getHead,
+  setAccTitle,
+  getAccTitle,
+  getAccDescription,
+  setAccDescription,
+  setDiagramTitle,
+  getDiagramTitle
+};
+var populate = /* @__PURE__ */ __name((ast, db2) => {
+  populateCommonDb(ast, db2);
+  if (ast.dir) {
+    db2.setDirection(ast.dir);
+  }
+  for (const statement of ast.statements) {
+    parseStatement(statement, db2);
+  }
+}, "populate");
+var parseStatement = /* @__PURE__ */ __name((statement, db2) => {
+  const parsers = {
+    Commit: /* @__PURE__ */ __name((stmt) => db2.commit(parseCommit(stmt)), "Commit"),
+    Branch: /* @__PURE__ */ __name((stmt) => db2.branch(parseBranch(stmt)), "Branch"),
+    Merge: /* @__PURE__ */ __name((stmt) => db2.merge(parseMerge(stmt)), "Merge"),
+    Checkout: /* @__PURE__ */ __name((stmt) => db2.checkout(parseCheckout(stmt)), "Checkout"),
+    CherryPicking: /* @__PURE__ */ __name((stmt) => db2.cherryPick(parseCherryPicking(stmt)), "CherryPicking")
+  };
+  const parser2 = parsers[statement.$type];
+  if (parser2) {
+    parser2(statement);
+  } else {
+    log.error(`Unknown statement type: ${statement.$type}`);
+  }
+}, "parseStatement");
+var parseCommit = /* @__PURE__ */ __name((commit2) => {
+  const commitDB = {
+    id: commit2.id,
+    msg: commit2.message ?? "",
+    type: commit2.type !== void 0 ? commitType[commit2.type] : commitType.NORMAL,
+    tags: commit2.tags ?? void 0
+  };
+  return commitDB;
+}, "parseCommit");
+var parseBranch = /* @__PURE__ */ __name((branch2) => {
+  const branchDB = {
+    name: branch2.name,
+    order: branch2.order ?? 0
+  };
+  return branchDB;
+}, "parseBranch");
+var parseMerge = /* @__PURE__ */ __name((merge2) => {
+  const mergeDB = {
+    branch: merge2.branch,
+    id: merge2.id ?? "",
+    type: merge2.type !== void 0 ? commitType[merge2.type] : void 0,
+    tags: merge2.tags ?? void 0
+  };
+  return mergeDB;
+}, "parseMerge");
+var parseCheckout = /* @__PURE__ */ __name((checkout2) => {
+  const branch2 = checkout2.branch;
+  return branch2;
+}, "parseCheckout");
+var parseCherryPicking = /* @__PURE__ */ __name((cherryPicking) => {
+  const cherryPickDB = {
+    id: cherryPicking.id,
+    targetId: "",
+    tags: cherryPicking.tags?.length === 0 ? void 0 : cherryPicking.tags,
+    parent: cherryPicking.parent
+  };
+  return cherryPickDB;
+}, "parseCherryPicking");
+var parser = {
+  parse: /* @__PURE__ */ __name(async (input) => {
+    const ast = await parse("gitGraph", input);
+    log.debug(ast);
+    populate(ast, db);
+  }, "parse")
+};
+var DEFAULT_CONFIG = getConfig2();
+var DEFAULT_GITGRAPH_CONFIG2 = DEFAULT_CONFIG?.gitGraph;
+var LAYOUT_OFFSET = 10;
+var COMMIT_STEP = 40;
+var PX = 4;
+var PY = 2;
+var THEME_COLOR_LIMIT = 8;
+var branchPos = /* @__PURE__ */ new Map();
+var commitPos = /* @__PURE__ */ new Map();
+var defaultPos = 30;
+var allCommitsDict = /* @__PURE__ */ new Map();
+var lanes = [];
+var maxPos = 0;
+var dir = "LR";
+var clear3 = /* @__PURE__ */ __name(() => {
+  branchPos.clear();
+  commitPos.clear();
+  allCommitsDict.clear();
+  maxPos = 0;
+  lanes = [];
+  dir = "LR";
+}, "clear");
+var drawText = /* @__PURE__ */ __name((txt) => {
+  const svgLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  const rows = typeof txt === "string" ? txt.split(/\\n|\n|<br\s*\/?>/gi) : txt;
+  rows.forEach((row) => {
+    const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspan.setAttributeNS("http://www.w3.org/XML/1998/namespace", "xml:space", "preserve");
+    tspan.setAttribute("dy", "1em");
+    tspan.setAttribute("x", "0");
+    tspan.setAttribute("class", "row");
+    tspan.textContent = row.trim();
+    svgLabel.appendChild(tspan);
+  });
+  return svgLabel;
+}, "drawText");
+var findClosestParent = /* @__PURE__ */ __name((parents) => {
+  let closestParent;
+  let comparisonFunc;
+  let targetPosition;
+  if (dir === "BT") {
+    comparisonFunc = /* @__PURE__ */ __name((a, b) => a <= b, "comparisonFunc");
+    targetPosition = Infinity;
+  } else {
+    comparisonFunc = /* @__PURE__ */ __name((a, b) => a >= b, "comparisonFunc");
+    targetPosition = 0;
+  }
+  parents.forEach((parent) => {
+    const parentPosition = dir === "TB" || dir == "BT" ? commitPos.get(parent)?.y : commitPos.get(parent)?.x;
+    if (parentPosition !== void 0 && comparisonFunc(parentPosition, targetPosition)) {
+      closestParent = parent;
+      targetPosition = parentPosition;
+    }
+  });
+  return closestParent;
+}, "findClosestParent");
+var findClosestParentBT = /* @__PURE__ */ __name((parents) => {
+  let closestParent = "";
+  let maxPosition = Infinity;
+  parents.forEach((parent) => {
+    const parentPosition = commitPos.get(parent).y;
+    if (parentPosition <= maxPosition) {
+      closestParent = parent;
+      maxPosition = parentPosition;
+    }
+  });
+  return closestParent || void 0;
+}, "findClosestParentBT");
+var setParallelBTPos = /* @__PURE__ */ __name((sortedKeys, commits, defaultPos2) => {
+  let curPos = defaultPos2;
+  let maxPosition = defaultPos2;
+  const roots = [];
+  sortedKeys.forEach((key) => {
+    const commit2 = commits.get(key);
+    if (!commit2) {
+      throw new Error(`Commit not found for key ${key}`);
+    }
+    if (commit2.parents.length) {
+      curPos = calculateCommitPosition(commit2);
+      maxPosition = Math.max(curPos, maxPosition);
+    } else {
+      roots.push(commit2);
+    }
+    setCommitPosition(commit2, curPos);
+  });
+  curPos = maxPosition;
+  roots.forEach((commit2) => {
+    setRootPosition(commit2, curPos, defaultPos2);
+  });
+  sortedKeys.forEach((key) => {
+    const commit2 = commits.get(key);
+    if (commit2?.parents.length) {
+      const closestParent = findClosestParentBT(commit2.parents);
+      curPos = commitPos.get(closestParent).y - COMMIT_STEP;
+      if (curPos <= maxPosition) {
+        maxPosition = curPos;
+      }
+      const x = branchPos.get(commit2.branch).pos;
+      const y = curPos - LAYOUT_OFFSET;
+      commitPos.set(commit2.id, { x, y });
+    }
+  });
+}, "setParallelBTPos");
+var findClosestParentPos = /* @__PURE__ */ __name((commit2) => {
+  const closestParent = findClosestParent(commit2.parents.filter((p) => p !== null));
+  if (!closestParent) {
+    throw new Error(`Closest parent not found for commit ${commit2.id}`);
+  }
+  const closestParentPos = commitPos.get(closestParent)?.y;
+  if (closestParentPos === void 0) {
+    throw new Error(`Closest parent position not found for commit ${commit2.id}`);
+  }
+  return closestParentPos;
+}, "findClosestParentPos");
+var calculateCommitPosition = /* @__PURE__ */ __name((commit2) => {
+  const closestParentPos = findClosestParentPos(commit2);
+  return closestParentPos + COMMIT_STEP;
+}, "calculateCommitPosition");
+var setCommitPosition = /* @__PURE__ */ __name((commit2, curPos) => {
+  const branch2 = branchPos.get(commit2.branch);
+  if (!branch2) {
+    throw new Error(`Branch not found for commit ${commit2.id}`);
+  }
+  const x = branch2.pos;
+  const y = curPos + LAYOUT_OFFSET;
+  commitPos.set(commit2.id, { x, y });
+  return { x, y };
+}, "setCommitPosition");
+var setRootPosition = /* @__PURE__ */ __name((commit2, curPos, defaultPos2) => {
+  const branch2 = branchPos.get(commit2.branch);
+  if (!branch2) {
+    throw new Error(`Branch not found for commit ${commit2.id}`);
+  }
+  const y = curPos + defaultPos2;
+  const x = branch2.pos;
+  commitPos.set(commit2.id, { x, y });
+}, "setRootPosition");
+var drawCommitBullet = /* @__PURE__ */ __name((gBullets, commit2, commitPosition, typeClass, branchIndex, commitSymbolType) => {
+  if (commitSymbolType === commitType.HIGHLIGHT) {
+    gBullets.append("rect").attr("x", commitPosition.x - 10).attr("y", commitPosition.y - 10).attr("width", 20).attr("height", 20).attr(
+      "class",
+      `commit ${commit2.id} commit-highlight${branchIndex % THEME_COLOR_LIMIT} ${typeClass}-outer`
+    );
+    gBullets.append("rect").attr("x", commitPosition.x - 6).attr("y", commitPosition.y - 6).attr("width", 12).attr("height", 12).attr(
+      "class",
+      `commit ${commit2.id} commit${branchIndex % THEME_COLOR_LIMIT} ${typeClass}-inner`
+    );
+  } else if (commitSymbolType === commitType.CHERRY_PICK) {
+    gBullets.append("circle").attr("cx", commitPosition.x).attr("cy", commitPosition.y).attr("r", 10).attr("class", `commit ${commit2.id} ${typeClass}`);
+    gBullets.append("circle").attr("cx", commitPosition.x - 3).attr("cy", commitPosition.y + 2).attr("r", 2.75).attr("fill", "#fff").attr("class", `commit ${commit2.id} ${typeClass}`);
+    gBullets.append("circle").attr("cx", commitPosition.x + 3).attr("cy", commitPosition.y + 2).attr("r", 2.75).attr("fill", "#fff").attr("class", `commit ${commit2.id} ${typeClass}`);
+    gBullets.append("line").attr("x1", commitPosition.x + 3).attr("y1", commitPosition.y + 1).attr("x2", commitPosition.x).attr("y2", commitPosition.y - 5).attr("stroke", "#fff").attr("class", `commit ${commit2.id} ${typeClass}`);
+    gBullets.append("line").attr("x1", commitPosition.x - 3).attr("y1", commitPosition.y + 1).attr("x2", commitPosition.x).attr("y2", commitPosition.y - 5).attr("stroke", "#fff").attr("class", `commit ${commit2.id} ${typeClass}`);
+  } else {
+    const circle = gBullets.append("circle");
+    circle.attr("cx", commitPosition.x);
+    circle.attr("cy", commitPosition.y);
+    circle.attr("r", commit2.type === commitType.MERGE ? 9 : 10);
+    circle.attr("class", `commit ${commit2.id} commit${branchIndex % THEME_COLOR_LIMIT}`);
+    if (commitSymbolType === commitType.MERGE) {
+      const circle2 = gBullets.append("circle");
+      circle2.attr("cx", commitPosition.x);
+      circle2.attr("cy", commitPosition.y);
+      circle2.attr("r", 6);
+      circle2.attr(
+        "class",
+        `commit ${typeClass} ${commit2.id} commit${branchIndex % THEME_COLOR_LIMIT}`
+      );
+    }
+    if (commitSymbolType === commitType.REVERSE) {
+      const cross = gBullets.append("path");
+      cross.attr(
+        "d",
+        `M ${commitPosition.x - 5},${commitPosition.y - 5}L${commitPosition.x + 5},${commitPosition.y + 5}M${commitPosition.x - 5},${commitPosition.y + 5}L${commitPosition.x + 5},${commitPosition.y - 5}`
+      ).attr("class", `commit ${typeClass} ${commit2.id} commit${branchIndex % THEME_COLOR_LIMIT}`);
+    }
+  }
+}, "drawCommitBullet");
+var drawCommitLabel = /* @__PURE__ */ __name((gLabels, commit2, commitPosition, pos) => {
+  if (commit2.type !== commitType.CHERRY_PICK && (commit2.customId && commit2.type === commitType.MERGE || commit2.type !== commitType.MERGE) && DEFAULT_GITGRAPH_CONFIG2?.showCommitLabel) {
+    const wrapper = gLabels.append("g");
+    const labelBkg = wrapper.insert("rect").attr("class", "commit-label-bkg");
+    const text = wrapper.append("text").attr("x", pos).attr("y", commitPosition.y + 25).attr("class", "commit-label").text(commit2.id);
+    const bbox = text.node()?.getBBox();
+    if (bbox) {
+      labelBkg.attr("x", commitPosition.posWithOffset - bbox.width / 2 - PY).attr("y", commitPosition.y + 13.5).attr("width", bbox.width + 2 * PY).attr("height", bbox.height + 2 * PY);
+      if (dir === "TB" || dir === "BT") {
+        labelBkg.attr("x", commitPosition.x - (bbox.width + 4 * PX + 5)).attr("y", commitPosition.y - 12);
+        text.attr("x", commitPosition.x - (bbox.width + 4 * PX)).attr("y", commitPosition.y + bbox.height - 12);
+      } else {
+        text.attr("x", commitPosition.posWithOffset - bbox.width / 2);
+      }
+      if (DEFAULT_GITGRAPH_CONFIG2.rotateCommitLabel) {
+        if (dir === "TB" || dir === "BT") {
+          text.attr(
+            "transform",
+            "rotate(-45, " + commitPosition.x + ", " + commitPosition.y + ")"
+          );
+          labelBkg.attr(
+            "transform",
+            "rotate(-45, " + commitPosition.x + ", " + commitPosition.y + ")"
+          );
+        } else {
+          const r_x = -7.5 - (bbox.width + 10) / 25 * 9.5;
+          const r_y = 10 + bbox.width / 25 * 8.5;
+          wrapper.attr(
+            "transform",
+            "translate(" + r_x + ", " + r_y + ") rotate(-45, " + pos + ", " + commitPosition.y + ")"
+          );
+        }
+      }
+    }
+  }
+}, "drawCommitLabel");
+var drawCommitTags = /* @__PURE__ */ __name((gLabels, commit2, commitPosition, pos) => {
+  if (commit2.tags.length > 0) {
+    let yOffset = 0;
+    let maxTagBboxWidth = 0;
+    let maxTagBboxHeight = 0;
+    const tagElements = [];
+    for (const tagValue of commit2.tags.reverse()) {
+      const rect = gLabels.insert("polygon");
+      const hole = gLabels.append("circle");
+      const tag = gLabels.append("text").attr("y", commitPosition.y - 16 - yOffset).attr("class", "tag-label").text(tagValue);
+      const tagBbox = tag.node()?.getBBox();
+      if (!tagBbox) {
+        throw new Error("Tag bbox not found");
+      }
+      maxTagBboxWidth = Math.max(maxTagBboxWidth, tagBbox.width);
+      maxTagBboxHeight = Math.max(maxTagBboxHeight, tagBbox.height);
+      tag.attr("x", commitPosition.posWithOffset - tagBbox.width / 2);
+      tagElements.push({
+        tag,
+        hole,
+        rect,
+        yOffset
+      });
+      yOffset += 20;
+    }
+    for (const { tag, hole, rect, yOffset: yOffset2 } of tagElements) {
+      const h2 = maxTagBboxHeight / 2;
+      const ly = commitPosition.y - 19.2 - yOffset2;
+      rect.attr("class", "tag-label-bkg").attr(
+        "points",
+        `
+      ${pos - maxTagBboxWidth / 2 - PX / 2},${ly + PY}  
+      ${pos - maxTagBboxWidth / 2 - PX / 2},${ly - PY}
+      ${commitPosition.posWithOffset - maxTagBboxWidth / 2 - PX},${ly - h2 - PY}
+      ${commitPosition.posWithOffset + maxTagBboxWidth / 2 + PX},${ly - h2 - PY}
+      ${commitPosition.posWithOffset + maxTagBboxWidth / 2 + PX},${ly + h2 + PY}
+      ${commitPosition.posWithOffset - maxTagBboxWidth / 2 - PX},${ly + h2 + PY}`
+      );
+      hole.attr("cy", ly).attr("cx", pos - maxTagBboxWidth / 2 + PX / 2).attr("r", 1.5).attr("class", "tag-hole");
+      if (dir === "TB" || dir === "BT") {
+        const yOrigin = pos + yOffset2;
+        rect.attr("class", "tag-label-bkg").attr(
+          "points",
+          `
+        ${commitPosition.x},${yOrigin + 2}
+        ${commitPosition.x},${yOrigin - 2}
+        ${commitPosition.x + LAYOUT_OFFSET},${yOrigin - h2 - 2}
+        ${commitPosition.x + LAYOUT_OFFSET + maxTagBboxWidth + 4},${yOrigin - h2 - 2}
+        ${commitPosition.x + LAYOUT_OFFSET + maxTagBboxWidth + 4},${yOrigin + h2 + 2}
+        ${commitPosition.x + LAYOUT_OFFSET},${yOrigin + h2 + 2}`
+        ).attr("transform", "translate(12,12) rotate(45, " + commitPosition.x + "," + pos + ")");
+        hole.attr("cx", commitPosition.x + PX / 2).attr("cy", yOrigin).attr("transform", "translate(12,12) rotate(45, " + commitPosition.x + "," + pos + ")");
+        tag.attr("x", commitPosition.x + 5).attr("y", yOrigin + 3).attr("transform", "translate(14,14) rotate(45, " + commitPosition.x + "," + pos + ")");
+      }
+    }
+  }
+}, "drawCommitTags");
+var getCommitClassType = /* @__PURE__ */ __name((commit2) => {
+  const commitSymbolType = commit2.customType ?? commit2.type;
+  switch (commitSymbolType) {
+    case commitType.NORMAL:
+      return "commit-normal";
+    case commitType.REVERSE:
+      return "commit-reverse";
+    case commitType.HIGHLIGHT:
+      return "commit-highlight";
+    case commitType.MERGE:
+      return "commit-merge";
+    case commitType.CHERRY_PICK:
+      return "commit-cherry-pick";
+    default:
+      return "commit-normal";
+  }
+}, "getCommitClassType");
+var calculatePosition = /* @__PURE__ */ __name((commit2, dir2, pos, commitPos2) => {
+  const defaultCommitPosition = { x: 0, y: 0 };
+  if (commit2.parents.length > 0) {
+    const closestParent = findClosestParent(commit2.parents);
+    if (closestParent) {
+      const parentPosition = commitPos2.get(closestParent) ?? defaultCommitPosition;
+      if (dir2 === "TB") {
+        return parentPosition.y + COMMIT_STEP;
+      } else if (dir2 === "BT") {
+        const currentPosition = commitPos2.get(commit2.id) ?? defaultCommitPosition;
+        return currentPosition.y - COMMIT_STEP;
+      } else {
+        return parentPosition.x + COMMIT_STEP;
+      }
+    }
+  } else {
+    if (dir2 === "TB") {
+      return defaultPos;
+    } else if (dir2 === "BT") {
+      const currentPosition = commitPos2.get(commit2.id) ?? defaultCommitPosition;
+      return currentPosition.y - COMMIT_STEP;
+    } else {
+      return 0;
+    }
+  }
+  return 0;
+}, "calculatePosition");
+var getCommitPosition = /* @__PURE__ */ __name((commit2, pos, isParallelCommits) => {
+  const posWithOffset = dir === "BT" && isParallelCommits ? pos : pos + LAYOUT_OFFSET;
+  const y = dir === "TB" || dir === "BT" ? posWithOffset : branchPos.get(commit2.branch)?.pos;
+  const x = dir === "TB" || dir === "BT" ? branchPos.get(commit2.branch)?.pos : posWithOffset;
+  if (x === void 0 || y === void 0) {
+    throw new Error(`Position were undefined for commit ${commit2.id}`);
+  }
+  return { x, y, posWithOffset };
+}, "getCommitPosition");
+var drawCommits = /* @__PURE__ */ __name((svg, commits, modifyGraph) => {
+  if (!DEFAULT_GITGRAPH_CONFIG2) {
+    throw new Error("GitGraph config not found");
+  }
+  const gBullets = svg.append("g").attr("class", "commit-bullets");
+  const gLabels = svg.append("g").attr("class", "commit-labels");
+  let pos = dir === "TB" || dir === "BT" ? defaultPos : 0;
+  const keys = [...commits.keys()];
+  const isParallelCommits = DEFAULT_GITGRAPH_CONFIG2?.parallelCommits ?? false;
+  const sortKeys = /* @__PURE__ */ __name((a, b) => {
+    const seqA = commits.get(a)?.seq;
+    const seqB = commits.get(b)?.seq;
+    return seqA !== void 0 && seqB !== void 0 ? seqA - seqB : 0;
+  }, "sortKeys");
+  let sortedKeys = keys.sort(sortKeys);
+  if (dir === "BT") {
+    if (isParallelCommits) {
+      setParallelBTPos(sortedKeys, commits, pos);
+    }
+    sortedKeys = sortedKeys.reverse();
+  }
+  sortedKeys.forEach((key) => {
+    const commit2 = commits.get(key);
+    if (!commit2) {
+      throw new Error(`Commit not found for key ${key}`);
+    }
+    if (isParallelCommits) {
+      pos = calculatePosition(commit2, dir, pos, commitPos);
+    }
+    const commitPosition = getCommitPosition(commit2, pos, isParallelCommits);
+    if (modifyGraph) {
+      const typeClass = getCommitClassType(commit2);
+      const commitSymbolType = commit2.customType ?? commit2.type;
+      const branchIndex = branchPos.get(commit2.branch)?.index ?? 0;
+      drawCommitBullet(gBullets, commit2, commitPosition, typeClass, branchIndex, commitSymbolType);
+      drawCommitLabel(gLabels, commit2, commitPosition, pos);
+      drawCommitTags(gLabels, commit2, commitPosition, pos);
+    }
+    if (dir === "TB" || dir === "BT") {
+      commitPos.set(commit2.id, { x: commitPosition.x, y: commitPosition.posWithOffset });
+    } else {
+      commitPos.set(commit2.id, { x: commitPosition.posWithOffset, y: commitPosition.y });
+    }
+    pos = dir === "BT" && isParallelCommits ? pos + COMMIT_STEP : pos + COMMIT_STEP + LAYOUT_OFFSET;
+    if (pos > maxPos) {
+      maxPos = pos;
+    }
+  });
+}, "drawCommits");
+var shouldRerouteArrow = /* @__PURE__ */ __name((commitA, commitB, p1, p2, allCommits) => {
+  const commitBIsFurthest = dir === "TB" || dir === "BT" ? p1.x < p2.x : p1.y < p2.y;
+  const branchToGetCurve = commitBIsFurthest ? commitB.branch : commitA.branch;
+  const isOnBranchToGetCurve = /* @__PURE__ */ __name((x) => x.branch === branchToGetCurve, "isOnBranchToGetCurve");
+  const isBetweenCommits = /* @__PURE__ */ __name((x) => x.seq > commitA.seq && x.seq < commitB.seq, "isBetweenCommits");
+  return [...allCommits.values()].some((commitX) => {
+    return isBetweenCommits(commitX) && isOnBranchToGetCurve(commitX);
+  });
+}, "shouldRerouteArrow");
+var findLane = /* @__PURE__ */ __name((y1, y2, depth = 0) => {
+  const candidate = y1 + Math.abs(y1 - y2) / 2;
+  if (depth > 5) {
+    return candidate;
+  }
+  const ok = lanes.every((lane) => Math.abs(lane - candidate) >= 10);
+  if (ok) {
+    lanes.push(candidate);
+    return candidate;
+  }
+  const diff = Math.abs(y1 - y2);
+  return findLane(y1, y2 - diff / 5, depth + 1);
+}, "findLane");
+var drawArrow = /* @__PURE__ */ __name((svg, commitA, commitB, allCommits) => {
+  const p1 = commitPos.get(commitA.id);
+  const p2 = commitPos.get(commitB.id);
+  if (p1 === void 0 || p2 === void 0) {
+    throw new Error(`Commit positions not found for commits ${commitA.id} and ${commitB.id}`);
+  }
+  const arrowNeedsRerouting = shouldRerouteArrow(commitA, commitB, p1, p2, allCommits);
+  let arc = "";
+  let arc2 = "";
+  let radius = 0;
+  let offset = 0;
+  let colorClassNum = branchPos.get(commitB.branch)?.index;
+  if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+    colorClassNum = branchPos.get(commitA.branch)?.index;
+  }
+  let lineDef;
+  if (arrowNeedsRerouting) {
+    arc = "A 10 10, 0, 0, 0,";
+    arc2 = "A 10 10, 0, 0, 1,";
+    radius = 10;
+    offset = 10;
+    const lineY = p1.y < p2.y ? findLane(p1.y, p2.y) : findLane(p2.y, p1.y);
+    const lineX = p1.x < p2.x ? findLane(p1.x, p2.x) : findLane(p2.x, p1.x);
+    if (dir === "TB") {
+      if (p1.x < p2.x) {
+        lineDef = `M ${p1.x} ${p1.y} L ${lineX - radius} ${p1.y} ${arc2} ${lineX} ${p1.y + offset} L ${lineX} ${p2.y - radius} ${arc} ${lineX + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+      } else {
+        colorClassNum = branchPos.get(commitA.branch)?.index;
+        lineDef = `M ${p1.x} ${p1.y} L ${lineX + radius} ${p1.y} ${arc} ${lineX} ${p1.y + offset} L ${lineX} ${p2.y - radius} ${arc2} ${lineX - offset} ${p2.y} L ${p2.x} ${p2.y}`;
+      }
+    } else if (dir === "BT") {
+      if (p1.x < p2.x) {
+        lineDef = `M ${p1.x} ${p1.y} L ${lineX - radius} ${p1.y} ${arc} ${lineX} ${p1.y - offset} L ${lineX} ${p2.y + radius} ${arc2} ${lineX + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+      } else {
+        colorClassNum = branchPos.get(commitA.branch)?.index;
+        lineDef = `M ${p1.x} ${p1.y} L ${lineX + radius} ${p1.y} ${arc2} ${lineX} ${p1.y - offset} L ${lineX} ${p2.y + radius} ${arc} ${lineX - offset} ${p2.y} L ${p2.x} ${p2.y}`;
+      }
+    } else {
+      if (p1.y < p2.y) {
+        lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${lineY - radius} ${arc} ${p1.x + offset} ${lineY} L ${p2.x - radius} ${lineY} ${arc2} ${p2.x} ${lineY + offset} L ${p2.x} ${p2.y}`;
+      } else {
+        colorClassNum = branchPos.get(commitA.branch)?.index;
+        lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${lineY + radius} ${arc2} ${p1.x + offset} ${lineY} L ${p2.x - radius} ${lineY} ${arc} ${p2.x} ${lineY - offset} L ${p2.x} ${p2.y}`;
+      }
+    }
+  } else {
+    arc = "A 20 20, 0, 0, 0,";
+    arc2 = "A 20 20, 0, 0, 1,";
+    radius = 20;
+    offset = 20;
+    if (dir === "TB") {
+      if (p1.x < p2.x) {
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y - radius} ${arc} ${p1.x + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x - radius} ${p1.y} ${arc2} ${p2.x} ${p1.y + offset} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.x > p2.x) {
+        arc = "A 20 20, 0, 0, 0,";
+        arc2 = "A 20 20, 0, 0, 1,";
+        radius = 20;
+        offset = 20;
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y - radius} ${arc2} ${p1.x - offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x + radius} ${p1.y} ${arc} ${p2.x} ${p1.y + offset} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.x === p2.x) {
+        lineDef = `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+      }
+    } else if (dir === "BT") {
+      if (p1.x < p2.x) {
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y + radius} ${arc2} ${p1.x + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x - radius} ${p1.y} ${arc} ${p2.x} ${p1.y - offset} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.x > p2.x) {
+        arc = "A 20 20, 0, 0, 0,";
+        arc2 = "A 20 20, 0, 0, 1,";
+        radius = 20;
+        offset = 20;
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y + radius} ${arc} ${p1.x - offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x - radius} ${p1.y} ${arc} ${p2.x} ${p1.y - offset} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.x === p2.x) {
+        lineDef = `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+      }
+    } else {
+      if (p1.y < p2.y) {
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x - radius} ${p1.y} ${arc2} ${p2.x} ${p1.y + offset} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y - radius} ${arc} ${p1.x + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.y > p2.y) {
+        if (commitB.type === commitType.MERGE && commitA.id !== commitB.parents[0]) {
+          lineDef = `M ${p1.x} ${p1.y} L ${p2.x - radius} ${p1.y} ${arc} ${p2.x} ${p1.y - offset} L ${p2.x} ${p2.y}`;
+        } else {
+          lineDef = `M ${p1.x} ${p1.y} L ${p1.x} ${p2.y + radius} ${arc2} ${p1.x + offset} ${p2.y} L ${p2.x} ${p2.y}`;
+        }
+      }
+      if (p1.y === p2.y) {
+        lineDef = `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+      }
+    }
+  }
+  if (lineDef === void 0) {
+    throw new Error("Line definition not found");
+  }
+  svg.append("path").attr("d", lineDef).attr("class", "arrow arrow" + colorClassNum % THEME_COLOR_LIMIT);
+}, "drawArrow");
+var drawArrows = /* @__PURE__ */ __name((svg, commits) => {
+  const gArrows = svg.append("g").attr("class", "commit-arrows");
+  [...commits.keys()].forEach((key) => {
+    const commit2 = commits.get(key);
+    if (commit2.parents && commit2.parents.length > 0) {
+      commit2.parents.forEach((parent) => {
+        drawArrow(gArrows, commits.get(parent), commit2, commits);
+      });
+    }
+  });
+}, "drawArrows");
+var drawBranches = /* @__PURE__ */ __name((svg, branches) => {
+  const g = svg.append("g");
+  branches.forEach((branch2, index) => {
+    const adjustIndexForTheme = index % THEME_COLOR_LIMIT;
+    const pos = branchPos.get(branch2.name)?.pos;
+    if (pos === void 0) {
+      throw new Error(`Position not found for branch ${branch2.name}`);
+    }
+    const line = g.append("line");
+    line.attr("x1", 0);
+    line.attr("y1", pos);
+    line.attr("x2", maxPos);
+    line.attr("y2", pos);
+    line.attr("class", "branch branch" + adjustIndexForTheme);
+    if (dir === "TB") {
+      line.attr("y1", defaultPos);
+      line.attr("x1", pos);
+      line.attr("y2", maxPos);
+      line.attr("x2", pos);
+    } else if (dir === "BT") {
+      line.attr("y1", maxPos);
+      line.attr("x1", pos);
+      line.attr("y2", defaultPos);
+      line.attr("x2", pos);
+    }
+    lanes.push(pos);
+    const name = branch2.name;
+    const labelElement = drawText(name);
+    const bkg = g.insert("rect");
+    const branchLabel = g.insert("g").attr("class", "branchLabel");
+    const label = branchLabel.insert("g").attr("class", "label branch-label" + adjustIndexForTheme);
+    label.node().appendChild(labelElement);
+    const bbox = labelElement.getBBox();
+    bkg.attr("class", "branchLabelBkg label" + adjustIndexForTheme).attr("rx", 4).attr("ry", 4).attr("x", -bbox.width - 4 - (DEFAULT_GITGRAPH_CONFIG2?.rotateCommitLabel === true ? 30 : 0)).attr("y", -bbox.height / 2 + 8).attr("width", bbox.width + 18).attr("height", bbox.height + 4);
+    label.attr(
+      "transform",
+      "translate(" + (-bbox.width - 14 - (DEFAULT_GITGRAPH_CONFIG2?.rotateCommitLabel === true ? 30 : 0)) + ", " + (pos - bbox.height / 2 - 1) + ")"
+    );
+    if (dir === "TB") {
+      bkg.attr("x", pos - bbox.width / 2 - 10).attr("y", 0);
+      label.attr("transform", "translate(" + (pos - bbox.width / 2 - 5) + ", 0)");
+    } else if (dir === "BT") {
+      bkg.attr("x", pos - bbox.width / 2 - 10).attr("y", maxPos);
+      label.attr("transform", "translate(" + (pos - bbox.width / 2 - 5) + ", " + maxPos + ")");
+    } else {
+      bkg.attr("transform", "translate(-19, " + (pos - bbox.height / 2) + ")");
+    }
+  });
+}, "drawBranches");
+var setBranchPosition = /* @__PURE__ */ __name(function(name, pos, index, bbox, rotateCommitLabel) {
+  branchPos.set(name, { pos, index });
+  pos += 50 + (rotateCommitLabel ? 40 : 0) + (dir === "TB" || dir === "BT" ? bbox.width / 2 : 0);
+  return pos;
+}, "setBranchPosition");
+var draw = /* @__PURE__ */ __name(function(txt, id, ver, diagObj) {
+  clear3();
+  log.debug("in gitgraph renderer", txt + "\n", "id:", id, ver);
+  if (!DEFAULT_GITGRAPH_CONFIG2) {
+    throw new Error("GitGraph config not found");
+  }
+  const rotateCommitLabel = DEFAULT_GITGRAPH_CONFIG2.rotateCommitLabel ?? false;
+  const db2 = diagObj.db;
+  allCommitsDict = db2.getCommits();
+  const branches = db2.getBranchesAsObjArray();
+  dir = db2.getDirection();
+  const diagram2 = select(`[id="${id}"]`);
+  let pos = 0;
+  branches.forEach((branch2, index) => {
+    const labelElement = drawText(branch2.name);
+    const g = diagram2.append("g");
+    const branchLabel = g.insert("g").attr("class", "branchLabel");
+    const label = branchLabel.insert("g").attr("class", "label branch-label");
+    label.node()?.appendChild(labelElement);
+    const bbox = labelElement.getBBox();
+    pos = setBranchPosition(branch2.name, pos, index, bbox, rotateCommitLabel);
+    label.remove();
+    branchLabel.remove();
+    g.remove();
+  });
+  drawCommits(diagram2, allCommitsDict, false);
+  if (DEFAULT_GITGRAPH_CONFIG2.showBranches) {
+    drawBranches(diagram2, branches);
+  }
+  drawArrows(diagram2, allCommitsDict);
+  drawCommits(diagram2, allCommitsDict, true);
+  utils_default.insertTitle(
+    diagram2,
+    "gitTitleText",
+    DEFAULT_GITGRAPH_CONFIG2.titleTopMargin ?? 0,
+    db2.getDiagramTitle()
+  );
+  setupGraphViewbox2(
+    void 0,
+    diagram2,
+    DEFAULT_GITGRAPH_CONFIG2.diagramPadding,
+    DEFAULT_GITGRAPH_CONFIG2.useMaxWidth
+  );
+}, "draw");
+var gitGraphRenderer_default = {
+  draw
+};
+var getStyles = /* @__PURE__ */ __name((options) => `
   .commit-id,
   .commit-msg,
   .branch-label {
@@ -20,46 +1148,57 @@ import{p as K}from"./chunk-4BX2VUAB.js";import{I as Y}from"./chunk-QZHKN3VN.js";
     font-family: 'trebuchet ms', verdana, arial, sans-serif;
     font-family: var(--mermaid-font-family);
   }
-  ${[0,1,2,3,4,5,6,7].map(r=>`
-        .branch-label${r} { fill: ${t["gitBranchLabel"+r]}; }
-        .commit${r} { stroke: ${t["git"+r]}; fill: ${t["git"+r]}; }
-        .commit-highlight${r} { stroke: ${t["gitInv"+r]}; fill: ${t["gitInv"+r]}; }
-        .label${r}  { fill: ${t["git"+r]}; }
-        .arrow${r} { stroke: ${t["git"+r]}; }
-        `).join(`
-`)}
+  ${[0, 1, 2, 3, 4, 5, 6, 7].map(
+  (i) => `
+        .branch-label${i} { fill: ${options["gitBranchLabel" + i]}; }
+        .commit${i} { stroke: ${options["git" + i]}; fill: ${options["git" + i]}; }
+        .commit-highlight${i} { stroke: ${options["gitInv" + i]}; fill: ${options["gitInv" + i]}; }
+        .label${i}  { fill: ${options["git" + i]}; }
+        .arrow${i} { stroke: ${options["git" + i]}; }
+        `
+).join("\n")}
 
   .branch {
     stroke-width: 1;
-    stroke: ${t.lineColor};
+    stroke: ${options.lineColor};
     stroke-dasharray: 2;
   }
-  .commit-label { font-size: ${t.commitLabelFontSize}; fill: ${t.commitLabelColor};}
-  .commit-label-bkg { font-size: ${t.commitLabelFontSize}; fill: ${t.commitLabelBackground}; opacity: 0.5; }
-  .tag-label { font-size: ${t.tagLabelFontSize}; fill: ${t.tagLabelColor};}
-  .tag-label-bkg { fill: ${t.tagLabelBackground}; stroke: ${t.tagLabelBorder}; }
-  .tag-hole { fill: ${t.textColor}; }
+  .commit-label { font-size: ${options.commitLabelFontSize}; fill: ${options.commitLabelColor};}
+  .commit-label-bkg { font-size: ${options.commitLabelFontSize}; fill: ${options.commitLabelBackground}; opacity: 0.5; }
+  .tag-label { font-size: ${options.tagLabelFontSize}; fill: ${options.tagLabelColor};}
+  .tag-label-bkg { fill: ${options.tagLabelBackground}; stroke: ${options.tagLabelBorder}; }
+  .tag-hole { fill: ${options.textColor}; }
 
   .commit-merge {
-    stroke: ${t.primaryColor};
-    fill: ${t.primaryColor};
+    stroke: ${options.primaryColor};
+    fill: ${options.primaryColor};
   }
   .commit-reverse {
-    stroke: ${t.primaryColor};
-    fill: ${t.primaryColor};
+    stroke: ${options.primaryColor};
+    fill: ${options.primaryColor};
     stroke-width: 3;
   }
   .commit-highlight-outer {
   }
   .commit-highlight-inner {
-    stroke: ${t.primaryColor};
-    fill: ${t.primaryColor};
+    stroke: ${options.primaryColor};
+    fill: ${options.primaryColor};
   }
 
   .arrow { stroke-width: 8; stroke-linecap: round; fill: none}
   .gitTitleText {
     text-anchor: middle;
     font-size: 18px;
-    fill: ${t.textColor};
+    fill: ${options.textColor};
   }
-`,"getStyles"),te=ee,ie={parser:Or,db:S,renderer:re,styles:te};export{ie as diagram};
+`, "getStyles");
+var styles_default = getStyles;
+var diagram = {
+  parser,
+  db,
+  renderer: gitGraphRenderer_default,
+  styles: styles_default
+};
+export {
+  diagram
+};

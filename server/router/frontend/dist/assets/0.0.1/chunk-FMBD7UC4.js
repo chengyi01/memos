@@ -1,4 +1,5 @@
-import{_ as e}from"./mermaid-vendor.js";var l=e(()=>`
+import { _ as __name } from "./mermaid-vendor.js";
+var getIconStyles = /* @__PURE__ */ __name(() => `
   /* Font Awesome icon styling - consolidated */
   .label-icon {
     display: inline-block;
@@ -12,4 +13,7 @@ import{_ as e}from"./mermaid-vendor.js";var l=e(()=>`
     stroke: revert;
     stroke-width: revert;
   }
-`,"getIconStyles");export{l as g};
+`, "getIconStyles");
+export {
+  getIconStyles as g
+};

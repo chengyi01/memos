@@ -1,6 +1,188 @@
-import{p as R,o as v,u as g,a as D,Z as F,_ as B,$ as U,r as _,V as n,j as e,c as j,T as m,z as d,C as u,F as x,a0 as a,L as $,a1 as y,D as z,k as H,l as L,a2 as O,E as V,a3 as P}from"./index.js";import{r as i}from"./leaflet-vendor.js";import{M as W}from"./message-circle.js";import{s as Z}from"./utils-vendor.js";import"./mermaid-vendor.js";import"./katex-vendor.js";/**
+import { p as createLucideIcon, o as observer, u as useTranslate, a as useNavigateTo, Z as useAsyncEffect, _ as activityServiceClient, $ as activityNamePrefix, r as memoStore, V as userStore, j as jsxRuntimeExports, c as cn, T as TooltipProvider, z as Tooltip, C as TooltipTrigger, F as TooltipContent, a0 as Inbox_Status, L as Loader, a1 as zt, D as Trash, k as useResponsiveWidth, l as MobileHeader, a2 as Bell, E as Empty, a3 as Inbox_Type } from "./index.js";
+import { r as reactExports } from "./leaflet-vendor.js";
+import { M as MessageCircle } from "./message-circle.js";
+import { s as sortBy } from "./utils-vendor.js";
+import "./mermaid-vendor.js";
+import "./katex-vendor.js";
+/**
  * @license lucide-react v0.486.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const q=[["polyline",{points:"22 12 16 12 14 15 10 15 8 12 2 12",key:"o97t9d"}],["path",{d:"M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z",key:"oot6mr"}]],G=R("inbox",q),J=v(({inbox:s})=>{const r=g(),c=D(),[l,t]=i.useState(void 0),[f,N]=i.useState(void 0),[w,b]=i.useState(!1),[E,M]=i.useState(!1);F(async()=>{if(s.activityId)try{const o=await B.getActivity({name:`${U}${s.activityId}`});if(o.payload?.memoComment){const A=o.payload.memoComment,S=await _.getOrFetchMemoByName(A.relatedMemo,{skipStore:!0});t(S);const k=await n.getOrFetchUserByName(s.sender);N(k),b(!0)}}catch(o){console.error("Failed to fetch activity:",o),M(!0);return}},[s.activityId]);const C=async()=>{l&&(c(`/${l.name}`),s.status===a.UNREAD&&h(!0))},h=async(o=!1)=>{await n.updateInbox({name:s.name,status:a.ARCHIVED},["status"]),o||y.success(r("message.archived-successfully"))},I=async()=>{await n.deleteInbox(s.name),y.success(r("message.deleted-successfully"))},p=()=>e.jsx(e.Fragment,{children:e.jsx("div",{children:e.jsx(m,{children:e.jsxs(d,{children:[e.jsx(u,{children:e.jsx(z,{className:"w-4 h-auto cursor-pointer text-muted-foreground hover:text-primary",onClick:()=>I()})}),e.jsx(x,{children:e.jsx("p",{children:r("common.delete")})})]})})})}),T=()=>e.jsx(e.Fragment,{children:e.jsx("div",{children:e.jsx(m,{children:e.jsxs(d,{children:[e.jsx(u,{children:e.jsx(G,{className:"w-4 h-auto cursor-pointer text-muted-foreground hover:text-primary",onClick:()=>h()})}),e.jsx(x,{children:e.jsx("p",{children:r("common.archive")})})]})})})});return e.jsxs("div",{className:"w-full flex flex-row justify-start items-start gap-3",children:[e.jsx("div",{className:j("shrink-0 mt-2 p-2 rounded-full border",s.status===a.UNREAD?"border-primary text-primary bg-primary/10":"border-muted-foreground text-muted-foreground bg-popover"),children:e.jsx(m,{children:e.jsxs(d,{children:[e.jsx(u,{children:e.jsx(W,{className:"w-4 sm:w-5 h-auto"})}),e.jsx(x,{children:e.jsx("p",{children:"Comment"})})]})})}),e.jsx("div",{className:j("border w-full p-2 px-3 rounded-lg flex flex-col justify-start items-start gap-1 border-border hover:bg-background",s.status!==a.UNREAD&&"opacity-60"),children:w?e.jsxs(e.Fragment,{children:[e.jsxs("div",{className:"w-full flex flex-row justify-between items-center",children:[e.jsx("span",{className:"text-sm text-muted-foreground",children:s.createTime?.toLocaleString()}),s.status===a.UNREAD?T():p()]}),e.jsx("p",{className:"text-base leading-tight cursor-pointer text-muted-foreground hover:underline hover:text-primary",onClick:C,children:r("inbox.memo-comment",{user:f?.displayName||f?.username,memo:l?.name,interpolation:{escapeValue:!1}})})]}):E?e.jsxs("div",{className:"w-full flex flex-row justify-between items-center",children:[e.jsx("span",{className:"text-sm text-muted-foreground",children:r("inbox.failed-to-load")}),p()]}):e.jsx("div",{className:"w-full flex flex-row justify-center items-center my-2",children:e.jsx($,{className:"animate-spin text-muted-foreground"})})})]})}),te=v(()=>{const s=g(),{md:r}=H(),c=Z(n.state.inboxes,t=>t.status===a.UNREAD?0:t.status===a.ARCHIVED?1:2),l=async()=>{try{await n.fetchInboxes()}catch(t){console.error("Failed to fetch inboxes:",t)}};return i.useEffect(()=>{l()},[]),e.jsxs("section",{className:"@container w-full max-w-5xl min-h-full flex flex-col justify-start items-center sm:pt-3 md:pt-6 pb-8",children:[!r&&e.jsx(L,{}),e.jsx("div",{className:"w-full px-4 sm:px-6",children:e.jsxs("div",{className:"w-full border border-border flex flex-col justify-start items-start px-4 py-3 rounded-xl bg-background text-foreground",children:[e.jsx("div",{className:"relative w-full flex flex-row justify-between items-center",children:e.jsxs("p",{className:"py-1 flex flex-row justify-start items-center select-none opacity-80",children:[e.jsx(O,{className:"w-6 h-auto mr-1 opacity-80"}),e.jsx("span",{className:"text-lg",children:s("common.inbox")})]})}),e.jsxs("div",{className:"w-full h-auto flex flex-col justify-start items-start px-2 pb-4",children:[c.length===0&&e.jsxs("div",{className:"w-full mt-4 mb-8 flex flex-col justify-center items-center italic",children:[e.jsx(V,{}),e.jsx("p",{className:"mt-4 text-muted-foreground",children:s("message.no-data")})]}),e.jsx("div",{className:"flex flex-col justify-start items-start w-full mt-4 gap-4",children:c.map(t=>{if(t.type===P.MEMO_COMMENT)return e.jsx(J,{inbox:t},`${t.name}-${t.status}`)})})]})]})})]})});export{te as default};
+ */
+const __iconNode = [
+  ["polyline", { points: "22 12 16 12 14 15 10 15 8 12 2 12", key: "o97t9d" }],
+  [
+    "path",
+    {
+      d: "M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z",
+      key: "oot6mr"
+    }
+  ]
+];
+const Inbox = createLucideIcon("inbox", __iconNode);
+const MemoCommentMessage = observer(({ inbox }) => {
+  const t = useTranslate();
+  const navigateTo = useNavigateTo();
+  const [relatedMemo, setRelatedMemo] = reactExports.useState(void 0);
+  const [sender, setSender] = reactExports.useState(void 0);
+  const [initialized, setInitialized] = reactExports.useState(false);
+  const [hasError, setHasError] = reactExports.useState(false);
+  useAsyncEffect(async () => {
+    if (!inbox.activityId) {
+      return;
+    }
+    try {
+      const activity = await activityServiceClient.getActivity({
+        name: `${activityNamePrefix}${inbox.activityId}`
+      });
+      if (activity.payload?.memoComment) {
+        const memoCommentPayload = activity.payload.memoComment;
+        const memo = await memoStore.getOrFetchMemoByName(memoCommentPayload.relatedMemo, {
+          skipStore: true
+        });
+        setRelatedMemo(memo);
+        const sender2 = await userStore.getOrFetchUserByName(inbox.sender);
+        setSender(sender2);
+        setInitialized(true);
+      }
+    } catch (error) {
+      console.error("Failed to fetch activity:", error);
+      setHasError(true);
+      return;
+    }
+  }, [inbox.activityId]);
+  const handleNavigateToMemo = async () => {
+    if (!relatedMemo) {
+      return;
+    }
+    navigateTo(`/${relatedMemo.name}`);
+    if (inbox.status === Inbox_Status.UNREAD) {
+      handleArchiveMessage(true);
+    }
+  };
+  const handleArchiveMessage = async (silence = false) => {
+    await userStore.updateInbox(
+      {
+        name: inbox.name,
+        status: Inbox_Status.ARCHIVED
+      },
+      ["status"]
+    );
+    if (!silence) {
+      zt.success(t("message.archived-successfully"));
+    }
+  };
+  const handleDeleteMessage = async () => {
+    await userStore.deleteInbox(inbox.name);
+    zt.success(t("message.deleted-successfully"));
+  };
+  const deleteButton = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Trash,
+      {
+        className: "w-4 h-auto cursor-pointer text-muted-foreground hover:text-primary",
+        onClick: () => handleDeleteMessage()
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: t("common.delete") }) })
+  ] }) }) }) });
+  const archiveButton = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Inbox,
+      {
+        className: "w-4 h-auto cursor-pointer text-muted-foreground hover:text-primary",
+        onClick: () => handleArchiveMessage()
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: t("common.archive") }) })
+  ] }) }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-row justify-start items-start gap-3", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: cn(
+          "shrink-0 mt-2 p-2 rounded-full border",
+          inbox.status === Inbox_Status.UNREAD ? "border-primary text-primary bg-primary/10" : "border-muted-foreground text-muted-foreground bg-popover"
+        ),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCircle, { className: "w-4 sm:w-5 h-auto" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Comment" }) })
+        ] }) })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: cn(
+          "border w-full p-2 px-3 rounded-lg flex flex-col justify-start items-start gap-1 border-border hover:bg-background",
+          inbox.status !== Inbox_Status.UNREAD && "opacity-60"
+        ),
+        children: initialized ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-row justify-between items-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-muted-foreground", children: inbox.createTime?.toLocaleString() }),
+            inbox.status === Inbox_Status.UNREAD ? archiveButton() : deleteButton()
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "p",
+            {
+              className: "text-base leading-tight cursor-pointer text-muted-foreground hover:underline hover:text-primary",
+              onClick: handleNavigateToMemo,
+              children: t("inbox.memo-comment", {
+                user: sender?.displayName || sender?.username,
+                memo: relatedMemo?.name,
+                interpolation: { escapeValue: false }
+              })
+            }
+          )
+        ] }) : hasError ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-row justify-between items-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-muted-foreground", children: t("inbox.failed-to-load") }),
+          deleteButton()
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex flex-row justify-center items-center my-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Loader, { className: "animate-spin text-muted-foreground" }) })
+      }
+    )
+  ] });
+});
+const Inboxes = observer(() => {
+  const t = useTranslate();
+  const { md } = useResponsiveWidth();
+  const inboxes = sortBy(userStore.state.inboxes, (inbox) => {
+    if (inbox.status === Inbox_Status.UNREAD) return 0;
+    if (inbox.status === Inbox_Status.ARCHIVED) return 1;
+    return 2;
+  });
+  const fetchInboxes = async () => {
+    try {
+      await userStore.fetchInboxes();
+    } catch (error) {
+      console.error("Failed to fetch inboxes:", error);
+    }
+  };
+  reactExports.useEffect(() => {
+    fetchInboxes();
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "@container w-full max-w-5xl min-h-full flex flex-col justify-start items-center sm:pt-3 md:pt-6 pb-8", children: [
+    !md && /* @__PURE__ */ jsxRuntimeExports.jsx(MobileHeader, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full px-4 sm:px-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full border border-border flex flex-col justify-start items-start px-4 py-3 rounded-xl bg-background text-foreground", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative w-full flex flex-row justify-between items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "py-1 flex flex-row justify-start items-center select-none opacity-80", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Bell, { className: "w-6 h-auto mr-1 opacity-80" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-lg", children: t("common.inbox") })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full h-auto flex flex-col justify-start items-start px-2 pb-4", children: [
+        inboxes.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full mt-4 mb-8 flex flex-col justify-center items-center italic", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Empty, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-muted-foreground", children: t("message.no-data") })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col justify-start items-start w-full mt-4 gap-4", children: inboxes.map((inbox) => {
+          if (inbox.type === Inbox_Type.MEMO_COMMENT) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(MemoCommentMessage, { inbox }, `${inbox.name}-${inbox.status}`);
+          }
+          return void 0;
+        }) })
+      ] })
+    ] }) })
+  ] });
+});
+export {
+  Inboxes as default
+};

@@ -1,1 +1,24 @@
-import{_ as a,f as w,l as x}from"./mermaid-vendor.js";var d=a((e,t,i,r)=>{e.attr("class",i);const{width:o,height:h,x:n,y:c}=u(e,t);w(e,h,o,r);const s=l(n,c,o,h,t);e.attr("viewBox",s),x.debug(`viewBox configured: ${s} with padding: ${t}`)},"setupViewPortForSVG"),u=a((e,t)=>{const i=e.node()?.getBBox()||{width:0,height:0,x:0,y:0};return{width:i.width+t*2,height:i.height+t*2,x:i.x,y:i.y}},"calculateDimensionsWithPadding"),l=a((e,t,i,r,o)=>`${e-o} ${t-o} ${i} ${r}`,"createViewBox");export{d as s};
+import { _ as __name, f as configureSvgSize, l as log } from "./mermaid-vendor.js";
+var setupViewPortForSVG = /* @__PURE__ */ __name((svg, padding, cssDiagram, useMaxWidth) => {
+  svg.attr("class", cssDiagram);
+  const { width, height, x, y } = calculateDimensionsWithPadding(svg, padding);
+  configureSvgSize(svg, height, width, useMaxWidth);
+  const viewBox = createViewBox(x, y, width, height, padding);
+  svg.attr("viewBox", viewBox);
+  log.debug(`viewBox configured: ${viewBox} with padding: ${padding}`);
+}, "setupViewPortForSVG");
+var calculateDimensionsWithPadding = /* @__PURE__ */ __name((svg, padding) => {
+  const bounds = svg.node()?.getBBox() || { width: 0, height: 0, x: 0, y: 0 };
+  return {
+    width: bounds.width + padding * 2,
+    height: bounds.height + padding * 2,
+    x: bounds.x,
+    y: bounds.y
+  };
+}, "calculateDimensionsWithPadding");
+var createViewBox = /* @__PURE__ */ __name((x, y, width, height, padding) => {
+  return `${x - padding} ${y - padding} ${width} ${height}`;
+}, "createViewBox");
+export {
+  setupViewPortForSVG as s
+};

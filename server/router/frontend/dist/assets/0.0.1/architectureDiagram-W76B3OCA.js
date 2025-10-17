@@ -1,18 +1,7991 @@
-import{_ as dt,L as Ze,a3 as ke,l as Se,b as qe,a as Qe,t as Je,v as Ke,g as je,s as _e,A as tr,G as er,H as rr,I as ir,c as Ee,ad as me,ax as pe,j as ar,e as nr,ay as or,az as sr}from"./mermaid-vendor.js";import{p as hr}from"./chunk-4BX2VUAB.js";import{p as lr}from"./treemap-75Q7IDZK.js";import{c as Fe}from"./cytoscape.esm.js";import{g as fr}from"./utils-vendor.js";var he={exports:{}},le={exports:{}},fe={exports:{}},cr=fe.exports,we;function gr(){return we||(we=1,(function(I,x){(function(P,N){I.exports=N()})(cr,function(){return(function(A){var P={};function N(u){if(P[u])return P[u].exports;var h=P[u]={i:u,l:!1,exports:{}};return A[u].call(h.exports,h,h.exports,N),h.l=!0,h.exports}return N.m=A,N.c=P,N.i=function(u){return u},N.d=function(u,h,a){N.o(u,h)||Object.defineProperty(u,h,{configurable:!1,enumerable:!0,get:a})},N.n=function(u){var h=u&&u.__esModule?function(){return u.default}:function(){return u};return N.d(h,"a",h),h},N.o=function(u,h){return Object.prototype.hasOwnProperty.call(u,h)},N.p="",N(N.s=28)})([(function(A,P,N){function u(){}u.QUALITY=1,u.DEFAULT_CREATE_BENDS_AS_NEEDED=!1,u.DEFAULT_INCREMENTAL=!1,u.DEFAULT_ANIMATION_ON_LAYOUT=!0,u.DEFAULT_ANIMATION_DURING_LAYOUT=!1,u.DEFAULT_ANIMATION_PERIOD=50,u.DEFAULT_UNIFORM_LEAF_NODE_SIZES=!1,u.DEFAULT_GRAPH_MARGIN=15,u.NODE_DIMENSIONS_INCLUDE_LABELS=!1,u.SIMPLE_NODE_SIZE=40,u.SIMPLE_NODE_HALF_SIZE=u.SIMPLE_NODE_SIZE/2,u.EMPTY_COMPOUND_NODE_SIZE=40,u.MIN_EDGE_LENGTH=1,u.WORLD_BOUNDARY=1e6,u.INITIAL_WORLD_BOUNDARY=u.WORLD_BOUNDARY/1e3,u.WORLD_CENTER_X=1200,u.WORLD_CENTER_Y=900,A.exports=u}),(function(A,P,N){var u=N(2),h=N(8),a=N(9);function e(f,i,g){u.call(this,g),this.isOverlapingSourceAndTarget=!1,this.vGraphObject=g,this.bendpoints=[],this.source=f,this.target=i}e.prototype=Object.create(u.prototype);for(var r in u)e[r]=u[r];e.prototype.getSource=function(){return this.source},e.prototype.getTarget=function(){return this.target},e.prototype.isInterGraph=function(){return this.isInterGraph},e.prototype.getLength=function(){return this.length},e.prototype.isOverlapingSourceAndTarget=function(){return this.isOverlapingSourceAndTarget},e.prototype.getBendpoints=function(){return this.bendpoints},e.prototype.getLca=function(){return this.lca},e.prototype.getSourceInLca=function(){return this.sourceInLca},e.prototype.getTargetInLca=function(){return this.targetInLca},e.prototype.getOtherEnd=function(f){if(this.source===f)return this.target;if(this.target===f)return this.source;throw"Node is not incident with this edge"},e.prototype.getOtherEndInGraph=function(f,i){for(var g=this.getOtherEnd(f),t=i.getGraphManager().getRoot();;){if(g.getOwner()==i)return g;if(g.getOwner()==t)break;g=g.getOwner().getParent()}return null},e.prototype.updateLength=function(){var f=new Array(4);this.isOverlapingSourceAndTarget=h.getIntersection(this.target.getRect(),this.source.getRect(),f),this.isOverlapingSourceAndTarget||(this.lengthX=f[0]-f[2],this.lengthY=f[1]-f[3],Math.abs(this.lengthX)<1&&(this.lengthX=a.sign(this.lengthX)),Math.abs(this.lengthY)<1&&(this.lengthY=a.sign(this.lengthY)),this.length=Math.sqrt(this.lengthX*this.lengthX+this.lengthY*this.lengthY))},e.prototype.updateLengthSimple=function(){this.lengthX=this.target.getCenterX()-this.source.getCenterX(),this.lengthY=this.target.getCenterY()-this.source.getCenterY(),Math.abs(this.lengthX)<1&&(this.lengthX=a.sign(this.lengthX)),Math.abs(this.lengthY)<1&&(this.lengthY=a.sign(this.lengthY)),this.length=Math.sqrt(this.lengthX*this.lengthX+this.lengthY*this.lengthY)},A.exports=e}),(function(A,P,N){function u(h){this.vGraphObject=h}A.exports=u}),(function(A,P,N){var u=N(2),h=N(10),a=N(13),e=N(0),r=N(16),f=N(5);function i(t,o,s,c){s==null&&c==null&&(c=o),u.call(this,c),t.graphManager!=null&&(t=t.graphManager),this.estimatedSize=h.MIN_VALUE,this.inclusionTreeDepth=h.MAX_VALUE,this.vGraphObject=c,this.edges=[],this.graphManager=t,s!=null&&o!=null?this.rect=new a(o.x,o.y,s.width,s.height):this.rect=new a}i.prototype=Object.create(u.prototype);for(var g in u)i[g]=u[g];i.prototype.getEdges=function(){return this.edges},i.prototype.getChild=function(){return this.child},i.prototype.getOwner=function(){return this.owner},i.prototype.getWidth=function(){return this.rect.width},i.prototype.setWidth=function(t){this.rect.width=t},i.prototype.getHeight=function(){return this.rect.height},i.prototype.setHeight=function(t){this.rect.height=t},i.prototype.getCenterX=function(){return this.rect.x+this.rect.width/2},i.prototype.getCenterY=function(){return this.rect.y+this.rect.height/2},i.prototype.getCenter=function(){return new f(this.rect.x+this.rect.width/2,this.rect.y+this.rect.height/2)},i.prototype.getLocation=function(){return new f(this.rect.x,this.rect.y)},i.prototype.getRect=function(){return this.rect},i.prototype.getDiagonal=function(){return Math.sqrt(this.rect.width*this.rect.width+this.rect.height*this.rect.height)},i.prototype.getHalfTheDiagonal=function(){return Math.sqrt(this.rect.height*this.rect.height+this.rect.width*this.rect.width)/2},i.prototype.setRect=function(t,o){this.rect.x=t.x,this.rect.y=t.y,this.rect.width=o.width,this.rect.height=o.height},i.prototype.setCenter=function(t,o){this.rect.x=t-this.rect.width/2,this.rect.y=o-this.rect.height/2},i.prototype.setLocation=function(t,o){this.rect.x=t,this.rect.y=o},i.prototype.moveBy=function(t,o){this.rect.x+=t,this.rect.y+=o},i.prototype.getEdgeListToNode=function(t){var o=[],s=this;return s.edges.forEach(function(c){if(c.target==t){if(c.source!=s)throw"Incorrect edge source!";o.push(c)}}),o},i.prototype.getEdgesBetween=function(t){var o=[],s=this;return s.edges.forEach(function(c){if(!(c.source==s||c.target==s))throw"Incorrect edge source and/or target";(c.target==t||c.source==t)&&o.push(c)}),o},i.prototype.getNeighborsList=function(){var t=new Set,o=this;return o.edges.forEach(function(s){if(s.source==o)t.add(s.target);else{if(s.target!=o)throw"Incorrect incidency!";t.add(s.source)}}),t},i.prototype.withChildren=function(){var t=new Set,o,s;if(t.add(this),this.child!=null)for(var c=this.child.getNodes(),l=0;l<c.length;l++)o=c[l],s=o.withChildren(),s.forEach(function(T){t.add(T)});return t},i.prototype.getNoOfChildren=function(){var t=0,o;if(this.child==null)t=1;else for(var s=this.child.getNodes(),c=0;c<s.length;c++)o=s[c],t+=o.getNoOfChildren();return t==0&&(t=1),t},i.prototype.getEstimatedSize=function(){if(this.estimatedSize==h.MIN_VALUE)throw"assert failed";return this.estimatedSize},i.prototype.calcEstimatedSize=function(){return this.child==null?this.estimatedSize=(this.rect.width+this.rect.height)/2:(this.estimatedSize=this.child.calcEstimatedSize(),this.rect.width=this.estimatedSize,this.rect.height=this.estimatedSize,this.estimatedSize)},i.prototype.scatter=function(){var t,o,s=-e.INITIAL_WORLD_BOUNDARY,c=e.INITIAL_WORLD_BOUNDARY;t=e.WORLD_CENTER_X+r.nextDouble()*(c-s)+s;var l=-e.INITIAL_WORLD_BOUNDARY,T=e.INITIAL_WORLD_BOUNDARY;o=e.WORLD_CENTER_Y+r.nextDouble()*(T-l)+l,this.rect.x=t,this.rect.y=o},i.prototype.updateBounds=function(){if(this.getChild()==null)throw"assert failed";if(this.getChild().getNodes().length!=0){var t=this.getChild();if(t.updateBounds(!0),this.rect.x=t.getLeft(),this.rect.y=t.getTop(),this.setWidth(t.getRight()-t.getLeft()),this.setHeight(t.getBottom()-t.getTop()),e.NODE_DIMENSIONS_INCLUDE_LABELS){var o=t.getRight()-t.getLeft(),s=t.getBottom()-t.getTop();this.labelWidth&&(this.labelPosHorizontal=="left"?(this.rect.x-=this.labelWidth,this.setWidth(o+this.labelWidth)):this.labelPosHorizontal=="center"&&this.labelWidth>o?(this.rect.x-=(this.labelWidth-o)/2,this.setWidth(this.labelWidth)):this.labelPosHorizontal=="right"&&this.setWidth(o+this.labelWidth)),this.labelHeight&&(this.labelPosVertical=="top"?(this.rect.y-=this.labelHeight,this.setHeight(s+this.labelHeight)):this.labelPosVertical=="center"&&this.labelHeight>s?(this.rect.y-=(this.labelHeight-s)/2,this.setHeight(this.labelHeight)):this.labelPosVertical=="bottom"&&this.setHeight(s+this.labelHeight))}}},i.prototype.getInclusionTreeDepth=function(){if(this.inclusionTreeDepth==h.MAX_VALUE)throw"assert failed";return this.inclusionTreeDepth},i.prototype.transform=function(t){var o=this.rect.x;o>e.WORLD_BOUNDARY?o=e.WORLD_BOUNDARY:o<-e.WORLD_BOUNDARY&&(o=-e.WORLD_BOUNDARY);var s=this.rect.y;s>e.WORLD_BOUNDARY?s=e.WORLD_BOUNDARY:s<-e.WORLD_BOUNDARY&&(s=-e.WORLD_BOUNDARY);var c=new f(o,s),l=t.inverseTransformPoint(c);this.setLocation(l.x,l.y)},i.prototype.getLeft=function(){return this.rect.x},i.prototype.getRight=function(){return this.rect.x+this.rect.width},i.prototype.getTop=function(){return this.rect.y},i.prototype.getBottom=function(){return this.rect.y+this.rect.height},i.prototype.getParent=function(){return this.owner==null?null:this.owner.getParent()},A.exports=i}),(function(A,P,N){var u=N(0);function h(){}for(var a in u)h[a]=u[a];h.MAX_ITERATIONS=2500,h.DEFAULT_EDGE_LENGTH=50,h.DEFAULT_SPRING_STRENGTH=.45,h.DEFAULT_REPULSION_STRENGTH=4500,h.DEFAULT_GRAVITY_STRENGTH=.4,h.DEFAULT_COMPOUND_GRAVITY_STRENGTH=1,h.DEFAULT_GRAVITY_RANGE_FACTOR=3.8,h.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR=1.5,h.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION=!0,h.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION=!0,h.DEFAULT_COOLING_FACTOR_INCREMENTAL=.3,h.COOLING_ADAPTATION_FACTOR=.33,h.ADAPTATION_LOWER_NODE_LIMIT=1e3,h.ADAPTATION_UPPER_NODE_LIMIT=5e3,h.MAX_NODE_DISPLACEMENT_INCREMENTAL=100,h.MAX_NODE_DISPLACEMENT=h.MAX_NODE_DISPLACEMENT_INCREMENTAL*3,h.MIN_REPULSION_DIST=h.DEFAULT_EDGE_LENGTH/10,h.CONVERGENCE_CHECK_PERIOD=100,h.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR=.1,h.MIN_EDGE_LENGTH=1,h.GRID_CALCULATION_CHECK_PERIOD=10,A.exports=h}),(function(A,P,N){function u(h,a){h==null&&a==null?(this.x=0,this.y=0):(this.x=h,this.y=a)}u.prototype.getX=function(){return this.x},u.prototype.getY=function(){return this.y},u.prototype.setX=function(h){this.x=h},u.prototype.setY=function(h){this.y=h},u.prototype.getDifference=function(h){return new DimensionD(this.x-h.x,this.y-h.y)},u.prototype.getCopy=function(){return new u(this.x,this.y)},u.prototype.translate=function(h){return this.x+=h.width,this.y+=h.height,this},A.exports=u}),(function(A,P,N){var u=N(2),h=N(10),a=N(0),e=N(7),r=N(3),f=N(1),i=N(13),g=N(12),t=N(11);function o(c,l,T){u.call(this,T),this.estimatedSize=h.MIN_VALUE,this.margin=a.DEFAULT_GRAPH_MARGIN,this.edges=[],this.nodes=[],this.isConnected=!1,this.parent=c,l!=null&&l instanceof e?this.graphManager=l:l!=null&&l instanceof Layout&&(this.graphManager=l.graphManager)}o.prototype=Object.create(u.prototype);for(var s in u)o[s]=u[s];o.prototype.getNodes=function(){return this.nodes},o.prototype.getEdges=function(){return this.edges},o.prototype.getGraphManager=function(){return this.graphManager},o.prototype.getParent=function(){return this.parent},o.prototype.getLeft=function(){return this.left},o.prototype.getRight=function(){return this.right},o.prototype.getTop=function(){return this.top},o.prototype.getBottom=function(){return this.bottom},o.prototype.isConnected=function(){return this.isConnected},o.prototype.add=function(c,l,T){if(l==null&&T==null){var d=c;if(this.graphManager==null)throw"Graph has no graph mgr!";if(this.getNodes().indexOf(d)>-1)throw"Node already in graph!";return d.owner=this,this.getNodes().push(d),d}else{var v=c;if(!(this.getNodes().indexOf(l)>-1&&this.getNodes().indexOf(T)>-1))throw"Source or target not in graph!";if(!(l.owner==T.owner&&l.owner==this))throw"Both owners must be this graph!";return l.owner!=T.owner?null:(v.source=l,v.target=T,v.isInterGraph=!1,this.getEdges().push(v),l.edges.push(v),T!=l&&T.edges.push(v),v)}},o.prototype.remove=function(c){var l=c;if(c instanceof r){if(l==null)throw"Node is null!";if(!(l.owner!=null&&l.owner==this))throw"Owner graph is invalid!";if(this.graphManager==null)throw"Owner graph manager is invalid!";for(var T=l.edges.slice(),d,v=T.length,L=0;L<v;L++)d=T[L],d.isInterGraph?this.graphManager.remove(d):d.source.owner.remove(d);var b=this.nodes.indexOf(l);if(b==-1)throw"Node not in owner node list!";this.nodes.splice(b,1)}else if(c instanceof f){var d=c;if(d==null)throw"Edge is null!";if(!(d.source!=null&&d.target!=null))throw"Source and/or target is null!";if(!(d.source.owner!=null&&d.target.owner!=null&&d.source.owner==this&&d.target.owner==this))throw"Source and/or target owner is invalid!";var C=d.source.edges.indexOf(d),G=d.target.edges.indexOf(d);if(!(C>-1&&G>-1))throw"Source and/or target doesn't know this edge!";d.source.edges.splice(C,1),d.target!=d.source&&d.target.edges.splice(G,1);var b=d.source.owner.getEdges().indexOf(d);if(b==-1)throw"Not in owner's edge list!";d.source.owner.getEdges().splice(b,1)}},o.prototype.updateLeftTop=function(){for(var c=h.MAX_VALUE,l=h.MAX_VALUE,T,d,v,L=this.getNodes(),b=L.length,C=0;C<b;C++){var G=L[C];T=G.getTop(),d=G.getLeft(),c>T&&(c=T),l>d&&(l=d)}return c==h.MAX_VALUE?null:(L[0].getParent().paddingLeft!=null?v=L[0].getParent().paddingLeft:v=this.margin,this.left=l-v,this.top=c-v,new g(this.left,this.top))},o.prototype.updateBounds=function(c){for(var l=h.MAX_VALUE,T=-h.MAX_VALUE,d=h.MAX_VALUE,v=-h.MAX_VALUE,L,b,C,G,k,Y=this.nodes,K=Y.length,O=0;O<K;O++){var it=Y[O];c&&it.child!=null&&it.updateBounds(),L=it.getLeft(),b=it.getRight(),C=it.getTop(),G=it.getBottom(),l>L&&(l=L),T<b&&(T=b),d>C&&(d=C),v<G&&(v=G)}var n=new i(l,d,T-l,v-d);l==h.MAX_VALUE&&(this.left=this.parent.getLeft(),this.right=this.parent.getRight(),this.top=this.parent.getTop(),this.bottom=this.parent.getBottom()),Y[0].getParent().paddingLeft!=null?k=Y[0].getParent().paddingLeft:k=this.margin,this.left=n.x-k,this.right=n.x+n.width+k,this.top=n.y-k,this.bottom=n.y+n.height+k},o.calculateBounds=function(c){for(var l=h.MAX_VALUE,T=-h.MAX_VALUE,d=h.MAX_VALUE,v=-h.MAX_VALUE,L,b,C,G,k=c.length,Y=0;Y<k;Y++){var K=c[Y];L=K.getLeft(),b=K.getRight(),C=K.getTop(),G=K.getBottom(),l>L&&(l=L),T<b&&(T=b),d>C&&(d=C),v<G&&(v=G)}var O=new i(l,d,T-l,v-d);return O},o.prototype.getInclusionTreeDepth=function(){return this==this.graphManager.getRoot()?1:this.parent.getInclusionTreeDepth()},o.prototype.getEstimatedSize=function(){if(this.estimatedSize==h.MIN_VALUE)throw"assert failed";return this.estimatedSize},o.prototype.calcEstimatedSize=function(){for(var c=0,l=this.nodes,T=l.length,d=0;d<T;d++){var v=l[d];c+=v.calcEstimatedSize()}return c==0?this.estimatedSize=a.EMPTY_COMPOUND_NODE_SIZE:this.estimatedSize=c/Math.sqrt(this.nodes.length),this.estimatedSize},o.prototype.updateConnected=function(){var c=this;if(this.nodes.length==0){this.isConnected=!0;return}var l=new t,T=new Set,d=this.nodes[0],v,L,b=d.withChildren();for(b.forEach(function(O){l.push(O),T.add(O)});l.length!==0;){d=l.shift(),v=d.getEdges();for(var C=v.length,G=0;G<C;G++){var k=v[G];if(L=k.getOtherEndInGraph(d,this),L!=null&&!T.has(L)){var Y=L.withChildren();Y.forEach(function(O){l.push(O),T.add(O)})}}}if(this.isConnected=!1,T.size>=this.nodes.length){var K=0;T.forEach(function(O){O.owner==c&&K++}),K==this.nodes.length&&(this.isConnected=!0)}},A.exports=o}),(function(A,P,N){var u,h=N(1);function a(e){u=N(6),this.layout=e,this.graphs=[],this.edges=[]}a.prototype.addRoot=function(){var e=this.layout.newGraph(),r=this.layout.newNode(null),f=this.add(e,r);return this.setRootGraph(f),this.rootGraph},a.prototype.add=function(e,r,f,i,g){if(f==null&&i==null&&g==null){if(e==null)throw"Graph is null!";if(r==null)throw"Parent node is null!";if(this.graphs.indexOf(e)>-1)throw"Graph already in this graph mgr!";if(this.graphs.push(e),e.parent!=null)throw"Already has a parent!";if(r.child!=null)throw"Already has a child!";return e.parent=r,r.child=e,e}else{g=f,i=r,f=e;var t=i.getOwner(),o=g.getOwner();if(!(t!=null&&t.getGraphManager()==this))throw"Source not in this graph mgr!";if(!(o!=null&&o.getGraphManager()==this))throw"Target not in this graph mgr!";if(t==o)return f.isInterGraph=!1,t.add(f,i,g);if(f.isInterGraph=!0,f.source=i,f.target=g,this.edges.indexOf(f)>-1)throw"Edge already in inter-graph edge list!";if(this.edges.push(f),!(f.source!=null&&f.target!=null))throw"Edge source and/or target is null!";if(!(f.source.edges.indexOf(f)==-1&&f.target.edges.indexOf(f)==-1))throw"Edge already in source and/or target incidency list!";return f.source.edges.push(f),f.target.edges.push(f),f}},a.prototype.remove=function(e){if(e instanceof u){var r=e;if(r.getGraphManager()!=this)throw"Graph not in this graph mgr";if(!(r==this.rootGraph||r.parent!=null&&r.parent.graphManager==this))throw"Invalid parent node!";var f=[];f=f.concat(r.getEdges());for(var i,g=f.length,t=0;t<g;t++)i=f[t],r.remove(i);var o=[];o=o.concat(r.getNodes());var s;g=o.length;for(var t=0;t<g;t++)s=o[t],r.remove(s);r==this.rootGraph&&this.setRootGraph(null);var c=this.graphs.indexOf(r);this.graphs.splice(c,1),r.parent=null}else if(e instanceof h){if(i=e,i==null)throw"Edge is null!";if(!i.isInterGraph)throw"Not an inter-graph edge!";if(!(i.source!=null&&i.target!=null))throw"Source and/or target is null!";if(!(i.source.edges.indexOf(i)!=-1&&i.target.edges.indexOf(i)!=-1))throw"Source and/or target doesn't know this edge!";var c=i.source.edges.indexOf(i);if(i.source.edges.splice(c,1),c=i.target.edges.indexOf(i),i.target.edges.splice(c,1),!(i.source.owner!=null&&i.source.owner.getGraphManager()!=null))throw"Edge owner graph or owner graph manager is null!";if(i.source.owner.getGraphManager().edges.indexOf(i)==-1)throw"Not in owner graph manager's edge list!";var c=i.source.owner.getGraphManager().edges.indexOf(i);i.source.owner.getGraphManager().edges.splice(c,1)}},a.prototype.updateBounds=function(){this.rootGraph.updateBounds(!0)},a.prototype.getGraphs=function(){return this.graphs},a.prototype.getAllNodes=function(){if(this.allNodes==null){for(var e=[],r=this.getGraphs(),f=r.length,i=0;i<f;i++)e=e.concat(r[i].getNodes());this.allNodes=e}return this.allNodes},a.prototype.resetAllNodes=function(){this.allNodes=null},a.prototype.resetAllEdges=function(){this.allEdges=null},a.prototype.resetAllNodesToApplyGravitation=function(){this.allNodesToApplyGravitation=null},a.prototype.getAllEdges=function(){if(this.allEdges==null){var e=[],r=this.getGraphs();r.length;for(var f=0;f<r.length;f++)e=e.concat(r[f].getEdges());e=e.concat(this.edges),this.allEdges=e}return this.allEdges},a.prototype.getAllNodesToApplyGravitation=function(){return this.allNodesToApplyGravitation},a.prototype.setAllNodesToApplyGravitation=function(e){if(this.allNodesToApplyGravitation!=null)throw"assert failed";this.allNodesToApplyGravitation=e},a.prototype.getRoot=function(){return this.rootGraph},a.prototype.setRootGraph=function(e){if(e.getGraphManager()!=this)throw"Root not in this graph mgr!";this.rootGraph=e,e.parent==null&&(e.parent=this.layout.newNode("Root node"))},a.prototype.getLayout=function(){return this.layout},a.prototype.isOneAncestorOfOther=function(e,r){if(!(e!=null&&r!=null))throw"assert failed";if(e==r)return!0;var f=e.getOwner(),i;do{if(i=f.getParent(),i==null)break;if(i==r)return!0;if(f=i.getOwner(),f==null)break}while(!0);f=r.getOwner();do{if(i=f.getParent(),i==null)break;if(i==e)return!0;if(f=i.getOwner(),f==null)break}while(!0);return!1},a.prototype.calcLowestCommonAncestors=function(){for(var e,r,f,i,g,t=this.getAllEdges(),o=t.length,s=0;s<o;s++){if(e=t[s],r=e.source,f=e.target,e.lca=null,e.sourceInLca=r,e.targetInLca=f,r==f){e.lca=r.getOwner();continue}for(i=r.getOwner();e.lca==null;){for(e.targetInLca=f,g=f.getOwner();e.lca==null;){if(g==i){e.lca=g;break}if(g==this.rootGraph)break;if(e.lca!=null)throw"assert failed";e.targetInLca=g.getParent(),g=e.targetInLca.getOwner()}if(i==this.rootGraph)break;e.lca==null&&(e.sourceInLca=i.getParent(),i=e.sourceInLca.getOwner())}if(e.lca==null)throw"assert failed"}},a.prototype.calcLowestCommonAncestor=function(e,r){if(e==r)return e.getOwner();var f=e.getOwner();do{if(f==null)break;var i=r.getOwner();do{if(i==null)break;if(i==f)return i;i=i.getParent().getOwner()}while(!0);f=f.getParent().getOwner()}while(!0);return f},a.prototype.calcInclusionTreeDepths=function(e,r){e==null&&r==null&&(e=this.rootGraph,r=1);for(var f,i=e.getNodes(),g=i.length,t=0;t<g;t++)f=i[t],f.inclusionTreeDepth=r,f.child!=null&&this.calcInclusionTreeDepths(f.child,r+1)},a.prototype.includesInvalidEdge=function(){for(var e,r=[],f=this.edges.length,i=0;i<f;i++)e=this.edges[i],this.isOneAncestorOfOther(e.source,e.target)&&r.push(e);for(var i=0;i<r.length;i++)this.remove(r[i]);return!1},A.exports=a}),(function(A,P,N){var u=N(12);function h(){}h.calcSeparationAmount=function(a,e,r,f){if(!a.intersects(e))throw"assert failed";var i=new Array(2);this.decideDirectionsForOverlappingNodes(a,e,i),r[0]=Math.min(a.getRight(),e.getRight())-Math.max(a.x,e.x),r[1]=Math.min(a.getBottom(),e.getBottom())-Math.max(a.y,e.y),a.getX()<=e.getX()&&a.getRight()>=e.getRight()?r[0]+=Math.min(e.getX()-a.getX(),a.getRight()-e.getRight()):e.getX()<=a.getX()&&e.getRight()>=a.getRight()&&(r[0]+=Math.min(a.getX()-e.getX(),e.getRight()-a.getRight())),a.getY()<=e.getY()&&a.getBottom()>=e.getBottom()?r[1]+=Math.min(e.getY()-a.getY(),a.getBottom()-e.getBottom()):e.getY()<=a.getY()&&e.getBottom()>=a.getBottom()&&(r[1]+=Math.min(a.getY()-e.getY(),e.getBottom()-a.getBottom()));var g=Math.abs((e.getCenterY()-a.getCenterY())/(e.getCenterX()-a.getCenterX()));e.getCenterY()===a.getCenterY()&&e.getCenterX()===a.getCenterX()&&(g=1);var t=g*r[0],o=r[1]/g;r[0]<o?o=r[0]:t=r[1],r[0]=-1*i[0]*(o/2+f),r[1]=-1*i[1]*(t/2+f)},h.decideDirectionsForOverlappingNodes=function(a,e,r){a.getCenterX()<e.getCenterX()?r[0]=-1:r[0]=1,a.getCenterY()<e.getCenterY()?r[1]=-1:r[1]=1},h.getIntersection2=function(a,e,r){var f=a.getCenterX(),i=a.getCenterY(),g=e.getCenterX(),t=e.getCenterY();if(a.intersects(e))return r[0]=f,r[1]=i,r[2]=g,r[3]=t,!0;var o=a.getX(),s=a.getY(),c=a.getRight(),l=a.getX(),T=a.getBottom(),d=a.getRight(),v=a.getWidthHalf(),L=a.getHeightHalf(),b=e.getX(),C=e.getY(),G=e.getRight(),k=e.getX(),Y=e.getBottom(),K=e.getRight(),O=e.getWidthHalf(),it=e.getHeightHalf(),n=!1,m=!1;if(f===g){if(i>t)return r[0]=f,r[1]=s,r[2]=g,r[3]=Y,!1;if(i<t)return r[0]=f,r[1]=T,r[2]=g,r[3]=C,!1}else if(i===t){if(f>g)return r[0]=o,r[1]=i,r[2]=G,r[3]=t,!1;if(f<g)return r[0]=c,r[1]=i,r[2]=b,r[3]=t,!1}else{var p=a.height/a.width,E=e.height/e.width,y=(t-i)/(g-f),R=void 0,M=void 0,S=void 0,W=void 0,D=void 0,q=void 0;if(-p===y?f>g?(r[0]=l,r[1]=T,n=!0):(r[0]=c,r[1]=s,n=!0):p===y&&(f>g?(r[0]=o,r[1]=s,n=!0):(r[0]=d,r[1]=T,n=!0)),-E===y?g>f?(r[2]=k,r[3]=Y,m=!0):(r[2]=G,r[3]=C,m=!0):E===y&&(g>f?(r[2]=b,r[3]=C,m=!0):(r[2]=K,r[3]=Y,m=!0)),n&&m)return!1;if(f>g?i>t?(R=this.getCardinalDirection(p,y,4),M=this.getCardinalDirection(E,y,2)):(R=this.getCardinalDirection(-p,y,3),M=this.getCardinalDirection(-E,y,1)):i>t?(R=this.getCardinalDirection(-p,y,1),M=this.getCardinalDirection(-E,y,3)):(R=this.getCardinalDirection(p,y,2),M=this.getCardinalDirection(E,y,4)),!n)switch(R){case 1:W=s,S=f+-L/y,r[0]=S,r[1]=W;break;case 2:S=d,W=i+v*y,r[0]=S,r[1]=W;break;case 3:W=T,S=f+L/y,r[0]=S,r[1]=W;break;case 4:S=l,W=i+-v*y,r[0]=S,r[1]=W;break}if(!m)switch(M){case 1:q=C,D=g+-it/y,r[2]=D,r[3]=q;break;case 2:D=K,q=t+O*y,r[2]=D,r[3]=q;break;case 3:q=Y,D=g+it/y,r[2]=D,r[3]=q;break;case 4:D=k,q=t+-O*y,r[2]=D,r[3]=q;break}}return!1},h.getCardinalDirection=function(a,e,r){return a>e?r:1+r%4},h.getIntersection=function(a,e,r,f){if(f==null)return this.getIntersection2(a,e,r);var i=a.x,g=a.y,t=e.x,o=e.y,s=r.x,c=r.y,l=f.x,T=f.y,d=void 0,v=void 0,L=void 0,b=void 0,C=void 0,G=void 0,k=void 0,Y=void 0,K=void 0;return L=o-g,C=i-t,k=t*g-i*o,b=T-c,G=s-l,Y=l*c-s*T,K=L*G-b*C,K===0?null:(d=(C*Y-G*k)/K,v=(b*k-L*Y)/K,new u(d,v))},h.angleOfVector=function(a,e,r,f){var i=void 0;return a!==r?(i=Math.atan((f-e)/(r-a)),r<a?i+=Math.PI:f<e&&(i+=this.TWO_PI)):f<e?i=this.ONE_AND_HALF_PI:i=this.HALF_PI,i},h.doIntersect=function(a,e,r,f){var i=a.x,g=a.y,t=e.x,o=e.y,s=r.x,c=r.y,l=f.x,T=f.y,d=(t-i)*(T-c)-(l-s)*(o-g);if(d===0)return!1;var v=((T-c)*(l-i)+(s-l)*(T-g))/d,L=((g-o)*(l-i)+(t-i)*(T-g))/d;return 0<v&&v<1&&0<L&&L<1},h.findCircleLineIntersections=function(a,e,r,f,i,g,t){var o=(r-a)*(r-a)+(f-e)*(f-e),s=2*((a-i)*(r-a)+(e-g)*(f-e)),c=(a-i)*(a-i)+(e-g)*(e-g)-t*t,l=s*s-4*o*c;if(l>=0){var T=(-s+Math.sqrt(s*s-4*o*c))/(2*o),d=(-s-Math.sqrt(s*s-4*o*c))/(2*o),v=null;return T>=0&&T<=1?[T]:d>=0&&d<=1?[d]:v}else return null},h.HALF_PI=.5*Math.PI,h.ONE_AND_HALF_PI=1.5*Math.PI,h.TWO_PI=2*Math.PI,h.THREE_PI=3*Math.PI,A.exports=h}),(function(A,P,N){function u(){}u.sign=function(h){return h>0?1:h<0?-1:0},u.floor=function(h){return h<0?Math.ceil(h):Math.floor(h)},u.ceil=function(h){return h<0?Math.floor(h):Math.ceil(h)},A.exports=u}),(function(A,P,N){function u(){}u.MAX_VALUE=2147483647,u.MIN_VALUE=-2147483648,A.exports=u}),(function(A,P,N){var u=(function(){function i(g,t){for(var o=0;o<t.length;o++){var s=t[o];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(g,s.key,s)}}return function(g,t,o){return t&&i(g.prototype,t),o&&i(g,o),g}})();function h(i,g){if(!(i instanceof g))throw new TypeError("Cannot call a class as a function")}var a=function(g){return{value:g,next:null,prev:null}},e=function(g,t,o,s){return g!==null?g.next=t:s.head=t,o!==null?o.prev=t:s.tail=t,t.prev=g,t.next=o,s.length++,t},r=function(g,t){var o=g.prev,s=g.next;return o!==null?o.next=s:t.head=s,s!==null?s.prev=o:t.tail=o,g.prev=g.next=null,t.length--,g},f=(function(){function i(g){var t=this;h(this,i),this.length=0,this.head=null,this.tail=null,g?.forEach(function(o){return t.push(o)})}return u(i,[{key:"size",value:function(){return this.length}},{key:"insertBefore",value:function(t,o){return e(o.prev,a(t),o,this)}},{key:"insertAfter",value:function(t,o){return e(o,a(t),o.next,this)}},{key:"insertNodeBefore",value:function(t,o){return e(o.prev,t,o,this)}},{key:"insertNodeAfter",value:function(t,o){return e(o,t,o.next,this)}},{key:"push",value:function(t){return e(this.tail,a(t),null,this)}},{key:"unshift",value:function(t){return e(null,a(t),this.head,this)}},{key:"remove",value:function(t){return r(t,this)}},{key:"pop",value:function(){return r(this.tail,this).value}},{key:"popNode",value:function(){return r(this.tail,this)}},{key:"shift",value:function(){return r(this.head,this).value}},{key:"shiftNode",value:function(){return r(this.head,this)}},{key:"get_object_at",value:function(t){if(t<=this.length()){for(var o=1,s=this.head;o<t;)s=s.next,o++;return s.value}}},{key:"set_object_at",value:function(t,o){if(t<=this.length()){for(var s=1,c=this.head;s<t;)c=c.next,s++;c.value=o}}}]),i})();A.exports=f}),(function(A,P,N){function u(h,a,e){this.x=null,this.y=null,h==null&&a==null&&e==null?(this.x=0,this.y=0):typeof h=="number"&&typeof a=="number"&&e==null?(this.x=h,this.y=a):h.constructor.name=="Point"&&a==null&&e==null&&(e=h,this.x=e.x,this.y=e.y)}u.prototype.getX=function(){return this.x},u.prototype.getY=function(){return this.y},u.prototype.getLocation=function(){return new u(this.x,this.y)},u.prototype.setLocation=function(h,a,e){h.constructor.name=="Point"&&a==null&&e==null?(e=h,this.setLocation(e.x,e.y)):typeof h=="number"&&typeof a=="number"&&e==null&&(parseInt(h)==h&&parseInt(a)==a?this.move(h,a):(this.x=Math.floor(h+.5),this.y=Math.floor(a+.5)))},u.prototype.move=function(h,a){this.x=h,this.y=a},u.prototype.translate=function(h,a){this.x+=h,this.y+=a},u.prototype.equals=function(h){if(h.constructor.name=="Point"){var a=h;return this.x==a.x&&this.y==a.y}return this==h},u.prototype.toString=function(){return new u().constructor.name+"[x="+this.x+",y="+this.y+"]"},A.exports=u}),(function(A,P,N){function u(h,a,e,r){this.x=0,this.y=0,this.width=0,this.height=0,h!=null&&a!=null&&e!=null&&r!=null&&(this.x=h,this.y=a,this.width=e,this.height=r)}u.prototype.getX=function(){return this.x},u.prototype.setX=function(h){this.x=h},u.prototype.getY=function(){return this.y},u.prototype.setY=function(h){this.y=h},u.prototype.getWidth=function(){return this.width},u.prototype.setWidth=function(h){this.width=h},u.prototype.getHeight=function(){return this.height},u.prototype.setHeight=function(h){this.height=h},u.prototype.getRight=function(){return this.x+this.width},u.prototype.getBottom=function(){return this.y+this.height},u.prototype.intersects=function(h){return!(this.getRight()<h.x||this.getBottom()<h.y||h.getRight()<this.x||h.getBottom()<this.y)},u.prototype.getCenterX=function(){return this.x+this.width/2},u.prototype.getMinX=function(){return this.getX()},u.prototype.getMaxX=function(){return this.getX()+this.width},u.prototype.getCenterY=function(){return this.y+this.height/2},u.prototype.getMinY=function(){return this.getY()},u.prototype.getMaxY=function(){return this.getY()+this.height},u.prototype.getWidthHalf=function(){return this.width/2},u.prototype.getHeightHalf=function(){return this.height/2},A.exports=u}),(function(A,P,N){var u=typeof Symbol=="function"&&typeof Symbol.iterator=="symbol"?function(a){return typeof a}:function(a){return a&&typeof Symbol=="function"&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a};function h(){}h.lastID=0,h.createID=function(a){return h.isPrimitive(a)?a:(a.uniqueID!=null||(a.uniqueID=h.getString(),h.lastID++),a.uniqueID)},h.getString=function(a){return a==null&&(a=h.lastID),"Object#"+a},h.isPrimitive=function(a){var e=typeof a>"u"?"undefined":u(a);return a==null||e!="object"&&e!="function"},A.exports=h}),(function(A,P,N){function u(s){if(Array.isArray(s)){for(var c=0,l=Array(s.length);c<s.length;c++)l[c]=s[c];return l}else return Array.from(s)}var h=N(0),a=N(7),e=N(3),r=N(1),f=N(6),i=N(5),g=N(17),t=N(29);function o(s){t.call(this),this.layoutQuality=h.QUALITY,this.createBendsAsNeeded=h.DEFAULT_CREATE_BENDS_AS_NEEDED,this.incremental=h.DEFAULT_INCREMENTAL,this.animationOnLayout=h.DEFAULT_ANIMATION_ON_LAYOUT,this.animationDuringLayout=h.DEFAULT_ANIMATION_DURING_LAYOUT,this.animationPeriod=h.DEFAULT_ANIMATION_PERIOD,this.uniformLeafNodeSizes=h.DEFAULT_UNIFORM_LEAF_NODE_SIZES,this.edgeToDummyNodes=new Map,this.graphManager=new a(this),this.isLayoutFinished=!1,this.isSubLayout=!1,this.isRemoteUse=!1,s!=null&&(this.isRemoteUse=s)}o.RANDOM_SEED=1,o.prototype=Object.create(t.prototype),o.prototype.getGraphManager=function(){return this.graphManager},o.prototype.getAllNodes=function(){return this.graphManager.getAllNodes()},o.prototype.getAllEdges=function(){return this.graphManager.getAllEdges()},o.prototype.getAllNodesToApplyGravitation=function(){return this.graphManager.getAllNodesToApplyGravitation()},o.prototype.newGraphManager=function(){var s=new a(this);return this.graphManager=s,s},o.prototype.newGraph=function(s){return new f(null,this.graphManager,s)},o.prototype.newNode=function(s){return new e(this.graphManager,s)},o.prototype.newEdge=function(s){return new r(null,null,s)},o.prototype.checkLayoutSuccess=function(){return this.graphManager.getRoot()==null||this.graphManager.getRoot().getNodes().length==0||this.graphManager.includesInvalidEdge()},o.prototype.runLayout=function(){this.isLayoutFinished=!1,this.tilingPreLayout&&this.tilingPreLayout(),this.initParameters();var s;return this.checkLayoutSuccess()?s=!1:s=this.layout(),h.ANIMATE==="during"?!1:(s&&(this.isSubLayout||this.doPostLayout()),this.tilingPostLayout&&this.tilingPostLayout(),this.isLayoutFinished=!0,s)},o.prototype.doPostLayout=function(){this.incremental||this.transform(),this.update()},o.prototype.update2=function(){if(this.createBendsAsNeeded&&(this.createBendpointsFromDummyNodes(),this.graphManager.resetAllEdges()),!this.isRemoteUse){for(var s=this.graphManager.getAllEdges(),c=0;c<s.length;c++)s[c];for(var l=this.graphManager.getRoot().getNodes(),c=0;c<l.length;c++)l[c];this.update(this.graphManager.getRoot())}},o.prototype.update=function(s){if(s==null)this.update2();else if(s instanceof e){var c=s;if(c.getChild()!=null)for(var l=c.getChild().getNodes(),T=0;T<l.length;T++)update(l[T]);if(c.vGraphObject!=null){var d=c.vGraphObject;d.update(c)}}else if(s instanceof r){var v=s;if(v.vGraphObject!=null){var L=v.vGraphObject;L.update(v)}}else if(s instanceof f){var b=s;if(b.vGraphObject!=null){var C=b.vGraphObject;C.update(b)}}},o.prototype.initParameters=function(){this.isSubLayout||(this.layoutQuality=h.QUALITY,this.animationDuringLayout=h.DEFAULT_ANIMATION_DURING_LAYOUT,this.animationPeriod=h.DEFAULT_ANIMATION_PERIOD,this.animationOnLayout=h.DEFAULT_ANIMATION_ON_LAYOUT,this.incremental=h.DEFAULT_INCREMENTAL,this.createBendsAsNeeded=h.DEFAULT_CREATE_BENDS_AS_NEEDED,this.uniformLeafNodeSizes=h.DEFAULT_UNIFORM_LEAF_NODE_SIZES),this.animationDuringLayout&&(this.animationOnLayout=!1)},o.prototype.transform=function(s){if(s==null)this.transform(new i(0,0));else{var c=new g,l=this.graphManager.getRoot().updateLeftTop();if(l!=null){c.setWorldOrgX(s.x),c.setWorldOrgY(s.y),c.setDeviceOrgX(l.x),c.setDeviceOrgY(l.y);for(var T=this.getAllNodes(),d,v=0;v<T.length;v++)d=T[v],d.transform(c)}}},o.prototype.positionNodesRandomly=function(s){if(s==null)this.positionNodesRandomly(this.getGraphManager().getRoot()),this.getGraphManager().getRoot().updateBounds(!0);else for(var c,l,T=s.getNodes(),d=0;d<T.length;d++)c=T[d],l=c.getChild(),l==null||l.getNodes().length==0?c.scatter():(this.positionNodesRandomly(l),c.updateBounds())},o.prototype.getFlatForest=function(){for(var s=[],c=!0,l=this.graphManager.getRoot().getNodes(),T=!0,d=0;d<l.length;d++)l[d].getChild()!=null&&(T=!1);if(!T)return s;var v=new Set,L=[],b=new Map,C=[];for(C=C.concat(l);C.length>0&&c;){for(L.push(C[0]);L.length>0&&c;){var G=L[0];L.splice(0,1),v.add(G);for(var k=G.getEdges(),d=0;d<k.length;d++){var Y=k[d].getOtherEnd(G);if(b.get(G)!=Y)if(!v.has(Y))L.push(Y),b.set(Y,G);else{c=!1;break}}}if(!c)s=[];else{var K=[].concat(u(v));s.push(K);for(var d=0;d<K.length;d++){var O=K[d],it=C.indexOf(O);it>-1&&C.splice(it,1)}v=new Set,b=new Map}}return s},o.prototype.createDummyNodesForBendpoints=function(s){for(var c=[],l=s.source,T=this.graphManager.calcLowestCommonAncestor(s.source,s.target),d=0;d<s.bendpoints.length;d++){var v=this.newNode(null);v.setRect(new Point(0,0),new Dimension(1,1)),T.add(v);var L=this.newEdge(null);this.graphManager.add(L,l,v),c.add(v),l=v}var L=this.newEdge(null);return this.graphManager.add(L,l,s.target),this.edgeToDummyNodes.set(s,c),s.isInterGraph()?this.graphManager.remove(s):T.remove(s),c},o.prototype.createBendpointsFromDummyNodes=function(){var s=[];s=s.concat(this.graphManager.getAllEdges()),s=[].concat(u(this.edgeToDummyNodes.keys())).concat(s);for(var c=0;c<s.length;c++){var l=s[c];if(l.bendpoints.length>0){for(var T=this.edgeToDummyNodes.get(l),d=0;d<T.length;d++){var v=T[d],L=new i(v.getCenterX(),v.getCenterY()),b=l.bendpoints.get(d);b.x=L.x,b.y=L.y,v.getOwner().remove(v)}this.graphManager.add(l,l.source,l.target)}}},o.transform=function(s,c,l,T){if(l!=null&&T!=null){var d=c;if(s<=50){var v=c/l;d-=(c-v)/50*(50-s)}else{var L=c*T;d+=(L-c)/50*(s-50)}return d}else{var b,C;return s<=50?(b=9*c/500,C=c/10):(b=9*c/50,C=-8*c),b*s+C}},o.findCenterOfTree=function(s){var c=[];c=c.concat(s);var l=[],T=new Map,d=!1,v=null;(c.length==1||c.length==2)&&(d=!0,v=c[0]);for(var L=0;L<c.length;L++){var b=c[L],C=b.getNeighborsList().size;T.set(b,b.getNeighborsList().size),C==1&&l.push(b)}var G=[];for(G=G.concat(l);!d;){var k=[];k=k.concat(G),G=[];for(var L=0;L<c.length;L++){var b=c[L],Y=c.indexOf(b);Y>=0&&c.splice(Y,1);var K=b.getNeighborsList();K.forEach(function(n){if(l.indexOf(n)<0){var m=T.get(n),p=m-1;p==1&&G.push(n),T.set(n,p)}})}l=l.concat(G),(c.length==1||c.length==2)&&(d=!0,v=c[0])}return v},o.prototype.setGraphManager=function(s){this.graphManager=s},A.exports=o}),(function(A,P,N){function u(){}u.seed=1,u.x=0,u.nextDouble=function(){return u.x=Math.sin(u.seed++)*1e4,u.x-Math.floor(u.x)},A.exports=u}),(function(A,P,N){var u=N(5);function h(a,e){this.lworldOrgX=0,this.lworldOrgY=0,this.ldeviceOrgX=0,this.ldeviceOrgY=0,this.lworldExtX=1,this.lworldExtY=1,this.ldeviceExtX=1,this.ldeviceExtY=1}h.prototype.getWorldOrgX=function(){return this.lworldOrgX},h.prototype.setWorldOrgX=function(a){this.lworldOrgX=a},h.prototype.getWorldOrgY=function(){return this.lworldOrgY},h.prototype.setWorldOrgY=function(a){this.lworldOrgY=a},h.prototype.getWorldExtX=function(){return this.lworldExtX},h.prototype.setWorldExtX=function(a){this.lworldExtX=a},h.prototype.getWorldExtY=function(){return this.lworldExtY},h.prototype.setWorldExtY=function(a){this.lworldExtY=a},h.prototype.getDeviceOrgX=function(){return this.ldeviceOrgX},h.prototype.setDeviceOrgX=function(a){this.ldeviceOrgX=a},h.prototype.getDeviceOrgY=function(){return this.ldeviceOrgY},h.prototype.setDeviceOrgY=function(a){this.ldeviceOrgY=a},h.prototype.getDeviceExtX=function(){return this.ldeviceExtX},h.prototype.setDeviceExtX=function(a){this.ldeviceExtX=a},h.prototype.getDeviceExtY=function(){return this.ldeviceExtY},h.prototype.setDeviceExtY=function(a){this.ldeviceExtY=a},h.prototype.transformX=function(a){var e=0,r=this.lworldExtX;return r!=0&&(e=this.ldeviceOrgX+(a-this.lworldOrgX)*this.ldeviceExtX/r),e},h.prototype.transformY=function(a){var e=0,r=this.lworldExtY;return r!=0&&(e=this.ldeviceOrgY+(a-this.lworldOrgY)*this.ldeviceExtY/r),e},h.prototype.inverseTransformX=function(a){var e=0,r=this.ldeviceExtX;return r!=0&&(e=this.lworldOrgX+(a-this.ldeviceOrgX)*this.lworldExtX/r),e},h.prototype.inverseTransformY=function(a){var e=0,r=this.ldeviceExtY;return r!=0&&(e=this.lworldOrgY+(a-this.ldeviceOrgY)*this.lworldExtY/r),e},h.prototype.inverseTransformPoint=function(a){var e=new u(this.inverseTransformX(a.x),this.inverseTransformY(a.y));return e},A.exports=h}),(function(A,P,N){function u(t){if(Array.isArray(t)){for(var o=0,s=Array(t.length);o<t.length;o++)s[o]=t[o];return s}else return Array.from(t)}var h=N(15),a=N(4),e=N(0),r=N(8),f=N(9);function i(){h.call(this),this.useSmartIdealEdgeLengthCalculation=a.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION,this.gravityConstant=a.DEFAULT_GRAVITY_STRENGTH,this.compoundGravityConstant=a.DEFAULT_COMPOUND_GRAVITY_STRENGTH,this.gravityRangeFactor=a.DEFAULT_GRAVITY_RANGE_FACTOR,this.compoundGravityRangeFactor=a.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR,this.displacementThresholdPerNode=3*a.DEFAULT_EDGE_LENGTH/100,this.coolingFactor=a.DEFAULT_COOLING_FACTOR_INCREMENTAL,this.initialCoolingFactor=a.DEFAULT_COOLING_FACTOR_INCREMENTAL,this.totalDisplacement=0,this.oldTotalDisplacement=0,this.maxIterations=a.MAX_ITERATIONS}i.prototype=Object.create(h.prototype);for(var g in h)i[g]=h[g];i.prototype.initParameters=function(){h.prototype.initParameters.call(this,arguments),this.totalIterations=0,this.notAnimatedIterations=0,this.useFRGridVariant=a.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION,this.grid=[]},i.prototype.calcIdealEdgeLengths=function(){for(var t,o,s,c,l,T,d,v=this.getGraphManager().getAllEdges(),L=0;L<v.length;L++)t=v[L],o=t.idealLength,t.isInterGraph&&(c=t.getSource(),l=t.getTarget(),T=t.getSourceInLca().getEstimatedSize(),d=t.getTargetInLca().getEstimatedSize(),this.useSmartIdealEdgeLengthCalculation&&(t.idealLength+=T+d-2*e.SIMPLE_NODE_SIZE),s=t.getLca().getInclusionTreeDepth(),t.idealLength+=o*a.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR*(c.getInclusionTreeDepth()+l.getInclusionTreeDepth()-2*s))},i.prototype.initSpringEmbedder=function(){var t=this.getAllNodes().length;this.incremental?(t>a.ADAPTATION_LOWER_NODE_LIMIT&&(this.coolingFactor=Math.max(this.coolingFactor*a.COOLING_ADAPTATION_FACTOR,this.coolingFactor-(t-a.ADAPTATION_LOWER_NODE_LIMIT)/(a.ADAPTATION_UPPER_NODE_LIMIT-a.ADAPTATION_LOWER_NODE_LIMIT)*this.coolingFactor*(1-a.COOLING_ADAPTATION_FACTOR))),this.maxNodeDisplacement=a.MAX_NODE_DISPLACEMENT_INCREMENTAL):(t>a.ADAPTATION_LOWER_NODE_LIMIT?this.coolingFactor=Math.max(a.COOLING_ADAPTATION_FACTOR,1-(t-a.ADAPTATION_LOWER_NODE_LIMIT)/(a.ADAPTATION_UPPER_NODE_LIMIT-a.ADAPTATION_LOWER_NODE_LIMIT)*(1-a.COOLING_ADAPTATION_FACTOR)):this.coolingFactor=1,this.initialCoolingFactor=this.coolingFactor,this.maxNodeDisplacement=a.MAX_NODE_DISPLACEMENT),this.maxIterations=Math.max(this.getAllNodes().length*5,this.maxIterations),this.displacementThresholdPerNode=3*a.DEFAULT_EDGE_LENGTH/100,this.totalDisplacementThreshold=this.displacementThresholdPerNode*this.getAllNodes().length,this.repulsionRange=this.calcRepulsionRange()},i.prototype.calcSpringForces=function(){for(var t=this.getAllEdges(),o,s=0;s<t.length;s++)o=t[s],this.calcSpringForce(o,o.idealLength)},i.prototype.calcRepulsionForces=function(){var t=arguments.length>0&&arguments[0]!==void 0?arguments[0]:!0,o=arguments.length>1&&arguments[1]!==void 0?arguments[1]:!1,s,c,l,T,d=this.getAllNodes(),v;if(this.useFRGridVariant)for(this.totalIterations%a.GRID_CALCULATION_CHECK_PERIOD==1&&t&&this.updateGrid(),v=new Set,s=0;s<d.length;s++)l=d[s],this.calculateRepulsionForceOfANode(l,v,t,o),v.add(l);else for(s=0;s<d.length;s++)for(l=d[s],c=s+1;c<d.length;c++)T=d[c],l.getOwner()==T.getOwner()&&this.calcRepulsionForce(l,T)},i.prototype.calcGravitationalForces=function(){for(var t,o=this.getAllNodesToApplyGravitation(),s=0;s<o.length;s++)t=o[s],this.calcGravitationalForce(t)},i.prototype.moveNodes=function(){for(var t=this.getAllNodes(),o,s=0;s<t.length;s++)o=t[s],o.move()},i.prototype.calcSpringForce=function(t,o){var s=t.getSource(),c=t.getTarget(),l,T,d,v;if(this.uniformLeafNodeSizes&&s.getChild()==null&&c.getChild()==null)t.updateLengthSimple();else if(t.updateLength(),t.isOverlapingSourceAndTarget)return;l=t.getLength(),l!=0&&(T=t.edgeElasticity*(l-o),d=T*(t.lengthX/l),v=T*(t.lengthY/l),s.springForceX+=d,s.springForceY+=v,c.springForceX-=d,c.springForceY-=v)},i.prototype.calcRepulsionForce=function(t,o){var s=t.getRect(),c=o.getRect(),l=new Array(2),T=new Array(4),d,v,L,b,C,G,k;if(s.intersects(c)){r.calcSeparationAmount(s,c,l,a.DEFAULT_EDGE_LENGTH/2),G=2*l[0],k=2*l[1];var Y=t.noOfChildren*o.noOfChildren/(t.noOfChildren+o.noOfChildren);t.repulsionForceX-=Y*G,t.repulsionForceY-=Y*k,o.repulsionForceX+=Y*G,o.repulsionForceY+=Y*k}else this.uniformLeafNodeSizes&&t.getChild()==null&&o.getChild()==null?(d=c.getCenterX()-s.getCenterX(),v=c.getCenterY()-s.getCenterY()):(r.getIntersection(s,c,T),d=T[2]-T[0],v=T[3]-T[1]),Math.abs(d)<a.MIN_REPULSION_DIST&&(d=f.sign(d)*a.MIN_REPULSION_DIST),Math.abs(v)<a.MIN_REPULSION_DIST&&(v=f.sign(v)*a.MIN_REPULSION_DIST),L=d*d+v*v,b=Math.sqrt(L),C=(t.nodeRepulsion/2+o.nodeRepulsion/2)*t.noOfChildren*o.noOfChildren/L,G=C*d/b,k=C*v/b,t.repulsionForceX-=G,t.repulsionForceY-=k,o.repulsionForceX+=G,o.repulsionForceY+=k},i.prototype.calcGravitationalForce=function(t){var o,s,c,l,T,d,v,L;o=t.getOwner(),s=(o.getRight()+o.getLeft())/2,c=(o.getTop()+o.getBottom())/2,l=t.getCenterX()-s,T=t.getCenterY()-c,d=Math.abs(l)+t.getWidth()/2,v=Math.abs(T)+t.getHeight()/2,t.getOwner()==this.graphManager.getRoot()?(L=o.getEstimatedSize()*this.gravityRangeFactor,(d>L||v>L)&&(t.gravitationForceX=-this.gravityConstant*l,t.gravitationForceY=-this.gravityConstant*T)):(L=o.getEstimatedSize()*this.compoundGravityRangeFactor,(d>L||v>L)&&(t.gravitationForceX=-this.gravityConstant*l*this.compoundGravityConstant,t.gravitationForceY=-this.gravityConstant*T*this.compoundGravityConstant))},i.prototype.isConverged=function(){var t,o=!1;return this.totalIterations>this.maxIterations/3&&(o=Math.abs(this.totalDisplacement-this.oldTotalDisplacement)<2),t=this.totalDisplacement<this.totalDisplacementThreshold,this.oldTotalDisplacement=this.totalDisplacement,t||o},i.prototype.animate=function(){this.animationDuringLayout&&!this.isSubLayout&&(this.notAnimatedIterations==this.animationPeriod?(this.update(),this.notAnimatedIterations=0):this.notAnimatedIterations++)},i.prototype.calcNoOfChildrenForAllNodes=function(){for(var t,o=this.graphManager.getAllNodes(),s=0;s<o.length;s++)t=o[s],t.noOfChildren=t.getNoOfChildren()},i.prototype.calcGrid=function(t){var o=0,s=0;o=parseInt(Math.ceil((t.getRight()-t.getLeft())/this.repulsionRange)),s=parseInt(Math.ceil((t.getBottom()-t.getTop())/this.repulsionRange));for(var c=new Array(o),l=0;l<o;l++)c[l]=new Array(s);for(var l=0;l<o;l++)for(var T=0;T<s;T++)c[l][T]=new Array;return c},i.prototype.addNodeToGrid=function(t,o,s){var c=0,l=0,T=0,d=0;c=parseInt(Math.floor((t.getRect().x-o)/this.repulsionRange)),l=parseInt(Math.floor((t.getRect().width+t.getRect().x-o)/this.repulsionRange)),T=parseInt(Math.floor((t.getRect().y-s)/this.repulsionRange)),d=parseInt(Math.floor((t.getRect().height+t.getRect().y-s)/this.repulsionRange));for(var v=c;v<=l;v++)for(var L=T;L<=d;L++)this.grid[v][L].push(t),t.setGridCoordinates(c,l,T,d)},i.prototype.updateGrid=function(){var t,o,s=this.getAllNodes();for(this.grid=this.calcGrid(this.graphManager.getRoot()),t=0;t<s.length;t++)o=s[t],this.addNodeToGrid(o,this.graphManager.getRoot().getLeft(),this.graphManager.getRoot().getTop())},i.prototype.calculateRepulsionForceOfANode=function(t,o,s,c){if(this.totalIterations%a.GRID_CALCULATION_CHECK_PERIOD==1&&s||c){var l=new Set;t.surrounding=new Array;for(var T,d=this.grid,v=t.startX-1;v<t.finishX+2;v++)for(var L=t.startY-1;L<t.finishY+2;L++)if(!(v<0||L<0||v>=d.length||L>=d[0].length)){for(var b=0;b<d[v][L].length;b++)if(T=d[v][L][b],!(t.getOwner()!=T.getOwner()||t==T)&&!o.has(T)&&!l.has(T)){var C=Math.abs(t.getCenterX()-T.getCenterX())-(t.getWidth()/2+T.getWidth()/2),G=Math.abs(t.getCenterY()-T.getCenterY())-(t.getHeight()/2+T.getHeight()/2);C<=this.repulsionRange&&G<=this.repulsionRange&&l.add(T)}}t.surrounding=[].concat(u(l))}for(v=0;v<t.surrounding.length;v++)this.calcRepulsionForce(t,t.surrounding[v])},i.prototype.calcRepulsionRange=function(){return 0},A.exports=i}),(function(A,P,N){var u=N(1),h=N(4);function a(r,f,i){u.call(this,r,f,i),this.idealLength=h.DEFAULT_EDGE_LENGTH,this.edgeElasticity=h.DEFAULT_SPRING_STRENGTH}a.prototype=Object.create(u.prototype);for(var e in u)a[e]=u[e];A.exports=a}),(function(A,P,N){var u=N(3),h=N(4);function a(r,f,i,g){u.call(this,r,f,i,g),this.nodeRepulsion=h.DEFAULT_REPULSION_STRENGTH,this.springForceX=0,this.springForceY=0,this.repulsionForceX=0,this.repulsionForceY=0,this.gravitationForceX=0,this.gravitationForceY=0,this.displacementX=0,this.displacementY=0,this.startX=0,this.finishX=0,this.startY=0,this.finishY=0,this.surrounding=[]}a.prototype=Object.create(u.prototype);for(var e in u)a[e]=u[e];a.prototype.setGridCoordinates=function(r,f,i,g){this.startX=r,this.finishX=f,this.startY=i,this.finishY=g},A.exports=a}),(function(A,P,N){function u(h,a){this.width=0,this.height=0,h!==null&&a!==null&&(this.height=a,this.width=h)}u.prototype.getWidth=function(){return this.width},u.prototype.setWidth=function(h){this.width=h},u.prototype.getHeight=function(){return this.height},u.prototype.setHeight=function(h){this.height=h},A.exports=u}),(function(A,P,N){var u=N(14);function h(){this.map={},this.keys=[]}h.prototype.put=function(a,e){var r=u.createID(a);this.contains(r)||(this.map[r]=e,this.keys.push(a))},h.prototype.contains=function(a){return u.createID(a),this.map[a]!=null},h.prototype.get=function(a){var e=u.createID(a);return this.map[e]},h.prototype.keySet=function(){return this.keys},A.exports=h}),(function(A,P,N){var u=N(14);function h(){this.set={}}h.prototype.add=function(a){var e=u.createID(a);this.contains(e)||(this.set[e]=a)},h.prototype.remove=function(a){delete this.set[u.createID(a)]},h.prototype.clear=function(){this.set={}},h.prototype.contains=function(a){return this.set[u.createID(a)]==a},h.prototype.isEmpty=function(){return this.size()===0},h.prototype.size=function(){return Object.keys(this.set).length},h.prototype.addAllTo=function(a){for(var e=Object.keys(this.set),r=e.length,f=0;f<r;f++)a.push(this.set[e[f]])},h.prototype.size=function(){return Object.keys(this.set).length},h.prototype.addAll=function(a){for(var e=a.length,r=0;r<e;r++){var f=a[r];this.add(f)}},A.exports=h}),(function(A,P,N){function u(){}u.multMat=function(h,a){for(var e=[],r=0;r<h.length;r++){e[r]=[];for(var f=0;f<a[0].length;f++){e[r][f]=0;for(var i=0;i<h[0].length;i++)e[r][f]+=h[r][i]*a[i][f]}}return e},u.transpose=function(h){for(var a=[],e=0;e<h[0].length;e++){a[e]=[];for(var r=0;r<h.length;r++)a[e][r]=h[r][e]}return a},u.multCons=function(h,a){for(var e=[],r=0;r<h.length;r++)e[r]=h[r]*a;return e},u.minusOp=function(h,a){for(var e=[],r=0;r<h.length;r++)e[r]=h[r]-a[r];return e},u.dotProduct=function(h,a){for(var e=0,r=0;r<h.length;r++)e+=h[r]*a[r];return e},u.mag=function(h){return Math.sqrt(this.dotProduct(h,h))},u.normalize=function(h){for(var a=[],e=this.mag(h),r=0;r<h.length;r++)a[r]=h[r]/e;return a},u.multGamma=function(h){for(var a=[],e=0,r=0;r<h.length;r++)e+=h[r];e*=-1/h.length;for(var f=0;f<h.length;f++)a[f]=e+h[f];return a},u.multL=function(h,a,e){for(var r=[],f=[],i=[],g=0;g<a[0].length;g++){for(var t=0,o=0;o<a.length;o++)t+=-.5*a[o][g]*h[o];f[g]=t}for(var s=0;s<e.length;s++){for(var c=0,l=0;l<e.length;l++)c+=e[s][l]*f[l];i[s]=c}for(var T=0;T<a.length;T++){for(var d=0,v=0;v<a[0].length;v++)d+=a[T][v]*i[v];r[T]=d}return r},A.exports=u}),(function(A,P,N){var u=(function(){function r(f,i){for(var g=0;g<i.length;g++){var t=i[g];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(f,t.key,t)}}return function(f,i,g){return i&&r(f.prototype,i),g&&r(f,g),f}})();function h(r,f){if(!(r instanceof f))throw new TypeError("Cannot call a class as a function")}var a=N(11),e=(function(){function r(f,i){h(this,r),(i!==null||i!==void 0)&&(this.compareFunction=this._defaultCompareFunction);var g=void 0;f instanceof a?g=f.size():g=f.length,this._quicksort(f,0,g-1)}return u(r,[{key:"_quicksort",value:function(i,g,t){if(g<t){var o=this._partition(i,g,t);this._quicksort(i,g,o),this._quicksort(i,o+1,t)}}},{key:"_partition",value:function(i,g,t){for(var o=this._get(i,g),s=g,c=t;;){for(;this.compareFunction(o,this._get(i,c));)c--;for(;this.compareFunction(this._get(i,s),o);)s++;if(s<c)this._swap(i,s,c),s++,c--;else return c}}},{key:"_get",value:function(i,g){return i instanceof a?i.get_object_at(g):i[g]}},{key:"_set",value:function(i,g,t){i instanceof a?i.set_object_at(g,t):i[g]=t}},{key:"_swap",value:function(i,g,t){var o=this._get(i,g);this._set(i,g,this._get(i,t)),this._set(i,t,o)}},{key:"_defaultCompareFunction",value:function(i,g){return g>i}}]),r})();A.exports=e}),(function(A,P,N){function u(){}u.svd=function(h){this.U=null,this.V=null,this.s=null,this.m=0,this.n=0,this.m=h.length,this.n=h[0].length;var a=Math.min(this.m,this.n);this.s=(function(Tt){for(var Ct=[];Tt-- >0;)Ct.push(0);return Ct})(Math.min(this.m+1,this.n)),this.U=(function(Tt){var Ct=function Bt(bt){if(bt.length==0)return 0;for(var zt=[],St=0;St<bt[0];St++)zt.push(Bt(bt.slice(1)));return zt};return Ct(Tt)})([this.m,a]),this.V=(function(Tt){var Ct=function Bt(bt){if(bt.length==0)return 0;for(var zt=[],St=0;St<bt[0];St++)zt.push(Bt(bt.slice(1)));return zt};return Ct(Tt)})([this.n,this.n]);for(var e=(function(Tt){for(var Ct=[];Tt-- >0;)Ct.push(0);return Ct})(this.n),r=(function(Tt){for(var Ct=[];Tt-- >0;)Ct.push(0);return Ct})(this.m),f=!0,i=Math.min(this.m-1,this.n),g=Math.max(0,Math.min(this.n-2,this.m)),t=0;t<Math.max(i,g);t++){if(t<i){this.s[t]=0;for(var o=t;o<this.m;o++)this.s[t]=u.hypot(this.s[t],h[o][t]);if(this.s[t]!==0){h[t][t]<0&&(this.s[t]=-this.s[t]);for(var s=t;s<this.m;s++)h[s][t]/=this.s[t];h[t][t]+=1}this.s[t]=-this.s[t]}for(var c=t+1;c<this.n;c++){if((function(Tt,Ct){return Tt&&Ct})(t<i,this.s[t]!==0)){for(var l=0,T=t;T<this.m;T++)l+=h[T][t]*h[T][c];l=-l/h[t][t];for(var d=t;d<this.m;d++)h[d][c]+=l*h[d][t]}e[c]=h[t][c]}if((function(Tt,Ct){return Ct})(f,t<i))for(var v=t;v<this.m;v++)this.U[v][t]=h[v][t];if(t<g){e[t]=0;for(var L=t+1;L<this.n;L++)e[t]=u.hypot(e[t],e[L]);if(e[t]!==0){e[t+1]<0&&(e[t]=-e[t]);for(var b=t+1;b<this.n;b++)e[b]/=e[t];e[t+1]+=1}if(e[t]=-e[t],(function(Tt,Ct){return Tt&&Ct})(t+1<this.m,e[t]!==0)){for(var C=t+1;C<this.m;C++)r[C]=0;for(var G=t+1;G<this.n;G++)for(var k=t+1;k<this.m;k++)r[k]+=e[G]*h[k][G];for(var Y=t+1;Y<this.n;Y++)for(var K=-e[Y]/e[t+1],O=t+1;O<this.m;O++)h[O][Y]+=K*r[O]}for(var it=t+1;it<this.n;it++)this.V[it][t]=e[it]}}var n=Math.min(this.n,this.m+1);i<this.n&&(this.s[i]=h[i][i]),this.m<n&&(this.s[n-1]=0),g+1<n&&(e[g]=h[g][n-1]),e[n-1]=0;{for(var m=i;m<a;m++){for(var p=0;p<this.m;p++)this.U[p][m]=0;this.U[m][m]=1}for(var E=i-1;E>=0;E--)if(this.s[E]!==0){for(var y=E+1;y<a;y++){for(var R=0,M=E;M<this.m;M++)R+=this.U[M][E]*this.U[M][y];R=-R/this.U[E][E];for(var S=E;S<this.m;S++)this.U[S][y]+=R*this.U[S][E]}for(var W=E;W<this.m;W++)this.U[W][E]=-this.U[W][E];this.U[E][E]=1+this.U[E][E];for(var D=0;D<E-1;D++)this.U[D][E]=0}else{for(var q=0;q<this.m;q++)this.U[q][E]=0;this.U[E][E]=1}}for(var V=this.n-1;V>=0;V--){if((function(Tt,Ct){return Tt&&Ct})(V<g,e[V]!==0))for(var X=V+1;X<a;X++){for(var et=0,z=V+1;z<this.n;z++)et+=this.V[z][V]*this.V[z][X];et=-et/this.V[V+1][V];for(var w=V+1;w<this.n;w++)this.V[w][X]+=et*this.V[w][V]}for(var H=0;H<this.n;H++)this.V[H][V]=0;this.V[V][V]=1}for(var B=n-1,_=Math.pow(2,-52),ht=Math.pow(2,-966);n>0;){var Q=void 0,It=void 0;for(Q=n-2;Q>=-1&&Q!==-1;Q--)if(Math.abs(e[Q])<=ht+_*(Math.abs(this.s[Q])+Math.abs(this.s[Q+1]))){e[Q]=0;break}if(Q===n-2)It=4;else{var Nt=void 0;for(Nt=n-1;Nt>=Q&&Nt!==Q;Nt--){var vt=(Nt!==n?Math.abs(e[Nt]):0)+(Nt!==Q+1?Math.abs(e[Nt-1]):0);if(Math.abs(this.s[Nt])<=ht+_*vt){this.s[Nt]=0;break}}Nt===Q?It=3:Nt===n-1?It=1:(It=2,Q=Nt)}switch(Q++,It){case 1:{var rt=e[n-2];e[n-2]=0;for(var gt=n-2;gt>=Q;gt--){var mt=u.hypot(this.s[gt],rt),At=this.s[gt]/mt,Ot=rt/mt;this.s[gt]=mt,gt!==Q&&(rt=-Ot*e[gt-1],e[gt-1]=At*e[gt-1]);for(var Et=0;Et<this.n;Et++)mt=At*this.V[Et][gt]+Ot*this.V[Et][n-1],this.V[Et][n-1]=-Ot*this.V[Et][gt]+At*this.V[Et][n-1],this.V[Et][gt]=mt}}break;case 2:{var Dt=e[Q-1];e[Q-1]=0;for(var Rt=Q;Rt<n;Rt++){var Ht=u.hypot(this.s[Rt],Dt),Ut=this.s[Rt]/Ht,Pt=Dt/Ht;this.s[Rt]=Ht,Dt=-Pt*e[Rt],e[Rt]=Ut*e[Rt];for(var Ft=0;Ft<this.m;Ft++)Ht=Ut*this.U[Ft][Rt]+Pt*this.U[Ft][Q-1],this.U[Ft][Q-1]=-Pt*this.U[Ft][Rt]+Ut*this.U[Ft][Q-1],this.U[Ft][Rt]=Ht}}break;case 3:{var Yt=Math.max(Math.max(Math.max(Math.max(Math.abs(this.s[n-1]),Math.abs(this.s[n-2])),Math.abs(e[n-2])),Math.abs(this.s[Q])),Math.abs(e[Q])),Vt=this.s[n-1]/Yt,F=this.s[n-2]/Yt,U=e[n-2]/Yt,$=this.s[Q]/Yt,J=e[Q]/Yt,Z=((F+Vt)*(F-Vt)+U*U)/2,at=Vt*U*(Vt*U),ct=0;(function(Tt,Ct){return Tt||Ct})(Z!==0,at!==0)&&(ct=Math.sqrt(Z*Z+at),Z<0&&(ct=-ct),ct=at/(Z+ct));for(var nt=($+Vt)*($-Vt)+ct,tt=$*J,j=Q;j<n-1;j++){var ut=u.hypot(nt,tt),Mt=nt/ut,pt=tt/ut;j!==Q&&(e[j-1]=ut),nt=Mt*this.s[j]+pt*e[j],e[j]=Mt*e[j]-pt*this.s[j],tt=pt*this.s[j+1],this.s[j+1]=Mt*this.s[j+1];for(var xt=0;xt<this.n;xt++)ut=Mt*this.V[xt][j]+pt*this.V[xt][j+1],this.V[xt][j+1]=-pt*this.V[xt][j]+Mt*this.V[xt][j+1],this.V[xt][j]=ut;if(ut=u.hypot(nt,tt),Mt=nt/ut,pt=tt/ut,this.s[j]=ut,nt=Mt*e[j]+pt*this.s[j+1],this.s[j+1]=-pt*e[j]+Mt*this.s[j+1],tt=pt*e[j+1],e[j+1]=Mt*e[j+1],j<this.m-1)for(var lt=0;lt<this.m;lt++)ut=Mt*this.U[lt][j]+pt*this.U[lt][j+1],this.U[lt][j+1]=-pt*this.U[lt][j]+Mt*this.U[lt][j+1],this.U[lt][j]=ut}e[n-2]=nt}break;case 4:{if(this.s[Q]<=0){this.s[Q]=this.s[Q]<0?-this.s[Q]:0;for(var ot=0;ot<=B;ot++)this.V[ot][Q]=-this.V[ot][Q]}for(;Q<B&&!(this.s[Q]>=this.s[Q+1]);){var Lt=this.s[Q];if(this.s[Q]=this.s[Q+1],this.s[Q+1]=Lt,Q<this.n-1)for(var ft=0;ft<this.n;ft++)Lt=this.V[ft][Q+1],this.V[ft][Q+1]=this.V[ft][Q],this.V[ft][Q]=Lt;if(Q<this.m-1)for(var st=0;st<this.m;st++)Lt=this.U[st][Q+1],this.U[st][Q+1]=this.U[st][Q],this.U[st][Q]=Lt;Q++}n--}break}}var Xt={U:this.U,V:this.V,S:this.s};return Xt},u.hypot=function(h,a){var e=void 0;return Math.abs(h)>Math.abs(a)?(e=a/h,e=Math.abs(h)*Math.sqrt(1+e*e)):a!=0?(e=h/a,e=Math.abs(a)*Math.sqrt(1+e*e)):e=0,e},A.exports=u}),(function(A,P,N){var u=(function(){function e(r,f){for(var i=0;i<f.length;i++){var g=f[i];g.enumerable=g.enumerable||!1,g.configurable=!0,"value"in g&&(g.writable=!0),Object.defineProperty(r,g.key,g)}}return function(r,f,i){return f&&e(r.prototype,f),i&&e(r,i),r}})();function h(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}var a=(function(){function e(r,f){var i=arguments.length>2&&arguments[2]!==void 0?arguments[2]:1,g=arguments.length>3&&arguments[3]!==void 0?arguments[3]:-1,t=arguments.length>4&&arguments[4]!==void 0?arguments[4]:-1;h(this,e),this.sequence1=r,this.sequence2=f,this.match_score=i,this.mismatch_penalty=g,this.gap_penalty=t,this.iMax=r.length+1,this.jMax=f.length+1,this.grid=new Array(this.iMax);for(var o=0;o<this.iMax;o++){this.grid[o]=new Array(this.jMax);for(var s=0;s<this.jMax;s++)this.grid[o][s]=0}this.tracebackGrid=new Array(this.iMax);for(var c=0;c<this.iMax;c++){this.tracebackGrid[c]=new Array(this.jMax);for(var l=0;l<this.jMax;l++)this.tracebackGrid[c][l]=[null,null,null]}this.alignments=[],this.score=-1,this.computeGrids()}return u(e,[{key:"getScore",value:function(){return this.score}},{key:"getAlignments",value:function(){return this.alignments}},{key:"computeGrids",value:function(){for(var f=1;f<this.jMax;f++)this.grid[0][f]=this.grid[0][f-1]+this.gap_penalty,this.tracebackGrid[0][f]=[!1,!1,!0];for(var i=1;i<this.iMax;i++)this.grid[i][0]=this.grid[i-1][0]+this.gap_penalty,this.tracebackGrid[i][0]=[!1,!0,!1];for(var g=1;g<this.iMax;g++)for(var t=1;t<this.jMax;t++){var o=void 0;this.sequence1[g-1]===this.sequence2[t-1]?o=this.grid[g-1][t-1]+this.match_score:o=this.grid[g-1][t-1]+this.mismatch_penalty;var s=this.grid[g-1][t]+this.gap_penalty,c=this.grid[g][t-1]+this.gap_penalty,l=[o,s,c],T=this.arrayAllMaxIndexes(l);this.grid[g][t]=l[T[0]],this.tracebackGrid[g][t]=[T.includes(0),T.includes(1),T.includes(2)]}this.score=this.grid[this.iMax-1][this.jMax-1]}},{key:"alignmentTraceback",value:function(){var f=[];for(f.push({pos:[this.sequence1.length,this.sequence2.length],seq1:"",seq2:""});f[0];){var i=f[0],g=this.tracebackGrid[i.pos[0]][i.pos[1]];g[0]&&f.push({pos:[i.pos[0]-1,i.pos[1]-1],seq1:this.sequence1[i.pos[0]-1]+i.seq1,seq2:this.sequence2[i.pos[1]-1]+i.seq2}),g[1]&&f.push({pos:[i.pos[0]-1,i.pos[1]],seq1:this.sequence1[i.pos[0]-1]+i.seq1,seq2:"-"+i.seq2}),g[2]&&f.push({pos:[i.pos[0],i.pos[1]-1],seq1:"-"+i.seq1,seq2:this.sequence2[i.pos[1]-1]+i.seq2}),i.pos[0]===0&&i.pos[1]===0&&this.alignments.push({sequence1:i.seq1,sequence2:i.seq2}),f.shift()}return this.alignments}},{key:"getAllIndexes",value:function(f,i){for(var g=[],t=-1;(t=f.indexOf(i,t+1))!==-1;)g.push(t);return g}},{key:"arrayAllMaxIndexes",value:function(f){return this.getAllIndexes(f,Math.max.apply(null,f))}}]),e})();A.exports=a}),(function(A,P,N){var u=function(){};u.FDLayout=N(18),u.FDLayoutConstants=N(4),u.FDLayoutEdge=N(19),u.FDLayoutNode=N(20),u.DimensionD=N(21),u.HashMap=N(22),u.HashSet=N(23),u.IGeometry=N(8),u.IMath=N(9),u.Integer=N(10),u.Point=N(12),u.PointD=N(5),u.RandomSeed=N(16),u.RectangleD=N(13),u.Transform=N(17),u.UniqueIDGeneretor=N(14),u.Quicksort=N(25),u.LinkedList=N(11),u.LGraphObject=N(2),u.LGraph=N(6),u.LEdge=N(1),u.LGraphManager=N(7),u.LNode=N(3),u.Layout=N(15),u.LayoutConstants=N(0),u.NeedlemanWunsch=N(27),u.Matrix=N(24),u.SVD=N(26),A.exports=u}),(function(A,P,N){function u(){this.listeners=[]}var h=u.prototype;h.addListener=function(a,e){this.listeners.push({event:a,callback:e})},h.removeListener=function(a,e){for(var r=this.listeners.length;r>=0;r--){var f=this.listeners[r];f.event===a&&f.callback===e&&this.listeners.splice(r,1)}},h.emit=function(a,e){for(var r=0;r<this.listeners.length;r++){var f=this.listeners[r];a===f.event&&f.callback(e)}},A.exports=u})])})})(fe)),fe.exports}var ur=le.exports,Oe;function dr(){return Oe||(Oe=1,(function(I,x){(function(P,N){I.exports=N(gr())})(ur,function(A){return(()=>{var P={45:((a,e,r)=>{var f={};f.layoutBase=r(551),f.CoSEConstants=r(806),f.CoSEEdge=r(767),f.CoSEGraph=r(880),f.CoSEGraphManager=r(578),f.CoSELayout=r(765),f.CoSENode=r(991),f.ConstraintHandler=r(902),a.exports=f}),806:((a,e,r)=>{var f=r(551).FDLayoutConstants;function i(){}for(var g in f)i[g]=f[g];i.DEFAULT_USE_MULTI_LEVEL_SCALING=!1,i.DEFAULT_RADIAL_SEPARATION=f.DEFAULT_EDGE_LENGTH,i.DEFAULT_COMPONENT_SEPERATION=60,i.TILE=!0,i.TILING_PADDING_VERTICAL=10,i.TILING_PADDING_HORIZONTAL=10,i.TRANSFORM_ON_CONSTRAINT_HANDLING=!0,i.ENFORCE_CONSTRAINTS=!0,i.APPLY_LAYOUT=!0,i.RELAX_MOVEMENT_ON_CONSTRAINTS=!0,i.TREE_REDUCTION_ON_INCREMENTAL=!0,i.PURE_INCREMENTAL=i.DEFAULT_INCREMENTAL,a.exports=i}),767:((a,e,r)=>{var f=r(551).FDLayoutEdge;function i(t,o,s){f.call(this,t,o,s)}i.prototype=Object.create(f.prototype);for(var g in f)i[g]=f[g];a.exports=i}),880:((a,e,r)=>{var f=r(551).LGraph;function i(t,o,s){f.call(this,t,o,s)}i.prototype=Object.create(f.prototype);for(var g in f)i[g]=f[g];a.exports=i}),578:((a,e,r)=>{var f=r(551).LGraphManager;function i(t){f.call(this,t)}i.prototype=Object.create(f.prototype);for(var g in f)i[g]=f[g];a.exports=i}),765:((a,e,r)=>{var f=r(551).FDLayout,i=r(578),g=r(880),t=r(991),o=r(767),s=r(806),c=r(902),l=r(551).FDLayoutConstants,T=r(551).LayoutConstants,d=r(551).Point,v=r(551).PointD,L=r(551).DimensionD,b=r(551).Layout,C=r(551).Integer,G=r(551).IGeometry,k=r(551).LGraph,Y=r(551).Transform,K=r(551).LinkedList;function O(){f.call(this),this.toBeTiled={},this.constraints={}}O.prototype=Object.create(f.prototype);for(var it in f)O[it]=f[it];O.prototype.newGraphManager=function(){var n=new i(this);return this.graphManager=n,n},O.prototype.newGraph=function(n){return new g(null,this.graphManager,n)},O.prototype.newNode=function(n){return new t(this.graphManager,n)},O.prototype.newEdge=function(n){return new o(null,null,n)},O.prototype.initParameters=function(){f.prototype.initParameters.call(this,arguments),this.isSubLayout||(s.DEFAULT_EDGE_LENGTH<10?this.idealEdgeLength=10:this.idealEdgeLength=s.DEFAULT_EDGE_LENGTH,this.useSmartIdealEdgeLengthCalculation=s.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION,this.gravityConstant=l.DEFAULT_GRAVITY_STRENGTH,this.compoundGravityConstant=l.DEFAULT_COMPOUND_GRAVITY_STRENGTH,this.gravityRangeFactor=l.DEFAULT_GRAVITY_RANGE_FACTOR,this.compoundGravityRangeFactor=l.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR,this.prunedNodesAll=[],this.growTreeIterations=0,this.afterGrowthIterations=0,this.isTreeGrowing=!1,this.isGrowthFinished=!1)},O.prototype.initSpringEmbedder=function(){f.prototype.initSpringEmbedder.call(this),this.coolingCycle=0,this.maxCoolingCycle=this.maxIterations/l.CONVERGENCE_CHECK_PERIOD,this.finalTemperature=.04,this.coolingAdjuster=1},O.prototype.layout=function(){var n=T.DEFAULT_CREATE_BENDS_AS_NEEDED;return n&&(this.createBendpoints(),this.graphManager.resetAllEdges()),this.level=0,this.classicLayout()},O.prototype.classicLayout=function(){if(this.nodesWithGravity=this.calculateNodesToApplyGravitationTo(),this.graphManager.setAllNodesToApplyGravitation(this.nodesWithGravity),this.calcNoOfChildrenForAllNodes(),this.graphManager.calcLowestCommonAncestors(),this.graphManager.calcInclusionTreeDepths(),this.graphManager.getRoot().calcEstimatedSize(),this.calcIdealEdgeLengths(),this.incremental){if(s.TREE_REDUCTION_ON_INCREMENTAL){this.reduceTrees(),this.graphManager.resetAllNodesToApplyGravitation();var m=new Set(this.getAllNodes()),p=this.nodesWithGravity.filter(function(R){return m.has(R)});this.graphManager.setAllNodesToApplyGravitation(p)}}else{var n=this.getFlatForest();if(n.length>0)this.positionNodesRadially(n);else{this.reduceTrees(),this.graphManager.resetAllNodesToApplyGravitation();var m=new Set(this.getAllNodes()),p=this.nodesWithGravity.filter(function(E){return m.has(E)});this.graphManager.setAllNodesToApplyGravitation(p),this.positionNodesRandomly()}}return Object.keys(this.constraints).length>0&&(c.handleConstraints(this),this.initConstraintVariables()),this.initSpringEmbedder(),s.APPLY_LAYOUT&&this.runSpringEmbedder(),!0},O.prototype.tick=function(){if(this.totalIterations++,this.totalIterations===this.maxIterations&&!this.isTreeGrowing&&!this.isGrowthFinished)if(this.prunedNodesAll.length>0)this.isTreeGrowing=!0;else return!0;if(this.totalIterations%l.CONVERGENCE_CHECK_PERIOD==0&&!this.isTreeGrowing&&!this.isGrowthFinished){if(this.isConverged())if(this.prunedNodesAll.length>0)this.isTreeGrowing=!0;else return!0;this.coolingCycle++,this.layoutQuality==0?this.coolingAdjuster=this.coolingCycle:this.layoutQuality==1&&(this.coolingAdjuster=this.coolingCycle/3),this.coolingFactor=Math.max(this.initialCoolingFactor-Math.pow(this.coolingCycle,Math.log(100*(this.initialCoolingFactor-this.finalTemperature))/Math.log(this.maxCoolingCycle))/100*this.coolingAdjuster,this.finalTemperature),this.animationPeriod=Math.ceil(this.initialAnimationPeriod*Math.sqrt(this.coolingFactor))}if(this.isTreeGrowing){if(this.growTreeIterations%10==0)if(this.prunedNodesAll.length>0){this.graphManager.updateBounds(),this.updateGrid(),this.growTree(this.prunedNodesAll),this.graphManager.resetAllNodesToApplyGravitation();var n=new Set(this.getAllNodes()),m=this.nodesWithGravity.filter(function(y){return n.has(y)});this.graphManager.setAllNodesToApplyGravitation(m),this.graphManager.updateBounds(),this.updateGrid(),s.PURE_INCREMENTAL?this.coolingFactor=l.DEFAULT_COOLING_FACTOR_INCREMENTAL/2:this.coolingFactor=l.DEFAULT_COOLING_FACTOR_INCREMENTAL}else this.isTreeGrowing=!1,this.isGrowthFinished=!0;this.growTreeIterations++}if(this.isGrowthFinished){if(this.isConverged())return!0;this.afterGrowthIterations%10==0&&(this.graphManager.updateBounds(),this.updateGrid()),s.PURE_INCREMENTAL?this.coolingFactor=l.DEFAULT_COOLING_FACTOR_INCREMENTAL/2*((100-this.afterGrowthIterations)/100):this.coolingFactor=l.DEFAULT_COOLING_FACTOR_INCREMENTAL*((100-this.afterGrowthIterations)/100),this.afterGrowthIterations++}var p=!this.isTreeGrowing&&!this.isGrowthFinished,E=this.growTreeIterations%10==1&&this.isTreeGrowing||this.afterGrowthIterations%10==1&&this.isGrowthFinished;return this.totalDisplacement=0,this.graphManager.updateBounds(),this.calcSpringForces(),this.calcRepulsionForces(p,E),this.calcGravitationalForces(),this.moveNodes(),this.animate(),!1},O.prototype.getPositionsData=function(){for(var n=this.graphManager.getAllNodes(),m={},p=0;p<n.length;p++){var E=n[p].rect,y=n[p].id;m[y]={id:y,x:E.getCenterX(),y:E.getCenterY(),w:E.width,h:E.height}}return m},O.prototype.runSpringEmbedder=function(){this.initialAnimationPeriod=25,this.animationPeriod=this.initialAnimationPeriod;var n=!1;if(l.ANIMATE==="during")this.emit("layoutstarted");else{for(;!n;)n=this.tick();this.graphManager.updateBounds()}},O.prototype.moveNodes=function(){for(var n=this.getAllNodes(),m,p=0;p<n.length;p++)m=n[p],m.calculateDisplacement();Object.keys(this.constraints).length>0&&this.updateDisplacements();for(var p=0;p<n.length;p++)m=n[p],m.move()},O.prototype.initConstraintVariables=function(){var n=this;this.idToNodeMap=new Map,this.fixedNodeSet=new Set;for(var m=this.graphManager.getAllNodes(),p=0;p<m.length;p++){var E=m[p];this.idToNodeMap.set(E.id,E)}var y=function w(H){for(var B=H.getChild().getNodes(),_,ht=0,Q=0;Q<B.length;Q++)_=B[Q],_.getChild()==null?n.fixedNodeSet.has(_.id)&&(ht+=100):ht+=w(_);return ht};if(this.constraints.fixedNodeConstraint){this.constraints.fixedNodeConstraint.forEach(function(B){n.fixedNodeSet.add(B.nodeId)});for(var m=this.graphManager.getAllNodes(),E,p=0;p<m.length;p++)if(E=m[p],E.getChild()!=null){var R=y(E);R>0&&(E.fixedNodeWeight=R)}}if(this.constraints.relativePlacementConstraint){var M=new Map,S=new Map;if(this.dummyToNodeForVerticalAlignment=new Map,this.dummyToNodeForHorizontalAlignment=new Map,this.fixedNodesOnHorizontal=new Set,this.fixedNodesOnVertical=new Set,this.fixedNodeSet.forEach(function(w){n.fixedNodesOnHorizontal.add(w),n.fixedNodesOnVertical.add(w)}),this.constraints.alignmentConstraint){if(this.constraints.alignmentConstraint.vertical)for(var W=this.constraints.alignmentConstraint.vertical,p=0;p<W.length;p++)this.dummyToNodeForVerticalAlignment.set("dummy"+p,[]),W[p].forEach(function(H){M.set(H,"dummy"+p),n.dummyToNodeForVerticalAlignment.get("dummy"+p).push(H),n.fixedNodeSet.has(H)&&n.fixedNodesOnHorizontal.add("dummy"+p)});if(this.constraints.alignmentConstraint.horizontal)for(var D=this.constraints.alignmentConstraint.horizontal,p=0;p<D.length;p++)this.dummyToNodeForHorizontalAlignment.set("dummy"+p,[]),D[p].forEach(function(H){S.set(H,"dummy"+p),n.dummyToNodeForHorizontalAlignment.get("dummy"+p).push(H),n.fixedNodeSet.has(H)&&n.fixedNodesOnVertical.add("dummy"+p)})}if(s.RELAX_MOVEMENT_ON_CONSTRAINTS)this.shuffle=function(w){var H,B,_;for(_=w.length-1;_>=2*w.length/3;_--)H=Math.floor(Math.random()*(_+1)),B=w[_],w[_]=w[H],w[H]=B;return w},this.nodesInRelativeHorizontal=[],this.nodesInRelativeVertical=[],this.nodeToRelativeConstraintMapHorizontal=new Map,this.nodeToRelativeConstraintMapVertical=new Map,this.nodeToTempPositionMapHorizontal=new Map,this.nodeToTempPositionMapVertical=new Map,this.constraints.relativePlacementConstraint.forEach(function(w){if(w.left){var H=M.has(w.left)?M.get(w.left):w.left,B=M.has(w.right)?M.get(w.right):w.right;n.nodesInRelativeHorizontal.includes(H)||(n.nodesInRelativeHorizontal.push(H),n.nodeToRelativeConstraintMapHorizontal.set(H,[]),n.dummyToNodeForVerticalAlignment.has(H)?n.nodeToTempPositionMapHorizontal.set(H,n.idToNodeMap.get(n.dummyToNodeForVerticalAlignment.get(H)[0]).getCenterX()):n.nodeToTempPositionMapHorizontal.set(H,n.idToNodeMap.get(H).getCenterX())),n.nodesInRelativeHorizontal.includes(B)||(n.nodesInRelativeHorizontal.push(B),n.nodeToRelativeConstraintMapHorizontal.set(B,[]),n.dummyToNodeForVerticalAlignment.has(B)?n.nodeToTempPositionMapHorizontal.set(B,n.idToNodeMap.get(n.dummyToNodeForVerticalAlignment.get(B)[0]).getCenterX()):n.nodeToTempPositionMapHorizontal.set(B,n.idToNodeMap.get(B).getCenterX())),n.nodeToRelativeConstraintMapHorizontal.get(H).push({right:B,gap:w.gap}),n.nodeToRelativeConstraintMapHorizontal.get(B).push({left:H,gap:w.gap})}else{var _=S.has(w.top)?S.get(w.top):w.top,ht=S.has(w.bottom)?S.get(w.bottom):w.bottom;n.nodesInRelativeVertical.includes(_)||(n.nodesInRelativeVertical.push(_),n.nodeToRelativeConstraintMapVertical.set(_,[]),n.dummyToNodeForHorizontalAlignment.has(_)?n.nodeToTempPositionMapVertical.set(_,n.idToNodeMap.get(n.dummyToNodeForHorizontalAlignment.get(_)[0]).getCenterY()):n.nodeToTempPositionMapVertical.set(_,n.idToNodeMap.get(_).getCenterY())),n.nodesInRelativeVertical.includes(ht)||(n.nodesInRelativeVertical.push(ht),n.nodeToRelativeConstraintMapVertical.set(ht,[]),n.dummyToNodeForHorizontalAlignment.has(ht)?n.nodeToTempPositionMapVertical.set(ht,n.idToNodeMap.get(n.dummyToNodeForHorizontalAlignment.get(ht)[0]).getCenterY()):n.nodeToTempPositionMapVertical.set(ht,n.idToNodeMap.get(ht).getCenterY())),n.nodeToRelativeConstraintMapVertical.get(_).push({bottom:ht,gap:w.gap}),n.nodeToRelativeConstraintMapVertical.get(ht).push({top:_,gap:w.gap})}});else{var q=new Map,V=new Map;this.constraints.relativePlacementConstraint.forEach(function(w){if(w.left){var H=M.has(w.left)?M.get(w.left):w.left,B=M.has(w.right)?M.get(w.right):w.right;q.has(H)?q.get(H).push(B):q.set(H,[B]),q.has(B)?q.get(B).push(H):q.set(B,[H])}else{var _=S.has(w.top)?S.get(w.top):w.top,ht=S.has(w.bottom)?S.get(w.bottom):w.bottom;V.has(_)?V.get(_).push(ht):V.set(_,[ht]),V.has(ht)?V.get(ht).push(_):V.set(ht,[_])}});var X=function(H,B){var _=[],ht=[],Q=new K,It=new Set,Nt=0;return H.forEach(function(vt,rt){if(!It.has(rt)){_[Nt]=[],ht[Nt]=!1;var gt=rt;for(Q.push(gt),It.add(gt),_[Nt].push(gt);Q.length!=0;){gt=Q.shift(),B.has(gt)&&(ht[Nt]=!0);var mt=H.get(gt);mt.forEach(function(At){It.has(At)||(Q.push(At),It.add(At),_[Nt].push(At))})}Nt++}}),{components:_,isFixed:ht}},et=X(q,n.fixedNodesOnHorizontal);this.componentsOnHorizontal=et.components,this.fixedComponentsOnHorizontal=et.isFixed;var z=X(V,n.fixedNodesOnVertical);this.componentsOnVertical=z.components,this.fixedComponentsOnVertical=z.isFixed}}},O.prototype.updateDisplacements=function(){var n=this;if(this.constraints.fixedNodeConstraint&&this.constraints.fixedNodeConstraint.forEach(function(z){var w=n.idToNodeMap.get(z.nodeId);w.displacementX=0,w.displacementY=0}),this.constraints.alignmentConstraint){if(this.constraints.alignmentConstraint.vertical)for(var m=this.constraints.alignmentConstraint.vertical,p=0;p<m.length;p++){for(var E=0,y=0;y<m[p].length;y++){if(this.fixedNodeSet.has(m[p][y])){E=0;break}E+=this.idToNodeMap.get(m[p][y]).displacementX}for(var R=E/m[p].length,y=0;y<m[p].length;y++)this.idToNodeMap.get(m[p][y]).displacementX=R}if(this.constraints.alignmentConstraint.horizontal)for(var M=this.constraints.alignmentConstraint.horizontal,p=0;p<M.length;p++){for(var S=0,y=0;y<M[p].length;y++){if(this.fixedNodeSet.has(M[p][y])){S=0;break}S+=this.idToNodeMap.get(M[p][y]).displacementY}for(var W=S/M[p].length,y=0;y<M[p].length;y++)this.idToNodeMap.get(M[p][y]).displacementY=W}}if(this.constraints.relativePlacementConstraint)if(s.RELAX_MOVEMENT_ON_CONSTRAINTS)this.totalIterations%10==0&&(this.shuffle(this.nodesInRelativeHorizontal),this.shuffle(this.nodesInRelativeVertical)),this.nodesInRelativeHorizontal.forEach(function(z){if(!n.fixedNodesOnHorizontal.has(z)){var w=0;n.dummyToNodeForVerticalAlignment.has(z)?w=n.idToNodeMap.get(n.dummyToNodeForVerticalAlignment.get(z)[0]).displacementX:w=n.idToNodeMap.get(z).displacementX,n.nodeToRelativeConstraintMapHorizontal.get(z).forEach(function(H){if(H.right){var B=n.nodeToTempPositionMapHorizontal.get(H.right)-n.nodeToTempPositionMapHorizontal.get(z)-w;B<H.gap&&(w-=H.gap-B)}else{var B=n.nodeToTempPositionMapHorizontal.get(z)-n.nodeToTempPositionMapHorizontal.get(H.left)+w;B<H.gap&&(w+=H.gap-B)}}),n.nodeToTempPositionMapHorizontal.set(z,n.nodeToTempPositionMapHorizontal.get(z)+w),n.dummyToNodeForVerticalAlignment.has(z)?n.dummyToNodeForVerticalAlignment.get(z).forEach(function(H){n.idToNodeMap.get(H).displacementX=w}):n.idToNodeMap.get(z).displacementX=w}}),this.nodesInRelativeVertical.forEach(function(z){if(!n.fixedNodesOnHorizontal.has(z)){var w=0;n.dummyToNodeForHorizontalAlignment.has(z)?w=n.idToNodeMap.get(n.dummyToNodeForHorizontalAlignment.get(z)[0]).displacementY:w=n.idToNodeMap.get(z).displacementY,n.nodeToRelativeConstraintMapVertical.get(z).forEach(function(H){if(H.bottom){var B=n.nodeToTempPositionMapVertical.get(H.bottom)-n.nodeToTempPositionMapVertical.get(z)-w;B<H.gap&&(w-=H.gap-B)}else{var B=n.nodeToTempPositionMapVertical.get(z)-n.nodeToTempPositionMapVertical.get(H.top)+w;B<H.gap&&(w+=H.gap-B)}}),n.nodeToTempPositionMapVertical.set(z,n.nodeToTempPositionMapVertical.get(z)+w),n.dummyToNodeForHorizontalAlignment.has(z)?n.dummyToNodeForHorizontalAlignment.get(z).forEach(function(H){n.idToNodeMap.get(H).displacementY=w}):n.idToNodeMap.get(z).displacementY=w}});else{for(var p=0;p<this.componentsOnHorizontal.length;p++){var D=this.componentsOnHorizontal[p];if(this.fixedComponentsOnHorizontal[p])for(var y=0;y<D.length;y++)this.dummyToNodeForVerticalAlignment.has(D[y])?this.dummyToNodeForVerticalAlignment.get(D[y]).forEach(function(H){n.idToNodeMap.get(H).displacementX=0}):this.idToNodeMap.get(D[y]).displacementX=0;else{for(var q=0,V=0,y=0;y<D.length;y++)if(this.dummyToNodeForVerticalAlignment.has(D[y])){var X=this.dummyToNodeForVerticalAlignment.get(D[y]);q+=X.length*this.idToNodeMap.get(X[0]).displacementX,V+=X.length}else q+=this.idToNodeMap.get(D[y]).displacementX,V++;for(var et=q/V,y=0;y<D.length;y++)this.dummyToNodeForVerticalAlignment.has(D[y])?this.dummyToNodeForVerticalAlignment.get(D[y]).forEach(function(H){n.idToNodeMap.get(H).displacementX=et}):this.idToNodeMap.get(D[y]).displacementX=et}}for(var p=0;p<this.componentsOnVertical.length;p++){var D=this.componentsOnVertical[p];if(this.fixedComponentsOnVertical[p])for(var y=0;y<D.length;y++)this.dummyToNodeForHorizontalAlignment.has(D[y])?this.dummyToNodeForHorizontalAlignment.get(D[y]).forEach(function(B){n.idToNodeMap.get(B).displacementY=0}):this.idToNodeMap.get(D[y]).displacementY=0;else{for(var q=0,V=0,y=0;y<D.length;y++)if(this.dummyToNodeForHorizontalAlignment.has(D[y])){var X=this.dummyToNodeForHorizontalAlignment.get(D[y]);q+=X.length*this.idToNodeMap.get(X[0]).displacementY,V+=X.length}else q+=this.idToNodeMap.get(D[y]).displacementY,V++;for(var et=q/V,y=0;y<D.length;y++)this.dummyToNodeForHorizontalAlignment.has(D[y])?this.dummyToNodeForHorizontalAlignment.get(D[y]).forEach(function(Q){n.idToNodeMap.get(Q).displacementY=et}):this.idToNodeMap.get(D[y]).displacementY=et}}}},O.prototype.calculateNodesToApplyGravitationTo=function(){var n=[],m,p=this.graphManager.getGraphs(),E=p.length,y;for(y=0;y<E;y++)m=p[y],m.updateConnected(),m.isConnected||(n=n.concat(m.getNodes()));return n},O.prototype.createBendpoints=function(){var n=[];n=n.concat(this.graphManager.getAllEdges());var m=new Set,p;for(p=0;p<n.length;p++){var E=n[p];if(!m.has(E)){var y=E.getSource(),R=E.getTarget();if(y==R)E.getBendpoints().push(new v),E.getBendpoints().push(new v),this.createDummyNodesForBendpoints(E),m.add(E);else{var M=[];if(M=M.concat(y.getEdgeListToNode(R)),M=M.concat(R.getEdgeListToNode(y)),!m.has(M[0])){if(M.length>1){var S;for(S=0;S<M.length;S++){var W=M[S];W.getBendpoints().push(new v),this.createDummyNodesForBendpoints(W)}}M.forEach(function(D){m.add(D)})}}}if(m.size==n.length)break}},O.prototype.positionNodesRadially=function(n){for(var m=new d(0,0),p=Math.ceil(Math.sqrt(n.length)),E=0,y=0,R=0,M=new v(0,0),S=0;S<n.length;S++){S%p==0&&(R=0,y=E,S!=0&&(y+=s.DEFAULT_COMPONENT_SEPERATION),E=0);var W=n[S],D=b.findCenterOfTree(W);m.x=R,m.y=y,M=O.radialLayout(W,D,m),M.y>E&&(E=Math.floor(M.y)),R=Math.floor(M.x+s.DEFAULT_COMPONENT_SEPERATION)}this.transform(new v(T.WORLD_CENTER_X-M.x/2,T.WORLD_CENTER_Y-M.y/2))},O.radialLayout=function(n,m,p){var E=Math.max(this.maxDiagonalInTree(n),s.DEFAULT_RADIAL_SEPARATION);O.branchRadialLayout(m,null,0,359,0,E);var y=k.calculateBounds(n),R=new Y;R.setDeviceOrgX(y.getMinX()),R.setDeviceOrgY(y.getMinY()),R.setWorldOrgX(p.x),R.setWorldOrgY(p.y);for(var M=0;M<n.length;M++){var S=n[M];S.transform(R)}var W=new v(y.getMaxX(),y.getMaxY());return R.inverseTransformPoint(W)},O.branchRadialLayout=function(n,m,p,E,y,R){var M=(E-p+1)/2;M<0&&(M+=180);var S=(M+p)%360,W=S*G.TWO_PI/360,D=y*Math.cos(W),q=y*Math.sin(W);n.setCenter(D,q);var V=[];V=V.concat(n.getEdges());var X=V.length;m!=null&&X--;for(var et=0,z=V.length,w,H=n.getEdgesBetween(m);H.length>1;){var B=H[0];H.splice(0,1);var _=V.indexOf(B);_>=0&&V.splice(_,1),z--,X--}m!=null?w=(V.indexOf(H[0])+1)%z:w=0;for(var ht=Math.abs(E-p)/X,Q=w;et!=X;Q=++Q%z){var It=V[Q].getOtherEnd(n);if(It!=m){var Nt=(p+et*ht)%360,vt=(Nt+ht)%360;O.branchRadialLayout(It,n,Nt,vt,y+R,R),et++}}},O.maxDiagonalInTree=function(n){for(var m=C.MIN_VALUE,p=0;p<n.length;p++){var E=n[p],y=E.getDiagonal();y>m&&(m=y)}return m},O.prototype.calcRepulsionRange=function(){return 2*(this.level+1)*this.idealEdgeLength},O.prototype.groupZeroDegreeMembers=function(){var n=this,m={};this.memberGroups={},this.idToDummyNode={};for(var p=[],E=this.graphManager.getAllNodes(),y=0;y<E.length;y++){var R=E[y],M=R.getParent();this.getNodeDegreeWithChildren(R)===0&&(M.id==null||!this.getToBeTiled(M))&&p.push(R)}for(var y=0;y<p.length;y++){var R=p[y],S=R.getParent().id;typeof m[S]>"u"&&(m[S]=[]),m[S]=m[S].concat(R)}Object.keys(m).forEach(function(W){if(m[W].length>1){var D="DummyCompound_"+W;n.memberGroups[D]=m[W];var q=m[W][0].getParent(),V=new t(n.graphManager);V.id=D,V.paddingLeft=q.paddingLeft||0,V.paddingRight=q.paddingRight||0,V.paddingBottom=q.paddingBottom||0,V.paddingTop=q.paddingTop||0,n.idToDummyNode[D]=V;var X=n.getGraphManager().add(n.newGraph(),V),et=q.getChild();et.add(V);for(var z=0;z<m[W].length;z++){var w=m[W][z];et.remove(w),X.add(w)}}})},O.prototype.clearCompounds=function(){var n={},m={};this.performDFSOnCompounds();for(var p=0;p<this.compoundOrder.length;p++)m[this.compoundOrder[p].id]=this.compoundOrder[p],n[this.compoundOrder[p].id]=[].concat(this.compoundOrder[p].getChild().getNodes()),this.graphManager.remove(this.compoundOrder[p].getChild()),this.compoundOrder[p].child=null;this.graphManager.resetAllNodes(),this.tileCompoundMembers(n,m)},O.prototype.clearZeroDegreeMembers=function(){var n=this,m=this.tiledZeroDegreePack=[];Object.keys(this.memberGroups).forEach(function(p){var E=n.idToDummyNode[p];if(m[p]=n.tileNodes(n.memberGroups[p],E.paddingLeft+E.paddingRight),E.rect.width=m[p].width,E.rect.height=m[p].height,E.setCenter(m[p].centerX,m[p].centerY),E.labelMarginLeft=0,E.labelMarginTop=0,s.NODE_DIMENSIONS_INCLUDE_LABELS){var y=E.rect.width,R=E.rect.height;E.labelWidth&&(E.labelPosHorizontal=="left"?(E.rect.x-=E.labelWidth,E.setWidth(y+E.labelWidth),E.labelMarginLeft=E.labelWidth):E.labelPosHorizontal=="center"&&E.labelWidth>y?(E.rect.x-=(E.labelWidth-y)/2,E.setWidth(E.labelWidth),E.labelMarginLeft=(E.labelWidth-y)/2):E.labelPosHorizontal=="right"&&E.setWidth(y+E.labelWidth)),E.labelHeight&&(E.labelPosVertical=="top"?(E.rect.y-=E.labelHeight,E.setHeight(R+E.labelHeight),E.labelMarginTop=E.labelHeight):E.labelPosVertical=="center"&&E.labelHeight>R?(E.rect.y-=(E.labelHeight-R)/2,E.setHeight(E.labelHeight),E.labelMarginTop=(E.labelHeight-R)/2):E.labelPosVertical=="bottom"&&E.setHeight(R+E.labelHeight))}})},O.prototype.repopulateCompounds=function(){for(var n=this.compoundOrder.length-1;n>=0;n--){var m=this.compoundOrder[n],p=m.id,E=m.paddingLeft,y=m.paddingTop,R=m.labelMarginLeft,M=m.labelMarginTop;this.adjustLocations(this.tiledMemberPack[p],m.rect.x,m.rect.y,E,y,R,M)}},O.prototype.repopulateZeroDegreeMembers=function(){var n=this,m=this.tiledZeroDegreePack;Object.keys(m).forEach(function(p){var E=n.idToDummyNode[p],y=E.paddingLeft,R=E.paddingTop,M=E.labelMarginLeft,S=E.labelMarginTop;n.adjustLocations(m[p],E.rect.x,E.rect.y,y,R,M,S)})},O.prototype.getToBeTiled=function(n){var m=n.id;if(this.toBeTiled[m]!=null)return this.toBeTiled[m];var p=n.getChild();if(p==null)return this.toBeTiled[m]=!1,!1;for(var E=p.getNodes(),y=0;y<E.length;y++){var R=E[y];if(this.getNodeDegree(R)>0)return this.toBeTiled[m]=!1,!1;if(R.getChild()==null){this.toBeTiled[R.id]=!1;continue}if(!this.getToBeTiled(R))return this.toBeTiled[m]=!1,!1}return this.toBeTiled[m]=!0,!0},O.prototype.getNodeDegree=function(n){n.id;for(var m=n.getEdges(),p=0,E=0;E<m.length;E++){var y=m[E];y.getSource().id!==y.getTarget().id&&(p=p+1)}return p},O.prototype.getNodeDegreeWithChildren=function(n){var m=this.getNodeDegree(n);if(n.getChild()==null)return m;for(var p=n.getChild().getNodes(),E=0;E<p.length;E++){var y=p[E];m+=this.getNodeDegreeWithChildren(y)}return m},O.prototype.performDFSOnCompounds=function(){this.compoundOrder=[],this.fillCompexOrderByDFS(this.graphManager.getRoot().getNodes())},O.prototype.fillCompexOrderByDFS=function(n){for(var m=0;m<n.length;m++){var p=n[m];p.getChild()!=null&&this.fillCompexOrderByDFS(p.getChild().getNodes()),this.getToBeTiled(p)&&this.compoundOrder.push(p)}},O.prototype.adjustLocations=function(n,m,p,E,y,R,M){m+=E+R,p+=y+M;for(var S=m,W=0;W<n.rows.length;W++){var D=n.rows[W];m=S;for(var q=0,V=0;V<D.length;V++){var X=D[V];X.rect.x=m,X.rect.y=p,m+=X.rect.width+n.horizontalPadding,X.rect.height>q&&(q=X.rect.height)}p+=q+n.verticalPadding}},O.prototype.tileCompoundMembers=function(n,m){var p=this;this.tiledMemberPack=[],Object.keys(n).forEach(function(E){var y=m[E];if(p.tiledMemberPack[E]=p.tileNodes(n[E],y.paddingLeft+y.paddingRight),y.rect.width=p.tiledMemberPack[E].width,y.rect.height=p.tiledMemberPack[E].height,y.setCenter(p.tiledMemberPack[E].centerX,p.tiledMemberPack[E].centerY),y.labelMarginLeft=0,y.labelMarginTop=0,s.NODE_DIMENSIONS_INCLUDE_LABELS){var R=y.rect.width,M=y.rect.height;y.labelWidth&&(y.labelPosHorizontal=="left"?(y.rect.x-=y.labelWidth,y.setWidth(R+y.labelWidth),y.labelMarginLeft=y.labelWidth):y.labelPosHorizontal=="center"&&y.labelWidth>R?(y.rect.x-=(y.labelWidth-R)/2,y.setWidth(y.labelWidth),y.labelMarginLeft=(y.labelWidth-R)/2):y.labelPosHorizontal=="right"&&y.setWidth(R+y.labelWidth)),y.labelHeight&&(y.labelPosVertical=="top"?(y.rect.y-=y.labelHeight,y.setHeight(M+y.labelHeight),y.labelMarginTop=y.labelHeight):y.labelPosVertical=="center"&&y.labelHeight>M?(y.rect.y-=(y.labelHeight-M)/2,y.setHeight(y.labelHeight),y.labelMarginTop=(y.labelHeight-M)/2):y.labelPosVertical=="bottom"&&y.setHeight(M+y.labelHeight))}})},O.prototype.tileNodes=function(n,m){var p=this.tileNodesByFavoringDim(n,m,!0),E=this.tileNodesByFavoringDim(n,m,!1),y=this.getOrgRatio(p),R=this.getOrgRatio(E),M;return R<y?M=E:M=p,M},O.prototype.getOrgRatio=function(n){var m=n.width,p=n.height,E=m/p;return E<1&&(E=1/E),E},O.prototype.calcIdealRowWidth=function(n,m){var p=s.TILING_PADDING_VERTICAL,E=s.TILING_PADDING_HORIZONTAL,y=n.length,R=0,M=0,S=0;n.forEach(function(z){R+=z.getWidth(),M+=z.getHeight(),z.getWidth()>S&&(S=z.getWidth())});var W=R/y,D=M/y,q=Math.pow(p-E,2)+4*(W+E)*(D+p)*y,V=(E-p+Math.sqrt(q))/(2*(W+E)),X;m?(X=Math.ceil(V),X==V&&X++):X=Math.floor(V);var et=X*(W+E)-E;return S>et&&(et=S),et+=E*2,et},O.prototype.tileNodesByFavoringDim=function(n,m,p){var E=s.TILING_PADDING_VERTICAL,y=s.TILING_PADDING_HORIZONTAL,R=s.TILING_COMPARE_BY,M={rows:[],rowWidth:[],rowHeight:[],width:0,height:m,verticalPadding:E,horizontalPadding:y,centerX:0,centerY:0};R&&(M.idealRowWidth=this.calcIdealRowWidth(n,p));var S=function(w){return w.rect.width*w.rect.height},W=function(w,H){return S(H)-S(w)};n.sort(function(z,w){var H=W;return M.idealRowWidth?(H=R,H(z.id,w.id)):H(z,w)});for(var D=0,q=0,V=0;V<n.length;V++){var X=n[V];D+=X.getCenterX(),q+=X.getCenterY()}M.centerX=D/n.length,M.centerY=q/n.length;for(var V=0;V<n.length;V++){var X=n[V];if(M.rows.length==0)this.insertNodeToRow(M,X,0,m);else if(this.canAddHorizontal(M,X.rect.width,X.rect.height)){var et=M.rows.length-1;M.idealRowWidth||(et=this.getShortestRowIndex(M)),this.insertNodeToRow(M,X,et,m)}else this.insertNodeToRow(M,X,M.rows.length,m);this.shiftToLastRow(M)}return M},O.prototype.insertNodeToRow=function(n,m,p,E){var y=E;if(p==n.rows.length){var R=[];n.rows.push(R),n.rowWidth.push(y),n.rowHeight.push(0)}var M=n.rowWidth[p]+m.rect.width;n.rows[p].length>0&&(M+=n.horizontalPadding),n.rowWidth[p]=M,n.width<M&&(n.width=M);var S=m.rect.height;p>0&&(S+=n.verticalPadding);var W=0;S>n.rowHeight[p]&&(W=n.rowHeight[p],n.rowHeight[p]=S,W=n.rowHeight[p]-W),n.height+=W,n.rows[p].push(m)},O.prototype.getShortestRowIndex=function(n){for(var m=-1,p=Number.MAX_VALUE,E=0;E<n.rows.length;E++)n.rowWidth[E]<p&&(m=E,p=n.rowWidth[E]);return m},O.prototype.getLongestRowIndex=function(n){for(var m=-1,p=Number.MIN_VALUE,E=0;E<n.rows.length;E++)n.rowWidth[E]>p&&(m=E,p=n.rowWidth[E]);return m},O.prototype.canAddHorizontal=function(n,m,p){if(n.idealRowWidth){var E=n.rows.length-1,y=n.rowWidth[E];return y+m+n.horizontalPadding<=n.idealRowWidth}var R=this.getShortestRowIndex(n);if(R<0)return!0;var M=n.rowWidth[R];if(M+n.horizontalPadding+m<=n.width)return!0;var S=0;n.rowHeight[R]<p&&R>0&&(S=p+n.verticalPadding-n.rowHeight[R]);var W;n.width-M>=m+n.horizontalPadding?W=(n.height+S)/(M+m+n.horizontalPadding):W=(n.height+S)/n.width,S=p+n.verticalPadding;var D;return n.width<m?D=(n.height+S)/m:D=(n.height+S)/n.width,D<1&&(D=1/D),W<1&&(W=1/W),W<D},O.prototype.shiftToLastRow=function(n){var m=this.getLongestRowIndex(n),p=n.rowWidth.length-1,E=n.rows[m],y=E[E.length-1],R=y.width+n.horizontalPadding;if(n.width-n.rowWidth[p]>R&&m!=p){E.splice(-1,1),n.rows[p].push(y),n.rowWidth[m]=n.rowWidth[m]-R,n.rowWidth[p]=n.rowWidth[p]+R,n.width=n.rowWidth[instance.getLongestRowIndex(n)];for(var M=Number.MIN_VALUE,S=0;S<E.length;S++)E[S].height>M&&(M=E[S].height);m>0&&(M+=n.verticalPadding);var W=n.rowHeight[m]+n.rowHeight[p];n.rowHeight[m]=M,n.rowHeight[p]<y.height+n.verticalPadding&&(n.rowHeight[p]=y.height+n.verticalPadding);var D=n.rowHeight[m]+n.rowHeight[p];n.height+=D-W,this.shiftToLastRow(n)}},O.prototype.tilingPreLayout=function(){s.TILE&&(this.groupZeroDegreeMembers(),this.clearCompounds(),this.clearZeroDegreeMembers())},O.prototype.tilingPostLayout=function(){s.TILE&&(this.repopulateZeroDegreeMembers(),this.repopulateCompounds())},O.prototype.reduceTrees=function(){for(var n=[],m=!0,p;m;){var E=this.graphManager.getAllNodes(),y=[];m=!1;for(var R=0;R<E.length;R++)if(p=E[R],p.getEdges().length==1&&!p.getEdges()[0].isInterGraph&&p.getChild()==null){if(s.PURE_INCREMENTAL){var M=p.getEdges()[0].getOtherEnd(p),S=new L(p.getCenterX()-M.getCenterX(),p.getCenterY()-M.getCenterY());y.push([p,p.getEdges()[0],p.getOwner(),S])}else y.push([p,p.getEdges()[0],p.getOwner()]);m=!0}if(m==!0){for(var W=[],D=0;D<y.length;D++)y[D][0].getEdges().length==1&&(W.push(y[D]),y[D][0].getOwner().remove(y[D][0]));n.push(W),this.graphManager.resetAllNodes(),this.graphManager.resetAllEdges()}}this.prunedNodesAll=n},O.prototype.growTree=function(n){for(var m=n.length,p=n[m-1],E,y=0;y<p.length;y++)E=p[y],this.findPlaceforPrunedNode(E),E[2].add(E[0]),E[2].add(E[1],E[1].source,E[1].target);n.splice(n.length-1,1),this.graphManager.resetAllNodes(),this.graphManager.resetAllEdges()},O.prototype.findPlaceforPrunedNode=function(n){var m,p,E=n[0];if(E==n[1].source?p=n[1].target:p=n[1].source,s.PURE_INCREMENTAL)E.setCenter(p.getCenterX()+n[3].getWidth(),p.getCenterY()+n[3].getHeight());else{var y=p.startX,R=p.finishX,M=p.startY,S=p.finishY,W=0,D=0,q=0,V=0,X=[W,q,D,V];if(M>0)for(var et=y;et<=R;et++)X[0]+=this.grid[et][M-1].length+this.grid[et][M].length-1;if(R<this.grid.length-1)for(var et=M;et<=S;et++)X[1]+=this.grid[R+1][et].length+this.grid[R][et].length-1;if(S<this.grid[0].length-1)for(var et=y;et<=R;et++)X[2]+=this.grid[et][S+1].length+this.grid[et][S].length-1;if(y>0)for(var et=M;et<=S;et++)X[3]+=this.grid[y-1][et].length+this.grid[y][et].length-1;for(var z=C.MAX_VALUE,w,H,B=0;B<X.length;B++)X[B]<z?(z=X[B],w=1,H=B):X[B]==z&&w++;if(w==3&&z==0)X[0]==0&&X[1]==0&&X[2]==0?m=1:X[0]==0&&X[1]==0&&X[3]==0?m=0:X[0]==0&&X[2]==0&&X[3]==0?m=3:X[1]==0&&X[2]==0&&X[3]==0&&(m=2);else if(w==2&&z==0){var _=Math.floor(Math.random()*2);X[0]==0&&X[1]==0?_==0?m=0:m=1:X[0]==0&&X[2]==0?_==0?m=0:m=2:X[0]==0&&X[3]==0?_==0?m=0:m=3:X[1]==0&&X[2]==0?_==0?m=1:m=2:X[1]==0&&X[3]==0?_==0?m=1:m=3:_==0?m=2:m=3}else if(w==4&&z==0){var _=Math.floor(Math.random()*4);m=_}else m=H;m==0?E.setCenter(p.getCenterX(),p.getCenterY()-p.getHeight()/2-l.DEFAULT_EDGE_LENGTH-E.getHeight()/2):m==1?E.setCenter(p.getCenterX()+p.getWidth()/2+l.DEFAULT_EDGE_LENGTH+E.getWidth()/2,p.getCenterY()):m==2?E.setCenter(p.getCenterX(),p.getCenterY()+p.getHeight()/2+l.DEFAULT_EDGE_LENGTH+E.getHeight()/2):E.setCenter(p.getCenterX()-p.getWidth()/2-l.DEFAULT_EDGE_LENGTH-E.getWidth()/2,p.getCenterY())}},a.exports=O}),991:((a,e,r)=>{var f=r(551).FDLayoutNode,i=r(551).IMath;function g(o,s,c,l){f.call(this,o,s,c,l)}g.prototype=Object.create(f.prototype);for(var t in f)g[t]=f[t];g.prototype.calculateDisplacement=function(){var o=this.graphManager.getLayout();this.getChild()!=null&&this.fixedNodeWeight?(this.displacementX+=o.coolingFactor*(this.springForceX+this.repulsionForceX+this.gravitationForceX)/this.fixedNodeWeight,this.displacementY+=o.coolingFactor*(this.springForceY+this.repulsionForceY+this.gravitationForceY)/this.fixedNodeWeight):(this.displacementX+=o.coolingFactor*(this.springForceX+this.repulsionForceX+this.gravitationForceX)/this.noOfChildren,this.displacementY+=o.coolingFactor*(this.springForceY+this.repulsionForceY+this.gravitationForceY)/this.noOfChildren),Math.abs(this.displacementX)>o.coolingFactor*o.maxNodeDisplacement&&(this.displacementX=o.coolingFactor*o.maxNodeDisplacement*i.sign(this.displacementX)),Math.abs(this.displacementY)>o.coolingFactor*o.maxNodeDisplacement&&(this.displacementY=o.coolingFactor*o.maxNodeDisplacement*i.sign(this.displacementY)),this.child&&this.child.getNodes().length>0&&this.propogateDisplacementToChildren(this.displacementX,this.displacementY)},g.prototype.propogateDisplacementToChildren=function(o,s){for(var c=this.getChild().getNodes(),l,T=0;T<c.length;T++)l=c[T],l.getChild()==null?(l.displacementX+=o,l.displacementY+=s):l.propogateDisplacementToChildren(o,s)},g.prototype.move=function(){var o=this.graphManager.getLayout();(this.child==null||this.child.getNodes().length==0)&&(this.moveBy(this.displacementX,this.displacementY),o.totalDisplacement+=Math.abs(this.displacementX)+Math.abs(this.displacementY)),this.springForceX=0,this.springForceY=0,this.repulsionForceX=0,this.repulsionForceY=0,this.gravitationForceX=0,this.gravitationForceY=0,this.displacementX=0,this.displacementY=0},g.prototype.setPred1=function(o){this.pred1=o},g.prototype.getPred1=function(){return pred1},g.prototype.getPred2=function(){return pred2},g.prototype.setNext=function(o){this.next=o},g.prototype.getNext=function(){return next},g.prototype.setProcessed=function(o){this.processed=o},g.prototype.isProcessed=function(){return processed},a.exports=g}),902:((a,e,r)=>{function f(c){if(Array.isArray(c)){for(var l=0,T=Array(c.length);l<c.length;l++)T[l]=c[l];return T}else return Array.from(c)}var i=r(806),g=r(551).LinkedList,t=r(551).Matrix,o=r(551).SVD;function s(){}s.handleConstraints=function(c){var l={};l.fixedNodeConstraint=c.constraints.fixedNodeConstraint,l.alignmentConstraint=c.constraints.alignmentConstraint,l.relativePlacementConstraint=c.constraints.relativePlacementConstraint;for(var T=new Map,d=new Map,v=[],L=[],b=c.getAllNodes(),C=0,G=0;G<b.length;G++){var k=b[G];k.getChild()==null&&(d.set(k.id,C++),v.push(k.getCenterX()),L.push(k.getCenterY()),T.set(k.id,k))}l.relativePlacementConstraint&&l.relativePlacementConstraint.forEach(function(F){!F.gap&&F.gap!=0&&(F.left?F.gap=i.DEFAULT_EDGE_LENGTH+T.get(F.left).getWidth()/2+T.get(F.right).getWidth()/2:F.gap=i.DEFAULT_EDGE_LENGTH+T.get(F.top).getHeight()/2+T.get(F.bottom).getHeight()/2)});var Y=function(U,$){return{x:U.x-$.x,y:U.y-$.y}},K=function(U){var $=0,J=0;return U.forEach(function(Z){$+=v[d.get(Z)],J+=L[d.get(Z)]}),{x:$/U.size,y:J/U.size}},O=function(U,$,J,Z,at){function ct(lt,ot){var Lt=new Set(lt),ft=!0,st=!1,Xt=void 0;try{for(var Tt=ot[Symbol.iterator](),Ct;!(ft=(Ct=Tt.next()).done);ft=!0){var Bt=Ct.value;Lt.add(Bt)}}catch(bt){st=!0,Xt=bt}finally{try{!ft&&Tt.return&&Tt.return()}finally{if(st)throw Xt}}return Lt}var nt=new Map;U.forEach(function(lt,ot){nt.set(ot,0)}),U.forEach(function(lt,ot){lt.forEach(function(Lt){nt.set(Lt.id,nt.get(Lt.id)+1)})});var tt=new Map,j=new Map,ut=new g;nt.forEach(function(lt,ot){lt==0?(ut.push(ot),J||($=="horizontal"?tt.set(ot,d.has(ot)?v[d.get(ot)]:Z.get(ot)):tt.set(ot,d.has(ot)?L[d.get(ot)]:Z.get(ot)))):tt.set(ot,Number.NEGATIVE_INFINITY),J&&j.set(ot,new Set([ot]))}),J&&at.forEach(function(lt){var ot=[];if(lt.forEach(function(st){J.has(st)&&ot.push(st)}),ot.length>0){var Lt=0;ot.forEach(function(st){$=="horizontal"?(tt.set(st,d.has(st)?v[d.get(st)]:Z.get(st)),Lt+=tt.get(st)):(tt.set(st,d.has(st)?L[d.get(st)]:Z.get(st)),Lt+=tt.get(st))}),Lt=Lt/ot.length,lt.forEach(function(st){J.has(st)||tt.set(st,Lt)})}else{var ft=0;lt.forEach(function(st){$=="horizontal"?ft+=d.has(st)?v[d.get(st)]:Z.get(st):ft+=d.has(st)?L[d.get(st)]:Z.get(st)}),ft=ft/lt.length,lt.forEach(function(st){tt.set(st,ft)})}});for(var Mt=function(){var ot=ut.shift(),Lt=U.get(ot);Lt.forEach(function(ft){if(tt.get(ft.id)<tt.get(ot)+ft.gap)if(J&&J.has(ft.id)){var st=void 0;if($=="horizontal"?st=d.has(ft.id)?v[d.get(ft.id)]:Z.get(ft.id):st=d.has(ft.id)?L[d.get(ft.id)]:Z.get(ft.id),tt.set(ft.id,st),st<tt.get(ot)+ft.gap){var Xt=tt.get(ot)+ft.gap-st;j.get(ot).forEach(function(Tt){tt.set(Tt,tt.get(Tt)-Xt)})}}else tt.set(ft.id,tt.get(ot)+ft.gap);nt.set(ft.id,nt.get(ft.id)-1),nt.get(ft.id)==0&&ut.push(ft.id),J&&j.set(ft.id,ct(j.get(ot),j.get(ft.id)))})};ut.length!=0;)Mt();if(J){var pt=new Set;U.forEach(function(lt,ot){lt.length==0&&pt.add(ot)});var xt=[];j.forEach(function(lt,ot){if(pt.has(ot)){var Lt=!1,ft=!0,st=!1,Xt=void 0;try{for(var Tt=lt[Symbol.iterator](),Ct;!(ft=(Ct=Tt.next()).done);ft=!0){var Bt=Ct.value;J.has(Bt)&&(Lt=!0)}}catch(St){st=!0,Xt=St}finally{try{!ft&&Tt.return&&Tt.return()}finally{if(st)throw Xt}}if(!Lt){var bt=!1,zt=void 0;xt.forEach(function(St,Zt){St.has([].concat(f(lt))[0])&&(bt=!0,zt=Zt)}),bt?lt.forEach(function(St){xt[zt].add(St)}):xt.push(new Set(lt))}}}),xt.forEach(function(lt,ot){var Lt=Number.POSITIVE_INFINITY,ft=Number.POSITIVE_INFINITY,st=Number.NEGATIVE_INFINITY,Xt=Number.NEGATIVE_INFINITY,Tt=!0,Ct=!1,Bt=void 0;try{for(var bt=lt[Symbol.iterator](),zt;!(Tt=(zt=bt.next()).done);Tt=!0){var St=zt.value,Zt=void 0;$=="horizontal"?Zt=d.has(St)?v[d.get(St)]:Z.get(St):Zt=d.has(St)?L[d.get(St)]:Z.get(St);var Kt=tt.get(St);Zt<Lt&&(Lt=Zt),Zt>st&&(st=Zt),Kt<ft&&(ft=Kt),Kt>Xt&&(Xt=Kt)}}catch(ee){Ct=!0,Bt=ee}finally{try{!Tt&&bt.return&&bt.return()}finally{if(Ct)throw Bt}}var ce=(Lt+st)/2-(ft+Xt)/2,Qt=!0,jt=!1,_t=void 0;try{for(var Jt=lt[Symbol.iterator](),oe;!(Qt=(oe=Jt.next()).done);Qt=!0){var te=oe.value;tt.set(te,tt.get(te)+ce)}}catch(ee){jt=!0,_t=ee}finally{try{!Qt&&Jt.return&&Jt.return()}finally{if(jt)throw _t}}})}return tt},it=function(U){var $=0,J=0,Z=0,at=0;if(U.forEach(function(j){j.left?v[d.get(j.left)]-v[d.get(j.right)]>=0?$++:J++:L[d.get(j.top)]-L[d.get(j.bottom)]>=0?Z++:at++}),$>J&&Z>at)for(var ct=0;ct<d.size;ct++)v[ct]=-1*v[ct],L[ct]=-1*L[ct];else if($>J)for(var nt=0;nt<d.size;nt++)v[nt]=-1*v[nt];else if(Z>at)for(var tt=0;tt<d.size;tt++)L[tt]=-1*L[tt]},n=function(U){var $=[],J=new g,Z=new Set,at=0;return U.forEach(function(ct,nt){if(!Z.has(nt)){$[at]=[];var tt=nt;for(J.push(tt),Z.add(tt),$[at].push(tt);J.length!=0;){tt=J.shift();var j=U.get(tt);j.forEach(function(ut){Z.has(ut.id)||(J.push(ut.id),Z.add(ut.id),$[at].push(ut.id))})}at++}}),$},m=function(U){var $=new Map;return U.forEach(function(J,Z){$.set(Z,[])}),U.forEach(function(J,Z){J.forEach(function(at){$.get(Z).push(at),$.get(at.id).push({id:Z,gap:at.gap,direction:at.direction})})}),$},p=function(U){var $=new Map;return U.forEach(function(J,Z){$.set(Z,[])}),U.forEach(function(J,Z){J.forEach(function(at){$.get(at.id).push({id:Z,gap:at.gap,direction:at.direction})})}),$},E=[],y=[],R=!1,M=!1,S=new Set,W=new Map,D=new Map,q=[];if(l.fixedNodeConstraint&&l.fixedNodeConstraint.forEach(function(F){S.add(F.nodeId)}),l.relativePlacementConstraint&&(l.relativePlacementConstraint.forEach(function(F){F.left?(W.has(F.left)?W.get(F.left).push({id:F.right,gap:F.gap,direction:"horizontal"}):W.set(F.left,[{id:F.right,gap:F.gap,direction:"horizontal"}]),W.has(F.right)||W.set(F.right,[])):(W.has(F.top)?W.get(F.top).push({id:F.bottom,gap:F.gap,direction:"vertical"}):W.set(F.top,[{id:F.bottom,gap:F.gap,direction:"vertical"}]),W.has(F.bottom)||W.set(F.bottom,[]))}),D=m(W),q=n(D)),i.TRANSFORM_ON_CONSTRAINT_HANDLING){if(l.fixedNodeConstraint&&l.fixedNodeConstraint.length>1)l.fixedNodeConstraint.forEach(function(F,U){E[U]=[F.position.x,F.position.y],y[U]=[v[d.get(F.nodeId)],L[d.get(F.nodeId)]]}),R=!0;else if(l.alignmentConstraint)(function(){var F=0;if(l.alignmentConstraint.vertical){for(var U=l.alignmentConstraint.vertical,$=function(tt){var j=new Set;U[tt].forEach(function(pt){j.add(pt)});var ut=new Set([].concat(f(j)).filter(function(pt){return S.has(pt)})),Mt=void 0;ut.size>0?Mt=v[d.get(ut.values().next().value)]:Mt=K(j).x,U[tt].forEach(function(pt){E[F]=[Mt,L[d.get(pt)]],y[F]=[v[d.get(pt)],L[d.get(pt)]],F++})},J=0;J<U.length;J++)$(J);R=!0}if(l.alignmentConstraint.horizontal){for(var Z=l.alignmentConstraint.horizontal,at=function(tt){var j=new Set;Z[tt].forEach(function(pt){j.add(pt)});var ut=new Set([].concat(f(j)).filter(function(pt){return S.has(pt)})),Mt=void 0;ut.size>0?Mt=v[d.get(ut.values().next().value)]:Mt=K(j).y,Z[tt].forEach(function(pt){E[F]=[v[d.get(pt)],Mt],y[F]=[v[d.get(pt)],L[d.get(pt)]],F++})},ct=0;ct<Z.length;ct++)at(ct);R=!0}l.relativePlacementConstraint&&(M=!0)})();else if(l.relativePlacementConstraint){for(var V=0,X=0,et=0;et<q.length;et++)q[et].length>V&&(V=q[et].length,X=et);if(V<D.size/2)it(l.relativePlacementConstraint),R=!1,M=!1;else{var z=new Map,w=new Map,H=[];q[X].forEach(function(F){W.get(F).forEach(function(U){U.direction=="horizontal"?(z.has(F)?z.get(F).push(U):z.set(F,[U]),z.has(U.id)||z.set(U.id,[]),H.push({left:F,right:U.id})):(w.has(F)?w.get(F).push(U):w.set(F,[U]),w.has(U.id)||w.set(U.id,[]),H.push({top:F,bottom:U.id}))})}),it(H),M=!1;var B=O(z,"horizontal"),_=O(w,"vertical");q[X].forEach(function(F,U){y[U]=[v[d.get(F)],L[d.get(F)]],E[U]=[],B.has(F)?E[U][0]=B.get(F):E[U][0]=v[d.get(F)],_.has(F)?E[U][1]=_.get(F):E[U][1]=L[d.get(F)]}),R=!0}}if(R){for(var ht=void 0,Q=t.transpose(E),It=t.transpose(y),Nt=0;Nt<Q.length;Nt++)Q[Nt]=t.multGamma(Q[Nt]),It[Nt]=t.multGamma(It[Nt]);var vt=t.multMat(Q,t.transpose(It)),rt=o.svd(vt);ht=t.multMat(rt.V,t.transpose(rt.U));for(var gt=0;gt<d.size;gt++){var mt=[v[gt],L[gt]],At=[ht[0][0],ht[1][0]],Ot=[ht[0][1],ht[1][1]];v[gt]=t.dotProduct(mt,At),L[gt]=t.dotProduct(mt,Ot)}M&&it(l.relativePlacementConstraint)}}if(i.ENFORCE_CONSTRAINTS){if(l.fixedNodeConstraint&&l.fixedNodeConstraint.length>0){var Et={x:0,y:0};l.fixedNodeConstraint.forEach(function(F,U){var $={x:v[d.get(F.nodeId)],y:L[d.get(F.nodeId)]},J=F.position,Z=Y(J,$);Et.x+=Z.x,Et.y+=Z.y}),Et.x/=l.fixedNodeConstraint.length,Et.y/=l.fixedNodeConstraint.length,v.forEach(function(F,U){v[U]+=Et.x}),L.forEach(function(F,U){L[U]+=Et.y}),l.fixedNodeConstraint.forEach(function(F){v[d.get(F.nodeId)]=F.position.x,L[d.get(F.nodeId)]=F.position.y})}if(l.alignmentConstraint){if(l.alignmentConstraint.vertical)for(var Dt=l.alignmentConstraint.vertical,Rt=function(U){var $=new Set;Dt[U].forEach(function(at){$.add(at)});var J=new Set([].concat(f($)).filter(function(at){return S.has(at)})),Z=void 0;J.size>0?Z=v[d.get(J.values().next().value)]:Z=K($).x,$.forEach(function(at){S.has(at)||(v[d.get(at)]=Z)})},Ht=0;Ht<Dt.length;Ht++)Rt(Ht);if(l.alignmentConstraint.horizontal)for(var Ut=l.alignmentConstraint.horizontal,Pt=function(U){var $=new Set;Ut[U].forEach(function(at){$.add(at)});var J=new Set([].concat(f($)).filter(function(at){return S.has(at)})),Z=void 0;J.size>0?Z=L[d.get(J.values().next().value)]:Z=K($).y,$.forEach(function(at){S.has(at)||(L[d.get(at)]=Z)})},Ft=0;Ft<Ut.length;Ft++)Pt(Ft)}l.relativePlacementConstraint&&(function(){var F=new Map,U=new Map,$=new Map,J=new Map,Z=new Map,at=new Map,ct=new Set,nt=new Set;if(S.forEach(function(Gt){ct.add(Gt),nt.add(Gt)}),l.alignmentConstraint){if(l.alignmentConstraint.vertical)for(var tt=l.alignmentConstraint.vertical,j=function(yt){$.set("dummy"+yt,[]),tt[yt].forEach(function(wt){F.set(wt,"dummy"+yt),$.get("dummy"+yt).push(wt),S.has(wt)&&ct.add("dummy"+yt)}),Z.set("dummy"+yt,v[d.get(tt[yt][0])])},ut=0;ut<tt.length;ut++)j(ut);if(l.alignmentConstraint.horizontal)for(var Mt=l.alignmentConstraint.horizontal,pt=function(yt){J.set("dummy"+yt,[]),Mt[yt].forEach(function(wt){U.set(wt,"dummy"+yt),J.get("dummy"+yt).push(wt),S.has(wt)&&nt.add("dummy"+yt)}),at.set("dummy"+yt,L[d.get(Mt[yt][0])])},xt=0;xt<Mt.length;xt++)pt(xt)}var lt=new Map,ot=new Map,Lt=function(yt){W.get(yt).forEach(function(wt){var kt=void 0,$t=void 0;wt.direction=="horizontal"?(kt=F.get(yt)?F.get(yt):yt,F.get(wt.id)?$t={id:F.get(wt.id),gap:wt.gap,direction:wt.direction}:$t=wt,lt.has(kt)?lt.get(kt).push($t):lt.set(kt,[$t]),lt.has($t.id)||lt.set($t.id,[])):(kt=U.get(yt)?U.get(yt):yt,U.get(wt.id)?$t={id:U.get(wt.id),gap:wt.gap,direction:wt.direction}:$t=wt,ot.has(kt)?ot.get(kt).push($t):ot.set(kt,[$t]),ot.has($t.id)||ot.set($t.id,[]))})},ft=!0,st=!1,Xt=void 0;try{for(var Tt=W.keys()[Symbol.iterator](),Ct;!(ft=(Ct=Tt.next()).done);ft=!0){var Bt=Ct.value;Lt(Bt)}}catch(Gt){st=!0,Xt=Gt}finally{try{!ft&&Tt.return&&Tt.return()}finally{if(st)throw Xt}}var bt=m(lt),zt=m(ot),St=n(bt),Zt=n(zt),Kt=p(lt),ce=p(ot),Qt=[],jt=[];St.forEach(function(Gt,yt){Qt[yt]=[],Gt.forEach(function(wt){Kt.get(wt).length==0&&Qt[yt].push(wt)})}),Zt.forEach(function(Gt,yt){jt[yt]=[],Gt.forEach(function(wt){ce.get(wt).length==0&&jt[yt].push(wt)})});var _t=O(lt,"horizontal",ct,Z,Qt),Jt=O(ot,"vertical",nt,at,jt),oe=function(yt){$.get(yt)?$.get(yt).forEach(function(wt){v[d.get(wt)]=_t.get(yt)}):v[d.get(yt)]=_t.get(yt)},te=!0,ee=!1,Ne=void 0;try{for(var ge=_t.keys()[Symbol.iterator](),Le;!(te=(Le=ge.next()).done);te=!0){var ue=Le.value;oe(ue)}}catch(Gt){ee=!0,Ne=Gt}finally{try{!te&&ge.return&&ge.return()}finally{if(ee)throw Ne}}var $e=function(yt){J.get(yt)?J.get(yt).forEach(function(wt){L[d.get(wt)]=Jt.get(yt)}):L[d.get(yt)]=Jt.get(yt)},de=!0,Ce=!1,Ae=void 0;try{for(var ve=Jt.keys()[Symbol.iterator](),Me;!(de=(Me=ve.next()).done);de=!0){var ue=Me.value;$e(ue)}}catch(Gt){Ce=!0,Ae=Gt}finally{try{!de&&ve.return&&ve.return()}finally{if(Ce)throw Ae}}})()}for(var Yt=0;Yt<b.length;Yt++){var Vt=b[Yt];Vt.getChild()==null&&Vt.setCenter(v[d.get(Vt.id)],L[d.get(Vt.id)])}},a.exports=s}),551:(a=>{a.exports=A})},N={};function u(a){var e=N[a];if(e!==void 0)return e.exports;var r=N[a]={exports:{}};return P[a](r,r.exports,u),r.exports}var h=u(45);return h})()})})(le)),le.exports}var vr=he.exports,De;function pr(){return De||(De=1,(function(I,x){(function(P,N){I.exports=N(dr())})(vr,function(A){return(()=>{var P={658:(a=>{a.exports=Object.assign!=null?Object.assign.bind(Object):function(e){for(var r=arguments.length,f=Array(r>1?r-1:0),i=1;i<r;i++)f[i-1]=arguments[i];return f.forEach(function(g){Object.keys(g).forEach(function(t){return e[t]=g[t]})}),e}}),548:((a,e,r)=>{var f=(function(){function t(o,s){var c=[],l=!0,T=!1,d=void 0;try{for(var v=o[Symbol.iterator](),L;!(l=(L=v.next()).done)&&(c.push(L.value),!(s&&c.length===s));l=!0);}catch(b){T=!0,d=b}finally{try{!l&&v.return&&v.return()}finally{if(T)throw d}}return c}return function(o,s){if(Array.isArray(o))return o;if(Symbol.iterator in Object(o))return t(o,s);throw new TypeError("Invalid attempt to destructure non-iterable instance")}})(),i=r(140).layoutBase.LinkedList,g={};g.getTopMostNodes=function(t){for(var o={},s=0;s<t.length;s++)o[t[s].id()]=!0;var c=t.filter(function(l,T){typeof l=="number"&&(l=T);for(var d=l.parent()[0];d!=null;){if(o[d.id()])return!1;d=d.parent()[0]}return!0});return c},g.connectComponents=function(t,o,s,c){var l=new i,T=new Set,d=[],v=void 0,L=void 0,b=void 0,C=!1,G=1,k=[],Y=[],K=function(){var it=t.collection();Y.push(it);var n=s[0],m=t.collection();m.merge(n).merge(n.descendants().intersection(o)),d.push(n),m.forEach(function(y){l.push(y),T.add(y),it.merge(y)});for(var p=function(){n=l.shift();var R=t.collection();n.neighborhood().nodes().forEach(function(D){o.intersection(n.edgesWith(D)).length>0&&R.merge(D)});for(var M=0;M<R.length;M++){var S=R[M];if(v=s.intersection(S.union(S.ancestors())),v!=null&&!T.has(v[0])){var W=v.union(v.descendants());W.forEach(function(D){l.push(D),T.add(D),it.merge(D),s.has(D)&&d.push(D)})}}};l.length!=0;)p();if(it.forEach(function(y){o.intersection(y.connectedEdges()).forEach(function(R){it.has(R.source())&&it.has(R.target())&&it.merge(R)})}),d.length==s.length&&(C=!0),!C||C&&G>1){L=d[0],b=L.connectedEdges().length,d.forEach(function(y){y.connectedEdges().length<b&&(b=y.connectedEdges().length,L=y)}),k.push(L.id());var E=t.collection();E.merge(d[0]),d.forEach(function(y){E.merge(y)}),d=[],s=s.difference(E),G++}};do K();while(!C);return c&&k.length>0&&c.set("dummy"+(c.size+1),k),Y},g.relocateComponent=function(t,o,s){if(!s.fixedNodeConstraint){var c=Number.POSITIVE_INFINITY,l=Number.NEGATIVE_INFINITY,T=Number.POSITIVE_INFINITY,d=Number.NEGATIVE_INFINITY;if(s.quality=="draft"){var v=!0,L=!1,b=void 0;try{for(var C=o.nodeIndexes[Symbol.iterator](),G;!(v=(G=C.next()).done);v=!0){var k=G.value,Y=f(k,2),K=Y[0],O=Y[1],it=s.cy.getElementById(K);if(it){var n=it.boundingBox(),m=o.xCoords[O]-n.w/2,p=o.xCoords[O]+n.w/2,E=o.yCoords[O]-n.h/2,y=o.yCoords[O]+n.h/2;m<c&&(c=m),p>l&&(l=p),E<T&&(T=E),y>d&&(d=y)}}}catch(D){L=!0,b=D}finally{try{!v&&C.return&&C.return()}finally{if(L)throw b}}var R=t.x-(l+c)/2,M=t.y-(d+T)/2;o.xCoords=o.xCoords.map(function(D){return D+R}),o.yCoords=o.yCoords.map(function(D){return D+M})}else{Object.keys(o).forEach(function(D){var q=o[D],V=q.getRect().x,X=q.getRect().x+q.getRect().width,et=q.getRect().y,z=q.getRect().y+q.getRect().height;V<c&&(c=V),X>l&&(l=X),et<T&&(T=et),z>d&&(d=z)});var S=t.x-(l+c)/2,W=t.y-(d+T)/2;Object.keys(o).forEach(function(D){var q=o[D];q.setCenter(q.getCenterX()+S,q.getCenterY()+W)})}}},g.calcBoundingBox=function(t,o,s,c){for(var l=Number.MAX_SAFE_INTEGER,T=Number.MIN_SAFE_INTEGER,d=Number.MAX_SAFE_INTEGER,v=Number.MIN_SAFE_INTEGER,L=void 0,b=void 0,C=void 0,G=void 0,k=t.descendants().not(":parent"),Y=k.length,K=0;K<Y;K++){var O=k[K];L=o[c.get(O.id())]-O.width()/2,b=o[c.get(O.id())]+O.width()/2,C=s[c.get(O.id())]-O.height()/2,G=s[c.get(O.id())]+O.height()/2,l>L&&(l=L),T<b&&(T=b),d>C&&(d=C),v<G&&(v=G)}var it={};return it.topLeftX=l,it.topLeftY=d,it.width=T-l,it.height=v-d,it},g.calcParentsWithoutChildren=function(t,o){var s=t.collection();return o.nodes(":parent").forEach(function(c){var l=!1;c.children().forEach(function(T){T.css("display")!="none"&&(l=!0)}),l||s.merge(c)}),s},a.exports=g}),816:((a,e,r)=>{var f=r(548),i=r(140).CoSELayout,g=r(140).CoSENode,t=r(140).layoutBase.PointD,o=r(140).layoutBase.DimensionD,s=r(140).layoutBase.LayoutConstants,c=r(140).layoutBase.FDLayoutConstants,l=r(140).CoSEConstants,T=function(v,L){var b=v.cy,C=v.eles,G=C.nodes(),k=C.edges(),Y=void 0,K=void 0,O=void 0,it={};v.randomize&&(Y=L.nodeIndexes,K=L.xCoords,O=L.yCoords);var n=function(D){return typeof D=="function"},m=function(D,q){return n(D)?D(q):D},p=f.calcParentsWithoutChildren(b,C),E=function W(D,q,V,X){for(var et=q.length,z=0;z<et;z++){var w=q[z],H=null;w.intersection(p).length==0&&(H=w.children());var B=void 0,_=w.layoutDimensions({nodeDimensionsIncludeLabels:X.nodeDimensionsIncludeLabels});if(w.outerWidth()!=null&&w.outerHeight()!=null)if(X.randomize)if(!w.isParent())B=D.add(new g(V.graphManager,new t(K[Y.get(w.id())]-_.w/2,O[Y.get(w.id())]-_.h/2),new o(parseFloat(_.w),parseFloat(_.h))));else{var ht=f.calcBoundingBox(w,K,O,Y);w.intersection(p).length==0?B=D.add(new g(V.graphManager,new t(ht.topLeftX,ht.topLeftY),new o(ht.width,ht.height))):B=D.add(new g(V.graphManager,new t(ht.topLeftX,ht.topLeftY),new o(parseFloat(_.w),parseFloat(_.h))))}else B=D.add(new g(V.graphManager,new t(w.position("x")-_.w/2,w.position("y")-_.h/2),new o(parseFloat(_.w),parseFloat(_.h))));else B=D.add(new g(this.graphManager));if(B.id=w.data("id"),B.nodeRepulsion=m(X.nodeRepulsion,w),B.paddingLeft=parseInt(w.css("padding")),B.paddingTop=parseInt(w.css("padding")),B.paddingRight=parseInt(w.css("padding")),B.paddingBottom=parseInt(w.css("padding")),X.nodeDimensionsIncludeLabels&&(B.labelWidth=w.boundingBox({includeLabels:!0,includeNodes:!1,includeOverlays:!1}).w,B.labelHeight=w.boundingBox({includeLabels:!0,includeNodes:!1,includeOverlays:!1}).h,B.labelPosVertical=w.css("text-valign"),B.labelPosHorizontal=w.css("text-halign")),it[w.data("id")]=B,isNaN(B.rect.x)&&(B.rect.x=0),isNaN(B.rect.y)&&(B.rect.y=0),H!=null&&H.length>0){var Q=void 0;Q=V.getGraphManager().add(V.newGraph(),B),W(Q,H,V,X)}}},y=function(D,q,V){for(var X=0,et=0,z=0;z<V.length;z++){var w=V[z],H=it[w.data("source")],B=it[w.data("target")];if(H&&B&&H!==B&&H.getEdgesBetween(B).length==0){var _=q.add(D.newEdge(),H,B);_.id=w.id(),_.idealLength=m(v.idealEdgeLength,w),_.edgeElasticity=m(v.edgeElasticity,w),X+=_.idealLength,et++}}v.idealEdgeLength!=null&&(et>0?l.DEFAULT_EDGE_LENGTH=c.DEFAULT_EDGE_LENGTH=X/et:n(v.idealEdgeLength)?l.DEFAULT_EDGE_LENGTH=c.DEFAULT_EDGE_LENGTH=50:l.DEFAULT_EDGE_LENGTH=c.DEFAULT_EDGE_LENGTH=v.idealEdgeLength,l.MIN_REPULSION_DIST=c.MIN_REPULSION_DIST=c.DEFAULT_EDGE_LENGTH/10,l.DEFAULT_RADIAL_SEPARATION=c.DEFAULT_EDGE_LENGTH)},R=function(D,q){q.fixedNodeConstraint&&(D.constraints.fixedNodeConstraint=q.fixedNodeConstraint),q.alignmentConstraint&&(D.constraints.alignmentConstraint=q.alignmentConstraint),q.relativePlacementConstraint&&(D.constraints.relativePlacementConstraint=q.relativePlacementConstraint)};v.nestingFactor!=null&&(l.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR=c.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR=v.nestingFactor),v.gravity!=null&&(l.DEFAULT_GRAVITY_STRENGTH=c.DEFAULT_GRAVITY_STRENGTH=v.gravity),v.numIter!=null&&(l.MAX_ITERATIONS=c.MAX_ITERATIONS=v.numIter),v.gravityRange!=null&&(l.DEFAULT_GRAVITY_RANGE_FACTOR=c.DEFAULT_GRAVITY_RANGE_FACTOR=v.gravityRange),v.gravityCompound!=null&&(l.DEFAULT_COMPOUND_GRAVITY_STRENGTH=c.DEFAULT_COMPOUND_GRAVITY_STRENGTH=v.gravityCompound),v.gravityRangeCompound!=null&&(l.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR=c.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR=v.gravityRangeCompound),v.initialEnergyOnIncremental!=null&&(l.DEFAULT_COOLING_FACTOR_INCREMENTAL=c.DEFAULT_COOLING_FACTOR_INCREMENTAL=v.initialEnergyOnIncremental),v.tilingCompareBy!=null&&(l.TILING_COMPARE_BY=v.tilingCompareBy),v.quality=="proof"?s.QUALITY=2:s.QUALITY=0,l.NODE_DIMENSIONS_INCLUDE_LABELS=c.NODE_DIMENSIONS_INCLUDE_LABELS=s.NODE_DIMENSIONS_INCLUDE_LABELS=v.nodeDimensionsIncludeLabels,l.DEFAULT_INCREMENTAL=c.DEFAULT_INCREMENTAL=s.DEFAULT_INCREMENTAL=!v.randomize,l.ANIMATE=c.ANIMATE=s.ANIMATE=v.animate,l.TILE=v.tile,l.TILING_PADDING_VERTICAL=typeof v.tilingPaddingVertical=="function"?v.tilingPaddingVertical.call():v.tilingPaddingVertical,l.TILING_PADDING_HORIZONTAL=typeof v.tilingPaddingHorizontal=="function"?v.tilingPaddingHorizontal.call():v.tilingPaddingHorizontal,l.DEFAULT_INCREMENTAL=c.DEFAULT_INCREMENTAL=s.DEFAULT_INCREMENTAL=!0,l.PURE_INCREMENTAL=!v.randomize,s.DEFAULT_UNIFORM_LEAF_NODE_SIZES=v.uniformNodeDimensions,v.step=="transformed"&&(l.TRANSFORM_ON_CONSTRAINT_HANDLING=!0,l.ENFORCE_CONSTRAINTS=!1,l.APPLY_LAYOUT=!1),v.step=="enforced"&&(l.TRANSFORM_ON_CONSTRAINT_HANDLING=!1,l.ENFORCE_CONSTRAINTS=!0,l.APPLY_LAYOUT=!1),v.step=="cose"&&(l.TRANSFORM_ON_CONSTRAINT_HANDLING=!1,l.ENFORCE_CONSTRAINTS=!1,l.APPLY_LAYOUT=!0),v.step=="all"&&(v.randomize?l.TRANSFORM_ON_CONSTRAINT_HANDLING=!0:l.TRANSFORM_ON_CONSTRAINT_HANDLING=!1,l.ENFORCE_CONSTRAINTS=!0,l.APPLY_LAYOUT=!0),v.fixedNodeConstraint||v.alignmentConstraint||v.relativePlacementConstraint?l.TREE_REDUCTION_ON_INCREMENTAL=!1:l.TREE_REDUCTION_ON_INCREMENTAL=!0;var M=new i,S=M.newGraphManager();return E(S.addRoot(),f.getTopMostNodes(G),M,v),y(M,S,k),R(M,v),M.runLayout(),it};a.exports={coseLayout:T}}),212:((a,e,r)=>{var f=(function(){function v(L,b){for(var C=0;C<b.length;C++){var G=b[C];G.enumerable=G.enumerable||!1,G.configurable=!0,"value"in G&&(G.writable=!0),Object.defineProperty(L,G.key,G)}}return function(L,b,C){return b&&v(L.prototype,b),C&&v(L,C),L}})();function i(v,L){if(!(v instanceof L))throw new TypeError("Cannot call a class as a function")}var g=r(658),t=r(548),o=r(657),s=o.spectralLayout,c=r(816),l=c.coseLayout,T=Object.freeze({quality:"default",randomize:!0,animate:!0,animationDuration:1e3,animationEasing:void 0,fit:!0,padding:30,nodeDimensionsIncludeLabels:!1,uniformNodeDimensions:!1,packComponents:!0,step:"all",samplingType:!0,sampleSize:25,nodeSeparation:75,piTol:1e-7,nodeRepulsion:function(L){return 4500},idealEdgeLength:function(L){return 50},edgeElasticity:function(L){return .45},nestingFactor:.1,gravity:.25,numIter:2500,tile:!0,tilingCompareBy:void 0,tilingPaddingVertical:10,tilingPaddingHorizontal:10,gravityRangeCompound:1.5,gravityCompound:1,gravityRange:3.8,initialEnergyOnIncremental:.3,fixedNodeConstraint:void 0,alignmentConstraint:void 0,relativePlacementConstraint:void 0,ready:function(){},stop:function(){}}),d=(function(){function v(L){i(this,v),this.options=g({},T,L)}return f(v,[{key:"run",value:function(){var b=this,C=this.options,G=C.cy,k=C.eles,Y=[],K=[],O=void 0,it=[];C.fixedNodeConstraint&&(!Array.isArray(C.fixedNodeConstraint)||C.fixedNodeConstraint.length==0)&&(C.fixedNodeConstraint=void 0),C.alignmentConstraint&&(C.alignmentConstraint.vertical&&(!Array.isArray(C.alignmentConstraint.vertical)||C.alignmentConstraint.vertical.length==0)&&(C.alignmentConstraint.vertical=void 0),C.alignmentConstraint.horizontal&&(!Array.isArray(C.alignmentConstraint.horizontal)||C.alignmentConstraint.horizontal.length==0)&&(C.alignmentConstraint.horizontal=void 0)),C.relativePlacementConstraint&&(!Array.isArray(C.relativePlacementConstraint)||C.relativePlacementConstraint.length==0)&&(C.relativePlacementConstraint=void 0);var n=C.fixedNodeConstraint||C.alignmentConstraint||C.relativePlacementConstraint;n&&(C.tile=!1,C.packComponents=!1);var m=void 0,p=!1;if(G.layoutUtilities&&C.packComponents&&(m=G.layoutUtilities("get"),m||(m=G.layoutUtilities()),p=!0),k.nodes().length>0)if(p){var R=t.getTopMostNodes(C.eles.nodes());if(O=t.connectComponents(G,C.eles,R),O.forEach(function(vt){var rt=vt.boundingBox();it.push({x:rt.x1+rt.w/2,y:rt.y1+rt.h/2})}),C.randomize&&O.forEach(function(vt){C.eles=vt,Y.push(s(C))}),C.quality=="default"||C.quality=="proof"){var M=G.collection();if(C.tile){var S=new Map,W=[],D=[],q=0,V={nodeIndexes:S,xCoords:W,yCoords:D},X=[];if(O.forEach(function(vt,rt){vt.edges().length==0&&(vt.nodes().forEach(function(gt,mt){M.merge(vt.nodes()[mt]),gt.isParent()||(V.nodeIndexes.set(vt.nodes()[mt].id(),q++),V.xCoords.push(vt.nodes()[0].position().x),V.yCoords.push(vt.nodes()[0].position().y))}),X.push(rt))}),M.length>1){var et=M.boundingBox();it.push({x:et.x1+et.w/2,y:et.y1+et.h/2}),O.push(M),Y.push(V);for(var z=X.length-1;z>=0;z--)O.splice(X[z],1),Y.splice(X[z],1),it.splice(X[z],1)}}O.forEach(function(vt,rt){C.eles=vt,K.push(l(C,Y[rt])),t.relocateComponent(it[rt],K[rt],C)})}else O.forEach(function(vt,rt){t.relocateComponent(it[rt],Y[rt],C)});var w=new Set;if(O.length>1){var H=[],B=k.filter(function(vt){return vt.css("display")=="none"});O.forEach(function(vt,rt){var gt=void 0;if(C.quality=="draft"&&(gt=Y[rt].nodeIndexes),vt.nodes().not(B).length>0){var mt={};mt.edges=[],mt.nodes=[];var At=void 0;vt.nodes().not(B).forEach(function(Ot){if(C.quality=="draft")if(!Ot.isParent())At=gt.get(Ot.id()),mt.nodes.push({x:Y[rt].xCoords[At]-Ot.boundingbox().w/2,y:Y[rt].yCoords[At]-Ot.boundingbox().h/2,width:Ot.boundingbox().w,height:Ot.boundingbox().h});else{var Et=t.calcBoundingBox(Ot,Y[rt].xCoords,Y[rt].yCoords,gt);mt.nodes.push({x:Et.topLeftX,y:Et.topLeftY,width:Et.width,height:Et.height})}else K[rt][Ot.id()]&&mt.nodes.push({x:K[rt][Ot.id()].getLeft(),y:K[rt][Ot.id()].getTop(),width:K[rt][Ot.id()].getWidth(),height:K[rt][Ot.id()].getHeight()})}),vt.edges().forEach(function(Ot){var Et=Ot.source(),Dt=Ot.target();if(Et.css("display")!="none"&&Dt.css("display")!="none")if(C.quality=="draft"){var Rt=gt.get(Et.id()),Ht=gt.get(Dt.id()),Ut=[],Pt=[];if(Et.isParent()){var Ft=t.calcBoundingBox(Et,Y[rt].xCoords,Y[rt].yCoords,gt);Ut.push(Ft.topLeftX+Ft.width/2),Ut.push(Ft.topLeftY+Ft.height/2)}else Ut.push(Y[rt].xCoords[Rt]),Ut.push(Y[rt].yCoords[Rt]);if(Dt.isParent()){var Yt=t.calcBoundingBox(Dt,Y[rt].xCoords,Y[rt].yCoords,gt);Pt.push(Yt.topLeftX+Yt.width/2),Pt.push(Yt.topLeftY+Yt.height/2)}else Pt.push(Y[rt].xCoords[Ht]),Pt.push(Y[rt].yCoords[Ht]);mt.edges.push({startX:Ut[0],startY:Ut[1],endX:Pt[0],endY:Pt[1]})}else K[rt][Et.id()]&&K[rt][Dt.id()]&&mt.edges.push({startX:K[rt][Et.id()].getCenterX(),startY:K[rt][Et.id()].getCenterY(),endX:K[rt][Dt.id()].getCenterX(),endY:K[rt][Dt.id()].getCenterY()})}),mt.nodes.length>0&&(H.push(mt),w.add(rt))}});var _=m.packComponents(H,C.randomize).shifts;if(C.quality=="draft")Y.forEach(function(vt,rt){var gt=vt.xCoords.map(function(At){return At+_[rt].dx}),mt=vt.yCoords.map(function(At){return At+_[rt].dy});vt.xCoords=gt,vt.yCoords=mt});else{var ht=0;w.forEach(function(vt){Object.keys(K[vt]).forEach(function(rt){var gt=K[vt][rt];gt.setCenter(gt.getCenterX()+_[ht].dx,gt.getCenterY()+_[ht].dy)}),ht++})}}}else{var E=C.eles.boundingBox();if(it.push({x:E.x1+E.w/2,y:E.y1+E.h/2}),C.randomize){var y=s(C);Y.push(y)}C.quality=="default"||C.quality=="proof"?(K.push(l(C,Y[0])),t.relocateComponent(it[0],K[0],C)):t.relocateComponent(it[0],Y[0],C)}var Q=function(rt,gt){if(C.quality=="default"||C.quality=="proof"){typeof rt=="number"&&(rt=gt);var mt=void 0,At=void 0,Ot=rt.data("id");return K.forEach(function(Dt){Ot in Dt&&(mt={x:Dt[Ot].getRect().getCenterX(),y:Dt[Ot].getRect().getCenterY()},At=Dt[Ot])}),C.nodeDimensionsIncludeLabels&&(At.labelWidth&&(At.labelPosHorizontal=="left"?mt.x+=At.labelWidth/2:At.labelPosHorizontal=="right"&&(mt.x-=At.labelWidth/2)),At.labelHeight&&(At.labelPosVertical=="top"?mt.y+=At.labelHeight/2:At.labelPosVertical=="bottom"&&(mt.y-=At.labelHeight/2))),mt==null&&(mt={x:rt.position("x"),y:rt.position("y")}),{x:mt.x,y:mt.y}}else{var Et=void 0;return Y.forEach(function(Dt){var Rt=Dt.nodeIndexes.get(rt.id());Rt!=null&&(Et={x:Dt.xCoords[Rt],y:Dt.yCoords[Rt]})}),Et==null&&(Et={x:rt.position("x"),y:rt.position("y")}),{x:Et.x,y:Et.y}}};if(C.quality=="default"||C.quality=="proof"||C.randomize){var It=t.calcParentsWithoutChildren(G,k),Nt=k.filter(function(vt){return vt.css("display")=="none"});C.eles=k.not(Nt),k.nodes().not(":parent").not(Nt).layoutPositions(b,C,Q),It.length>0&&It.forEach(function(vt){vt.position(Q(vt))})}else console.log("If randomize option is set to false, then quality option must be 'default' or 'proof'.")}}]),v})();a.exports=d}),657:((a,e,r)=>{var f=r(548),i=r(140).layoutBase.Matrix,g=r(140).layoutBase.SVD,t=function(s){var c=s.cy,l=s.eles,T=l.nodes(),d=l.nodes(":parent"),v=new Map,L=new Map,b=new Map,C=[],G=[],k=[],Y=[],K=[],O=[],it=[],n=[],m=void 0,p=1e8,E=1e-9,y=s.piTol,R=s.samplingType,M=s.nodeSeparation,S=void 0,W=function(){for(var U=0,$=0,J=!1;$<S;){U=Math.floor(Math.random()*m),J=!1;for(var Z=0;Z<$;Z++)if(Y[Z]==U){J=!0;break}if(!J)Y[$]=U,$++;else continue}},D=function(U,$,J){for(var Z=[],at=0,ct=0,nt=0,tt=void 0,j=[],ut=0,Mt=1,pt=0;pt<m;pt++)j[pt]=p;for(Z[ct]=U,j[U]=0;ct>=at;){nt=Z[at++];for(var xt=C[nt],lt=0;lt<xt.length;lt++)tt=L.get(xt[lt]),j[tt]==p&&(j[tt]=j[nt]+1,Z[++ct]=tt);O[nt][$]=j[nt]*M}if(J){for(var ot=0;ot<m;ot++)O[ot][$]<K[ot]&&(K[ot]=O[ot][$]);for(var Lt=0;Lt<m;Lt++)K[Lt]>ut&&(ut=K[Lt],Mt=Lt)}return Mt},q=function(U){var $=void 0;if(U){$=Math.floor(Math.random()*m);for(var Z=0;Z<m;Z++)K[Z]=p;for(var at=0;at<S;at++)Y[at]=$,$=D($,at,U)}else{W();for(var J=0;J<S;J++)D(Y[J],J,U)}for(var ct=0;ct<m;ct++)for(var nt=0;nt<S;nt++)O[ct][nt]*=O[ct][nt];for(var tt=0;tt<S;tt++)it[tt]=[];for(var j=0;j<S;j++)for(var ut=0;ut<S;ut++)it[j][ut]=O[Y[ut]][j]},V=function(){for(var U=g.svd(it),$=U.S,J=U.U,Z=U.V,at=$[0]*$[0]*$[0],ct=[],nt=0;nt<S;nt++){ct[nt]=[];for(var tt=0;tt<S;tt++)ct[nt][tt]=0,nt==tt&&(ct[nt][tt]=$[nt]/($[nt]*$[nt]+at/($[nt]*$[nt])))}n=i.multMat(i.multMat(Z,ct),i.transpose(J))},X=function(){for(var U=void 0,$=void 0,J=[],Z=[],at=[],ct=[],nt=0;nt<m;nt++)J[nt]=Math.random(),Z[nt]=Math.random();J=i.normalize(J),Z=i.normalize(Z);for(var tt=E,j=E,ut=void 0;;){for(var Mt=0;Mt<m;Mt++)at[Mt]=J[Mt];if(J=i.multGamma(i.multL(i.multGamma(at),O,n)),U=i.dotProduct(at,J),J=i.normalize(J),tt=i.dotProduct(at,J),ut=Math.abs(tt/j),ut<=1+y&&ut>=1)break;j=tt}for(var pt=0;pt<m;pt++)at[pt]=J[pt];for(j=E;;){for(var xt=0;xt<m;xt++)ct[xt]=Z[xt];if(ct=i.minusOp(ct,i.multCons(at,i.dotProduct(at,ct))),Z=i.multGamma(i.multL(i.multGamma(ct),O,n)),$=i.dotProduct(ct,Z),Z=i.normalize(Z),tt=i.dotProduct(ct,Z),ut=Math.abs(tt/j),ut<=1+y&&ut>=1)break;j=tt}for(var lt=0;lt<m;lt++)ct[lt]=Z[lt];G=i.multCons(at,Math.sqrt(Math.abs(U))),k=i.multCons(ct,Math.sqrt(Math.abs($)))};f.connectComponents(c,l,f.getTopMostNodes(T),v),d.forEach(function(F){f.connectComponents(c,l,f.getTopMostNodes(F.descendants().intersection(l)),v)});for(var et=0,z=0;z<T.length;z++)T[z].isParent()||L.set(T[z].id(),et++);var w=!0,H=!1,B=void 0;try{for(var _=v.keys()[Symbol.iterator](),ht;!(w=(ht=_.next()).done);w=!0){var Q=ht.value;L.set(Q,et++)}}catch(F){H=!0,B=F}finally{try{!w&&_.return&&_.return()}finally{if(H)throw B}}for(var It=0;It<L.size;It++)C[It]=[];d.forEach(function(F){for(var U=F.children().intersection(l);U.nodes(":childless").length==0;)U=U.nodes()[0].children().intersection(l);var $=0,J=U.nodes(":childless")[0].connectedEdges().length;U.nodes(":childless").forEach(function(Z,at){Z.connectedEdges().length<J&&(J=Z.connectedEdges().length,$=at)}),b.set(F.id(),U.nodes(":childless")[$].id())}),T.forEach(function(F){var U=void 0;F.isParent()?U=L.get(b.get(F.id())):U=L.get(F.id()),F.neighborhood().nodes().forEach(function($){l.intersection(F.edgesWith($)).length>0&&($.isParent()?C[U].push(b.get($.id())):C[U].push($.id()))})});var Nt=function(U){var $=L.get(U),J=void 0;v.get(U).forEach(function(Z){c.getElementById(Z).isParent()?J=b.get(Z):J=Z,C[$].push(J),C[L.get(J)].push(U)})},vt=!0,rt=!1,gt=void 0;try{for(var mt=v.keys()[Symbol.iterator](),At;!(vt=(At=mt.next()).done);vt=!0){var Ot=At.value;Nt(Ot)}}catch(F){rt=!0,gt=F}finally{try{!vt&&mt.return&&mt.return()}finally{if(rt)throw gt}}m=L.size;var Et=void 0;if(m>2){S=m<s.sampleSize?m:s.sampleSize;for(var Dt=0;Dt<m;Dt++)O[Dt]=[];for(var Rt=0;Rt<S;Rt++)n[Rt]=[];return s.quality=="draft"||s.step=="all"?(q(R),V(),X(),Et={nodeIndexes:L,xCoords:G,yCoords:k}):(L.forEach(function(F,U){G.push(c.getElementById(U).position("x")),k.push(c.getElementById(U).position("y"))}),Et={nodeIndexes:L,xCoords:G,yCoords:k}),Et}else{var Ht=L.keys(),Ut=c.getElementById(Ht.next().value),Pt=Ut.position(),Ft=Ut.outerWidth();if(G.push(Pt.x),k.push(Pt.y),m==2){var Yt=c.getElementById(Ht.next().value),Vt=Yt.outerWidth();G.push(Pt.x+Ft/2+Vt/2+s.idealEdgeLength),k.push(Pt.y)}return Et={nodeIndexes:L,xCoords:G,yCoords:k},Et}};a.exports={spectralLayout:t}}),579:((a,e,r)=>{var f=r(212),i=function(t){t&&t("layout","fcose",f)};typeof cytoscape<"u"&&i(cytoscape),a.exports=i}),140:(a=>{a.exports=A})},N={};function u(a){var e=N[a];if(e!==void 0)return e.exports;var r=N[a]={exports:{}};return P[a](r,r.exports,u),r.exports}var h=u(579);return h})()})})(he)),he.exports}var yr=pr();const Er=fr(yr);var xe={L:"left",R:"right",T:"top",B:"bottom"},Ie={L:dt(I=>`${I},${I/2} 0,${I} 0,0`,"L"),R:dt(I=>`0,${I/2} ${I},0 ${I},${I}`,"R"),T:dt(I=>`0,0 ${I},0 ${I/2},${I}`,"T"),B:dt(I=>`${I/2},0 ${I},${I} 0,${I}`,"B")},se={L:dt((I,x)=>I-x+2,"L"),R:dt((I,x)=>I-2,"R"),T:dt((I,x)=>I-x+2,"T"),B:dt((I,x)=>I-2,"B")},mr=dt(function(I){return Wt(I)?I==="L"?"R":"L":I==="T"?"B":"T"},"getOppositeArchitectureDirection"),Re=dt(function(I){const x=I;return x==="L"||x==="R"||x==="T"||x==="B"},"isArchitectureDirection"),Wt=dt(function(I){const x=I;return x==="L"||x==="R"},"isArchitectureDirectionX"),qt=dt(function(I){const x=I;return x==="T"||x==="B"},"isArchitectureDirectionY"),Te=dt(function(I,x){const A=Wt(I)&&qt(x),P=qt(I)&&Wt(x);return A||P},"isArchitectureDirectionXY"),Tr=dt(function(I){const x=I[0],A=I[1],P=Wt(x)&&qt(A),N=qt(x)&&Wt(A);return P||N},"isArchitecturePairXY"),Nr=dt(function(I){return I!=="LL"&&I!=="RR"&&I!=="TT"&&I!=="BB"},"isValidArchitectureDirectionPair"),ye=dt(function(I,x){const A=`${I}${x}`;return Nr(A)?A:void 0},"getArchitectureDirectionPair"),Lr=dt(function([I,x],A){const P=A[0],N=A[1];return Wt(P)?qt(N)?[I+(P==="L"?-1:1),x+(N==="T"?1:-1)]:[I+(P==="L"?-1:1),x]:Wt(N)?[I+(N==="L"?1:-1),x+(P==="T"?1:-1)]:[I,x+(P==="T"?1:-1)]},"shiftPositionByArchitectureDirectionPair"),Cr=dt(function(I){return I==="LT"||I==="TL"?[1,1]:I==="BL"||I==="LB"?[1,-1]:I==="BR"||I==="RB"?[-1,-1]:[-1,1]},"getArchitectureDirectionXYFactors"),Ar=dt(function(I,x){return Te(I,x)?"bend":Wt(I)?"horizontal":"vertical"},"getArchitectureDirectionAlignment"),Mr=dt(function(I){return I.type==="service"},"isArchitectureService"),wr=dt(function(I){return I.type==="junction"},"isArchitectureJunction"),be=dt(I=>I.data(),"edgeData"),ie=dt(I=>I.data(),"nodeData"),Or=ir.architecture,ae,Pe=(ae=class{constructor(){this.nodes={},this.groups={},this.edges=[],this.registeredIds={},this.elements={},this.setAccTitle=qe,this.getAccTitle=Qe,this.setDiagramTitle=Je,this.getDiagramTitle=Ke,this.getAccDescription=je,this.setAccDescription=_e,this.clear()}clear(){this.nodes={},this.groups={},this.edges=[],this.registeredIds={},this.dataStructures=void 0,this.elements={},tr()}addService({id:x,icon:A,in:P,title:N,iconText:u}){if(this.registeredIds[x]!==void 0)throw new Error(`The service id [${x}] is already in use by another ${this.registeredIds[x]}`);if(P!==void 0){if(x===P)throw new Error(`The service [${x}] cannot be placed within itself`);if(this.registeredIds[P]===void 0)throw new Error(`The service [${x}]'s parent does not exist. Please make sure the parent is created before this service`);if(this.registeredIds[P]==="node")throw new Error(`The service [${x}]'s parent is not a group`)}this.registeredIds[x]="node",this.nodes[x]={id:x,type:"service",icon:A,iconText:u,title:N,edges:[],in:P}}getServices(){return Object.values(this.nodes).filter(Mr)}addJunction({id:x,in:A}){this.registeredIds[x]="node",this.nodes[x]={id:x,type:"junction",edges:[],in:A}}getJunctions(){return Object.values(this.nodes).filter(wr)}getNodes(){return Object.values(this.nodes)}getNode(x){return this.nodes[x]??null}addGroup({id:x,icon:A,in:P,title:N}){if(this.registeredIds?.[x]!==void 0)throw new Error(`The group id [${x}] is already in use by another ${this.registeredIds[x]}`);if(P!==void 0){if(x===P)throw new Error(`The group [${x}] cannot be placed within itself`);if(this.registeredIds?.[P]===void 0)throw new Error(`The group [${x}]'s parent does not exist. Please make sure the parent is created before this group`);if(this.registeredIds?.[P]==="node")throw new Error(`The group [${x}]'s parent is not a group`)}this.registeredIds[x]="group",this.groups[x]={id:x,icon:A,title:N,in:P}}getGroups(){return Object.values(this.groups)}addEdge({lhsId:x,rhsId:A,lhsDir:P,rhsDir:N,lhsInto:u,rhsInto:h,lhsGroup:a,rhsGroup:e,title:r}){if(!Re(P))throw new Error(`Invalid direction given for left hand side of edge ${x}--${A}. Expected (L,R,T,B) got ${String(P)}`);if(!Re(N))throw new Error(`Invalid direction given for right hand side of edge ${x}--${A}. Expected (L,R,T,B) got ${String(N)}`);if(this.nodes[x]===void 0&&this.groups[x]===void 0)throw new Error(`The left-hand id [${x}] does not yet exist. Please create the service/group before declaring an edge to it.`);if(this.nodes[A]===void 0&&this.groups[A]===void 0)throw new Error(`The right-hand id [${A}] does not yet exist. Please create the service/group before declaring an edge to it.`);const f=this.nodes[x].in,i=this.nodes[A].in;if(a&&f&&i&&f==i)throw new Error(`The left-hand id [${x}] is modified to traverse the group boundary, but the edge does not pass through two groups.`);if(e&&f&&i&&f==i)throw new Error(`The right-hand id [${A}] is modified to traverse the group boundary, but the edge does not pass through two groups.`);const g={lhsId:x,lhsDir:P,lhsInto:u,lhsGroup:a,rhsId:A,rhsDir:N,rhsInto:h,rhsGroup:e,title:r};this.edges.push(g),this.nodes[x]&&this.nodes[A]&&(this.nodes[x].edges.push(this.edges[this.edges.length-1]),this.nodes[A].edges.push(this.edges[this.edges.length-1]))}getEdges(){return this.edges}getDataStructures(){if(this.dataStructures===void 0){const x={},A=Object.entries(this.nodes).reduce((e,[r,f])=>(e[r]=f.edges.reduce((i,g)=>{const t=this.getNode(g.lhsId)?.in,o=this.getNode(g.rhsId)?.in;if(t&&o&&t!==o){const s=Ar(g.lhsDir,g.rhsDir);s!=="bend"&&(x[t]??={},x[t][o]=s,x[o]??={},x[o][t]=s)}if(g.lhsId===r){const s=ye(g.lhsDir,g.rhsDir);s&&(i[s]=g.rhsId)}else{const s=ye(g.rhsDir,g.lhsDir);s&&(i[s]=g.lhsId)}return i},{}),e),{}),P=Object.keys(A)[0],N={[P]:1},u=Object.keys(A).reduce((e,r)=>r===P?e:{...e,[r]:1},{}),h=dt(e=>{const r={[e]:[0,0]},f=[e];for(;f.length>0;){const i=f.shift();if(i){N[i]=1,delete u[i];const g=A[i],[t,o]=r[i];Object.entries(g).forEach(([s,c])=>{N[c]||(r[c]=Lr([t,o],s),f.push(c))})}}return r},"BFS"),a=[h(P)];for(;Object.keys(u).length>0;)a.push(h(Object.keys(u)[0]));this.dataStructures={adjList:A,spatialMaps:a,groupAlignments:x}}return this.dataStructures}setElementForId(x,A){this.elements[x]=A}getElementById(x){return this.elements[x]}getConfig(){return er({...Or,...rr().architecture})}getConfigField(x){return this.getConfig()[x]}},dt(ae,"ArchitectureDB"),ae),Dr=dt((I,x)=>{hr(I,x),I.groups.map(A=>x.addGroup(A)),I.services.map(A=>x.addService({...A,type:"service"})),I.junctions.map(A=>x.addJunction({...A,type:"junction"})),I.edges.map(A=>x.addEdge(A))},"populateDb"),Ge={parser:{yy:void 0},parse:dt(async I=>{const x=await lr("architecture",I);Se.debug(x);const A=Ge.parser?.yy;if(!(A instanceof Pe))throw new Error("parser.parser?.yy was not a ArchitectureDB. This is due to a bug within Mermaid, please report this issue at https://github.com/mermaid-js/mermaid/issues.");Dr(x,A)},"parse")},xr=dt(I=>`
+var _a;
+import { _ as __name, L as selectSvgElement, a3 as setupGraphViewbox, l as log, b as setAccTitle, a as getAccTitle, t as setDiagramTitle, v as getDiagramTitle, g as getAccDescription, s as setAccDescription, A as clear, G as cleanAndMerge, H as getConfig, I as defaultConfig_default, c as getConfig2, ad as createText, ax as getIconSVG, j as sanitizeText, e as select, ay as registerIconPacks, az as unknownIcon } from "./mermaid-vendor.js";
+import { p as populateCommonDb } from "./chunk-4BX2VUAB.js";
+import { p as parse } from "./treemap-75Q7IDZK.js";
+import { c as cytoscape$1 } from "./cytoscape.esm.js";
+import { g as getDefaultExportFromCjs } from "./utils-vendor.js";
+var cytoscapeFcose$1 = { exports: {} };
+var coseBase$1 = { exports: {} };
+var layoutBase$1 = { exports: {} };
+var layoutBase = layoutBase$1.exports;
+var hasRequiredLayoutBase;
+function requireLayoutBase() {
+  if (hasRequiredLayoutBase) return layoutBase$1.exports;
+  hasRequiredLayoutBase = 1;
+  (function(module, exports) {
+    (function webpackUniversalModuleDefinition(root, factory) {
+      module.exports = factory();
+    })(layoutBase, function() {
+      return (
+        /******/
+        (function(modules) {
+          var installedModules = {};
+          function __webpack_require__(moduleId) {
+            if (installedModules[moduleId]) {
+              return installedModules[moduleId].exports;
+            }
+            var module2 = installedModules[moduleId] = {
+              /******/
+              i: moduleId,
+              /******/
+              l: false,
+              /******/
+              exports: {}
+              /******/
+            };
+            modules[moduleId].call(module2.exports, module2, module2.exports, __webpack_require__);
+            module2.l = true;
+            return module2.exports;
+          }
+          __webpack_require__.m = modules;
+          __webpack_require__.c = installedModules;
+          __webpack_require__.i = function(value) {
+            return value;
+          };
+          __webpack_require__.d = function(exports2, name, getter) {
+            if (!__webpack_require__.o(exports2, name)) {
+              Object.defineProperty(exports2, name, {
+                /******/
+                configurable: false,
+                /******/
+                enumerable: true,
+                /******/
+                get: getter
+                /******/
+              });
+            }
+          };
+          __webpack_require__.n = function(module2) {
+            var getter = module2 && module2.__esModule ? (
+              /******/
+              function getDefault() {
+                return module2["default"];
+              }
+            ) : (
+              /******/
+              function getModuleExports() {
+                return module2;
+              }
+            );
+            __webpack_require__.d(getter, "a", getter);
+            return getter;
+          };
+          __webpack_require__.o = function(object, property) {
+            return Object.prototype.hasOwnProperty.call(object, property);
+          };
+          __webpack_require__.p = "";
+          return __webpack_require__(__webpack_require__.s = 28);
+        })([
+          /* 0 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function LayoutConstants() {
+            }
+            LayoutConstants.QUALITY = 1;
+            LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED = false;
+            LayoutConstants.DEFAULT_INCREMENTAL = false;
+            LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT = true;
+            LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT = false;
+            LayoutConstants.DEFAULT_ANIMATION_PERIOD = 50;
+            LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = false;
+            LayoutConstants.DEFAULT_GRAPH_MARGIN = 15;
+            LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = false;
+            LayoutConstants.SIMPLE_NODE_SIZE = 40;
+            LayoutConstants.SIMPLE_NODE_HALF_SIZE = LayoutConstants.SIMPLE_NODE_SIZE / 2;
+            LayoutConstants.EMPTY_COMPOUND_NODE_SIZE = 40;
+            LayoutConstants.MIN_EDGE_LENGTH = 1;
+            LayoutConstants.WORLD_BOUNDARY = 1e6;
+            LayoutConstants.INITIAL_WORLD_BOUNDARY = LayoutConstants.WORLD_BOUNDARY / 1e3;
+            LayoutConstants.WORLD_CENTER_X = 1200;
+            LayoutConstants.WORLD_CENTER_Y = 900;
+            module2.exports = LayoutConstants;
+          }),
+          /* 1 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LGraphObject = __webpack_require__(2);
+            var IGeometry = __webpack_require__(8);
+            var IMath = __webpack_require__(9);
+            function LEdge(source, target, vEdge) {
+              LGraphObject.call(this, vEdge);
+              this.isOverlapingSourceAndTarget = false;
+              this.vGraphObject = vEdge;
+              this.bendpoints = [];
+              this.source = source;
+              this.target = target;
+            }
+            LEdge.prototype = Object.create(LGraphObject.prototype);
+            for (var prop in LGraphObject) {
+              LEdge[prop] = LGraphObject[prop];
+            }
+            LEdge.prototype.getSource = function() {
+              return this.source;
+            };
+            LEdge.prototype.getTarget = function() {
+              return this.target;
+            };
+            LEdge.prototype.isInterGraph = function() {
+              return this.isInterGraph;
+            };
+            LEdge.prototype.getLength = function() {
+              return this.length;
+            };
+            LEdge.prototype.isOverlapingSourceAndTarget = function() {
+              return this.isOverlapingSourceAndTarget;
+            };
+            LEdge.prototype.getBendpoints = function() {
+              return this.bendpoints;
+            };
+            LEdge.prototype.getLca = function() {
+              return this.lca;
+            };
+            LEdge.prototype.getSourceInLca = function() {
+              return this.sourceInLca;
+            };
+            LEdge.prototype.getTargetInLca = function() {
+              return this.targetInLca;
+            };
+            LEdge.prototype.getOtherEnd = function(node) {
+              if (this.source === node) {
+                return this.target;
+              } else if (this.target === node) {
+                return this.source;
+              } else {
+                throw "Node is not incident with this edge";
+              }
+            };
+            LEdge.prototype.getOtherEndInGraph = function(node, graph) {
+              var otherEnd = this.getOtherEnd(node);
+              var root = graph.getGraphManager().getRoot();
+              while (true) {
+                if (otherEnd.getOwner() == graph) {
+                  return otherEnd;
+                }
+                if (otherEnd.getOwner() == root) {
+                  break;
+                }
+                otherEnd = otherEnd.getOwner().getParent();
+              }
+              return null;
+            };
+            LEdge.prototype.updateLength = function() {
+              var clipPointCoordinates = new Array(4);
+              this.isOverlapingSourceAndTarget = IGeometry.getIntersection(this.target.getRect(), this.source.getRect(), clipPointCoordinates);
+              if (!this.isOverlapingSourceAndTarget) {
+                this.lengthX = clipPointCoordinates[0] - clipPointCoordinates[2];
+                this.lengthY = clipPointCoordinates[1] - clipPointCoordinates[3];
+                if (Math.abs(this.lengthX) < 1) {
+                  this.lengthX = IMath.sign(this.lengthX);
+                }
+                if (Math.abs(this.lengthY) < 1) {
+                  this.lengthY = IMath.sign(this.lengthY);
+                }
+                this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+              }
+            };
+            LEdge.prototype.updateLengthSimple = function() {
+              this.lengthX = this.target.getCenterX() - this.source.getCenterX();
+              this.lengthY = this.target.getCenterY() - this.source.getCenterY();
+              if (Math.abs(this.lengthX) < 1) {
+                this.lengthX = IMath.sign(this.lengthX);
+              }
+              if (Math.abs(this.lengthY) < 1) {
+                this.lengthY = IMath.sign(this.lengthY);
+              }
+              this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+            };
+            module2.exports = LEdge;
+          }),
+          /* 2 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function LGraphObject(vGraphObject) {
+              this.vGraphObject = vGraphObject;
+            }
+            module2.exports = LGraphObject;
+          }),
+          /* 3 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LGraphObject = __webpack_require__(2);
+            var Integer = __webpack_require__(10);
+            var RectangleD = __webpack_require__(13);
+            var LayoutConstants = __webpack_require__(0);
+            var RandomSeed = __webpack_require__(16);
+            var PointD = __webpack_require__(5);
+            function LNode(gm, loc, size, vNode) {
+              if (size == null && vNode == null) {
+                vNode = loc;
+              }
+              LGraphObject.call(this, vNode);
+              if (gm.graphManager != null) gm = gm.graphManager;
+              this.estimatedSize = Integer.MIN_VALUE;
+              this.inclusionTreeDepth = Integer.MAX_VALUE;
+              this.vGraphObject = vNode;
+              this.edges = [];
+              this.graphManager = gm;
+              if (size != null && loc != null) this.rect = new RectangleD(loc.x, loc.y, size.width, size.height);
+              else this.rect = new RectangleD();
+            }
+            LNode.prototype = Object.create(LGraphObject.prototype);
+            for (var prop in LGraphObject) {
+              LNode[prop] = LGraphObject[prop];
+            }
+            LNode.prototype.getEdges = function() {
+              return this.edges;
+            };
+            LNode.prototype.getChild = function() {
+              return this.child;
+            };
+            LNode.prototype.getOwner = function() {
+              return this.owner;
+            };
+            LNode.prototype.getWidth = function() {
+              return this.rect.width;
+            };
+            LNode.prototype.setWidth = function(width) {
+              this.rect.width = width;
+            };
+            LNode.prototype.getHeight = function() {
+              return this.rect.height;
+            };
+            LNode.prototype.setHeight = function(height) {
+              this.rect.height = height;
+            };
+            LNode.prototype.getCenterX = function() {
+              return this.rect.x + this.rect.width / 2;
+            };
+            LNode.prototype.getCenterY = function() {
+              return this.rect.y + this.rect.height / 2;
+            };
+            LNode.prototype.getCenter = function() {
+              return new PointD(this.rect.x + this.rect.width / 2, this.rect.y + this.rect.height / 2);
+            };
+            LNode.prototype.getLocation = function() {
+              return new PointD(this.rect.x, this.rect.y);
+            };
+            LNode.prototype.getRect = function() {
+              return this.rect;
+            };
+            LNode.prototype.getDiagonal = function() {
+              return Math.sqrt(this.rect.width * this.rect.width + this.rect.height * this.rect.height);
+            };
+            LNode.prototype.getHalfTheDiagonal = function() {
+              return Math.sqrt(this.rect.height * this.rect.height + this.rect.width * this.rect.width) / 2;
+            };
+            LNode.prototype.setRect = function(upperLeft, dimension) {
+              this.rect.x = upperLeft.x;
+              this.rect.y = upperLeft.y;
+              this.rect.width = dimension.width;
+              this.rect.height = dimension.height;
+            };
+            LNode.prototype.setCenter = function(cx, cy) {
+              this.rect.x = cx - this.rect.width / 2;
+              this.rect.y = cy - this.rect.height / 2;
+            };
+            LNode.prototype.setLocation = function(x, y) {
+              this.rect.x = x;
+              this.rect.y = y;
+            };
+            LNode.prototype.moveBy = function(dx, dy) {
+              this.rect.x += dx;
+              this.rect.y += dy;
+            };
+            LNode.prototype.getEdgeListToNode = function(to) {
+              var edgeList = [];
+              var self = this;
+              self.edges.forEach(function(edge) {
+                if (edge.target == to) {
+                  if (edge.source != self) throw "Incorrect edge source!";
+                  edgeList.push(edge);
+                }
+              });
+              return edgeList;
+            };
+            LNode.prototype.getEdgesBetween = function(other) {
+              var edgeList = [];
+              var self = this;
+              self.edges.forEach(function(edge) {
+                if (!(edge.source == self || edge.target == self)) throw "Incorrect edge source and/or target";
+                if (edge.target == other || edge.source == other) {
+                  edgeList.push(edge);
+                }
+              });
+              return edgeList;
+            };
+            LNode.prototype.getNeighborsList = function() {
+              var neighbors = /* @__PURE__ */ new Set();
+              var self = this;
+              self.edges.forEach(function(edge) {
+                if (edge.source == self) {
+                  neighbors.add(edge.target);
+                } else {
+                  if (edge.target != self) {
+                    throw "Incorrect incidency!";
+                  }
+                  neighbors.add(edge.source);
+                }
+              });
+              return neighbors;
+            };
+            LNode.prototype.withChildren = function() {
+              var withNeighborsList = /* @__PURE__ */ new Set();
+              var childNode;
+              var children;
+              withNeighborsList.add(this);
+              if (this.child != null) {
+                var nodes = this.child.getNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                  childNode = nodes[i];
+                  children = childNode.withChildren();
+                  children.forEach(function(node) {
+                    withNeighborsList.add(node);
+                  });
+                }
+              }
+              return withNeighborsList;
+            };
+            LNode.prototype.getNoOfChildren = function() {
+              var noOfChildren = 0;
+              var childNode;
+              if (this.child == null) {
+                noOfChildren = 1;
+              } else {
+                var nodes = this.child.getNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                  childNode = nodes[i];
+                  noOfChildren += childNode.getNoOfChildren();
+                }
+              }
+              if (noOfChildren == 0) {
+                noOfChildren = 1;
+              }
+              return noOfChildren;
+            };
+            LNode.prototype.getEstimatedSize = function() {
+              if (this.estimatedSize == Integer.MIN_VALUE) {
+                throw "assert failed";
+              }
+              return this.estimatedSize;
+            };
+            LNode.prototype.calcEstimatedSize = function() {
+              if (this.child == null) {
+                return this.estimatedSize = (this.rect.width + this.rect.height) / 2;
+              } else {
+                this.estimatedSize = this.child.calcEstimatedSize();
+                this.rect.width = this.estimatedSize;
+                this.rect.height = this.estimatedSize;
+                return this.estimatedSize;
+              }
+            };
+            LNode.prototype.scatter = function() {
+              var randomCenterX;
+              var randomCenterY;
+              var minX = -LayoutConstants.INITIAL_WORLD_BOUNDARY;
+              var maxX = LayoutConstants.INITIAL_WORLD_BOUNDARY;
+              randomCenterX = LayoutConstants.WORLD_CENTER_X + RandomSeed.nextDouble() * (maxX - minX) + minX;
+              var minY = -LayoutConstants.INITIAL_WORLD_BOUNDARY;
+              var maxY = LayoutConstants.INITIAL_WORLD_BOUNDARY;
+              randomCenterY = LayoutConstants.WORLD_CENTER_Y + RandomSeed.nextDouble() * (maxY - minY) + minY;
+              this.rect.x = randomCenterX;
+              this.rect.y = randomCenterY;
+            };
+            LNode.prototype.updateBounds = function() {
+              if (this.getChild() == null) {
+                throw "assert failed";
+              }
+              if (this.getChild().getNodes().length != 0) {
+                var childGraph = this.getChild();
+                childGraph.updateBounds(true);
+                this.rect.x = childGraph.getLeft();
+                this.rect.y = childGraph.getTop();
+                this.setWidth(childGraph.getRight() - childGraph.getLeft());
+                this.setHeight(childGraph.getBottom() - childGraph.getTop());
+                if (LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+                  var width = childGraph.getRight() - childGraph.getLeft();
+                  var height = childGraph.getBottom() - childGraph.getTop();
+                  if (this.labelWidth) {
+                    if (this.labelPosHorizontal == "left") {
+                      this.rect.x -= this.labelWidth;
+                      this.setWidth(width + this.labelWidth);
+                    } else if (this.labelPosHorizontal == "center" && this.labelWidth > width) {
+                      this.rect.x -= (this.labelWidth - width) / 2;
+                      this.setWidth(this.labelWidth);
+                    } else if (this.labelPosHorizontal == "right") {
+                      this.setWidth(width + this.labelWidth);
+                    }
+                  }
+                  if (this.labelHeight) {
+                    if (this.labelPosVertical == "top") {
+                      this.rect.y -= this.labelHeight;
+                      this.setHeight(height + this.labelHeight);
+                    } else if (this.labelPosVertical == "center" && this.labelHeight > height) {
+                      this.rect.y -= (this.labelHeight - height) / 2;
+                      this.setHeight(this.labelHeight);
+                    } else if (this.labelPosVertical == "bottom") {
+                      this.setHeight(height + this.labelHeight);
+                    }
+                  }
+                }
+              }
+            };
+            LNode.prototype.getInclusionTreeDepth = function() {
+              if (this.inclusionTreeDepth == Integer.MAX_VALUE) {
+                throw "assert failed";
+              }
+              return this.inclusionTreeDepth;
+            };
+            LNode.prototype.transform = function(trans) {
+              var left = this.rect.x;
+              if (left > LayoutConstants.WORLD_BOUNDARY) {
+                left = LayoutConstants.WORLD_BOUNDARY;
+              } else if (left < -LayoutConstants.WORLD_BOUNDARY) {
+                left = -LayoutConstants.WORLD_BOUNDARY;
+              }
+              var top = this.rect.y;
+              if (top > LayoutConstants.WORLD_BOUNDARY) {
+                top = LayoutConstants.WORLD_BOUNDARY;
+              } else if (top < -LayoutConstants.WORLD_BOUNDARY) {
+                top = -LayoutConstants.WORLD_BOUNDARY;
+              }
+              var leftTop = new PointD(left, top);
+              var vLeftTop = trans.inverseTransformPoint(leftTop);
+              this.setLocation(vLeftTop.x, vLeftTop.y);
+            };
+            LNode.prototype.getLeft = function() {
+              return this.rect.x;
+            };
+            LNode.prototype.getRight = function() {
+              return this.rect.x + this.rect.width;
+            };
+            LNode.prototype.getTop = function() {
+              return this.rect.y;
+            };
+            LNode.prototype.getBottom = function() {
+              return this.rect.y + this.rect.height;
+            };
+            LNode.prototype.getParent = function() {
+              if (this.owner == null) {
+                return null;
+              }
+              return this.owner.getParent();
+            };
+            module2.exports = LNode;
+          }),
+          /* 4 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LayoutConstants = __webpack_require__(0);
+            function FDLayoutConstants() {
+            }
+            for (var prop in LayoutConstants) {
+              FDLayoutConstants[prop] = LayoutConstants[prop];
+            }
+            FDLayoutConstants.MAX_ITERATIONS = 2500;
+            FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+            FDLayoutConstants.DEFAULT_SPRING_STRENGTH = 0.45;
+            FDLayoutConstants.DEFAULT_REPULSION_STRENGTH = 4500;
+            FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = 0.4;
+            FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = 1;
+            FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = 3.8;
+            FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = 1.5;
+            FDLayoutConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION = true;
+            FDLayoutConstants.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION = true;
+            FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = 0.3;
+            FDLayoutConstants.COOLING_ADAPTATION_FACTOR = 0.33;
+            FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT = 1e3;
+            FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT = 5e3;
+            FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL = 100;
+            FDLayoutConstants.MAX_NODE_DISPLACEMENT = FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL * 3;
+            FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10;
+            FDLayoutConstants.CONVERGENCE_CHECK_PERIOD = 100;
+            FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = 0.1;
+            FDLayoutConstants.MIN_EDGE_LENGTH = 1;
+            FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD = 10;
+            module2.exports = FDLayoutConstants;
+          }),
+          /* 5 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function PointD(x, y) {
+              if (x == null && y == null) {
+                this.x = 0;
+                this.y = 0;
+              } else {
+                this.x = x;
+                this.y = y;
+              }
+            }
+            PointD.prototype.getX = function() {
+              return this.x;
+            };
+            PointD.prototype.getY = function() {
+              return this.y;
+            };
+            PointD.prototype.setX = function(x) {
+              this.x = x;
+            };
+            PointD.prototype.setY = function(y) {
+              this.y = y;
+            };
+            PointD.prototype.getDifference = function(pt) {
+              return new DimensionD(this.x - pt.x, this.y - pt.y);
+            };
+            PointD.prototype.getCopy = function() {
+              return new PointD(this.x, this.y);
+            };
+            PointD.prototype.translate = function(dim) {
+              this.x += dim.width;
+              this.y += dim.height;
+              return this;
+            };
+            module2.exports = PointD;
+          }),
+          /* 6 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LGraphObject = __webpack_require__(2);
+            var Integer = __webpack_require__(10);
+            var LayoutConstants = __webpack_require__(0);
+            var LGraphManager = __webpack_require__(7);
+            var LNode = __webpack_require__(3);
+            var LEdge = __webpack_require__(1);
+            var RectangleD = __webpack_require__(13);
+            var Point2 = __webpack_require__(12);
+            var LinkedList = __webpack_require__(11);
+            function LGraph(parent, obj2, vGraph) {
+              LGraphObject.call(this, vGraph);
+              this.estimatedSize = Integer.MIN_VALUE;
+              this.margin = LayoutConstants.DEFAULT_GRAPH_MARGIN;
+              this.edges = [];
+              this.nodes = [];
+              this.isConnected = false;
+              this.parent = parent;
+              if (obj2 != null && obj2 instanceof LGraphManager) {
+                this.graphManager = obj2;
+              } else if (obj2 != null && obj2 instanceof Layout) {
+                this.graphManager = obj2.graphManager;
+              }
+            }
+            LGraph.prototype = Object.create(LGraphObject.prototype);
+            for (var prop in LGraphObject) {
+              LGraph[prop] = LGraphObject[prop];
+            }
+            LGraph.prototype.getNodes = function() {
+              return this.nodes;
+            };
+            LGraph.prototype.getEdges = function() {
+              return this.edges;
+            };
+            LGraph.prototype.getGraphManager = function() {
+              return this.graphManager;
+            };
+            LGraph.prototype.getParent = function() {
+              return this.parent;
+            };
+            LGraph.prototype.getLeft = function() {
+              return this.left;
+            };
+            LGraph.prototype.getRight = function() {
+              return this.right;
+            };
+            LGraph.prototype.getTop = function() {
+              return this.top;
+            };
+            LGraph.prototype.getBottom = function() {
+              return this.bottom;
+            };
+            LGraph.prototype.isConnected = function() {
+              return this.isConnected;
+            };
+            LGraph.prototype.add = function(obj1, sourceNode, targetNode) {
+              if (sourceNode == null && targetNode == null) {
+                var newNode = obj1;
+                if (this.graphManager == null) {
+                  throw "Graph has no graph mgr!";
+                }
+                if (this.getNodes().indexOf(newNode) > -1) {
+                  throw "Node already in graph!";
+                }
+                newNode.owner = this;
+                this.getNodes().push(newNode);
+                return newNode;
+              } else {
+                var newEdge = obj1;
+                if (!(this.getNodes().indexOf(sourceNode) > -1 && this.getNodes().indexOf(targetNode) > -1)) {
+                  throw "Source or target not in graph!";
+                }
+                if (!(sourceNode.owner == targetNode.owner && sourceNode.owner == this)) {
+                  throw "Both owners must be this graph!";
+                }
+                if (sourceNode.owner != targetNode.owner) {
+                  return null;
+                }
+                newEdge.source = sourceNode;
+                newEdge.target = targetNode;
+                newEdge.isInterGraph = false;
+                this.getEdges().push(newEdge);
+                sourceNode.edges.push(newEdge);
+                if (targetNode != sourceNode) {
+                  targetNode.edges.push(newEdge);
+                }
+                return newEdge;
+              }
+            };
+            LGraph.prototype.remove = function(obj) {
+              var node = obj;
+              if (obj instanceof LNode) {
+                if (node == null) {
+                  throw "Node is null!";
+                }
+                if (!(node.owner != null && node.owner == this)) {
+                  throw "Owner graph is invalid!";
+                }
+                if (this.graphManager == null) {
+                  throw "Owner graph manager is invalid!";
+                }
+                var edgesToBeRemoved = node.edges.slice();
+                var edge;
+                var s = edgesToBeRemoved.length;
+                for (var i = 0; i < s; i++) {
+                  edge = edgesToBeRemoved[i];
+                  if (edge.isInterGraph) {
+                    this.graphManager.remove(edge);
+                  } else {
+                    edge.source.owner.remove(edge);
+                  }
+                }
+                var index = this.nodes.indexOf(node);
+                if (index == -1) {
+                  throw "Node not in owner node list!";
+                }
+                this.nodes.splice(index, 1);
+              } else if (obj instanceof LEdge) {
+                var edge = obj;
+                if (edge == null) {
+                  throw "Edge is null!";
+                }
+                if (!(edge.source != null && edge.target != null)) {
+                  throw "Source and/or target is null!";
+                }
+                if (!(edge.source.owner != null && edge.target.owner != null && edge.source.owner == this && edge.target.owner == this)) {
+                  throw "Source and/or target owner is invalid!";
+                }
+                var sourceIndex = edge.source.edges.indexOf(edge);
+                var targetIndex = edge.target.edges.indexOf(edge);
+                if (!(sourceIndex > -1 && targetIndex > -1)) {
+                  throw "Source and/or target doesn't know this edge!";
+                }
+                edge.source.edges.splice(sourceIndex, 1);
+                if (edge.target != edge.source) {
+                  edge.target.edges.splice(targetIndex, 1);
+                }
+                var index = edge.source.owner.getEdges().indexOf(edge);
+                if (index == -1) {
+                  throw "Not in owner's edge list!";
+                }
+                edge.source.owner.getEdges().splice(index, 1);
+              }
+            };
+            LGraph.prototype.updateLeftTop = function() {
+              var top = Integer.MAX_VALUE;
+              var left = Integer.MAX_VALUE;
+              var nodeTop;
+              var nodeLeft;
+              var margin;
+              var nodes = this.getNodes();
+              var s = nodes.length;
+              for (var i = 0; i < s; i++) {
+                var lNode = nodes[i];
+                nodeTop = lNode.getTop();
+                nodeLeft = lNode.getLeft();
+                if (top > nodeTop) {
+                  top = nodeTop;
+                }
+                if (left > nodeLeft) {
+                  left = nodeLeft;
+                }
+              }
+              if (top == Integer.MAX_VALUE) {
+                return null;
+              }
+              if (nodes[0].getParent().paddingLeft != void 0) {
+                margin = nodes[0].getParent().paddingLeft;
+              } else {
+                margin = this.margin;
+              }
+              this.left = left - margin;
+              this.top = top - margin;
+              return new Point2(this.left, this.top);
+            };
+            LGraph.prototype.updateBounds = function(recursive) {
+              var left = Integer.MAX_VALUE;
+              var right = -Integer.MAX_VALUE;
+              var top = Integer.MAX_VALUE;
+              var bottom = -Integer.MAX_VALUE;
+              var nodeLeft;
+              var nodeRight;
+              var nodeTop;
+              var nodeBottom;
+              var margin;
+              var nodes = this.nodes;
+              var s = nodes.length;
+              for (var i = 0; i < s; i++) {
+                var lNode = nodes[i];
+                if (recursive && lNode.child != null) {
+                  lNode.updateBounds();
+                }
+                nodeLeft = lNode.getLeft();
+                nodeRight = lNode.getRight();
+                nodeTop = lNode.getTop();
+                nodeBottom = lNode.getBottom();
+                if (left > nodeLeft) {
+                  left = nodeLeft;
+                }
+                if (right < nodeRight) {
+                  right = nodeRight;
+                }
+                if (top > nodeTop) {
+                  top = nodeTop;
+                }
+                if (bottom < nodeBottom) {
+                  bottom = nodeBottom;
+                }
+              }
+              var boundingRect = new RectangleD(left, top, right - left, bottom - top);
+              if (left == Integer.MAX_VALUE) {
+                this.left = this.parent.getLeft();
+                this.right = this.parent.getRight();
+                this.top = this.parent.getTop();
+                this.bottom = this.parent.getBottom();
+              }
+              if (nodes[0].getParent().paddingLeft != void 0) {
+                margin = nodes[0].getParent().paddingLeft;
+              } else {
+                margin = this.margin;
+              }
+              this.left = boundingRect.x - margin;
+              this.right = boundingRect.x + boundingRect.width + margin;
+              this.top = boundingRect.y - margin;
+              this.bottom = boundingRect.y + boundingRect.height + margin;
+            };
+            LGraph.calculateBounds = function(nodes) {
+              var left = Integer.MAX_VALUE;
+              var right = -Integer.MAX_VALUE;
+              var top = Integer.MAX_VALUE;
+              var bottom = -Integer.MAX_VALUE;
+              var nodeLeft;
+              var nodeRight;
+              var nodeTop;
+              var nodeBottom;
+              var s = nodes.length;
+              for (var i = 0; i < s; i++) {
+                var lNode = nodes[i];
+                nodeLeft = lNode.getLeft();
+                nodeRight = lNode.getRight();
+                nodeTop = lNode.getTop();
+                nodeBottom = lNode.getBottom();
+                if (left > nodeLeft) {
+                  left = nodeLeft;
+                }
+                if (right < nodeRight) {
+                  right = nodeRight;
+                }
+                if (top > nodeTop) {
+                  top = nodeTop;
+                }
+                if (bottom < nodeBottom) {
+                  bottom = nodeBottom;
+                }
+              }
+              var boundingRect = new RectangleD(left, top, right - left, bottom - top);
+              return boundingRect;
+            };
+            LGraph.prototype.getInclusionTreeDepth = function() {
+              if (this == this.graphManager.getRoot()) {
+                return 1;
+              } else {
+                return this.parent.getInclusionTreeDepth();
+              }
+            };
+            LGraph.prototype.getEstimatedSize = function() {
+              if (this.estimatedSize == Integer.MIN_VALUE) {
+                throw "assert failed";
+              }
+              return this.estimatedSize;
+            };
+            LGraph.prototype.calcEstimatedSize = function() {
+              var size = 0;
+              var nodes = this.nodes;
+              var s = nodes.length;
+              for (var i = 0; i < s; i++) {
+                var lNode = nodes[i];
+                size += lNode.calcEstimatedSize();
+              }
+              if (size == 0) {
+                this.estimatedSize = LayoutConstants.EMPTY_COMPOUND_NODE_SIZE;
+              } else {
+                this.estimatedSize = size / Math.sqrt(this.nodes.length);
+              }
+              return this.estimatedSize;
+            };
+            LGraph.prototype.updateConnected = function() {
+              var self = this;
+              if (this.nodes.length == 0) {
+                this.isConnected = true;
+                return;
+              }
+              var queue = new LinkedList();
+              var visited = /* @__PURE__ */ new Set();
+              var currentNode = this.nodes[0];
+              var neighborEdges;
+              var currentNeighbor;
+              var childrenOfNode = currentNode.withChildren();
+              childrenOfNode.forEach(function(node) {
+                queue.push(node);
+                visited.add(node);
+              });
+              while (queue.length !== 0) {
+                currentNode = queue.shift();
+                neighborEdges = currentNode.getEdges();
+                var size = neighborEdges.length;
+                for (var i = 0; i < size; i++) {
+                  var neighborEdge = neighborEdges[i];
+                  currentNeighbor = neighborEdge.getOtherEndInGraph(currentNode, this);
+                  if (currentNeighbor != null && !visited.has(currentNeighbor)) {
+                    var childrenOfNeighbor = currentNeighbor.withChildren();
+                    childrenOfNeighbor.forEach(function(node) {
+                      queue.push(node);
+                      visited.add(node);
+                    });
+                  }
+                }
+              }
+              this.isConnected = false;
+              if (visited.size >= this.nodes.length) {
+                var noOfVisitedInThisGraph = 0;
+                visited.forEach(function(visitedNode) {
+                  if (visitedNode.owner == self) {
+                    noOfVisitedInThisGraph++;
+                  }
+                });
+                if (noOfVisitedInThisGraph == this.nodes.length) {
+                  this.isConnected = true;
+                }
+              }
+            };
+            module2.exports = LGraph;
+          }),
+          /* 7 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LGraph;
+            var LEdge = __webpack_require__(1);
+            function LGraphManager(layout) {
+              LGraph = __webpack_require__(6);
+              this.layout = layout;
+              this.graphs = [];
+              this.edges = [];
+            }
+            LGraphManager.prototype.addRoot = function() {
+              var ngraph = this.layout.newGraph();
+              var nnode = this.layout.newNode(null);
+              var root = this.add(ngraph, nnode);
+              this.setRootGraph(root);
+              return this.rootGraph;
+            };
+            LGraphManager.prototype.add = function(newGraph, parentNode, newEdge, sourceNode, targetNode) {
+              if (newEdge == null && sourceNode == null && targetNode == null) {
+                if (newGraph == null) {
+                  throw "Graph is null!";
+                }
+                if (parentNode == null) {
+                  throw "Parent node is null!";
+                }
+                if (this.graphs.indexOf(newGraph) > -1) {
+                  throw "Graph already in this graph mgr!";
+                }
+                this.graphs.push(newGraph);
+                if (newGraph.parent != null) {
+                  throw "Already has a parent!";
+                }
+                if (parentNode.child != null) {
+                  throw "Already has a child!";
+                }
+                newGraph.parent = parentNode;
+                parentNode.child = newGraph;
+                return newGraph;
+              } else {
+                targetNode = newEdge;
+                sourceNode = parentNode;
+                newEdge = newGraph;
+                var sourceGraph = sourceNode.getOwner();
+                var targetGraph = targetNode.getOwner();
+                if (!(sourceGraph != null && sourceGraph.getGraphManager() == this)) {
+                  throw "Source not in this graph mgr!";
+                }
+                if (!(targetGraph != null && targetGraph.getGraphManager() == this)) {
+                  throw "Target not in this graph mgr!";
+                }
+                if (sourceGraph == targetGraph) {
+                  newEdge.isInterGraph = false;
+                  return sourceGraph.add(newEdge, sourceNode, targetNode);
+                } else {
+                  newEdge.isInterGraph = true;
+                  newEdge.source = sourceNode;
+                  newEdge.target = targetNode;
+                  if (this.edges.indexOf(newEdge) > -1) {
+                    throw "Edge already in inter-graph edge list!";
+                  }
+                  this.edges.push(newEdge);
+                  if (!(newEdge.source != null && newEdge.target != null)) {
+                    throw "Edge source and/or target is null!";
+                  }
+                  if (!(newEdge.source.edges.indexOf(newEdge) == -1 && newEdge.target.edges.indexOf(newEdge) == -1)) {
+                    throw "Edge already in source and/or target incidency list!";
+                  }
+                  newEdge.source.edges.push(newEdge);
+                  newEdge.target.edges.push(newEdge);
+                  return newEdge;
+                }
+              }
+            };
+            LGraphManager.prototype.remove = function(lObj) {
+              if (lObj instanceof LGraph) {
+                var graph = lObj;
+                if (graph.getGraphManager() != this) {
+                  throw "Graph not in this graph mgr";
+                }
+                if (!(graph == this.rootGraph || graph.parent != null && graph.parent.graphManager == this)) {
+                  throw "Invalid parent node!";
+                }
+                var edgesToBeRemoved = [];
+                edgesToBeRemoved = edgesToBeRemoved.concat(graph.getEdges());
+                var edge;
+                var s = edgesToBeRemoved.length;
+                for (var i = 0; i < s; i++) {
+                  edge = edgesToBeRemoved[i];
+                  graph.remove(edge);
+                }
+                var nodesToBeRemoved = [];
+                nodesToBeRemoved = nodesToBeRemoved.concat(graph.getNodes());
+                var node;
+                s = nodesToBeRemoved.length;
+                for (var i = 0; i < s; i++) {
+                  node = nodesToBeRemoved[i];
+                  graph.remove(node);
+                }
+                if (graph == this.rootGraph) {
+                  this.setRootGraph(null);
+                }
+                var index = this.graphs.indexOf(graph);
+                this.graphs.splice(index, 1);
+                graph.parent = null;
+              } else if (lObj instanceof LEdge) {
+                edge = lObj;
+                if (edge == null) {
+                  throw "Edge is null!";
+                }
+                if (!edge.isInterGraph) {
+                  throw "Not an inter-graph edge!";
+                }
+                if (!(edge.source != null && edge.target != null)) {
+                  throw "Source and/or target is null!";
+                }
+                if (!(edge.source.edges.indexOf(edge) != -1 && edge.target.edges.indexOf(edge) != -1)) {
+                  throw "Source and/or target doesn't know this edge!";
+                }
+                var index = edge.source.edges.indexOf(edge);
+                edge.source.edges.splice(index, 1);
+                index = edge.target.edges.indexOf(edge);
+                edge.target.edges.splice(index, 1);
+                if (!(edge.source.owner != null && edge.source.owner.getGraphManager() != null)) {
+                  throw "Edge owner graph or owner graph manager is null!";
+                }
+                if (edge.source.owner.getGraphManager().edges.indexOf(edge) == -1) {
+                  throw "Not in owner graph manager's edge list!";
+                }
+                var index = edge.source.owner.getGraphManager().edges.indexOf(edge);
+                edge.source.owner.getGraphManager().edges.splice(index, 1);
+              }
+            };
+            LGraphManager.prototype.updateBounds = function() {
+              this.rootGraph.updateBounds(true);
+            };
+            LGraphManager.prototype.getGraphs = function() {
+              return this.graphs;
+            };
+            LGraphManager.prototype.getAllNodes = function() {
+              if (this.allNodes == null) {
+                var nodeList = [];
+                var graphs = this.getGraphs();
+                var s = graphs.length;
+                for (var i = 0; i < s; i++) {
+                  nodeList = nodeList.concat(graphs[i].getNodes());
+                }
+                this.allNodes = nodeList;
+              }
+              return this.allNodes;
+            };
+            LGraphManager.prototype.resetAllNodes = function() {
+              this.allNodes = null;
+            };
+            LGraphManager.prototype.resetAllEdges = function() {
+              this.allEdges = null;
+            };
+            LGraphManager.prototype.resetAllNodesToApplyGravitation = function() {
+              this.allNodesToApplyGravitation = null;
+            };
+            LGraphManager.prototype.getAllEdges = function() {
+              if (this.allEdges == null) {
+                var edgeList = [];
+                var graphs = this.getGraphs();
+                graphs.length;
+                for (var i = 0; i < graphs.length; i++) {
+                  edgeList = edgeList.concat(graphs[i].getEdges());
+                }
+                edgeList = edgeList.concat(this.edges);
+                this.allEdges = edgeList;
+              }
+              return this.allEdges;
+            };
+            LGraphManager.prototype.getAllNodesToApplyGravitation = function() {
+              return this.allNodesToApplyGravitation;
+            };
+            LGraphManager.prototype.setAllNodesToApplyGravitation = function(nodeList) {
+              if (this.allNodesToApplyGravitation != null) {
+                throw "assert failed";
+              }
+              this.allNodesToApplyGravitation = nodeList;
+            };
+            LGraphManager.prototype.getRoot = function() {
+              return this.rootGraph;
+            };
+            LGraphManager.prototype.setRootGraph = function(graph) {
+              if (graph.getGraphManager() != this) {
+                throw "Root not in this graph mgr!";
+              }
+              this.rootGraph = graph;
+              if (graph.parent == null) {
+                graph.parent = this.layout.newNode("Root node");
+              }
+            };
+            LGraphManager.prototype.getLayout = function() {
+              return this.layout;
+            };
+            LGraphManager.prototype.isOneAncestorOfOther = function(firstNode, secondNode) {
+              if (!(firstNode != null && secondNode != null)) {
+                throw "assert failed";
+              }
+              if (firstNode == secondNode) {
+                return true;
+              }
+              var ownerGraph = firstNode.getOwner();
+              var parentNode;
+              do {
+                parentNode = ownerGraph.getParent();
+                if (parentNode == null) {
+                  break;
+                }
+                if (parentNode == secondNode) {
+                  return true;
+                }
+                ownerGraph = parentNode.getOwner();
+                if (ownerGraph == null) {
+                  break;
+                }
+              } while (true);
+              ownerGraph = secondNode.getOwner();
+              do {
+                parentNode = ownerGraph.getParent();
+                if (parentNode == null) {
+                  break;
+                }
+                if (parentNode == firstNode) {
+                  return true;
+                }
+                ownerGraph = parentNode.getOwner();
+                if (ownerGraph == null) {
+                  break;
+                }
+              } while (true);
+              return false;
+            };
+            LGraphManager.prototype.calcLowestCommonAncestors = function() {
+              var edge;
+              var sourceNode;
+              var targetNode;
+              var sourceAncestorGraph;
+              var targetAncestorGraph;
+              var edges = this.getAllEdges();
+              var s = edges.length;
+              for (var i = 0; i < s; i++) {
+                edge = edges[i];
+                sourceNode = edge.source;
+                targetNode = edge.target;
+                edge.lca = null;
+                edge.sourceInLca = sourceNode;
+                edge.targetInLca = targetNode;
+                if (sourceNode == targetNode) {
+                  edge.lca = sourceNode.getOwner();
+                  continue;
+                }
+                sourceAncestorGraph = sourceNode.getOwner();
+                while (edge.lca == null) {
+                  edge.targetInLca = targetNode;
+                  targetAncestorGraph = targetNode.getOwner();
+                  while (edge.lca == null) {
+                    if (targetAncestorGraph == sourceAncestorGraph) {
+                      edge.lca = targetAncestorGraph;
+                      break;
+                    }
+                    if (targetAncestorGraph == this.rootGraph) {
+                      break;
+                    }
+                    if (edge.lca != null) {
+                      throw "assert failed";
+                    }
+                    edge.targetInLca = targetAncestorGraph.getParent();
+                    targetAncestorGraph = edge.targetInLca.getOwner();
+                  }
+                  if (sourceAncestorGraph == this.rootGraph) {
+                    break;
+                  }
+                  if (edge.lca == null) {
+                    edge.sourceInLca = sourceAncestorGraph.getParent();
+                    sourceAncestorGraph = edge.sourceInLca.getOwner();
+                  }
+                }
+                if (edge.lca == null) {
+                  throw "assert failed";
+                }
+              }
+            };
+            LGraphManager.prototype.calcLowestCommonAncestor = function(firstNode, secondNode) {
+              if (firstNode == secondNode) {
+                return firstNode.getOwner();
+              }
+              var firstOwnerGraph = firstNode.getOwner();
+              do {
+                if (firstOwnerGraph == null) {
+                  break;
+                }
+                var secondOwnerGraph = secondNode.getOwner();
+                do {
+                  if (secondOwnerGraph == null) {
+                    break;
+                  }
+                  if (secondOwnerGraph == firstOwnerGraph) {
+                    return secondOwnerGraph;
+                  }
+                  secondOwnerGraph = secondOwnerGraph.getParent().getOwner();
+                } while (true);
+                firstOwnerGraph = firstOwnerGraph.getParent().getOwner();
+              } while (true);
+              return firstOwnerGraph;
+            };
+            LGraphManager.prototype.calcInclusionTreeDepths = function(graph, depth) {
+              if (graph == null && depth == null) {
+                graph = this.rootGraph;
+                depth = 1;
+              }
+              var node;
+              var nodes = graph.getNodes();
+              var s = nodes.length;
+              for (var i = 0; i < s; i++) {
+                node = nodes[i];
+                node.inclusionTreeDepth = depth;
+                if (node.child != null) {
+                  this.calcInclusionTreeDepths(node.child, depth + 1);
+                }
+              }
+            };
+            LGraphManager.prototype.includesInvalidEdge = function() {
+              var edge;
+              var edgesToRemove = [];
+              var s = this.edges.length;
+              for (var i = 0; i < s; i++) {
+                edge = this.edges[i];
+                if (this.isOneAncestorOfOther(edge.source, edge.target)) {
+                  edgesToRemove.push(edge);
+                }
+              }
+              for (var i = 0; i < edgesToRemove.length; i++) {
+                this.remove(edgesToRemove[i]);
+              }
+              return false;
+            };
+            module2.exports = LGraphManager;
+          }),
+          /* 8 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var Point2 = __webpack_require__(12);
+            function IGeometry() {
+            }
+            IGeometry.calcSeparationAmount = function(rectA, rectB, overlapAmount, separationBuffer) {
+              if (!rectA.intersects(rectB)) {
+                throw "assert failed";
+              }
+              var directions = new Array(2);
+              this.decideDirectionsForOverlappingNodes(rectA, rectB, directions);
+              overlapAmount[0] = Math.min(rectA.getRight(), rectB.getRight()) - Math.max(rectA.x, rectB.x);
+              overlapAmount[1] = Math.min(rectA.getBottom(), rectB.getBottom()) - Math.max(rectA.y, rectB.y);
+              if (rectA.getX() <= rectB.getX() && rectA.getRight() >= rectB.getRight()) {
+                overlapAmount[0] += Math.min(rectB.getX() - rectA.getX(), rectA.getRight() - rectB.getRight());
+              } else if (rectB.getX() <= rectA.getX() && rectB.getRight() >= rectA.getRight()) {
+                overlapAmount[0] += Math.min(rectA.getX() - rectB.getX(), rectB.getRight() - rectA.getRight());
+              }
+              if (rectA.getY() <= rectB.getY() && rectA.getBottom() >= rectB.getBottom()) {
+                overlapAmount[1] += Math.min(rectB.getY() - rectA.getY(), rectA.getBottom() - rectB.getBottom());
+              } else if (rectB.getY() <= rectA.getY() && rectB.getBottom() >= rectA.getBottom()) {
+                overlapAmount[1] += Math.min(rectA.getY() - rectB.getY(), rectB.getBottom() - rectA.getBottom());
+              }
+              var slope = Math.abs((rectB.getCenterY() - rectA.getCenterY()) / (rectB.getCenterX() - rectA.getCenterX()));
+              if (rectB.getCenterY() === rectA.getCenterY() && rectB.getCenterX() === rectA.getCenterX()) {
+                slope = 1;
+              }
+              var moveByY = slope * overlapAmount[0];
+              var moveByX = overlapAmount[1] / slope;
+              if (overlapAmount[0] < moveByX) {
+                moveByX = overlapAmount[0];
+              } else {
+                moveByY = overlapAmount[1];
+              }
+              overlapAmount[0] = -1 * directions[0] * (moveByX / 2 + separationBuffer);
+              overlapAmount[1] = -1 * directions[1] * (moveByY / 2 + separationBuffer);
+            };
+            IGeometry.decideDirectionsForOverlappingNodes = function(rectA, rectB, directions) {
+              if (rectA.getCenterX() < rectB.getCenterX()) {
+                directions[0] = -1;
+              } else {
+                directions[0] = 1;
+              }
+              if (rectA.getCenterY() < rectB.getCenterY()) {
+                directions[1] = -1;
+              } else {
+                directions[1] = 1;
+              }
+            };
+            IGeometry.getIntersection2 = function(rectA, rectB, result) {
+              var p1x = rectA.getCenterX();
+              var p1y = rectA.getCenterY();
+              var p2x = rectB.getCenterX();
+              var p2y = rectB.getCenterY();
+              if (rectA.intersects(rectB)) {
+                result[0] = p1x;
+                result[1] = p1y;
+                result[2] = p2x;
+                result[3] = p2y;
+                return true;
+              }
+              var topLeftAx = rectA.getX();
+              var topLeftAy = rectA.getY();
+              var topRightAx = rectA.getRight();
+              var bottomLeftAx = rectA.getX();
+              var bottomLeftAy = rectA.getBottom();
+              var bottomRightAx = rectA.getRight();
+              var halfWidthA = rectA.getWidthHalf();
+              var halfHeightA = rectA.getHeightHalf();
+              var topLeftBx = rectB.getX();
+              var topLeftBy = rectB.getY();
+              var topRightBx = rectB.getRight();
+              var bottomLeftBx = rectB.getX();
+              var bottomLeftBy = rectB.getBottom();
+              var bottomRightBx = rectB.getRight();
+              var halfWidthB = rectB.getWidthHalf();
+              var halfHeightB = rectB.getHeightHalf();
+              var clipPointAFound = false;
+              var clipPointBFound = false;
+              if (p1x === p2x) {
+                if (p1y > p2y) {
+                  result[0] = p1x;
+                  result[1] = topLeftAy;
+                  result[2] = p2x;
+                  result[3] = bottomLeftBy;
+                  return false;
+                } else if (p1y < p2y) {
+                  result[0] = p1x;
+                  result[1] = bottomLeftAy;
+                  result[2] = p2x;
+                  result[3] = topLeftBy;
+                  return false;
+                } else ;
+              } else if (p1y === p2y) {
+                if (p1x > p2x) {
+                  result[0] = topLeftAx;
+                  result[1] = p1y;
+                  result[2] = topRightBx;
+                  result[3] = p2y;
+                  return false;
+                } else if (p1x < p2x) {
+                  result[0] = topRightAx;
+                  result[1] = p1y;
+                  result[2] = topLeftBx;
+                  result[3] = p2y;
+                  return false;
+                } else ;
+              } else {
+                var slopeA = rectA.height / rectA.width;
+                var slopeB = rectB.height / rectB.width;
+                var slopePrime = (p2y - p1y) / (p2x - p1x);
+                var cardinalDirectionA = void 0;
+                var cardinalDirectionB = void 0;
+                var tempPointAx = void 0;
+                var tempPointAy = void 0;
+                var tempPointBx = void 0;
+                var tempPointBy = void 0;
+                if (-slopeA === slopePrime) {
+                  if (p1x > p2x) {
+                    result[0] = bottomLeftAx;
+                    result[1] = bottomLeftAy;
+                    clipPointAFound = true;
+                  } else {
+                    result[0] = topRightAx;
+                    result[1] = topLeftAy;
+                    clipPointAFound = true;
+                  }
+                } else if (slopeA === slopePrime) {
+                  if (p1x > p2x) {
+                    result[0] = topLeftAx;
+                    result[1] = topLeftAy;
+                    clipPointAFound = true;
+                  } else {
+                    result[0] = bottomRightAx;
+                    result[1] = bottomLeftAy;
+                    clipPointAFound = true;
+                  }
+                }
+                if (-slopeB === slopePrime) {
+                  if (p2x > p1x) {
+                    result[2] = bottomLeftBx;
+                    result[3] = bottomLeftBy;
+                    clipPointBFound = true;
+                  } else {
+                    result[2] = topRightBx;
+                    result[3] = topLeftBy;
+                    clipPointBFound = true;
+                  }
+                } else if (slopeB === slopePrime) {
+                  if (p2x > p1x) {
+                    result[2] = topLeftBx;
+                    result[3] = topLeftBy;
+                    clipPointBFound = true;
+                  } else {
+                    result[2] = bottomRightBx;
+                    result[3] = bottomLeftBy;
+                    clipPointBFound = true;
+                  }
+                }
+                if (clipPointAFound && clipPointBFound) {
+                  return false;
+                }
+                if (p1x > p2x) {
+                  if (p1y > p2y) {
+                    cardinalDirectionA = this.getCardinalDirection(slopeA, slopePrime, 4);
+                    cardinalDirectionB = this.getCardinalDirection(slopeB, slopePrime, 2);
+                  } else {
+                    cardinalDirectionA = this.getCardinalDirection(-slopeA, slopePrime, 3);
+                    cardinalDirectionB = this.getCardinalDirection(-slopeB, slopePrime, 1);
+                  }
+                } else {
+                  if (p1y > p2y) {
+                    cardinalDirectionA = this.getCardinalDirection(-slopeA, slopePrime, 1);
+                    cardinalDirectionB = this.getCardinalDirection(-slopeB, slopePrime, 3);
+                  } else {
+                    cardinalDirectionA = this.getCardinalDirection(slopeA, slopePrime, 2);
+                    cardinalDirectionB = this.getCardinalDirection(slopeB, slopePrime, 4);
+                  }
+                }
+                if (!clipPointAFound) {
+                  switch (cardinalDirectionA) {
+                    case 1:
+                      tempPointAy = topLeftAy;
+                      tempPointAx = p1x + -halfHeightA / slopePrime;
+                      result[0] = tempPointAx;
+                      result[1] = tempPointAy;
+                      break;
+                    case 2:
+                      tempPointAx = bottomRightAx;
+                      tempPointAy = p1y + halfWidthA * slopePrime;
+                      result[0] = tempPointAx;
+                      result[1] = tempPointAy;
+                      break;
+                    case 3:
+                      tempPointAy = bottomLeftAy;
+                      tempPointAx = p1x + halfHeightA / slopePrime;
+                      result[0] = tempPointAx;
+                      result[1] = tempPointAy;
+                      break;
+                    case 4:
+                      tempPointAx = bottomLeftAx;
+                      tempPointAy = p1y + -halfWidthA * slopePrime;
+                      result[0] = tempPointAx;
+                      result[1] = tempPointAy;
+                      break;
+                  }
+                }
+                if (!clipPointBFound) {
+                  switch (cardinalDirectionB) {
+                    case 1:
+                      tempPointBy = topLeftBy;
+                      tempPointBx = p2x + -halfHeightB / slopePrime;
+                      result[2] = tempPointBx;
+                      result[3] = tempPointBy;
+                      break;
+                    case 2:
+                      tempPointBx = bottomRightBx;
+                      tempPointBy = p2y + halfWidthB * slopePrime;
+                      result[2] = tempPointBx;
+                      result[3] = tempPointBy;
+                      break;
+                    case 3:
+                      tempPointBy = bottomLeftBy;
+                      tempPointBx = p2x + halfHeightB / slopePrime;
+                      result[2] = tempPointBx;
+                      result[3] = tempPointBy;
+                      break;
+                    case 4:
+                      tempPointBx = bottomLeftBx;
+                      tempPointBy = p2y + -halfWidthB * slopePrime;
+                      result[2] = tempPointBx;
+                      result[3] = tempPointBy;
+                      break;
+                  }
+                }
+              }
+              return false;
+            };
+            IGeometry.getCardinalDirection = function(slope, slopePrime, line) {
+              if (slope > slopePrime) {
+                return line;
+              } else {
+                return 1 + line % 4;
+              }
+            };
+            IGeometry.getIntersection = function(s1, s2, f1, f2) {
+              if (f2 == null) {
+                return this.getIntersection2(s1, s2, f1);
+              }
+              var x1 = s1.x;
+              var y1 = s1.y;
+              var x2 = s2.x;
+              var y2 = s2.y;
+              var x3 = f1.x;
+              var y3 = f1.y;
+              var x4 = f2.x;
+              var y4 = f2.y;
+              var x = void 0, y = void 0;
+              var a1 = void 0, a2 = void 0, b1 = void 0, b2 = void 0, c1 = void 0, c2 = void 0;
+              var denom = void 0;
+              a1 = y2 - y1;
+              b1 = x1 - x2;
+              c1 = x2 * y1 - x1 * y2;
+              a2 = y4 - y3;
+              b2 = x3 - x4;
+              c2 = x4 * y3 - x3 * y4;
+              denom = a1 * b2 - a2 * b1;
+              if (denom === 0) {
+                return null;
+              }
+              x = (b1 * c2 - b2 * c1) / denom;
+              y = (a2 * c1 - a1 * c2) / denom;
+              return new Point2(x, y);
+            };
+            IGeometry.angleOfVector = function(Cx, Cy, Nx, Ny) {
+              var C_angle = void 0;
+              if (Cx !== Nx) {
+                C_angle = Math.atan((Ny - Cy) / (Nx - Cx));
+                if (Nx < Cx) {
+                  C_angle += Math.PI;
+                } else if (Ny < Cy) {
+                  C_angle += this.TWO_PI;
+                }
+              } else if (Ny < Cy) {
+                C_angle = this.ONE_AND_HALF_PI;
+              } else {
+                C_angle = this.HALF_PI;
+              }
+              return C_angle;
+            };
+            IGeometry.doIntersect = function(p1, p2, p3, p4) {
+              var a = p1.x;
+              var b = p1.y;
+              var c = p2.x;
+              var d = p2.y;
+              var p = p3.x;
+              var q = p3.y;
+              var r = p4.x;
+              var s = p4.y;
+              var det = (c - a) * (s - q) - (r - p) * (d - b);
+              if (det === 0) {
+                return false;
+              } else {
+                var lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+                var gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+                return 0 < lambda && lambda < 1 && 0 < gamma && gamma < 1;
+              }
+            };
+            IGeometry.findCircleLineIntersections = function(Ex, Ey, Lx, Ly, Cx, Cy, r) {
+              var a = (Lx - Ex) * (Lx - Ex) + (Ly - Ey) * (Ly - Ey);
+              var b = 2 * ((Ex - Cx) * (Lx - Ex) + (Ey - Cy) * (Ly - Ey));
+              var c = (Ex - Cx) * (Ex - Cx) + (Ey - Cy) * (Ey - Cy) - r * r;
+              var disc = b * b - 4 * a * c;
+              if (disc >= 0) {
+                var t1 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+                var t2 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+                var intersections = null;
+                if (t1 >= 0 && t1 <= 1) {
+                  return [t1];
+                }
+                if (t2 >= 0 && t2 <= 1) {
+                  return [t2];
+                }
+                return intersections;
+              } else return null;
+            };
+            IGeometry.HALF_PI = 0.5 * Math.PI;
+            IGeometry.ONE_AND_HALF_PI = 1.5 * Math.PI;
+            IGeometry.TWO_PI = 2 * Math.PI;
+            IGeometry.THREE_PI = 3 * Math.PI;
+            module2.exports = IGeometry;
+          }),
+          /* 9 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function IMath() {
+            }
+            IMath.sign = function(value) {
+              if (value > 0) {
+                return 1;
+              } else if (value < 0) {
+                return -1;
+              } else {
+                return 0;
+              }
+            };
+            IMath.floor = function(value) {
+              return value < 0 ? Math.ceil(value) : Math.floor(value);
+            };
+            IMath.ceil = function(value) {
+              return value < 0 ? Math.floor(value) : Math.ceil(value);
+            };
+            module2.exports = IMath;
+          }),
+          /* 10 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function Integer() {
+            }
+            Integer.MAX_VALUE = 2147483647;
+            Integer.MIN_VALUE = -2147483648;
+            module2.exports = Integer;
+          }),
+          /* 11 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var _createClass = /* @__PURE__ */ (function() {
+              function defineProperties(target, props) {
+                for (var i = 0; i < props.length; i++) {
+                  var descriptor = props[i];
+                  descriptor.enumerable = descriptor.enumerable || false;
+                  descriptor.configurable = true;
+                  if ("value" in descriptor) descriptor.writable = true;
+                  Object.defineProperty(target, descriptor.key, descriptor);
+                }
+              }
+              return function(Constructor, protoProps, staticProps) {
+                if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                if (staticProps) defineProperties(Constructor, staticProps);
+                return Constructor;
+              };
+            })();
+            function _classCallCheck(instance2, Constructor) {
+              if (!(instance2 instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+              }
+            }
+            var nodeFrom = function nodeFrom2(value) {
+              return { value, next: null, prev: null };
+            };
+            var add = function add2(prev, node, next2, list) {
+              if (prev !== null) {
+                prev.next = node;
+              } else {
+                list.head = node;
+              }
+              if (next2 !== null) {
+                next2.prev = node;
+              } else {
+                list.tail = node;
+              }
+              node.prev = prev;
+              node.next = next2;
+              list.length++;
+              return node;
+            };
+            var _remove = function _remove2(node, list) {
+              var prev = node.prev, next2 = node.next;
+              if (prev !== null) {
+                prev.next = next2;
+              } else {
+                list.head = next2;
+              }
+              if (next2 !== null) {
+                next2.prev = prev;
+              } else {
+                list.tail = prev;
+              }
+              node.prev = node.next = null;
+              list.length--;
+              return node;
+            };
+            var LinkedList = (function() {
+              function LinkedList2(vals) {
+                var _this = this;
+                _classCallCheck(this, LinkedList2);
+                this.length = 0;
+                this.head = null;
+                this.tail = null;
+                if (vals != null) {
+                  vals.forEach(function(v) {
+                    return _this.push(v);
+                  });
+                }
+              }
+              _createClass(LinkedList2, [{
+                key: "size",
+                value: function size() {
+                  return this.length;
+                }
+              }, {
+                key: "insertBefore",
+                value: function insertBefore(val, otherNode) {
+                  return add(otherNode.prev, nodeFrom(val), otherNode, this);
+                }
+              }, {
+                key: "insertAfter",
+                value: function insertAfter(val, otherNode) {
+                  return add(otherNode, nodeFrom(val), otherNode.next, this);
+                }
+              }, {
+                key: "insertNodeBefore",
+                value: function insertNodeBefore(newNode, otherNode) {
+                  return add(otherNode.prev, newNode, otherNode, this);
+                }
+              }, {
+                key: "insertNodeAfter",
+                value: function insertNodeAfter(newNode, otherNode) {
+                  return add(otherNode, newNode, otherNode.next, this);
+                }
+              }, {
+                key: "push",
+                value: function push(val) {
+                  return add(this.tail, nodeFrom(val), null, this);
+                }
+              }, {
+                key: "unshift",
+                value: function unshift(val) {
+                  return add(null, nodeFrom(val), this.head, this);
+                }
+              }, {
+                key: "remove",
+                value: function remove(node) {
+                  return _remove(node, this);
+                }
+              }, {
+                key: "pop",
+                value: function pop() {
+                  return _remove(this.tail, this).value;
+                }
+              }, {
+                key: "popNode",
+                value: function popNode() {
+                  return _remove(this.tail, this);
+                }
+              }, {
+                key: "shift",
+                value: function shift() {
+                  return _remove(this.head, this).value;
+                }
+              }, {
+                key: "shiftNode",
+                value: function shiftNode() {
+                  return _remove(this.head, this);
+                }
+              }, {
+                key: "get_object_at",
+                value: function get_object_at(index) {
+                  if (index <= this.length()) {
+                    var i = 1;
+                    var current = this.head;
+                    while (i < index) {
+                      current = current.next;
+                      i++;
+                    }
+                    return current.value;
+                  }
+                }
+              }, {
+                key: "set_object_at",
+                value: function set_object_at(index, value) {
+                  if (index <= this.length()) {
+                    var i = 1;
+                    var current = this.head;
+                    while (i < index) {
+                      current = current.next;
+                      i++;
+                    }
+                    current.value = value;
+                  }
+                }
+              }]);
+              return LinkedList2;
+            })();
+            module2.exports = LinkedList;
+          }),
+          /* 12 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function Point2(x, y, p) {
+              this.x = null;
+              this.y = null;
+              if (x == null && y == null && p == null) {
+                this.x = 0;
+                this.y = 0;
+              } else if (typeof x == "number" && typeof y == "number" && p == null) {
+                this.x = x;
+                this.y = y;
+              } else if (x.constructor.name == "Point" && y == null && p == null) {
+                p = x;
+                this.x = p.x;
+                this.y = p.y;
+              }
+            }
+            Point2.prototype.getX = function() {
+              return this.x;
+            };
+            Point2.prototype.getY = function() {
+              return this.y;
+            };
+            Point2.prototype.getLocation = function() {
+              return new Point2(this.x, this.y);
+            };
+            Point2.prototype.setLocation = function(x, y, p) {
+              if (x.constructor.name == "Point" && y == null && p == null) {
+                p = x;
+                this.setLocation(p.x, p.y);
+              } else if (typeof x == "number" && typeof y == "number" && p == null) {
+                if (parseInt(x) == x && parseInt(y) == y) {
+                  this.move(x, y);
+                } else {
+                  this.x = Math.floor(x + 0.5);
+                  this.y = Math.floor(y + 0.5);
+                }
+              }
+            };
+            Point2.prototype.move = function(x, y) {
+              this.x = x;
+              this.y = y;
+            };
+            Point2.prototype.translate = function(dx, dy) {
+              this.x += dx;
+              this.y += dy;
+            };
+            Point2.prototype.equals = function(obj) {
+              if (obj.constructor.name == "Point") {
+                var pt = obj;
+                return this.x == pt.x && this.y == pt.y;
+              }
+              return this == obj;
+            };
+            Point2.prototype.toString = function() {
+              return new Point2().constructor.name + "[x=" + this.x + ",y=" + this.y + "]";
+            };
+            module2.exports = Point2;
+          }),
+          /* 13 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function RectangleD(x, y, width, height) {
+              this.x = 0;
+              this.y = 0;
+              this.width = 0;
+              this.height = 0;
+              if (x != null && y != null && width != null && height != null) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+              }
+            }
+            RectangleD.prototype.getX = function() {
+              return this.x;
+            };
+            RectangleD.prototype.setX = function(x) {
+              this.x = x;
+            };
+            RectangleD.prototype.getY = function() {
+              return this.y;
+            };
+            RectangleD.prototype.setY = function(y) {
+              this.y = y;
+            };
+            RectangleD.prototype.getWidth = function() {
+              return this.width;
+            };
+            RectangleD.prototype.setWidth = function(width) {
+              this.width = width;
+            };
+            RectangleD.prototype.getHeight = function() {
+              return this.height;
+            };
+            RectangleD.prototype.setHeight = function(height) {
+              this.height = height;
+            };
+            RectangleD.prototype.getRight = function() {
+              return this.x + this.width;
+            };
+            RectangleD.prototype.getBottom = function() {
+              return this.y + this.height;
+            };
+            RectangleD.prototype.intersects = function(a) {
+              if (this.getRight() < a.x) {
+                return false;
+              }
+              if (this.getBottom() < a.y) {
+                return false;
+              }
+              if (a.getRight() < this.x) {
+                return false;
+              }
+              if (a.getBottom() < this.y) {
+                return false;
+              }
+              return true;
+            };
+            RectangleD.prototype.getCenterX = function() {
+              return this.x + this.width / 2;
+            };
+            RectangleD.prototype.getMinX = function() {
+              return this.getX();
+            };
+            RectangleD.prototype.getMaxX = function() {
+              return this.getX() + this.width;
+            };
+            RectangleD.prototype.getCenterY = function() {
+              return this.y + this.height / 2;
+            };
+            RectangleD.prototype.getMinY = function() {
+              return this.getY();
+            };
+            RectangleD.prototype.getMaxY = function() {
+              return this.getY() + this.height;
+            };
+            RectangleD.prototype.getWidthHalf = function() {
+              return this.width / 2;
+            };
+            RectangleD.prototype.getHeightHalf = function() {
+              return this.height / 2;
+            };
+            module2.exports = RectangleD;
+          }),
+          /* 14 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
+              return typeof obj;
+            } : function(obj) {
+              return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+            };
+            function UniqueIDGeneretor() {
+            }
+            UniqueIDGeneretor.lastID = 0;
+            UniqueIDGeneretor.createID = function(obj) {
+              if (UniqueIDGeneretor.isPrimitive(obj)) {
+                return obj;
+              }
+              if (obj.uniqueID != null) {
+                return obj.uniqueID;
+              }
+              obj.uniqueID = UniqueIDGeneretor.getString();
+              UniqueIDGeneretor.lastID++;
+              return obj.uniqueID;
+            };
+            UniqueIDGeneretor.getString = function(id) {
+              if (id == null) id = UniqueIDGeneretor.lastID;
+              return "Object#" + id;
+            };
+            UniqueIDGeneretor.isPrimitive = function(arg) {
+              var type = typeof arg === "undefined" ? "undefined" : _typeof(arg);
+              return arg == null || type != "object" && type != "function";
+            };
+            module2.exports = UniqueIDGeneretor;
+          }),
+          /* 15 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function _toConsumableArray(arr) {
+              if (Array.isArray(arr)) {
+                for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                  arr2[i] = arr[i];
+                }
+                return arr2;
+              } else {
+                return Array.from(arr);
+              }
+            }
+            var LayoutConstants = __webpack_require__(0);
+            var LGraphManager = __webpack_require__(7);
+            var LNode = __webpack_require__(3);
+            var LEdge = __webpack_require__(1);
+            var LGraph = __webpack_require__(6);
+            var PointD = __webpack_require__(5);
+            var Transform = __webpack_require__(17);
+            var Emitter = __webpack_require__(29);
+            function Layout2(isRemoteUse) {
+              Emitter.call(this);
+              this.layoutQuality = LayoutConstants.QUALITY;
+              this.createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+              this.incremental = LayoutConstants.DEFAULT_INCREMENTAL;
+              this.animationOnLayout = LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT;
+              this.animationDuringLayout = LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT;
+              this.animationPeriod = LayoutConstants.DEFAULT_ANIMATION_PERIOD;
+              this.uniformLeafNodeSizes = LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES;
+              this.edgeToDummyNodes = /* @__PURE__ */ new Map();
+              this.graphManager = new LGraphManager(this);
+              this.isLayoutFinished = false;
+              this.isSubLayout = false;
+              this.isRemoteUse = false;
+              if (isRemoteUse != null) {
+                this.isRemoteUse = isRemoteUse;
+              }
+            }
+            Layout2.RANDOM_SEED = 1;
+            Layout2.prototype = Object.create(Emitter.prototype);
+            Layout2.prototype.getGraphManager = function() {
+              return this.graphManager;
+            };
+            Layout2.prototype.getAllNodes = function() {
+              return this.graphManager.getAllNodes();
+            };
+            Layout2.prototype.getAllEdges = function() {
+              return this.graphManager.getAllEdges();
+            };
+            Layout2.prototype.getAllNodesToApplyGravitation = function() {
+              return this.graphManager.getAllNodesToApplyGravitation();
+            };
+            Layout2.prototype.newGraphManager = function() {
+              var gm = new LGraphManager(this);
+              this.graphManager = gm;
+              return gm;
+            };
+            Layout2.prototype.newGraph = function(vGraph) {
+              return new LGraph(null, this.graphManager, vGraph);
+            };
+            Layout2.prototype.newNode = function(vNode) {
+              return new LNode(this.graphManager, vNode);
+            };
+            Layout2.prototype.newEdge = function(vEdge) {
+              return new LEdge(null, null, vEdge);
+            };
+            Layout2.prototype.checkLayoutSuccess = function() {
+              return this.graphManager.getRoot() == null || this.graphManager.getRoot().getNodes().length == 0 || this.graphManager.includesInvalidEdge();
+            };
+            Layout2.prototype.runLayout = function() {
+              this.isLayoutFinished = false;
+              if (this.tilingPreLayout) {
+                this.tilingPreLayout();
+              }
+              this.initParameters();
+              var isLayoutSuccessfull;
+              if (this.checkLayoutSuccess()) {
+                isLayoutSuccessfull = false;
+              } else {
+                isLayoutSuccessfull = this.layout();
+              }
+              if (LayoutConstants.ANIMATE === "during") {
+                return false;
+              }
+              if (isLayoutSuccessfull) {
+                if (!this.isSubLayout) {
+                  this.doPostLayout();
+                }
+              }
+              if (this.tilingPostLayout) {
+                this.tilingPostLayout();
+              }
+              this.isLayoutFinished = true;
+              return isLayoutSuccessfull;
+            };
+            Layout2.prototype.doPostLayout = function() {
+              if (!this.incremental) {
+                this.transform();
+              }
+              this.update();
+            };
+            Layout2.prototype.update2 = function() {
+              if (this.createBendsAsNeeded) {
+                this.createBendpointsFromDummyNodes();
+                this.graphManager.resetAllEdges();
+              }
+              if (!this.isRemoteUse) {
+                var allEdges = this.graphManager.getAllEdges();
+                for (var i = 0; i < allEdges.length; i++) {
+                  allEdges[i];
+                }
+                var nodes = this.graphManager.getRoot().getNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                  nodes[i];
+                }
+                this.update(this.graphManager.getRoot());
+              }
+            };
+            Layout2.prototype.update = function(obj) {
+              if (obj == null) {
+                this.update2();
+              } else if (obj instanceof LNode) {
+                var node = obj;
+                if (node.getChild() != null) {
+                  var nodes = node.getChild().getNodes();
+                  for (var i = 0; i < nodes.length; i++) {
+                    update(nodes[i]);
+                  }
+                }
+                if (node.vGraphObject != null) {
+                  var vNode = node.vGraphObject;
+                  vNode.update(node);
+                }
+              } else if (obj instanceof LEdge) {
+                var edge = obj;
+                if (edge.vGraphObject != null) {
+                  var vEdge = edge.vGraphObject;
+                  vEdge.update(edge);
+                }
+              } else if (obj instanceof LGraph) {
+                var graph = obj;
+                if (graph.vGraphObject != null) {
+                  var vGraph = graph.vGraphObject;
+                  vGraph.update(graph);
+                }
+              }
+            };
+            Layout2.prototype.initParameters = function() {
+              if (!this.isSubLayout) {
+                this.layoutQuality = LayoutConstants.QUALITY;
+                this.animationDuringLayout = LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT;
+                this.animationPeriod = LayoutConstants.DEFAULT_ANIMATION_PERIOD;
+                this.animationOnLayout = LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT;
+                this.incremental = LayoutConstants.DEFAULT_INCREMENTAL;
+                this.createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+                this.uniformLeafNodeSizes = LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES;
+              }
+              if (this.animationDuringLayout) {
+                this.animationOnLayout = false;
+              }
+            };
+            Layout2.prototype.transform = function(newLeftTop) {
+              if (newLeftTop == void 0) {
+                this.transform(new PointD(0, 0));
+              } else {
+                var trans = new Transform();
+                var leftTop = this.graphManager.getRoot().updateLeftTop();
+                if (leftTop != null) {
+                  trans.setWorldOrgX(newLeftTop.x);
+                  trans.setWorldOrgY(newLeftTop.y);
+                  trans.setDeviceOrgX(leftTop.x);
+                  trans.setDeviceOrgY(leftTop.y);
+                  var nodes = this.getAllNodes();
+                  var node;
+                  for (var i = 0; i < nodes.length; i++) {
+                    node = nodes[i];
+                    node.transform(trans);
+                  }
+                }
+              }
+            };
+            Layout2.prototype.positionNodesRandomly = function(graph) {
+              if (graph == void 0) {
+                this.positionNodesRandomly(this.getGraphManager().getRoot());
+                this.getGraphManager().getRoot().updateBounds(true);
+              } else {
+                var lNode;
+                var childGraph;
+                var nodes = graph.getNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                  lNode = nodes[i];
+                  childGraph = lNode.getChild();
+                  if (childGraph == null) {
+                    lNode.scatter();
+                  } else if (childGraph.getNodes().length == 0) {
+                    lNode.scatter();
+                  } else {
+                    this.positionNodesRandomly(childGraph);
+                    lNode.updateBounds();
+                  }
+                }
+              }
+            };
+            Layout2.prototype.getFlatForest = function() {
+              var flatForest = [];
+              var isForest = true;
+              var allNodes = this.graphManager.getRoot().getNodes();
+              var isFlat = true;
+              for (var i = 0; i < allNodes.length; i++) {
+                if (allNodes[i].getChild() != null) {
+                  isFlat = false;
+                }
+              }
+              if (!isFlat) {
+                return flatForest;
+              }
+              var visited = /* @__PURE__ */ new Set();
+              var toBeVisited = [];
+              var parents = /* @__PURE__ */ new Map();
+              var unProcessedNodes = [];
+              unProcessedNodes = unProcessedNodes.concat(allNodes);
+              while (unProcessedNodes.length > 0 && isForest) {
+                toBeVisited.push(unProcessedNodes[0]);
+                while (toBeVisited.length > 0 && isForest) {
+                  var currentNode = toBeVisited[0];
+                  toBeVisited.splice(0, 1);
+                  visited.add(currentNode);
+                  var neighborEdges = currentNode.getEdges();
+                  for (var i = 0; i < neighborEdges.length; i++) {
+                    var currentNeighbor = neighborEdges[i].getOtherEnd(currentNode);
+                    if (parents.get(currentNode) != currentNeighbor) {
+                      if (!visited.has(currentNeighbor)) {
+                        toBeVisited.push(currentNeighbor);
+                        parents.set(currentNeighbor, currentNode);
+                      } else {
+                        isForest = false;
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (!isForest) {
+                  flatForest = [];
+                } else {
+                  var temp = [].concat(_toConsumableArray(visited));
+                  flatForest.push(temp);
+                  for (var i = 0; i < temp.length; i++) {
+                    var value = temp[i];
+                    var index = unProcessedNodes.indexOf(value);
+                    if (index > -1) {
+                      unProcessedNodes.splice(index, 1);
+                    }
+                  }
+                  visited = /* @__PURE__ */ new Set();
+                  parents = /* @__PURE__ */ new Map();
+                }
+              }
+              return flatForest;
+            };
+            Layout2.prototype.createDummyNodesForBendpoints = function(edge) {
+              var dummyNodes = [];
+              var prev = edge.source;
+              var graph = this.graphManager.calcLowestCommonAncestor(edge.source, edge.target);
+              for (var i = 0; i < edge.bendpoints.length; i++) {
+                var dummyNode = this.newNode(null);
+                dummyNode.setRect(new Point(0, 0), new Dimension(1, 1));
+                graph.add(dummyNode);
+                var dummyEdge = this.newEdge(null);
+                this.graphManager.add(dummyEdge, prev, dummyNode);
+                dummyNodes.add(dummyNode);
+                prev = dummyNode;
+              }
+              var dummyEdge = this.newEdge(null);
+              this.graphManager.add(dummyEdge, prev, edge.target);
+              this.edgeToDummyNodes.set(edge, dummyNodes);
+              if (edge.isInterGraph()) {
+                this.graphManager.remove(edge);
+              } else {
+                graph.remove(edge);
+              }
+              return dummyNodes;
+            };
+            Layout2.prototype.createBendpointsFromDummyNodes = function() {
+              var edges = [];
+              edges = edges.concat(this.graphManager.getAllEdges());
+              edges = [].concat(_toConsumableArray(this.edgeToDummyNodes.keys())).concat(edges);
+              for (var k = 0; k < edges.length; k++) {
+                var lEdge = edges[k];
+                if (lEdge.bendpoints.length > 0) {
+                  var path = this.edgeToDummyNodes.get(lEdge);
+                  for (var i = 0; i < path.length; i++) {
+                    var dummyNode = path[i];
+                    var p = new PointD(dummyNode.getCenterX(), dummyNode.getCenterY());
+                    var ebp = lEdge.bendpoints.get(i);
+                    ebp.x = p.x;
+                    ebp.y = p.y;
+                    dummyNode.getOwner().remove(dummyNode);
+                  }
+                  this.graphManager.add(lEdge, lEdge.source, lEdge.target);
+                }
+              }
+            };
+            Layout2.transform = function(sliderValue, defaultValue, minDiv, maxMul) {
+              if (minDiv != void 0 && maxMul != void 0) {
+                var value = defaultValue;
+                if (sliderValue <= 50) {
+                  var minValue = defaultValue / minDiv;
+                  value -= (defaultValue - minValue) / 50 * (50 - sliderValue);
+                } else {
+                  var maxValue = defaultValue * maxMul;
+                  value += (maxValue - defaultValue) / 50 * (sliderValue - 50);
+                }
+                return value;
+              } else {
+                var a, b;
+                if (sliderValue <= 50) {
+                  a = 9 * defaultValue / 500;
+                  b = defaultValue / 10;
+                } else {
+                  a = 9 * defaultValue / 50;
+                  b = -8 * defaultValue;
+                }
+                return a * sliderValue + b;
+              }
+            };
+            Layout2.findCenterOfTree = function(nodes) {
+              var list = [];
+              list = list.concat(nodes);
+              var removedNodes = [];
+              var remainingDegrees = /* @__PURE__ */ new Map();
+              var foundCenter = false;
+              var centerNode = null;
+              if (list.length == 1 || list.length == 2) {
+                foundCenter = true;
+                centerNode = list[0];
+              }
+              for (var i = 0; i < list.length; i++) {
+                var node = list[i];
+                var degree = node.getNeighborsList().size;
+                remainingDegrees.set(node, node.getNeighborsList().size);
+                if (degree == 1) {
+                  removedNodes.push(node);
+                }
+              }
+              var tempList = [];
+              tempList = tempList.concat(removedNodes);
+              while (!foundCenter) {
+                var tempList2 = [];
+                tempList2 = tempList2.concat(tempList);
+                tempList = [];
+                for (var i = 0; i < list.length; i++) {
+                  var node = list[i];
+                  var index = list.indexOf(node);
+                  if (index >= 0) {
+                    list.splice(index, 1);
+                  }
+                  var neighbours = node.getNeighborsList();
+                  neighbours.forEach(function(neighbour) {
+                    if (removedNodes.indexOf(neighbour) < 0) {
+                      var otherDegree = remainingDegrees.get(neighbour);
+                      var newDegree = otherDegree - 1;
+                      if (newDegree == 1) {
+                        tempList.push(neighbour);
+                      }
+                      remainingDegrees.set(neighbour, newDegree);
+                    }
+                  });
+                }
+                removedNodes = removedNodes.concat(tempList);
+                if (list.length == 1 || list.length == 2) {
+                  foundCenter = true;
+                  centerNode = list[0];
+                }
+              }
+              return centerNode;
+            };
+            Layout2.prototype.setGraphManager = function(gm) {
+              this.graphManager = gm;
+            };
+            module2.exports = Layout2;
+          }),
+          /* 16 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function RandomSeed() {
+            }
+            RandomSeed.seed = 1;
+            RandomSeed.x = 0;
+            RandomSeed.nextDouble = function() {
+              RandomSeed.x = Math.sin(RandomSeed.seed++) * 1e4;
+              return RandomSeed.x - Math.floor(RandomSeed.x);
+            };
+            module2.exports = RandomSeed;
+          }),
+          /* 17 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var PointD = __webpack_require__(5);
+            function Transform(x, y) {
+              this.lworldOrgX = 0;
+              this.lworldOrgY = 0;
+              this.ldeviceOrgX = 0;
+              this.ldeviceOrgY = 0;
+              this.lworldExtX = 1;
+              this.lworldExtY = 1;
+              this.ldeviceExtX = 1;
+              this.ldeviceExtY = 1;
+            }
+            Transform.prototype.getWorldOrgX = function() {
+              return this.lworldOrgX;
+            };
+            Transform.prototype.setWorldOrgX = function(wox) {
+              this.lworldOrgX = wox;
+            };
+            Transform.prototype.getWorldOrgY = function() {
+              return this.lworldOrgY;
+            };
+            Transform.prototype.setWorldOrgY = function(woy) {
+              this.lworldOrgY = woy;
+            };
+            Transform.prototype.getWorldExtX = function() {
+              return this.lworldExtX;
+            };
+            Transform.prototype.setWorldExtX = function(wex) {
+              this.lworldExtX = wex;
+            };
+            Transform.prototype.getWorldExtY = function() {
+              return this.lworldExtY;
+            };
+            Transform.prototype.setWorldExtY = function(wey) {
+              this.lworldExtY = wey;
+            };
+            Transform.prototype.getDeviceOrgX = function() {
+              return this.ldeviceOrgX;
+            };
+            Transform.prototype.setDeviceOrgX = function(dox) {
+              this.ldeviceOrgX = dox;
+            };
+            Transform.prototype.getDeviceOrgY = function() {
+              return this.ldeviceOrgY;
+            };
+            Transform.prototype.setDeviceOrgY = function(doy) {
+              this.ldeviceOrgY = doy;
+            };
+            Transform.prototype.getDeviceExtX = function() {
+              return this.ldeviceExtX;
+            };
+            Transform.prototype.setDeviceExtX = function(dex) {
+              this.ldeviceExtX = dex;
+            };
+            Transform.prototype.getDeviceExtY = function() {
+              return this.ldeviceExtY;
+            };
+            Transform.prototype.setDeviceExtY = function(dey) {
+              this.ldeviceExtY = dey;
+            };
+            Transform.prototype.transformX = function(x) {
+              var xDevice = 0;
+              var worldExtX = this.lworldExtX;
+              if (worldExtX != 0) {
+                xDevice = this.ldeviceOrgX + (x - this.lworldOrgX) * this.ldeviceExtX / worldExtX;
+              }
+              return xDevice;
+            };
+            Transform.prototype.transformY = function(y) {
+              var yDevice = 0;
+              var worldExtY = this.lworldExtY;
+              if (worldExtY != 0) {
+                yDevice = this.ldeviceOrgY + (y - this.lworldOrgY) * this.ldeviceExtY / worldExtY;
+              }
+              return yDevice;
+            };
+            Transform.prototype.inverseTransformX = function(x) {
+              var xWorld = 0;
+              var deviceExtX = this.ldeviceExtX;
+              if (deviceExtX != 0) {
+                xWorld = this.lworldOrgX + (x - this.ldeviceOrgX) * this.lworldExtX / deviceExtX;
+              }
+              return xWorld;
+            };
+            Transform.prototype.inverseTransformY = function(y) {
+              var yWorld = 0;
+              var deviceExtY = this.ldeviceExtY;
+              if (deviceExtY != 0) {
+                yWorld = this.lworldOrgY + (y - this.ldeviceOrgY) * this.lworldExtY / deviceExtY;
+              }
+              return yWorld;
+            };
+            Transform.prototype.inverseTransformPoint = function(inPoint) {
+              var outPoint = new PointD(this.inverseTransformX(inPoint.x), this.inverseTransformY(inPoint.y));
+              return outPoint;
+            };
+            module2.exports = Transform;
+          }),
+          /* 18 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function _toConsumableArray(arr) {
+              if (Array.isArray(arr)) {
+                for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                  arr2[i] = arr[i];
+                }
+                return arr2;
+              } else {
+                return Array.from(arr);
+              }
+            }
+            var Layout2 = __webpack_require__(15);
+            var FDLayoutConstants = __webpack_require__(4);
+            var LayoutConstants = __webpack_require__(0);
+            var IGeometry = __webpack_require__(8);
+            var IMath = __webpack_require__(9);
+            function FDLayout() {
+              Layout2.call(this);
+              this.useSmartIdealEdgeLengthCalculation = FDLayoutConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION;
+              this.gravityConstant = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH;
+              this.compoundGravityConstant = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH;
+              this.gravityRangeFactor = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR;
+              this.compoundGravityRangeFactor = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR;
+              this.displacementThresholdPerNode = 3 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
+              this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+              this.initialCoolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+              this.totalDisplacement = 0;
+              this.oldTotalDisplacement = 0;
+              this.maxIterations = FDLayoutConstants.MAX_ITERATIONS;
+            }
+            FDLayout.prototype = Object.create(Layout2.prototype);
+            for (var prop in Layout2) {
+              FDLayout[prop] = Layout2[prop];
+            }
+            FDLayout.prototype.initParameters = function() {
+              Layout2.prototype.initParameters.call(this, arguments);
+              this.totalIterations = 0;
+              this.notAnimatedIterations = 0;
+              this.useFRGridVariant = FDLayoutConstants.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION;
+              this.grid = [];
+            };
+            FDLayout.prototype.calcIdealEdgeLengths = function() {
+              var edge;
+              var originalIdealLength;
+              var lcaDepth;
+              var source;
+              var target;
+              var sizeOfSourceInLca;
+              var sizeOfTargetInLca;
+              var allEdges = this.getGraphManager().getAllEdges();
+              for (var i = 0; i < allEdges.length; i++) {
+                edge = allEdges[i];
+                originalIdealLength = edge.idealLength;
+                if (edge.isInterGraph) {
+                  source = edge.getSource();
+                  target = edge.getTarget();
+                  sizeOfSourceInLca = edge.getSourceInLca().getEstimatedSize();
+                  sizeOfTargetInLca = edge.getTargetInLca().getEstimatedSize();
+                  if (this.useSmartIdealEdgeLengthCalculation) {
+                    edge.idealLength += sizeOfSourceInLca + sizeOfTargetInLca - 2 * LayoutConstants.SIMPLE_NODE_SIZE;
+                  }
+                  lcaDepth = edge.getLca().getInclusionTreeDepth();
+                  edge.idealLength += originalIdealLength * FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR * (source.getInclusionTreeDepth() + target.getInclusionTreeDepth() - 2 * lcaDepth);
+                }
+              }
+            };
+            FDLayout.prototype.initSpringEmbedder = function() {
+              var s = this.getAllNodes().length;
+              if (this.incremental) {
+                if (s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) {
+                  this.coolingFactor = Math.max(this.coolingFactor * FDLayoutConstants.COOLING_ADAPTATION_FACTOR, this.coolingFactor - (s - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) / (FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) * this.coolingFactor * (1 - FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+                }
+                this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL;
+              } else {
+                if (s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) {
+                  this.coolingFactor = Math.max(FDLayoutConstants.COOLING_ADAPTATION_FACTOR, 1 - (s - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) / (FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) * (1 - FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+                } else {
+                  this.coolingFactor = 1;
+                }
+                this.initialCoolingFactor = this.coolingFactor;
+                this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT;
+              }
+              this.maxIterations = Math.max(this.getAllNodes().length * 5, this.maxIterations);
+              this.displacementThresholdPerNode = 3 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
+              this.totalDisplacementThreshold = this.displacementThresholdPerNode * this.getAllNodes().length;
+              this.repulsionRange = this.calcRepulsionRange();
+            };
+            FDLayout.prototype.calcSpringForces = function() {
+              var lEdges = this.getAllEdges();
+              var edge;
+              for (var i = 0; i < lEdges.length; i++) {
+                edge = lEdges[i];
+                this.calcSpringForce(edge, edge.idealLength);
+              }
+            };
+            FDLayout.prototype.calcRepulsionForces = function() {
+              var gridUpdateAllowed = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+              var forceToNodeSurroundingUpdate = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+              var i, j;
+              var nodeA, nodeB;
+              var lNodes = this.getAllNodes();
+              var processedNodeSet;
+              if (this.useFRGridVariant) {
+                if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed) {
+                  this.updateGrid();
+                }
+                processedNodeSet = /* @__PURE__ */ new Set();
+                for (i = 0; i < lNodes.length; i++) {
+                  nodeA = lNodes[i];
+                  this.calculateRepulsionForceOfANode(nodeA, processedNodeSet, gridUpdateAllowed, forceToNodeSurroundingUpdate);
+                  processedNodeSet.add(nodeA);
+                }
+              } else {
+                for (i = 0; i < lNodes.length; i++) {
+                  nodeA = lNodes[i];
+                  for (j = i + 1; j < lNodes.length; j++) {
+                    nodeB = lNodes[j];
+                    if (nodeA.getOwner() != nodeB.getOwner()) {
+                      continue;
+                    }
+                    this.calcRepulsionForce(nodeA, nodeB);
+                  }
+                }
+              }
+            };
+            FDLayout.prototype.calcGravitationalForces = function() {
+              var node;
+              var lNodes = this.getAllNodesToApplyGravitation();
+              for (var i = 0; i < lNodes.length; i++) {
+                node = lNodes[i];
+                this.calcGravitationalForce(node);
+              }
+            };
+            FDLayout.prototype.moveNodes = function() {
+              var lNodes = this.getAllNodes();
+              var node;
+              for (var i = 0; i < lNodes.length; i++) {
+                node = lNodes[i];
+                node.move();
+              }
+            };
+            FDLayout.prototype.calcSpringForce = function(edge, idealLength) {
+              var sourceNode = edge.getSource();
+              var targetNode = edge.getTarget();
+              var length;
+              var springForce;
+              var springForceX;
+              var springForceY;
+              if (this.uniformLeafNodeSizes && sourceNode.getChild() == null && targetNode.getChild() == null) {
+                edge.updateLengthSimple();
+              } else {
+                edge.updateLength();
+                if (edge.isOverlapingSourceAndTarget) {
+                  return;
+                }
+              }
+              length = edge.getLength();
+              if (length == 0) return;
+              springForce = edge.edgeElasticity * (length - idealLength);
+              springForceX = springForce * (edge.lengthX / length);
+              springForceY = springForce * (edge.lengthY / length);
+              sourceNode.springForceX += springForceX;
+              sourceNode.springForceY += springForceY;
+              targetNode.springForceX -= springForceX;
+              targetNode.springForceY -= springForceY;
+            };
+            FDLayout.prototype.calcRepulsionForce = function(nodeA, nodeB) {
+              var rectA = nodeA.getRect();
+              var rectB = nodeB.getRect();
+              var overlapAmount = new Array(2);
+              var clipPoints = new Array(4);
+              var distanceX;
+              var distanceY;
+              var distanceSquared;
+              var distance;
+              var repulsionForce;
+              var repulsionForceX;
+              var repulsionForceY;
+              if (rectA.intersects(rectB)) {
+                IGeometry.calcSeparationAmount(rectA, rectB, overlapAmount, FDLayoutConstants.DEFAULT_EDGE_LENGTH / 2);
+                repulsionForceX = 2 * overlapAmount[0];
+                repulsionForceY = 2 * overlapAmount[1];
+                var childrenConstant = nodeA.noOfChildren * nodeB.noOfChildren / (nodeA.noOfChildren + nodeB.noOfChildren);
+                nodeA.repulsionForceX -= childrenConstant * repulsionForceX;
+                nodeA.repulsionForceY -= childrenConstant * repulsionForceY;
+                nodeB.repulsionForceX += childrenConstant * repulsionForceX;
+                nodeB.repulsionForceY += childrenConstant * repulsionForceY;
+              } else {
+                if (this.uniformLeafNodeSizes && nodeA.getChild() == null && nodeB.getChild() == null) {
+                  distanceX = rectB.getCenterX() - rectA.getCenterX();
+                  distanceY = rectB.getCenterY() - rectA.getCenterY();
+                } else {
+                  IGeometry.getIntersection(rectA, rectB, clipPoints);
+                  distanceX = clipPoints[2] - clipPoints[0];
+                  distanceY = clipPoints[3] - clipPoints[1];
+                }
+                if (Math.abs(distanceX) < FDLayoutConstants.MIN_REPULSION_DIST) {
+                  distanceX = IMath.sign(distanceX) * FDLayoutConstants.MIN_REPULSION_DIST;
+                }
+                if (Math.abs(distanceY) < FDLayoutConstants.MIN_REPULSION_DIST) {
+                  distanceY = IMath.sign(distanceY) * FDLayoutConstants.MIN_REPULSION_DIST;
+                }
+                distanceSquared = distanceX * distanceX + distanceY * distanceY;
+                distance = Math.sqrt(distanceSquared);
+                repulsionForce = (nodeA.nodeRepulsion / 2 + nodeB.nodeRepulsion / 2) * nodeA.noOfChildren * nodeB.noOfChildren / distanceSquared;
+                repulsionForceX = repulsionForce * distanceX / distance;
+                repulsionForceY = repulsionForce * distanceY / distance;
+                nodeA.repulsionForceX -= repulsionForceX;
+                nodeA.repulsionForceY -= repulsionForceY;
+                nodeB.repulsionForceX += repulsionForceX;
+                nodeB.repulsionForceY += repulsionForceY;
+              }
+            };
+            FDLayout.prototype.calcGravitationalForce = function(node) {
+              var ownerGraph;
+              var ownerCenterX;
+              var ownerCenterY;
+              var distanceX;
+              var distanceY;
+              var absDistanceX;
+              var absDistanceY;
+              var estimatedSize;
+              ownerGraph = node.getOwner();
+              ownerCenterX = (ownerGraph.getRight() + ownerGraph.getLeft()) / 2;
+              ownerCenterY = (ownerGraph.getTop() + ownerGraph.getBottom()) / 2;
+              distanceX = node.getCenterX() - ownerCenterX;
+              distanceY = node.getCenterY() - ownerCenterY;
+              absDistanceX = Math.abs(distanceX) + node.getWidth() / 2;
+              absDistanceY = Math.abs(distanceY) + node.getHeight() / 2;
+              if (node.getOwner() == this.graphManager.getRoot()) {
+                estimatedSize = ownerGraph.getEstimatedSize() * this.gravityRangeFactor;
+                if (absDistanceX > estimatedSize || absDistanceY > estimatedSize) {
+                  node.gravitationForceX = -this.gravityConstant * distanceX;
+                  node.gravitationForceY = -this.gravityConstant * distanceY;
+                }
+              } else {
+                estimatedSize = ownerGraph.getEstimatedSize() * this.compoundGravityRangeFactor;
+                if (absDistanceX > estimatedSize || absDistanceY > estimatedSize) {
+                  node.gravitationForceX = -this.gravityConstant * distanceX * this.compoundGravityConstant;
+                  node.gravitationForceY = -this.gravityConstant * distanceY * this.compoundGravityConstant;
+                }
+              }
+            };
+            FDLayout.prototype.isConverged = function() {
+              var converged;
+              var oscilating = false;
+              if (this.totalIterations > this.maxIterations / 3) {
+                oscilating = Math.abs(this.totalDisplacement - this.oldTotalDisplacement) < 2;
+              }
+              converged = this.totalDisplacement < this.totalDisplacementThreshold;
+              this.oldTotalDisplacement = this.totalDisplacement;
+              return converged || oscilating;
+            };
+            FDLayout.prototype.animate = function() {
+              if (this.animationDuringLayout && !this.isSubLayout) {
+                if (this.notAnimatedIterations == this.animationPeriod) {
+                  this.update();
+                  this.notAnimatedIterations = 0;
+                } else {
+                  this.notAnimatedIterations++;
+                }
+              }
+            };
+            FDLayout.prototype.calcNoOfChildrenForAllNodes = function() {
+              var node;
+              var allNodes = this.graphManager.getAllNodes();
+              for (var i = 0; i < allNodes.length; i++) {
+                node = allNodes[i];
+                node.noOfChildren = node.getNoOfChildren();
+              }
+            };
+            FDLayout.prototype.calcGrid = function(graph) {
+              var sizeX = 0;
+              var sizeY = 0;
+              sizeX = parseInt(Math.ceil((graph.getRight() - graph.getLeft()) / this.repulsionRange));
+              sizeY = parseInt(Math.ceil((graph.getBottom() - graph.getTop()) / this.repulsionRange));
+              var grid = new Array(sizeX);
+              for (var i = 0; i < sizeX; i++) {
+                grid[i] = new Array(sizeY);
+              }
+              for (var i = 0; i < sizeX; i++) {
+                for (var j = 0; j < sizeY; j++) {
+                  grid[i][j] = new Array();
+                }
+              }
+              return grid;
+            };
+            FDLayout.prototype.addNodeToGrid = function(v, left, top) {
+              var startX = 0;
+              var finishX = 0;
+              var startY = 0;
+              var finishY = 0;
+              startX = parseInt(Math.floor((v.getRect().x - left) / this.repulsionRange));
+              finishX = parseInt(Math.floor((v.getRect().width + v.getRect().x - left) / this.repulsionRange));
+              startY = parseInt(Math.floor((v.getRect().y - top) / this.repulsionRange));
+              finishY = parseInt(Math.floor((v.getRect().height + v.getRect().y - top) / this.repulsionRange));
+              for (var i = startX; i <= finishX; i++) {
+                for (var j = startY; j <= finishY; j++) {
+                  this.grid[i][j].push(v);
+                  v.setGridCoordinates(startX, finishX, startY, finishY);
+                }
+              }
+            };
+            FDLayout.prototype.updateGrid = function() {
+              var i;
+              var nodeA;
+              var lNodes = this.getAllNodes();
+              this.grid = this.calcGrid(this.graphManager.getRoot());
+              for (i = 0; i < lNodes.length; i++) {
+                nodeA = lNodes[i];
+                this.addNodeToGrid(nodeA, this.graphManager.getRoot().getLeft(), this.graphManager.getRoot().getTop());
+              }
+            };
+            FDLayout.prototype.calculateRepulsionForceOfANode = function(nodeA, processedNodeSet, gridUpdateAllowed, forceToNodeSurroundingUpdate) {
+              if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed || forceToNodeSurroundingUpdate) {
+                var surrounding = /* @__PURE__ */ new Set();
+                nodeA.surrounding = new Array();
+                var nodeB;
+                var grid = this.grid;
+                for (var i = nodeA.startX - 1; i < nodeA.finishX + 2; i++) {
+                  for (var j = nodeA.startY - 1; j < nodeA.finishY + 2; j++) {
+                    if (!(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length)) {
+                      for (var k = 0; k < grid[i][j].length; k++) {
+                        nodeB = grid[i][j][k];
+                        if (nodeA.getOwner() != nodeB.getOwner() || nodeA == nodeB) {
+                          continue;
+                        }
+                        if (!processedNodeSet.has(nodeB) && !surrounding.has(nodeB)) {
+                          var distanceX = Math.abs(nodeA.getCenterX() - nodeB.getCenterX()) - (nodeA.getWidth() / 2 + nodeB.getWidth() / 2);
+                          var distanceY = Math.abs(nodeA.getCenterY() - nodeB.getCenterY()) - (nodeA.getHeight() / 2 + nodeB.getHeight() / 2);
+                          if (distanceX <= this.repulsionRange && distanceY <= this.repulsionRange) {
+                            surrounding.add(nodeB);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                nodeA.surrounding = [].concat(_toConsumableArray(surrounding));
+              }
+              for (i = 0; i < nodeA.surrounding.length; i++) {
+                this.calcRepulsionForce(nodeA, nodeA.surrounding[i]);
+              }
+            };
+            FDLayout.prototype.calcRepulsionRange = function() {
+              return 0;
+            };
+            module2.exports = FDLayout;
+          }),
+          /* 19 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LEdge = __webpack_require__(1);
+            var FDLayoutConstants = __webpack_require__(4);
+            function FDLayoutEdge(source, target, vEdge) {
+              LEdge.call(this, source, target, vEdge);
+              this.idealLength = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+              this.edgeElasticity = FDLayoutConstants.DEFAULT_SPRING_STRENGTH;
+            }
+            FDLayoutEdge.prototype = Object.create(LEdge.prototype);
+            for (var prop in LEdge) {
+              FDLayoutEdge[prop] = LEdge[prop];
+            }
+            module2.exports = FDLayoutEdge;
+          }),
+          /* 20 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var LNode = __webpack_require__(3);
+            var FDLayoutConstants = __webpack_require__(4);
+            function FDLayoutNode(gm, loc, size, vNode) {
+              LNode.call(this, gm, loc, size, vNode);
+              this.nodeRepulsion = FDLayoutConstants.DEFAULT_REPULSION_STRENGTH;
+              this.springForceX = 0;
+              this.springForceY = 0;
+              this.repulsionForceX = 0;
+              this.repulsionForceY = 0;
+              this.gravitationForceX = 0;
+              this.gravitationForceY = 0;
+              this.displacementX = 0;
+              this.displacementY = 0;
+              this.startX = 0;
+              this.finishX = 0;
+              this.startY = 0;
+              this.finishY = 0;
+              this.surrounding = [];
+            }
+            FDLayoutNode.prototype = Object.create(LNode.prototype);
+            for (var prop in LNode) {
+              FDLayoutNode[prop] = LNode[prop];
+            }
+            FDLayoutNode.prototype.setGridCoordinates = function(_startX, _finishX, _startY, _finishY) {
+              this.startX = _startX;
+              this.finishX = _finishX;
+              this.startY = _startY;
+              this.finishY = _finishY;
+            };
+            module2.exports = FDLayoutNode;
+          }),
+          /* 21 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function DimensionD2(width, height) {
+              this.width = 0;
+              this.height = 0;
+              if (width !== null && height !== null) {
+                this.height = height;
+                this.width = width;
+              }
+            }
+            DimensionD2.prototype.getWidth = function() {
+              return this.width;
+            };
+            DimensionD2.prototype.setWidth = function(width) {
+              this.width = width;
+            };
+            DimensionD2.prototype.getHeight = function() {
+              return this.height;
+            };
+            DimensionD2.prototype.setHeight = function(height) {
+              this.height = height;
+            };
+            module2.exports = DimensionD2;
+          }),
+          /* 22 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var UniqueIDGeneretor = __webpack_require__(14);
+            function HashMap() {
+              this.map = {};
+              this.keys = [];
+            }
+            HashMap.prototype.put = function(key, value) {
+              var theId = UniqueIDGeneretor.createID(key);
+              if (!this.contains(theId)) {
+                this.map[theId] = value;
+                this.keys.push(key);
+              }
+            };
+            HashMap.prototype.contains = function(key) {
+              UniqueIDGeneretor.createID(key);
+              return this.map[key] != null;
+            };
+            HashMap.prototype.get = function(key) {
+              var theId = UniqueIDGeneretor.createID(key);
+              return this.map[theId];
+            };
+            HashMap.prototype.keySet = function() {
+              return this.keys;
+            };
+            module2.exports = HashMap;
+          }),
+          /* 23 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var UniqueIDGeneretor = __webpack_require__(14);
+            function HashSet() {
+              this.set = {};
+            }
+            HashSet.prototype.add = function(obj) {
+              var theId = UniqueIDGeneretor.createID(obj);
+              if (!this.contains(theId)) this.set[theId] = obj;
+            };
+            HashSet.prototype.remove = function(obj) {
+              delete this.set[UniqueIDGeneretor.createID(obj)];
+            };
+            HashSet.prototype.clear = function() {
+              this.set = {};
+            };
+            HashSet.prototype.contains = function(obj) {
+              return this.set[UniqueIDGeneretor.createID(obj)] == obj;
+            };
+            HashSet.prototype.isEmpty = function() {
+              return this.size() === 0;
+            };
+            HashSet.prototype.size = function() {
+              return Object.keys(this.set).length;
+            };
+            HashSet.prototype.addAllTo = function(list) {
+              var keys = Object.keys(this.set);
+              var length = keys.length;
+              for (var i = 0; i < length; i++) {
+                list.push(this.set[keys[i]]);
+              }
+            };
+            HashSet.prototype.size = function() {
+              return Object.keys(this.set).length;
+            };
+            HashSet.prototype.addAll = function(list) {
+              var s = list.length;
+              for (var i = 0; i < s; i++) {
+                var v = list[i];
+                this.add(v);
+              }
+            };
+            module2.exports = HashSet;
+          }),
+          /* 24 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function Matrix() {
+            }
+            Matrix.multMat = function(array1, array2) {
+              var result = [];
+              for (var i = 0; i < array1.length; i++) {
+                result[i] = [];
+                for (var j = 0; j < array2[0].length; j++) {
+                  result[i][j] = 0;
+                  for (var k = 0; k < array1[0].length; k++) {
+                    result[i][j] += array1[i][k] * array2[k][j];
+                  }
+                }
+              }
+              return result;
+            };
+            Matrix.transpose = function(array) {
+              var result = [];
+              for (var i = 0; i < array[0].length; i++) {
+                result[i] = [];
+                for (var j = 0; j < array.length; j++) {
+                  result[i][j] = array[j][i];
+                }
+              }
+              return result;
+            };
+            Matrix.multCons = function(array, constant) {
+              var result = [];
+              for (var i = 0; i < array.length; i++) {
+                result[i] = array[i] * constant;
+              }
+              return result;
+            };
+            Matrix.minusOp = function(array1, array2) {
+              var result = [];
+              for (var i = 0; i < array1.length; i++) {
+                result[i] = array1[i] - array2[i];
+              }
+              return result;
+            };
+            Matrix.dotProduct = function(array1, array2) {
+              var product = 0;
+              for (var i = 0; i < array1.length; i++) {
+                product += array1[i] * array2[i];
+              }
+              return product;
+            };
+            Matrix.mag = function(array) {
+              return Math.sqrt(this.dotProduct(array, array));
+            };
+            Matrix.normalize = function(array) {
+              var result = [];
+              var magnitude = this.mag(array);
+              for (var i = 0; i < array.length; i++) {
+                result[i] = array[i] / magnitude;
+              }
+              return result;
+            };
+            Matrix.multGamma = function(array) {
+              var result = [];
+              var sum = 0;
+              for (var i = 0; i < array.length; i++) {
+                sum += array[i];
+              }
+              sum *= -1 / array.length;
+              for (var _i = 0; _i < array.length; _i++) {
+                result[_i] = sum + array[_i];
+              }
+              return result;
+            };
+            Matrix.multL = function(array, C, INV) {
+              var result = [];
+              var temp1 = [];
+              var temp2 = [];
+              for (var i = 0; i < C[0].length; i++) {
+                var sum = 0;
+                for (var j = 0; j < C.length; j++) {
+                  sum += -0.5 * C[j][i] * array[j];
+                }
+                temp1[i] = sum;
+              }
+              for (var _i2 = 0; _i2 < INV.length; _i2++) {
+                var _sum = 0;
+                for (var _j = 0; _j < INV.length; _j++) {
+                  _sum += INV[_i2][_j] * temp1[_j];
+                }
+                temp2[_i2] = _sum;
+              }
+              for (var _i3 = 0; _i3 < C.length; _i3++) {
+                var _sum2 = 0;
+                for (var _j2 = 0; _j2 < C[0].length; _j2++) {
+                  _sum2 += C[_i3][_j2] * temp2[_j2];
+                }
+                result[_i3] = _sum2;
+              }
+              return result;
+            };
+            module2.exports = Matrix;
+          }),
+          /* 25 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var _createClass = /* @__PURE__ */ (function() {
+              function defineProperties(target, props) {
+                for (var i = 0; i < props.length; i++) {
+                  var descriptor = props[i];
+                  descriptor.enumerable = descriptor.enumerable || false;
+                  descriptor.configurable = true;
+                  if ("value" in descriptor) descriptor.writable = true;
+                  Object.defineProperty(target, descriptor.key, descriptor);
+                }
+              }
+              return function(Constructor, protoProps, staticProps) {
+                if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                if (staticProps) defineProperties(Constructor, staticProps);
+                return Constructor;
+              };
+            })();
+            function _classCallCheck(instance2, Constructor) {
+              if (!(instance2 instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+              }
+            }
+            var LinkedList = __webpack_require__(11);
+            var Quicksort = (function() {
+              function Quicksort2(A, compareFunction) {
+                _classCallCheck(this, Quicksort2);
+                if (compareFunction !== null || compareFunction !== void 0) this.compareFunction = this._defaultCompareFunction;
+                var length = void 0;
+                if (A instanceof LinkedList) length = A.size();
+                else length = A.length;
+                this._quicksort(A, 0, length - 1);
+              }
+              _createClass(Quicksort2, [{
+                key: "_quicksort",
+                value: function _quicksort(A, p, r) {
+                  if (p < r) {
+                    var q = this._partition(A, p, r);
+                    this._quicksort(A, p, q);
+                    this._quicksort(A, q + 1, r);
+                  }
+                }
+              }, {
+                key: "_partition",
+                value: function _partition(A, p, r) {
+                  var x = this._get(A, p);
+                  var i = p;
+                  var j = r;
+                  while (true) {
+                    while (this.compareFunction(x, this._get(A, j))) {
+                      j--;
+                    }
+                    while (this.compareFunction(this._get(A, i), x)) {
+                      i++;
+                    }
+                    if (i < j) {
+                      this._swap(A, i, j);
+                      i++;
+                      j--;
+                    } else return j;
+                  }
+                }
+              }, {
+                key: "_get",
+                value: function _get(object, index) {
+                  if (object instanceof LinkedList) return object.get_object_at(index);
+                  else return object[index];
+                }
+              }, {
+                key: "_set",
+                value: function _set(object, index, value) {
+                  if (object instanceof LinkedList) object.set_object_at(index, value);
+                  else object[index] = value;
+                }
+              }, {
+                key: "_swap",
+                value: function _swap(A, i, j) {
+                  var temp = this._get(A, i);
+                  this._set(A, i, this._get(A, j));
+                  this._set(A, j, temp);
+                }
+              }, {
+                key: "_defaultCompareFunction",
+                value: function _defaultCompareFunction(a, b) {
+                  return b > a;
+                }
+              }]);
+              return Quicksort2;
+            })();
+            module2.exports = Quicksort;
+          }),
+          /* 26 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function SVD() {
+            }
+            SVD.svd = function(A) {
+              this.U = null;
+              this.V = null;
+              this.s = null;
+              this.m = 0;
+              this.n = 0;
+              this.m = A.length;
+              this.n = A[0].length;
+              var nu = Math.min(this.m, this.n);
+              this.s = (function(s) {
+                var a = [];
+                while (s-- > 0) {
+                  a.push(0);
+                }
+                return a;
+              })(Math.min(this.m + 1, this.n));
+              this.U = (function(dims) {
+                var allocate = function allocate2(dims2) {
+                  if (dims2.length == 0) {
+                    return 0;
+                  } else {
+                    var array = [];
+                    for (var i2 = 0; i2 < dims2[0]; i2++) {
+                      array.push(allocate2(dims2.slice(1)));
+                    }
+                    return array;
+                  }
+                };
+                return allocate(dims);
+              })([this.m, nu]);
+              this.V = (function(dims) {
+                var allocate = function allocate2(dims2) {
+                  if (dims2.length == 0) {
+                    return 0;
+                  } else {
+                    var array = [];
+                    for (var i2 = 0; i2 < dims2[0]; i2++) {
+                      array.push(allocate2(dims2.slice(1)));
+                    }
+                    return array;
+                  }
+                };
+                return allocate(dims);
+              })([this.n, this.n]);
+              var e = (function(s) {
+                var a = [];
+                while (s-- > 0) {
+                  a.push(0);
+                }
+                return a;
+              })(this.n);
+              var work = (function(s) {
+                var a = [];
+                while (s-- > 0) {
+                  a.push(0);
+                }
+                return a;
+              })(this.m);
+              var wantu = true;
+              var nct = Math.min(this.m - 1, this.n);
+              var nrt = Math.max(0, Math.min(this.n - 2, this.m));
+              for (var k = 0; k < Math.max(nct, nrt); k++) {
+                if (k < nct) {
+                  this.s[k] = 0;
+                  for (var i = k; i < this.m; i++) {
+                    this.s[k] = SVD.hypot(this.s[k], A[i][k]);
+                  }
+                  if (this.s[k] !== 0) {
+                    if (A[k][k] < 0) {
+                      this.s[k] = -this.s[k];
+                    }
+                    for (var _i = k; _i < this.m; _i++) {
+                      A[_i][k] /= this.s[k];
+                    }
+                    A[k][k] += 1;
+                  }
+                  this.s[k] = -this.s[k];
+                }
+                for (var j = k + 1; j < this.n; j++) {
+                  if (/* @__PURE__ */ (function(lhs, rhs) {
+                    return lhs && rhs;
+                  })(k < nct, this.s[k] !== 0)) {
+                    var t = 0;
+                    for (var _i2 = k; _i2 < this.m; _i2++) {
+                      t += A[_i2][k] * A[_i2][j];
+                    }
+                    t = -t / A[k][k];
+                    for (var _i3 = k; _i3 < this.m; _i3++) {
+                      A[_i3][j] += t * A[_i3][k];
+                    }
+                  }
+                  e[j] = A[k][j];
+                }
+                if (/* @__PURE__ */ (function(lhs, rhs) {
+                  return rhs;
+                })(wantu, k < nct)) {
+                  for (var _i4 = k; _i4 < this.m; _i4++) {
+                    this.U[_i4][k] = A[_i4][k];
+                  }
+                }
+                if (k < nrt) {
+                  e[k] = 0;
+                  for (var _i5 = k + 1; _i5 < this.n; _i5++) {
+                    e[k] = SVD.hypot(e[k], e[_i5]);
+                  }
+                  if (e[k] !== 0) {
+                    if (e[k + 1] < 0) {
+                      e[k] = -e[k];
+                    }
+                    for (var _i6 = k + 1; _i6 < this.n; _i6++) {
+                      e[_i6] /= e[k];
+                    }
+                    e[k + 1] += 1;
+                  }
+                  e[k] = -e[k];
+                  if (/* @__PURE__ */ (function(lhs, rhs) {
+                    return lhs && rhs;
+                  })(k + 1 < this.m, e[k] !== 0)) {
+                    for (var _i7 = k + 1; _i7 < this.m; _i7++) {
+                      work[_i7] = 0;
+                    }
+                    for (var _j = k + 1; _j < this.n; _j++) {
+                      for (var _i8 = k + 1; _i8 < this.m; _i8++) {
+                        work[_i8] += e[_j] * A[_i8][_j];
+                      }
+                    }
+                    for (var _j2 = k + 1; _j2 < this.n; _j2++) {
+                      var _t = -e[_j2] / e[k + 1];
+                      for (var _i9 = k + 1; _i9 < this.m; _i9++) {
+                        A[_i9][_j2] += _t * work[_i9];
+                      }
+                    }
+                  }
+                  {
+                    for (var _i10 = k + 1; _i10 < this.n; _i10++) {
+                      this.V[_i10][k] = e[_i10];
+                    }
+                  }
+                }
+              }
+              var p = Math.min(this.n, this.m + 1);
+              if (nct < this.n) {
+                this.s[nct] = A[nct][nct];
+              }
+              if (this.m < p) {
+                this.s[p - 1] = 0;
+              }
+              if (nrt + 1 < p) {
+                e[nrt] = A[nrt][p - 1];
+              }
+              e[p - 1] = 0;
+              {
+                for (var _j3 = nct; _j3 < nu; _j3++) {
+                  for (var _i11 = 0; _i11 < this.m; _i11++) {
+                    this.U[_i11][_j3] = 0;
+                  }
+                  this.U[_j3][_j3] = 1;
+                }
+                for (var _k = nct - 1; _k >= 0; _k--) {
+                  if (this.s[_k] !== 0) {
+                    for (var _j4 = _k + 1; _j4 < nu; _j4++) {
+                      var _t2 = 0;
+                      for (var _i12 = _k; _i12 < this.m; _i12++) {
+                        _t2 += this.U[_i12][_k] * this.U[_i12][_j4];
+                      }
+                      _t2 = -_t2 / this.U[_k][_k];
+                      for (var _i13 = _k; _i13 < this.m; _i13++) {
+                        this.U[_i13][_j4] += _t2 * this.U[_i13][_k];
+                      }
+                    }
+                    for (var _i14 = _k; _i14 < this.m; _i14++) {
+                      this.U[_i14][_k] = -this.U[_i14][_k];
+                    }
+                    this.U[_k][_k] = 1 + this.U[_k][_k];
+                    for (var _i15 = 0; _i15 < _k - 1; _i15++) {
+                      this.U[_i15][_k] = 0;
+                    }
+                  } else {
+                    for (var _i16 = 0; _i16 < this.m; _i16++) {
+                      this.U[_i16][_k] = 0;
+                    }
+                    this.U[_k][_k] = 1;
+                  }
+                }
+              }
+              {
+                for (var _k2 = this.n - 1; _k2 >= 0; _k2--) {
+                  if (/* @__PURE__ */ (function(lhs, rhs) {
+                    return lhs && rhs;
+                  })(_k2 < nrt, e[_k2] !== 0)) {
+                    for (var _j5 = _k2 + 1; _j5 < nu; _j5++) {
+                      var _t3 = 0;
+                      for (var _i17 = _k2 + 1; _i17 < this.n; _i17++) {
+                        _t3 += this.V[_i17][_k2] * this.V[_i17][_j5];
+                      }
+                      _t3 = -_t3 / this.V[_k2 + 1][_k2];
+                      for (var _i18 = _k2 + 1; _i18 < this.n; _i18++) {
+                        this.V[_i18][_j5] += _t3 * this.V[_i18][_k2];
+                      }
+                    }
+                  }
+                  for (var _i19 = 0; _i19 < this.n; _i19++) {
+                    this.V[_i19][_k2] = 0;
+                  }
+                  this.V[_k2][_k2] = 1;
+                }
+              }
+              var pp = p - 1;
+              var eps = Math.pow(2, -52);
+              var tiny = Math.pow(2, -966);
+              while (p > 0) {
+                var _k3 = void 0;
+                var kase = void 0;
+                for (_k3 = p - 2; _k3 >= -1; _k3--) {
+                  if (_k3 === -1) {
+                    break;
+                  }
+                  if (Math.abs(e[_k3]) <= tiny + eps * (Math.abs(this.s[_k3]) + Math.abs(this.s[_k3 + 1]))) {
+                    e[_k3] = 0;
+                    break;
+                  }
+                }
+                if (_k3 === p - 2) {
+                  kase = 4;
+                } else {
+                  var ks = void 0;
+                  for (ks = p - 1; ks >= _k3; ks--) {
+                    if (ks === _k3) {
+                      break;
+                    }
+                    var _t4 = (ks !== p ? Math.abs(e[ks]) : 0) + (ks !== _k3 + 1 ? Math.abs(e[ks - 1]) : 0);
+                    if (Math.abs(this.s[ks]) <= tiny + eps * _t4) {
+                      this.s[ks] = 0;
+                      break;
+                    }
+                  }
+                  if (ks === _k3) {
+                    kase = 3;
+                  } else if (ks === p - 1) {
+                    kase = 1;
+                  } else {
+                    kase = 2;
+                    _k3 = ks;
+                  }
+                }
+                _k3++;
+                switch (kase) {
+                  case 1:
+                    {
+                      var f = e[p - 2];
+                      e[p - 2] = 0;
+                      for (var _j6 = p - 2; _j6 >= _k3; _j6--) {
+                        var _t5 = SVD.hypot(this.s[_j6], f);
+                        var cs = this.s[_j6] / _t5;
+                        var sn = f / _t5;
+                        this.s[_j6] = _t5;
+                        if (_j6 !== _k3) {
+                          f = -sn * e[_j6 - 1];
+                          e[_j6 - 1] = cs * e[_j6 - 1];
+                        }
+                        {
+                          for (var _i20 = 0; _i20 < this.n; _i20++) {
+                            _t5 = cs * this.V[_i20][_j6] + sn * this.V[_i20][p - 1];
+                            this.V[_i20][p - 1] = -sn * this.V[_i20][_j6] + cs * this.V[_i20][p - 1];
+                            this.V[_i20][_j6] = _t5;
+                          }
+                        }
+                      }
+                    }
+                    break;
+                  case 2:
+                    {
+                      var _f = e[_k3 - 1];
+                      e[_k3 - 1] = 0;
+                      for (var _j7 = _k3; _j7 < p; _j7++) {
+                        var _t6 = SVD.hypot(this.s[_j7], _f);
+                        var _cs = this.s[_j7] / _t6;
+                        var _sn = _f / _t6;
+                        this.s[_j7] = _t6;
+                        _f = -_sn * e[_j7];
+                        e[_j7] = _cs * e[_j7];
+                        {
+                          for (var _i21 = 0; _i21 < this.m; _i21++) {
+                            _t6 = _cs * this.U[_i21][_j7] + _sn * this.U[_i21][_k3 - 1];
+                            this.U[_i21][_k3 - 1] = -_sn * this.U[_i21][_j7] + _cs * this.U[_i21][_k3 - 1];
+                            this.U[_i21][_j7] = _t6;
+                          }
+                        }
+                      }
+                    }
+                    break;
+                  case 3:
+                    {
+                      var scale = Math.max(Math.max(Math.max(Math.max(Math.abs(this.s[p - 1]), Math.abs(this.s[p - 2])), Math.abs(e[p - 2])), Math.abs(this.s[_k3])), Math.abs(e[_k3]));
+                      var sp = this.s[p - 1] / scale;
+                      var spm1 = this.s[p - 2] / scale;
+                      var epm1 = e[p - 2] / scale;
+                      var sk = this.s[_k3] / scale;
+                      var ek = e[_k3] / scale;
+                      var b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2;
+                      var c = sp * epm1 * (sp * epm1);
+                      var shift = 0;
+                      if (/* @__PURE__ */ (function(lhs, rhs) {
+                        return lhs || rhs;
+                      })(b !== 0, c !== 0)) {
+                        shift = Math.sqrt(b * b + c);
+                        if (b < 0) {
+                          shift = -shift;
+                        }
+                        shift = c / (b + shift);
+                      }
+                      var _f2 = (sk + sp) * (sk - sp) + shift;
+                      var g = sk * ek;
+                      for (var _j8 = _k3; _j8 < p - 1; _j8++) {
+                        var _t7 = SVD.hypot(_f2, g);
+                        var _cs2 = _f2 / _t7;
+                        var _sn2 = g / _t7;
+                        if (_j8 !== _k3) {
+                          e[_j8 - 1] = _t7;
+                        }
+                        _f2 = _cs2 * this.s[_j8] + _sn2 * e[_j8];
+                        e[_j8] = _cs2 * e[_j8] - _sn2 * this.s[_j8];
+                        g = _sn2 * this.s[_j8 + 1];
+                        this.s[_j8 + 1] = _cs2 * this.s[_j8 + 1];
+                        {
+                          for (var _i22 = 0; _i22 < this.n; _i22++) {
+                            _t7 = _cs2 * this.V[_i22][_j8] + _sn2 * this.V[_i22][_j8 + 1];
+                            this.V[_i22][_j8 + 1] = -_sn2 * this.V[_i22][_j8] + _cs2 * this.V[_i22][_j8 + 1];
+                            this.V[_i22][_j8] = _t7;
+                          }
+                        }
+                        _t7 = SVD.hypot(_f2, g);
+                        _cs2 = _f2 / _t7;
+                        _sn2 = g / _t7;
+                        this.s[_j8] = _t7;
+                        _f2 = _cs2 * e[_j8] + _sn2 * this.s[_j8 + 1];
+                        this.s[_j8 + 1] = -_sn2 * e[_j8] + _cs2 * this.s[_j8 + 1];
+                        g = _sn2 * e[_j8 + 1];
+                        e[_j8 + 1] = _cs2 * e[_j8 + 1];
+                        if (_j8 < this.m - 1) {
+                          for (var _i23 = 0; _i23 < this.m; _i23++) {
+                            _t7 = _cs2 * this.U[_i23][_j8] + _sn2 * this.U[_i23][_j8 + 1];
+                            this.U[_i23][_j8 + 1] = -_sn2 * this.U[_i23][_j8] + _cs2 * this.U[_i23][_j8 + 1];
+                            this.U[_i23][_j8] = _t7;
+                          }
+                        }
+                      }
+                      e[p - 2] = _f2;
+                    }
+                    break;
+                  case 4:
+                    {
+                      if (this.s[_k3] <= 0) {
+                        this.s[_k3] = this.s[_k3] < 0 ? -this.s[_k3] : 0;
+                        {
+                          for (var _i24 = 0; _i24 <= pp; _i24++) {
+                            this.V[_i24][_k3] = -this.V[_i24][_k3];
+                          }
+                        }
+                      }
+                      while (_k3 < pp) {
+                        if (this.s[_k3] >= this.s[_k3 + 1]) {
+                          break;
+                        }
+                        var _t8 = this.s[_k3];
+                        this.s[_k3] = this.s[_k3 + 1];
+                        this.s[_k3 + 1] = _t8;
+                        if (_k3 < this.n - 1) {
+                          for (var _i25 = 0; _i25 < this.n; _i25++) {
+                            _t8 = this.V[_i25][_k3 + 1];
+                            this.V[_i25][_k3 + 1] = this.V[_i25][_k3];
+                            this.V[_i25][_k3] = _t8;
+                          }
+                        }
+                        if (_k3 < this.m - 1) {
+                          for (var _i26 = 0; _i26 < this.m; _i26++) {
+                            _t8 = this.U[_i26][_k3 + 1];
+                            this.U[_i26][_k3 + 1] = this.U[_i26][_k3];
+                            this.U[_i26][_k3] = _t8;
+                          }
+                        }
+                        _k3++;
+                      }
+                      p--;
+                    }
+                    break;
+                }
+              }
+              var result = { U: this.U, V: this.V, S: this.s };
+              return result;
+            };
+            SVD.hypot = function(a, b) {
+              var r = void 0;
+              if (Math.abs(a) > Math.abs(b)) {
+                r = b / a;
+                r = Math.abs(a) * Math.sqrt(1 + r * r);
+              } else if (b != 0) {
+                r = a / b;
+                r = Math.abs(b) * Math.sqrt(1 + r * r);
+              } else {
+                r = 0;
+              }
+              return r;
+            };
+            module2.exports = SVD;
+          }),
+          /* 27 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var _createClass = /* @__PURE__ */ (function() {
+              function defineProperties(target, props) {
+                for (var i = 0; i < props.length; i++) {
+                  var descriptor = props[i];
+                  descriptor.enumerable = descriptor.enumerable || false;
+                  descriptor.configurable = true;
+                  if ("value" in descriptor) descriptor.writable = true;
+                  Object.defineProperty(target, descriptor.key, descriptor);
+                }
+              }
+              return function(Constructor, protoProps, staticProps) {
+                if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                if (staticProps) defineProperties(Constructor, staticProps);
+                return Constructor;
+              };
+            })();
+            function _classCallCheck(instance2, Constructor) {
+              if (!(instance2 instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+              }
+            }
+            var NeedlemanWunsch = (function() {
+              function NeedlemanWunsch2(sequence1, sequence2) {
+                var match_score = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 1;
+                var mismatch_penalty = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : -1;
+                var gap_penalty = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : -1;
+                _classCallCheck(this, NeedlemanWunsch2);
+                this.sequence1 = sequence1;
+                this.sequence2 = sequence2;
+                this.match_score = match_score;
+                this.mismatch_penalty = mismatch_penalty;
+                this.gap_penalty = gap_penalty;
+                this.iMax = sequence1.length + 1;
+                this.jMax = sequence2.length + 1;
+                this.grid = new Array(this.iMax);
+                for (var i = 0; i < this.iMax; i++) {
+                  this.grid[i] = new Array(this.jMax);
+                  for (var j = 0; j < this.jMax; j++) {
+                    this.grid[i][j] = 0;
+                  }
+                }
+                this.tracebackGrid = new Array(this.iMax);
+                for (var _i = 0; _i < this.iMax; _i++) {
+                  this.tracebackGrid[_i] = new Array(this.jMax);
+                  for (var _j = 0; _j < this.jMax; _j++) {
+                    this.tracebackGrid[_i][_j] = [null, null, null];
+                  }
+                }
+                this.alignments = [];
+                this.score = -1;
+                this.computeGrids();
+              }
+              _createClass(NeedlemanWunsch2, [{
+                key: "getScore",
+                value: function getScore() {
+                  return this.score;
+                }
+              }, {
+                key: "getAlignments",
+                value: function getAlignments2() {
+                  return this.alignments;
+                }
+                // Main dynamic programming procedure
+              }, {
+                key: "computeGrids",
+                value: function computeGrids() {
+                  for (var j = 1; j < this.jMax; j++) {
+                    this.grid[0][j] = this.grid[0][j - 1] + this.gap_penalty;
+                    this.tracebackGrid[0][j] = [false, false, true];
+                  }
+                  for (var i = 1; i < this.iMax; i++) {
+                    this.grid[i][0] = this.grid[i - 1][0] + this.gap_penalty;
+                    this.tracebackGrid[i][0] = [false, true, false];
+                  }
+                  for (var _i2 = 1; _i2 < this.iMax; _i2++) {
+                    for (var _j2 = 1; _j2 < this.jMax; _j2++) {
+                      var diag = void 0;
+                      if (this.sequence1[_i2 - 1] === this.sequence2[_j2 - 1]) diag = this.grid[_i2 - 1][_j2 - 1] + this.match_score;
+                      else diag = this.grid[_i2 - 1][_j2 - 1] + this.mismatch_penalty;
+                      var up = this.grid[_i2 - 1][_j2] + this.gap_penalty;
+                      var left = this.grid[_i2][_j2 - 1] + this.gap_penalty;
+                      var maxOf = [diag, up, left];
+                      var indices = this.arrayAllMaxIndexes(maxOf);
+                      this.grid[_i2][_j2] = maxOf[indices[0]];
+                      this.tracebackGrid[_i2][_j2] = [indices.includes(0), indices.includes(1), indices.includes(2)];
+                    }
+                  }
+                  this.score = this.grid[this.iMax - 1][this.jMax - 1];
+                }
+                // Gets all possible valid sequence combinations
+              }, {
+                key: "alignmentTraceback",
+                value: function alignmentTraceback() {
+                  var inProcessAlignments = [];
+                  inProcessAlignments.push({
+                    pos: [this.sequence1.length, this.sequence2.length],
+                    seq1: "",
+                    seq2: ""
+                  });
+                  while (inProcessAlignments[0]) {
+                    var current = inProcessAlignments[0];
+                    var directions = this.tracebackGrid[current.pos[0]][current.pos[1]];
+                    if (directions[0]) {
+                      inProcessAlignments.push({
+                        pos: [current.pos[0] - 1, current.pos[1] - 1],
+                        seq1: this.sequence1[current.pos[0] - 1] + current.seq1,
+                        seq2: this.sequence2[current.pos[1] - 1] + current.seq2
+                      });
+                    }
+                    if (directions[1]) {
+                      inProcessAlignments.push({
+                        pos: [current.pos[0] - 1, current.pos[1]],
+                        seq1: this.sequence1[current.pos[0] - 1] + current.seq1,
+                        seq2: "-" + current.seq2
+                      });
+                    }
+                    if (directions[2]) {
+                      inProcessAlignments.push({
+                        pos: [current.pos[0], current.pos[1] - 1],
+                        seq1: "-" + current.seq1,
+                        seq2: this.sequence2[current.pos[1] - 1] + current.seq2
+                      });
+                    }
+                    if (current.pos[0] === 0 && current.pos[1] === 0) this.alignments.push({
+                      sequence1: current.seq1,
+                      sequence2: current.seq2
+                    });
+                    inProcessAlignments.shift();
+                  }
+                  return this.alignments;
+                }
+                // Helper Functions
+              }, {
+                key: "getAllIndexes",
+                value: function getAllIndexes(arr, val) {
+                  var indexes = [], i = -1;
+                  while ((i = arr.indexOf(val, i + 1)) !== -1) {
+                    indexes.push(i);
+                  }
+                  return indexes;
+                }
+              }, {
+                key: "arrayAllMaxIndexes",
+                value: function arrayAllMaxIndexes(array) {
+                  return this.getAllIndexes(array, Math.max.apply(null, array));
+                }
+              }]);
+              return NeedlemanWunsch2;
+            })();
+            module2.exports = NeedlemanWunsch;
+          }),
+          /* 28 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            var layoutBase2 = function layoutBase3() {
+              return;
+            };
+            layoutBase2.FDLayout = __webpack_require__(18);
+            layoutBase2.FDLayoutConstants = __webpack_require__(4);
+            layoutBase2.FDLayoutEdge = __webpack_require__(19);
+            layoutBase2.FDLayoutNode = __webpack_require__(20);
+            layoutBase2.DimensionD = __webpack_require__(21);
+            layoutBase2.HashMap = __webpack_require__(22);
+            layoutBase2.HashSet = __webpack_require__(23);
+            layoutBase2.IGeometry = __webpack_require__(8);
+            layoutBase2.IMath = __webpack_require__(9);
+            layoutBase2.Integer = __webpack_require__(10);
+            layoutBase2.Point = __webpack_require__(12);
+            layoutBase2.PointD = __webpack_require__(5);
+            layoutBase2.RandomSeed = __webpack_require__(16);
+            layoutBase2.RectangleD = __webpack_require__(13);
+            layoutBase2.Transform = __webpack_require__(17);
+            layoutBase2.UniqueIDGeneretor = __webpack_require__(14);
+            layoutBase2.Quicksort = __webpack_require__(25);
+            layoutBase2.LinkedList = __webpack_require__(11);
+            layoutBase2.LGraphObject = __webpack_require__(2);
+            layoutBase2.LGraph = __webpack_require__(6);
+            layoutBase2.LEdge = __webpack_require__(1);
+            layoutBase2.LGraphManager = __webpack_require__(7);
+            layoutBase2.LNode = __webpack_require__(3);
+            layoutBase2.Layout = __webpack_require__(15);
+            layoutBase2.LayoutConstants = __webpack_require__(0);
+            layoutBase2.NeedlemanWunsch = __webpack_require__(27);
+            layoutBase2.Matrix = __webpack_require__(24);
+            layoutBase2.SVD = __webpack_require__(26);
+            module2.exports = layoutBase2;
+          }),
+          /* 29 */
+          /***/
+          (function(module2, exports2, __webpack_require__) {
+            function Emitter() {
+              this.listeners = [];
+            }
+            var p = Emitter.prototype;
+            p.addListener = function(event, callback) {
+              this.listeners.push({
+                event,
+                callback
+              });
+            };
+            p.removeListener = function(event, callback) {
+              for (var i = this.listeners.length; i >= 0; i--) {
+                var l = this.listeners[i];
+                if (l.event === event && l.callback === callback) {
+                  this.listeners.splice(i, 1);
+                }
+              }
+            };
+            p.emit = function(event, data) {
+              for (var i = 0; i < this.listeners.length; i++) {
+                var l = this.listeners[i];
+                if (event === l.event) {
+                  l.callback(data);
+                }
+              }
+            };
+            module2.exports = Emitter;
+          })
+          /******/
+        ])
+      );
+    });
+  })(layoutBase$1);
+  return layoutBase$1.exports;
+}
+var coseBase = coseBase$1.exports;
+var hasRequiredCoseBase;
+function requireCoseBase() {
+  if (hasRequiredCoseBase) return coseBase$1.exports;
+  hasRequiredCoseBase = 1;
+  (function(module, exports) {
+    (function webpackUniversalModuleDefinition(root, factory) {
+      module.exports = factory(requireLayoutBase());
+    })(coseBase, function(__WEBPACK_EXTERNAL_MODULE__551__) {
+      return (
+        /******/
+        (() => {
+          var __webpack_modules__ = {
+            /***/
+            45: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var coseBase2 = {};
+                coseBase2.layoutBase = __webpack_require__2(551);
+                coseBase2.CoSEConstants = __webpack_require__2(806);
+                coseBase2.CoSEEdge = __webpack_require__2(767);
+                coseBase2.CoSEGraph = __webpack_require__2(880);
+                coseBase2.CoSEGraphManager = __webpack_require__2(578);
+                coseBase2.CoSELayout = __webpack_require__2(765);
+                coseBase2.CoSENode = __webpack_require__2(991);
+                coseBase2.ConstraintHandler = __webpack_require__2(902);
+                module2.exports = coseBase2;
+              })
+            ),
+            /***/
+            806: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var FDLayoutConstants = __webpack_require__2(551).FDLayoutConstants;
+                function CoSEConstants() {
+                }
+                for (var prop in FDLayoutConstants) {
+                  CoSEConstants[prop] = FDLayoutConstants[prop];
+                }
+                CoSEConstants.DEFAULT_USE_MULTI_LEVEL_SCALING = false;
+                CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+                CoSEConstants.DEFAULT_COMPONENT_SEPERATION = 60;
+                CoSEConstants.TILE = true;
+                CoSEConstants.TILING_PADDING_VERTICAL = 10;
+                CoSEConstants.TILING_PADDING_HORIZONTAL = 10;
+                CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;
+                CoSEConstants.ENFORCE_CONSTRAINTS = true;
+                CoSEConstants.APPLY_LAYOUT = true;
+                CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS = true;
+                CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = true;
+                CoSEConstants.PURE_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL;
+                module2.exports = CoSEConstants;
+              })
+            ),
+            /***/
+            767: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var FDLayoutEdge = __webpack_require__2(551).FDLayoutEdge;
+                function CoSEEdge(source, target, vEdge) {
+                  FDLayoutEdge.call(this, source, target, vEdge);
+                }
+                CoSEEdge.prototype = Object.create(FDLayoutEdge.prototype);
+                for (var prop in FDLayoutEdge) {
+                  CoSEEdge[prop] = FDLayoutEdge[prop];
+                }
+                module2.exports = CoSEEdge;
+              })
+            ),
+            /***/
+            880: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var LGraph = __webpack_require__2(551).LGraph;
+                function CoSEGraph(parent, graphMgr, vGraph) {
+                  LGraph.call(this, parent, graphMgr, vGraph);
+                }
+                CoSEGraph.prototype = Object.create(LGraph.prototype);
+                for (var prop in LGraph) {
+                  CoSEGraph[prop] = LGraph[prop];
+                }
+                module2.exports = CoSEGraph;
+              })
+            ),
+            /***/
+            578: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var LGraphManager = __webpack_require__2(551).LGraphManager;
+                function CoSEGraphManager(layout) {
+                  LGraphManager.call(this, layout);
+                }
+                CoSEGraphManager.prototype = Object.create(LGraphManager.prototype);
+                for (var prop in LGraphManager) {
+                  CoSEGraphManager[prop] = LGraphManager[prop];
+                }
+                module2.exports = CoSEGraphManager;
+              })
+            ),
+            /***/
+            765: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var FDLayout = __webpack_require__2(551).FDLayout;
+                var CoSEGraphManager = __webpack_require__2(578);
+                var CoSEGraph = __webpack_require__2(880);
+                var CoSENode = __webpack_require__2(991);
+                var CoSEEdge = __webpack_require__2(767);
+                var CoSEConstants = __webpack_require__2(806);
+                var ConstraintHandler = __webpack_require__2(902);
+                var FDLayoutConstants = __webpack_require__2(551).FDLayoutConstants;
+                var LayoutConstants = __webpack_require__2(551).LayoutConstants;
+                var Point2 = __webpack_require__2(551).Point;
+                var PointD = __webpack_require__2(551).PointD;
+                var DimensionD2 = __webpack_require__2(551).DimensionD;
+                var Layout2 = __webpack_require__2(551).Layout;
+                var Integer = __webpack_require__2(551).Integer;
+                var IGeometry = __webpack_require__2(551).IGeometry;
+                var LGraph = __webpack_require__2(551).LGraph;
+                var Transform = __webpack_require__2(551).Transform;
+                var LinkedList = __webpack_require__2(551).LinkedList;
+                function CoSELayout() {
+                  FDLayout.call(this);
+                  this.toBeTiled = {};
+                  this.constraints = {};
+                }
+                CoSELayout.prototype = Object.create(FDLayout.prototype);
+                for (var prop in FDLayout) {
+                  CoSELayout[prop] = FDLayout[prop];
+                }
+                CoSELayout.prototype.newGraphManager = function() {
+                  var gm = new CoSEGraphManager(this);
+                  this.graphManager = gm;
+                  return gm;
+                };
+                CoSELayout.prototype.newGraph = function(vGraph) {
+                  return new CoSEGraph(null, this.graphManager, vGraph);
+                };
+                CoSELayout.prototype.newNode = function(vNode) {
+                  return new CoSENode(this.graphManager, vNode);
+                };
+                CoSELayout.prototype.newEdge = function(vEdge) {
+                  return new CoSEEdge(null, null, vEdge);
+                };
+                CoSELayout.prototype.initParameters = function() {
+                  FDLayout.prototype.initParameters.call(this, arguments);
+                  if (!this.isSubLayout) {
+                    if (CoSEConstants.DEFAULT_EDGE_LENGTH < 10) {
+                      this.idealEdgeLength = 10;
+                    } else {
+                      this.idealEdgeLength = CoSEConstants.DEFAULT_EDGE_LENGTH;
+                    }
+                    this.useSmartIdealEdgeLengthCalculation = CoSEConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION;
+                    this.gravityConstant = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH;
+                    this.compoundGravityConstant = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH;
+                    this.gravityRangeFactor = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR;
+                    this.compoundGravityRangeFactor = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR;
+                    this.prunedNodesAll = [];
+                    this.growTreeIterations = 0;
+                    this.afterGrowthIterations = 0;
+                    this.isTreeGrowing = false;
+                    this.isGrowthFinished = false;
+                  }
+                };
+                CoSELayout.prototype.initSpringEmbedder = function() {
+                  FDLayout.prototype.initSpringEmbedder.call(this);
+                  this.coolingCycle = 0;
+                  this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
+                  this.finalTemperature = 0.04;
+                  this.coolingAdjuster = 1;
+                };
+                CoSELayout.prototype.layout = function() {
+                  var createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+                  if (createBendsAsNeeded) {
+                    this.createBendpoints();
+                    this.graphManager.resetAllEdges();
+                  }
+                  this.level = 0;
+                  return this.classicLayout();
+                };
+                CoSELayout.prototype.classicLayout = function() {
+                  this.nodesWithGravity = this.calculateNodesToApplyGravitationTo();
+                  this.graphManager.setAllNodesToApplyGravitation(this.nodesWithGravity);
+                  this.calcNoOfChildrenForAllNodes();
+                  this.graphManager.calcLowestCommonAncestors();
+                  this.graphManager.calcInclusionTreeDepths();
+                  this.graphManager.getRoot().calcEstimatedSize();
+                  this.calcIdealEdgeLengths();
+                  if (!this.incremental) {
+                    var forest = this.getFlatForest();
+                    if (forest.length > 0) {
+                      this.positionNodesRadially(forest);
+                    } else {
+                      this.reduceTrees();
+                      this.graphManager.resetAllNodesToApplyGravitation();
+                      var allNodes = new Set(this.getAllNodes());
+                      var intersection = this.nodesWithGravity.filter(function(x) {
+                        return allNodes.has(x);
+                      });
+                      this.graphManager.setAllNodesToApplyGravitation(intersection);
+                      this.positionNodesRandomly();
+                    }
+                  } else {
+                    if (CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL) {
+                      this.reduceTrees();
+                      this.graphManager.resetAllNodesToApplyGravitation();
+                      var allNodes = new Set(this.getAllNodes());
+                      var intersection = this.nodesWithGravity.filter(function(x) {
+                        return allNodes.has(x);
+                      });
+                      this.graphManager.setAllNodesToApplyGravitation(intersection);
+                    }
+                  }
+                  if (Object.keys(this.constraints).length > 0) {
+                    ConstraintHandler.handleConstraints(this);
+                    this.initConstraintVariables();
+                  }
+                  this.initSpringEmbedder();
+                  if (CoSEConstants.APPLY_LAYOUT) {
+                    this.runSpringEmbedder();
+                  }
+                  return true;
+                };
+                CoSELayout.prototype.tick = function() {
+                  this.totalIterations++;
+                  if (this.totalIterations === this.maxIterations && !this.isTreeGrowing && !this.isGrowthFinished) {
+                    if (this.prunedNodesAll.length > 0) {
+                      this.isTreeGrowing = true;
+                    } else {
+                      return true;
+                    }
+                  }
+                  if (this.totalIterations % FDLayoutConstants.CONVERGENCE_CHECK_PERIOD == 0 && !this.isTreeGrowing && !this.isGrowthFinished) {
+                    if (this.isConverged()) {
+                      if (this.prunedNodesAll.length > 0) {
+                        this.isTreeGrowing = true;
+                      } else {
+                        return true;
+                      }
+                    }
+                    this.coolingCycle++;
+                    if (this.layoutQuality == 0) {
+                      this.coolingAdjuster = this.coolingCycle;
+                    } else if (this.layoutQuality == 1) {
+                      this.coolingAdjuster = this.coolingCycle / 3;
+                    }
+                    this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
+                    this.animationPeriod = Math.ceil(this.initialAnimationPeriod * Math.sqrt(this.coolingFactor));
+                  }
+                  if (this.isTreeGrowing) {
+                    if (this.growTreeIterations % 10 == 0) {
+                      if (this.prunedNodesAll.length > 0) {
+                        this.graphManager.updateBounds();
+                        this.updateGrid();
+                        this.growTree(this.prunedNodesAll);
+                        this.graphManager.resetAllNodesToApplyGravitation();
+                        var allNodes = new Set(this.getAllNodes());
+                        var intersection = this.nodesWithGravity.filter(function(x) {
+                          return allNodes.has(x);
+                        });
+                        this.graphManager.setAllNodesToApplyGravitation(intersection);
+                        this.graphManager.updateBounds();
+                        this.updateGrid();
+                        if (CoSEConstants.PURE_INCREMENTAL) this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL / 2;
+                        else this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+                      } else {
+                        this.isTreeGrowing = false;
+                        this.isGrowthFinished = true;
+                      }
+                    }
+                    this.growTreeIterations++;
+                  }
+                  if (this.isGrowthFinished) {
+                    if (this.isConverged()) {
+                      return true;
+                    }
+                    if (this.afterGrowthIterations % 10 == 0) {
+                      this.graphManager.updateBounds();
+                      this.updateGrid();
+                    }
+                    if (CoSEConstants.PURE_INCREMENTAL) this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL / 2 * ((100 - this.afterGrowthIterations) / 100);
+                    else this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL * ((100 - this.afterGrowthIterations) / 100);
+                    this.afterGrowthIterations++;
+                  }
+                  var gridUpdateAllowed = !this.isTreeGrowing && !this.isGrowthFinished;
+                  var forceToNodeSurroundingUpdate = this.growTreeIterations % 10 == 1 && this.isTreeGrowing || this.afterGrowthIterations % 10 == 1 && this.isGrowthFinished;
+                  this.totalDisplacement = 0;
+                  this.graphManager.updateBounds();
+                  this.calcSpringForces();
+                  this.calcRepulsionForces(gridUpdateAllowed, forceToNodeSurroundingUpdate);
+                  this.calcGravitationalForces();
+                  this.moveNodes();
+                  this.animate();
+                  return false;
+                };
+                CoSELayout.prototype.getPositionsData = function() {
+                  var allNodes = this.graphManager.getAllNodes();
+                  var pData = {};
+                  for (var i = 0; i < allNodes.length; i++) {
+                    var rect = allNodes[i].rect;
+                    var id = allNodes[i].id;
+                    pData[id] = {
+                      id,
+                      x: rect.getCenterX(),
+                      y: rect.getCenterY(),
+                      w: rect.width,
+                      h: rect.height
+                    };
+                  }
+                  return pData;
+                };
+                CoSELayout.prototype.runSpringEmbedder = function() {
+                  this.initialAnimationPeriod = 25;
+                  this.animationPeriod = this.initialAnimationPeriod;
+                  var layoutEnded = false;
+                  if (FDLayoutConstants.ANIMATE === "during") {
+                    this.emit("layoutstarted");
+                  } else {
+                    while (!layoutEnded) {
+                      layoutEnded = this.tick();
+                    }
+                    this.graphManager.updateBounds();
+                  }
+                };
+                CoSELayout.prototype.moveNodes = function() {
+                  var lNodes = this.getAllNodes();
+                  var node;
+                  for (var i = 0; i < lNodes.length; i++) {
+                    node = lNodes[i];
+                    node.calculateDisplacement();
+                  }
+                  if (Object.keys(this.constraints).length > 0) {
+                    this.updateDisplacements();
+                  }
+                  for (var i = 0; i < lNodes.length; i++) {
+                    node = lNodes[i];
+                    node.move();
+                  }
+                };
+                CoSELayout.prototype.initConstraintVariables = function() {
+                  var self = this;
+                  this.idToNodeMap = /* @__PURE__ */ new Map();
+                  this.fixedNodeSet = /* @__PURE__ */ new Set();
+                  var allNodes = this.graphManager.getAllNodes();
+                  for (var i = 0; i < allNodes.length; i++) {
+                    var node = allNodes[i];
+                    this.idToNodeMap.set(node.id, node);
+                  }
+                  var calculateCompoundWeight = function calculateCompoundWeight2(compoundNode) {
+                    var nodes = compoundNode.getChild().getNodes();
+                    var node2;
+                    var fixedNodeWeight2 = 0;
+                    for (var i2 = 0; i2 < nodes.length; i2++) {
+                      node2 = nodes[i2];
+                      if (node2.getChild() == null) {
+                        if (self.fixedNodeSet.has(node2.id)) {
+                          fixedNodeWeight2 += 100;
+                        }
+                      } else {
+                        fixedNodeWeight2 += calculateCompoundWeight2(node2);
+                      }
+                    }
+                    return fixedNodeWeight2;
+                  };
+                  if (this.constraints.fixedNodeConstraint) {
+                    this.constraints.fixedNodeConstraint.forEach(function(nodeData2) {
+                      self.fixedNodeSet.add(nodeData2.nodeId);
+                    });
+                    var allNodes = this.graphManager.getAllNodes();
+                    var node;
+                    for (var i = 0; i < allNodes.length; i++) {
+                      node = allNodes[i];
+                      if (node.getChild() != null) {
+                        var fixedNodeWeight = calculateCompoundWeight(node);
+                        if (fixedNodeWeight > 0) {
+                          node.fixedNodeWeight = fixedNodeWeight;
+                        }
+                      }
+                    }
+                  }
+                  if (this.constraints.relativePlacementConstraint) {
+                    var nodeToDummyForVerticalAlignment = /* @__PURE__ */ new Map();
+                    var nodeToDummyForHorizontalAlignment = /* @__PURE__ */ new Map();
+                    this.dummyToNodeForVerticalAlignment = /* @__PURE__ */ new Map();
+                    this.dummyToNodeForHorizontalAlignment = /* @__PURE__ */ new Map();
+                    this.fixedNodesOnHorizontal = /* @__PURE__ */ new Set();
+                    this.fixedNodesOnVertical = /* @__PURE__ */ new Set();
+                    this.fixedNodeSet.forEach(function(nodeId) {
+                      self.fixedNodesOnHorizontal.add(nodeId);
+                      self.fixedNodesOnVertical.add(nodeId);
+                    });
+                    if (this.constraints.alignmentConstraint) {
+                      if (this.constraints.alignmentConstraint.vertical) {
+                        var verticalAlignment = this.constraints.alignmentConstraint.vertical;
+                        for (var i = 0; i < verticalAlignment.length; i++) {
+                          this.dummyToNodeForVerticalAlignment.set("dummy" + i, []);
+                          verticalAlignment[i].forEach(function(nodeId) {
+                            nodeToDummyForVerticalAlignment.set(nodeId, "dummy" + i);
+                            self.dummyToNodeForVerticalAlignment.get("dummy" + i).push(nodeId);
+                            if (self.fixedNodeSet.has(nodeId)) {
+                              self.fixedNodesOnHorizontal.add("dummy" + i);
+                            }
+                          });
+                        }
+                      }
+                      if (this.constraints.alignmentConstraint.horizontal) {
+                        var horizontalAlignment = this.constraints.alignmentConstraint.horizontal;
+                        for (var i = 0; i < horizontalAlignment.length; i++) {
+                          this.dummyToNodeForHorizontalAlignment.set("dummy" + i, []);
+                          horizontalAlignment[i].forEach(function(nodeId) {
+                            nodeToDummyForHorizontalAlignment.set(nodeId, "dummy" + i);
+                            self.dummyToNodeForHorizontalAlignment.get("dummy" + i).push(nodeId);
+                            if (self.fixedNodeSet.has(nodeId)) {
+                              self.fixedNodesOnVertical.add("dummy" + i);
+                            }
+                          });
+                        }
+                      }
+                    }
+                    if (CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS) {
+                      this.shuffle = function(array) {
+                        var j, x, i2;
+                        for (i2 = array.length - 1; i2 >= 2 * array.length / 3; i2--) {
+                          j = Math.floor(Math.random() * (i2 + 1));
+                          x = array[i2];
+                          array[i2] = array[j];
+                          array[j] = x;
+                        }
+                        return array;
+                      };
+                      this.nodesInRelativeHorizontal = [];
+                      this.nodesInRelativeVertical = [];
+                      this.nodeToRelativeConstraintMapHorizontal = /* @__PURE__ */ new Map();
+                      this.nodeToRelativeConstraintMapVertical = /* @__PURE__ */ new Map();
+                      this.nodeToTempPositionMapHorizontal = /* @__PURE__ */ new Map();
+                      this.nodeToTempPositionMapVertical = /* @__PURE__ */ new Map();
+                      this.constraints.relativePlacementConstraint.forEach(function(constraint) {
+                        if (constraint.left) {
+                          var nodeIdLeft = nodeToDummyForVerticalAlignment.has(constraint.left) ? nodeToDummyForVerticalAlignment.get(constraint.left) : constraint.left;
+                          var nodeIdRight = nodeToDummyForVerticalAlignment.has(constraint.right) ? nodeToDummyForVerticalAlignment.get(constraint.right) : constraint.right;
+                          if (!self.nodesInRelativeHorizontal.includes(nodeIdLeft)) {
+                            self.nodesInRelativeHorizontal.push(nodeIdLeft);
+                            self.nodeToRelativeConstraintMapHorizontal.set(nodeIdLeft, []);
+                            if (self.dummyToNodeForVerticalAlignment.has(nodeIdLeft)) {
+                              self.nodeToTempPositionMapHorizontal.set(nodeIdLeft, self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeIdLeft)[0]).getCenterX());
+                            } else {
+                              self.nodeToTempPositionMapHorizontal.set(nodeIdLeft, self.idToNodeMap.get(nodeIdLeft).getCenterX());
+                            }
+                          }
+                          if (!self.nodesInRelativeHorizontal.includes(nodeIdRight)) {
+                            self.nodesInRelativeHorizontal.push(nodeIdRight);
+                            self.nodeToRelativeConstraintMapHorizontal.set(nodeIdRight, []);
+                            if (self.dummyToNodeForVerticalAlignment.has(nodeIdRight)) {
+                              self.nodeToTempPositionMapHorizontal.set(nodeIdRight, self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeIdRight)[0]).getCenterX());
+                            } else {
+                              self.nodeToTempPositionMapHorizontal.set(nodeIdRight, self.idToNodeMap.get(nodeIdRight).getCenterX());
+                            }
+                          }
+                          self.nodeToRelativeConstraintMapHorizontal.get(nodeIdLeft).push({ right: nodeIdRight, gap: constraint.gap });
+                          self.nodeToRelativeConstraintMapHorizontal.get(nodeIdRight).push({ left: nodeIdLeft, gap: constraint.gap });
+                        } else {
+                          var nodeIdTop = nodeToDummyForHorizontalAlignment.has(constraint.top) ? nodeToDummyForHorizontalAlignment.get(constraint.top) : constraint.top;
+                          var nodeIdBottom = nodeToDummyForHorizontalAlignment.has(constraint.bottom) ? nodeToDummyForHorizontalAlignment.get(constraint.bottom) : constraint.bottom;
+                          if (!self.nodesInRelativeVertical.includes(nodeIdTop)) {
+                            self.nodesInRelativeVertical.push(nodeIdTop);
+                            self.nodeToRelativeConstraintMapVertical.set(nodeIdTop, []);
+                            if (self.dummyToNodeForHorizontalAlignment.has(nodeIdTop)) {
+                              self.nodeToTempPositionMapVertical.set(nodeIdTop, self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeIdTop)[0]).getCenterY());
+                            } else {
+                              self.nodeToTempPositionMapVertical.set(nodeIdTop, self.idToNodeMap.get(nodeIdTop).getCenterY());
+                            }
+                          }
+                          if (!self.nodesInRelativeVertical.includes(nodeIdBottom)) {
+                            self.nodesInRelativeVertical.push(nodeIdBottom);
+                            self.nodeToRelativeConstraintMapVertical.set(nodeIdBottom, []);
+                            if (self.dummyToNodeForHorizontalAlignment.has(nodeIdBottom)) {
+                              self.nodeToTempPositionMapVertical.set(nodeIdBottom, self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeIdBottom)[0]).getCenterY());
+                            } else {
+                              self.nodeToTempPositionMapVertical.set(nodeIdBottom, self.idToNodeMap.get(nodeIdBottom).getCenterY());
+                            }
+                          }
+                          self.nodeToRelativeConstraintMapVertical.get(nodeIdTop).push({ bottom: nodeIdBottom, gap: constraint.gap });
+                          self.nodeToRelativeConstraintMapVertical.get(nodeIdBottom).push({ top: nodeIdTop, gap: constraint.gap });
+                        }
+                      });
+                    } else {
+                      var subGraphOnHorizontal = /* @__PURE__ */ new Map();
+                      var subGraphOnVertical = /* @__PURE__ */ new Map();
+                      this.constraints.relativePlacementConstraint.forEach(function(constraint) {
+                        if (constraint.left) {
+                          var left = nodeToDummyForVerticalAlignment.has(constraint.left) ? nodeToDummyForVerticalAlignment.get(constraint.left) : constraint.left;
+                          var right = nodeToDummyForVerticalAlignment.has(constraint.right) ? nodeToDummyForVerticalAlignment.get(constraint.right) : constraint.right;
+                          if (subGraphOnHorizontal.has(left)) {
+                            subGraphOnHorizontal.get(left).push(right);
+                          } else {
+                            subGraphOnHorizontal.set(left, [right]);
+                          }
+                          if (subGraphOnHorizontal.has(right)) {
+                            subGraphOnHorizontal.get(right).push(left);
+                          } else {
+                            subGraphOnHorizontal.set(right, [left]);
+                          }
+                        } else {
+                          var top = nodeToDummyForHorizontalAlignment.has(constraint.top) ? nodeToDummyForHorizontalAlignment.get(constraint.top) : constraint.top;
+                          var bottom = nodeToDummyForHorizontalAlignment.has(constraint.bottom) ? nodeToDummyForHorizontalAlignment.get(constraint.bottom) : constraint.bottom;
+                          if (subGraphOnVertical.has(top)) {
+                            subGraphOnVertical.get(top).push(bottom);
+                          } else {
+                            subGraphOnVertical.set(top, [bottom]);
+                          }
+                          if (subGraphOnVertical.has(bottom)) {
+                            subGraphOnVertical.get(bottom).push(top);
+                          } else {
+                            subGraphOnVertical.set(bottom, [top]);
+                          }
+                        }
+                      });
+                      var constructComponents = function constructComponents2(graph, fixedNodes) {
+                        var components = [];
+                        var isFixed = [];
+                        var queue = new LinkedList();
+                        var visited = /* @__PURE__ */ new Set();
+                        var count = 0;
+                        graph.forEach(function(value, key) {
+                          if (!visited.has(key)) {
+                            components[count] = [];
+                            isFixed[count] = false;
+                            var currentNode = key;
+                            queue.push(currentNode);
+                            visited.add(currentNode);
+                            components[count].push(currentNode);
+                            while (queue.length != 0) {
+                              currentNode = queue.shift();
+                              if (fixedNodes.has(currentNode)) {
+                                isFixed[count] = true;
+                              }
+                              var neighbors = graph.get(currentNode);
+                              neighbors.forEach(function(neighbor) {
+                                if (!visited.has(neighbor)) {
+                                  queue.push(neighbor);
+                                  visited.add(neighbor);
+                                  components[count].push(neighbor);
+                                }
+                              });
+                            }
+                            count++;
+                          }
+                        });
+                        return { components, isFixed };
+                      };
+                      var resultOnHorizontal = constructComponents(subGraphOnHorizontal, self.fixedNodesOnHorizontal);
+                      this.componentsOnHorizontal = resultOnHorizontal.components;
+                      this.fixedComponentsOnHorizontal = resultOnHorizontal.isFixed;
+                      var resultOnVertical = constructComponents(subGraphOnVertical, self.fixedNodesOnVertical);
+                      this.componentsOnVertical = resultOnVertical.components;
+                      this.fixedComponentsOnVertical = resultOnVertical.isFixed;
+                    }
+                  }
+                };
+                CoSELayout.prototype.updateDisplacements = function() {
+                  var self = this;
+                  if (this.constraints.fixedNodeConstraint) {
+                    this.constraints.fixedNodeConstraint.forEach(function(nodeData2) {
+                      var fixedNode = self.idToNodeMap.get(nodeData2.nodeId);
+                      fixedNode.displacementX = 0;
+                      fixedNode.displacementY = 0;
+                    });
+                  }
+                  if (this.constraints.alignmentConstraint) {
+                    if (this.constraints.alignmentConstraint.vertical) {
+                      var allVerticalAlignments = this.constraints.alignmentConstraint.vertical;
+                      for (var i = 0; i < allVerticalAlignments.length; i++) {
+                        var totalDisplacementX = 0;
+                        for (var j = 0; j < allVerticalAlignments[i].length; j++) {
+                          if (this.fixedNodeSet.has(allVerticalAlignments[i][j])) {
+                            totalDisplacementX = 0;
+                            break;
+                          }
+                          totalDisplacementX += this.idToNodeMap.get(allVerticalAlignments[i][j]).displacementX;
+                        }
+                        var averageDisplacementX = totalDisplacementX / allVerticalAlignments[i].length;
+                        for (var j = 0; j < allVerticalAlignments[i].length; j++) {
+                          this.idToNodeMap.get(allVerticalAlignments[i][j]).displacementX = averageDisplacementX;
+                        }
+                      }
+                    }
+                    if (this.constraints.alignmentConstraint.horizontal) {
+                      var allHorizontalAlignments = this.constraints.alignmentConstraint.horizontal;
+                      for (var i = 0; i < allHorizontalAlignments.length; i++) {
+                        var totalDisplacementY = 0;
+                        for (var j = 0; j < allHorizontalAlignments[i].length; j++) {
+                          if (this.fixedNodeSet.has(allHorizontalAlignments[i][j])) {
+                            totalDisplacementY = 0;
+                            break;
+                          }
+                          totalDisplacementY += this.idToNodeMap.get(allHorizontalAlignments[i][j]).displacementY;
+                        }
+                        var averageDisplacementY = totalDisplacementY / allHorizontalAlignments[i].length;
+                        for (var j = 0; j < allHorizontalAlignments[i].length; j++) {
+                          this.idToNodeMap.get(allHorizontalAlignments[i][j]).displacementY = averageDisplacementY;
+                        }
+                      }
+                    }
+                  }
+                  if (this.constraints.relativePlacementConstraint) {
+                    if (CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS) {
+                      if (this.totalIterations % 10 == 0) {
+                        this.shuffle(this.nodesInRelativeHorizontal);
+                        this.shuffle(this.nodesInRelativeVertical);
+                      }
+                      this.nodesInRelativeHorizontal.forEach(function(nodeId) {
+                        if (!self.fixedNodesOnHorizontal.has(nodeId)) {
+                          var displacement = 0;
+                          if (self.dummyToNodeForVerticalAlignment.has(nodeId)) {
+                            displacement = self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeId)[0]).displacementX;
+                          } else {
+                            displacement = self.idToNodeMap.get(nodeId).displacementX;
+                          }
+                          self.nodeToRelativeConstraintMapHorizontal.get(nodeId).forEach(function(constraint) {
+                            if (constraint.right) {
+                              var diff = self.nodeToTempPositionMapHorizontal.get(constraint.right) - self.nodeToTempPositionMapHorizontal.get(nodeId) - displacement;
+                              if (diff < constraint.gap) {
+                                displacement -= constraint.gap - diff;
+                              }
+                            } else {
+                              var diff = self.nodeToTempPositionMapHorizontal.get(nodeId) - self.nodeToTempPositionMapHorizontal.get(constraint.left) + displacement;
+                              if (diff < constraint.gap) {
+                                displacement += constraint.gap - diff;
+                              }
+                            }
+                          });
+                          self.nodeToTempPositionMapHorizontal.set(nodeId, self.nodeToTempPositionMapHorizontal.get(nodeId) + displacement);
+                          if (self.dummyToNodeForVerticalAlignment.has(nodeId)) {
+                            self.dummyToNodeForVerticalAlignment.get(nodeId).forEach(function(nodeId2) {
+                              self.idToNodeMap.get(nodeId2).displacementX = displacement;
+                            });
+                          } else {
+                            self.idToNodeMap.get(nodeId).displacementX = displacement;
+                          }
+                        }
+                      });
+                      this.nodesInRelativeVertical.forEach(function(nodeId) {
+                        if (!self.fixedNodesOnHorizontal.has(nodeId)) {
+                          var displacement = 0;
+                          if (self.dummyToNodeForHorizontalAlignment.has(nodeId)) {
+                            displacement = self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeId)[0]).displacementY;
+                          } else {
+                            displacement = self.idToNodeMap.get(nodeId).displacementY;
+                          }
+                          self.nodeToRelativeConstraintMapVertical.get(nodeId).forEach(function(constraint) {
+                            if (constraint.bottom) {
+                              var diff = self.nodeToTempPositionMapVertical.get(constraint.bottom) - self.nodeToTempPositionMapVertical.get(nodeId) - displacement;
+                              if (diff < constraint.gap) {
+                                displacement -= constraint.gap - diff;
+                              }
+                            } else {
+                              var diff = self.nodeToTempPositionMapVertical.get(nodeId) - self.nodeToTempPositionMapVertical.get(constraint.top) + displacement;
+                              if (diff < constraint.gap) {
+                                displacement += constraint.gap - diff;
+                              }
+                            }
+                          });
+                          self.nodeToTempPositionMapVertical.set(nodeId, self.nodeToTempPositionMapVertical.get(nodeId) + displacement);
+                          if (self.dummyToNodeForHorizontalAlignment.has(nodeId)) {
+                            self.dummyToNodeForHorizontalAlignment.get(nodeId).forEach(function(nodeId2) {
+                              self.idToNodeMap.get(nodeId2).displacementY = displacement;
+                            });
+                          } else {
+                            self.idToNodeMap.get(nodeId).displacementY = displacement;
+                          }
+                        }
+                      });
+                    } else {
+                      for (var i = 0; i < this.componentsOnHorizontal.length; i++) {
+                        var component = this.componentsOnHorizontal[i];
+                        if (this.fixedComponentsOnHorizontal[i]) {
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+                              this.dummyToNodeForVerticalAlignment.get(component[j]).forEach(function(nodeId) {
+                                self.idToNodeMap.get(nodeId).displacementX = 0;
+                              });
+                            } else {
+                              this.idToNodeMap.get(component[j]).displacementX = 0;
+                            }
+                          }
+                        } else {
+                          var sum = 0;
+                          var count = 0;
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+                              var actualNodes = this.dummyToNodeForVerticalAlignment.get(component[j]);
+                              sum += actualNodes.length * this.idToNodeMap.get(actualNodes[0]).displacementX;
+                              count += actualNodes.length;
+                            } else {
+                              sum += this.idToNodeMap.get(component[j]).displacementX;
+                              count++;
+                            }
+                          }
+                          var averageDisplacement = sum / count;
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+                              this.dummyToNodeForVerticalAlignment.get(component[j]).forEach(function(nodeId) {
+                                self.idToNodeMap.get(nodeId).displacementX = averageDisplacement;
+                              });
+                            } else {
+                              this.idToNodeMap.get(component[j]).displacementX = averageDisplacement;
+                            }
+                          }
+                        }
+                      }
+                      for (var i = 0; i < this.componentsOnVertical.length; i++) {
+                        var component = this.componentsOnVertical[i];
+                        if (this.fixedComponentsOnVertical[i]) {
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+                              this.dummyToNodeForHorizontalAlignment.get(component[j]).forEach(function(nodeId) {
+                                self.idToNodeMap.get(nodeId).displacementY = 0;
+                              });
+                            } else {
+                              this.idToNodeMap.get(component[j]).displacementY = 0;
+                            }
+                          }
+                        } else {
+                          var sum = 0;
+                          var count = 0;
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+                              var actualNodes = this.dummyToNodeForHorizontalAlignment.get(component[j]);
+                              sum += actualNodes.length * this.idToNodeMap.get(actualNodes[0]).displacementY;
+                              count += actualNodes.length;
+                            } else {
+                              sum += this.idToNodeMap.get(component[j]).displacementY;
+                              count++;
+                            }
+                          }
+                          var averageDisplacement = sum / count;
+                          for (var j = 0; j < component.length; j++) {
+                            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+                              this.dummyToNodeForHorizontalAlignment.get(component[j]).forEach(function(nodeId) {
+                                self.idToNodeMap.get(nodeId).displacementY = averageDisplacement;
+                              });
+                            } else {
+                              this.idToNodeMap.get(component[j]).displacementY = averageDisplacement;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                };
+                CoSELayout.prototype.calculateNodesToApplyGravitationTo = function() {
+                  var nodeList = [];
+                  var graph;
+                  var graphs = this.graphManager.getGraphs();
+                  var size = graphs.length;
+                  var i;
+                  for (i = 0; i < size; i++) {
+                    graph = graphs[i];
+                    graph.updateConnected();
+                    if (!graph.isConnected) {
+                      nodeList = nodeList.concat(graph.getNodes());
+                    }
+                  }
+                  return nodeList;
+                };
+                CoSELayout.prototype.createBendpoints = function() {
+                  var edges = [];
+                  edges = edges.concat(this.graphManager.getAllEdges());
+                  var visited = /* @__PURE__ */ new Set();
+                  var i;
+                  for (i = 0; i < edges.length; i++) {
+                    var edge = edges[i];
+                    if (!visited.has(edge)) {
+                      var source = edge.getSource();
+                      var target = edge.getTarget();
+                      if (source == target) {
+                        edge.getBendpoints().push(new PointD());
+                        edge.getBendpoints().push(new PointD());
+                        this.createDummyNodesForBendpoints(edge);
+                        visited.add(edge);
+                      } else {
+                        var edgeList = [];
+                        edgeList = edgeList.concat(source.getEdgeListToNode(target));
+                        edgeList = edgeList.concat(target.getEdgeListToNode(source));
+                        if (!visited.has(edgeList[0])) {
+                          if (edgeList.length > 1) {
+                            var k;
+                            for (k = 0; k < edgeList.length; k++) {
+                              var multiEdge = edgeList[k];
+                              multiEdge.getBendpoints().push(new PointD());
+                              this.createDummyNodesForBendpoints(multiEdge);
+                            }
+                          }
+                          edgeList.forEach(function(edge2) {
+                            visited.add(edge2);
+                          });
+                        }
+                      }
+                    }
+                    if (visited.size == edges.length) {
+                      break;
+                    }
+                  }
+                };
+                CoSELayout.prototype.positionNodesRadially = function(forest) {
+                  var currentStartingPoint = new Point2(0, 0);
+                  var numberOfColumns = Math.ceil(Math.sqrt(forest.length));
+                  var height = 0;
+                  var currentY = 0;
+                  var currentX = 0;
+                  var point = new PointD(0, 0);
+                  for (var i = 0; i < forest.length; i++) {
+                    if (i % numberOfColumns == 0) {
+                      currentX = 0;
+                      currentY = height;
+                      if (i != 0) {
+                        currentY += CoSEConstants.DEFAULT_COMPONENT_SEPERATION;
+                      }
+                      height = 0;
+                    }
+                    var tree = forest[i];
+                    var centerNode = Layout2.findCenterOfTree(tree);
+                    currentStartingPoint.x = currentX;
+                    currentStartingPoint.y = currentY;
+                    point = CoSELayout.radialLayout(tree, centerNode, currentStartingPoint);
+                    if (point.y > height) {
+                      height = Math.floor(point.y);
+                    }
+                    currentX = Math.floor(point.x + CoSEConstants.DEFAULT_COMPONENT_SEPERATION);
+                  }
+                  this.transform(new PointD(LayoutConstants.WORLD_CENTER_X - point.x / 2, LayoutConstants.WORLD_CENTER_Y - point.y / 2));
+                };
+                CoSELayout.radialLayout = function(tree, centerNode, startingPoint) {
+                  var radialSep = Math.max(this.maxDiagonalInTree(tree), CoSEConstants.DEFAULT_RADIAL_SEPARATION);
+                  CoSELayout.branchRadialLayout(centerNode, null, 0, 359, 0, radialSep);
+                  var bounds = LGraph.calculateBounds(tree);
+                  var transform = new Transform();
+                  transform.setDeviceOrgX(bounds.getMinX());
+                  transform.setDeviceOrgY(bounds.getMinY());
+                  transform.setWorldOrgX(startingPoint.x);
+                  transform.setWorldOrgY(startingPoint.y);
+                  for (var i = 0; i < tree.length; i++) {
+                    var node = tree[i];
+                    node.transform(transform);
+                  }
+                  var bottomRight = new PointD(bounds.getMaxX(), bounds.getMaxY());
+                  return transform.inverseTransformPoint(bottomRight);
+                };
+                CoSELayout.branchRadialLayout = function(node, parentOfNode, startAngle, endAngle, distance, radialSeparation) {
+                  var halfInterval = (endAngle - startAngle + 1) / 2;
+                  if (halfInterval < 0) {
+                    halfInterval += 180;
+                  }
+                  var nodeAngle = (halfInterval + startAngle) % 360;
+                  var teta = nodeAngle * IGeometry.TWO_PI / 360;
+                  var x_ = distance * Math.cos(teta);
+                  var y_ = distance * Math.sin(teta);
+                  node.setCenter(x_, y_);
+                  var neighborEdges = [];
+                  neighborEdges = neighborEdges.concat(node.getEdges());
+                  var childCount = neighborEdges.length;
+                  if (parentOfNode != null) {
+                    childCount--;
+                  }
+                  var branchCount = 0;
+                  var incEdgesCount = neighborEdges.length;
+                  var startIndex;
+                  var edges = node.getEdgesBetween(parentOfNode);
+                  while (edges.length > 1) {
+                    var temp = edges[0];
+                    edges.splice(0, 1);
+                    var index = neighborEdges.indexOf(temp);
+                    if (index >= 0) {
+                      neighborEdges.splice(index, 1);
+                    }
+                    incEdgesCount--;
+                    childCount--;
+                  }
+                  if (parentOfNode != null) {
+                    startIndex = (neighborEdges.indexOf(edges[0]) + 1) % incEdgesCount;
+                  } else {
+                    startIndex = 0;
+                  }
+                  var stepAngle = Math.abs(endAngle - startAngle) / childCount;
+                  for (var i = startIndex; branchCount != childCount; i = ++i % incEdgesCount) {
+                    var currentNeighbor = neighborEdges[i].getOtherEnd(node);
+                    if (currentNeighbor == parentOfNode) {
+                      continue;
+                    }
+                    var childStartAngle = (startAngle + branchCount * stepAngle) % 360;
+                    var childEndAngle = (childStartAngle + stepAngle) % 360;
+                    CoSELayout.branchRadialLayout(currentNeighbor, node, childStartAngle, childEndAngle, distance + radialSeparation, radialSeparation);
+                    branchCount++;
+                  }
+                };
+                CoSELayout.maxDiagonalInTree = function(tree) {
+                  var maxDiagonal = Integer.MIN_VALUE;
+                  for (var i = 0; i < tree.length; i++) {
+                    var node = tree[i];
+                    var diagonal = node.getDiagonal();
+                    if (diagonal > maxDiagonal) {
+                      maxDiagonal = diagonal;
+                    }
+                  }
+                  return maxDiagonal;
+                };
+                CoSELayout.prototype.calcRepulsionRange = function() {
+                  return 2 * (this.level + 1) * this.idealEdgeLength;
+                };
+                CoSELayout.prototype.groupZeroDegreeMembers = function() {
+                  var self = this;
+                  var tempMemberGroups = {};
+                  this.memberGroups = {};
+                  this.idToDummyNode = {};
+                  var zeroDegree = [];
+                  var allNodes = this.graphManager.getAllNodes();
+                  for (var i = 0; i < allNodes.length; i++) {
+                    var node = allNodes[i];
+                    var parent = node.getParent();
+                    if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == void 0 || !this.getToBeTiled(parent))) {
+                      zeroDegree.push(node);
+                    }
+                  }
+                  for (var i = 0; i < zeroDegree.length; i++) {
+                    var node = zeroDegree[i];
+                    var p_id = node.getParent().id;
+                    if (typeof tempMemberGroups[p_id] === "undefined") tempMemberGroups[p_id] = [];
+                    tempMemberGroups[p_id] = tempMemberGroups[p_id].concat(node);
+                  }
+                  Object.keys(tempMemberGroups).forEach(function(p_id2) {
+                    if (tempMemberGroups[p_id2].length > 1) {
+                      var dummyCompoundId = "DummyCompound_" + p_id2;
+                      self.memberGroups[dummyCompoundId] = tempMemberGroups[p_id2];
+                      var parent2 = tempMemberGroups[p_id2][0].getParent();
+                      var dummyCompound = new CoSENode(self.graphManager);
+                      dummyCompound.id = dummyCompoundId;
+                      dummyCompound.paddingLeft = parent2.paddingLeft || 0;
+                      dummyCompound.paddingRight = parent2.paddingRight || 0;
+                      dummyCompound.paddingBottom = parent2.paddingBottom || 0;
+                      dummyCompound.paddingTop = parent2.paddingTop || 0;
+                      self.idToDummyNode[dummyCompoundId] = dummyCompound;
+                      var dummyParentGraph = self.getGraphManager().add(self.newGraph(), dummyCompound);
+                      var parentGraph = parent2.getChild();
+                      parentGraph.add(dummyCompound);
+                      for (var i2 = 0; i2 < tempMemberGroups[p_id2].length; i2++) {
+                        var node2 = tempMemberGroups[p_id2][i2];
+                        parentGraph.remove(node2);
+                        dummyParentGraph.add(node2);
+                      }
+                    }
+                  });
+                };
+                CoSELayout.prototype.clearCompounds = function() {
+                  var childGraphMap = {};
+                  var idToNode = {};
+                  this.performDFSOnCompounds();
+                  for (var i = 0; i < this.compoundOrder.length; i++) {
+                    idToNode[this.compoundOrder[i].id] = this.compoundOrder[i];
+                    childGraphMap[this.compoundOrder[i].id] = [].concat(this.compoundOrder[i].getChild().getNodes());
+                    this.graphManager.remove(this.compoundOrder[i].getChild());
+                    this.compoundOrder[i].child = null;
+                  }
+                  this.graphManager.resetAllNodes();
+                  this.tileCompoundMembers(childGraphMap, idToNode);
+                };
+                CoSELayout.prototype.clearZeroDegreeMembers = function() {
+                  var self = this;
+                  var tiledZeroDegreePack = this.tiledZeroDegreePack = [];
+                  Object.keys(this.memberGroups).forEach(function(id) {
+                    var compoundNode = self.idToDummyNode[id];
+                    tiledZeroDegreePack[id] = self.tileNodes(self.memberGroups[id], compoundNode.paddingLeft + compoundNode.paddingRight);
+                    compoundNode.rect.width = tiledZeroDegreePack[id].width;
+                    compoundNode.rect.height = tiledZeroDegreePack[id].height;
+                    compoundNode.setCenter(tiledZeroDegreePack[id].centerX, tiledZeroDegreePack[id].centerY);
+                    compoundNode.labelMarginLeft = 0;
+                    compoundNode.labelMarginTop = 0;
+                    if (CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+                      var width = compoundNode.rect.width;
+                      var height = compoundNode.rect.height;
+                      if (compoundNode.labelWidth) {
+                        if (compoundNode.labelPosHorizontal == "left") {
+                          compoundNode.rect.x -= compoundNode.labelWidth;
+                          compoundNode.setWidth(width + compoundNode.labelWidth);
+                          compoundNode.labelMarginLeft = compoundNode.labelWidth;
+                        } else if (compoundNode.labelPosHorizontal == "center" && compoundNode.labelWidth > width) {
+                          compoundNode.rect.x -= (compoundNode.labelWidth - width) / 2;
+                          compoundNode.setWidth(compoundNode.labelWidth);
+                          compoundNode.labelMarginLeft = (compoundNode.labelWidth - width) / 2;
+                        } else if (compoundNode.labelPosHorizontal == "right") {
+                          compoundNode.setWidth(width + compoundNode.labelWidth);
+                        }
+                      }
+                      if (compoundNode.labelHeight) {
+                        if (compoundNode.labelPosVertical == "top") {
+                          compoundNode.rect.y -= compoundNode.labelHeight;
+                          compoundNode.setHeight(height + compoundNode.labelHeight);
+                          compoundNode.labelMarginTop = compoundNode.labelHeight;
+                        } else if (compoundNode.labelPosVertical == "center" && compoundNode.labelHeight > height) {
+                          compoundNode.rect.y -= (compoundNode.labelHeight - height) / 2;
+                          compoundNode.setHeight(compoundNode.labelHeight);
+                          compoundNode.labelMarginTop = (compoundNode.labelHeight - height) / 2;
+                        } else if (compoundNode.labelPosVertical == "bottom") {
+                          compoundNode.setHeight(height + compoundNode.labelHeight);
+                        }
+                      }
+                    }
+                  });
+                };
+                CoSELayout.prototype.repopulateCompounds = function() {
+                  for (var i = this.compoundOrder.length - 1; i >= 0; i--) {
+                    var lCompoundNode = this.compoundOrder[i];
+                    var id = lCompoundNode.id;
+                    var horizontalMargin = lCompoundNode.paddingLeft;
+                    var verticalMargin = lCompoundNode.paddingTop;
+                    var labelMarginLeft = lCompoundNode.labelMarginLeft;
+                    var labelMarginTop = lCompoundNode.labelMarginTop;
+                    this.adjustLocations(this.tiledMemberPack[id], lCompoundNode.rect.x, lCompoundNode.rect.y, horizontalMargin, verticalMargin, labelMarginLeft, labelMarginTop);
+                  }
+                };
+                CoSELayout.prototype.repopulateZeroDegreeMembers = function() {
+                  var self = this;
+                  var tiledPack = this.tiledZeroDegreePack;
+                  Object.keys(tiledPack).forEach(function(id) {
+                    var compoundNode = self.idToDummyNode[id];
+                    var horizontalMargin = compoundNode.paddingLeft;
+                    var verticalMargin = compoundNode.paddingTop;
+                    var labelMarginLeft = compoundNode.labelMarginLeft;
+                    var labelMarginTop = compoundNode.labelMarginTop;
+                    self.adjustLocations(tiledPack[id], compoundNode.rect.x, compoundNode.rect.y, horizontalMargin, verticalMargin, labelMarginLeft, labelMarginTop);
+                  });
+                };
+                CoSELayout.prototype.getToBeTiled = function(node) {
+                  var id = node.id;
+                  if (this.toBeTiled[id] != null) {
+                    return this.toBeTiled[id];
+                  }
+                  var childGraph = node.getChild();
+                  if (childGraph == null) {
+                    this.toBeTiled[id] = false;
+                    return false;
+                  }
+                  var children = childGraph.getNodes();
+                  for (var i = 0; i < children.length; i++) {
+                    var theChild = children[i];
+                    if (this.getNodeDegree(theChild) > 0) {
+                      this.toBeTiled[id] = false;
+                      return false;
+                    }
+                    if (theChild.getChild() == null) {
+                      this.toBeTiled[theChild.id] = false;
+                      continue;
+                    }
+                    if (!this.getToBeTiled(theChild)) {
+                      this.toBeTiled[id] = false;
+                      return false;
+                    }
+                  }
+                  this.toBeTiled[id] = true;
+                  return true;
+                };
+                CoSELayout.prototype.getNodeDegree = function(node) {
+                  node.id;
+                  var edges = node.getEdges();
+                  var degree = 0;
+                  for (var i = 0; i < edges.length; i++) {
+                    var edge = edges[i];
+                    if (edge.getSource().id !== edge.getTarget().id) {
+                      degree = degree + 1;
+                    }
+                  }
+                  return degree;
+                };
+                CoSELayout.prototype.getNodeDegreeWithChildren = function(node) {
+                  var degree = this.getNodeDegree(node);
+                  if (node.getChild() == null) {
+                    return degree;
+                  }
+                  var children = node.getChild().getNodes();
+                  for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    degree += this.getNodeDegreeWithChildren(child);
+                  }
+                  return degree;
+                };
+                CoSELayout.prototype.performDFSOnCompounds = function() {
+                  this.compoundOrder = [];
+                  this.fillCompexOrderByDFS(this.graphManager.getRoot().getNodes());
+                };
+                CoSELayout.prototype.fillCompexOrderByDFS = function(children) {
+                  for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    if (child.getChild() != null) {
+                      this.fillCompexOrderByDFS(child.getChild().getNodes());
+                    }
+                    if (this.getToBeTiled(child)) {
+                      this.compoundOrder.push(child);
+                    }
+                  }
+                };
+                CoSELayout.prototype.adjustLocations = function(organization, x, y, compoundHorizontalMargin, compoundVerticalMargin, compoundLabelMarginLeft, compoundLabelMarginTop) {
+                  x += compoundHorizontalMargin + compoundLabelMarginLeft;
+                  y += compoundVerticalMargin + compoundLabelMarginTop;
+                  var left = x;
+                  for (var i = 0; i < organization.rows.length; i++) {
+                    var row = organization.rows[i];
+                    x = left;
+                    var maxHeight = 0;
+                    for (var j = 0; j < row.length; j++) {
+                      var lnode = row[j];
+                      lnode.rect.x = x;
+                      lnode.rect.y = y;
+                      x += lnode.rect.width + organization.horizontalPadding;
+                      if (lnode.rect.height > maxHeight) maxHeight = lnode.rect.height;
+                    }
+                    y += maxHeight + organization.verticalPadding;
+                  }
+                };
+                CoSELayout.prototype.tileCompoundMembers = function(childGraphMap, idToNode) {
+                  var self = this;
+                  this.tiledMemberPack = [];
+                  Object.keys(childGraphMap).forEach(function(id) {
+                    var compoundNode = idToNode[id];
+                    self.tiledMemberPack[id] = self.tileNodes(childGraphMap[id], compoundNode.paddingLeft + compoundNode.paddingRight);
+                    compoundNode.rect.width = self.tiledMemberPack[id].width;
+                    compoundNode.rect.height = self.tiledMemberPack[id].height;
+                    compoundNode.setCenter(self.tiledMemberPack[id].centerX, self.tiledMemberPack[id].centerY);
+                    compoundNode.labelMarginLeft = 0;
+                    compoundNode.labelMarginTop = 0;
+                    if (CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+                      var width = compoundNode.rect.width;
+                      var height = compoundNode.rect.height;
+                      if (compoundNode.labelWidth) {
+                        if (compoundNode.labelPosHorizontal == "left") {
+                          compoundNode.rect.x -= compoundNode.labelWidth;
+                          compoundNode.setWidth(width + compoundNode.labelWidth);
+                          compoundNode.labelMarginLeft = compoundNode.labelWidth;
+                        } else if (compoundNode.labelPosHorizontal == "center" && compoundNode.labelWidth > width) {
+                          compoundNode.rect.x -= (compoundNode.labelWidth - width) / 2;
+                          compoundNode.setWidth(compoundNode.labelWidth);
+                          compoundNode.labelMarginLeft = (compoundNode.labelWidth - width) / 2;
+                        } else if (compoundNode.labelPosHorizontal == "right") {
+                          compoundNode.setWidth(width + compoundNode.labelWidth);
+                        }
+                      }
+                      if (compoundNode.labelHeight) {
+                        if (compoundNode.labelPosVertical == "top") {
+                          compoundNode.rect.y -= compoundNode.labelHeight;
+                          compoundNode.setHeight(height + compoundNode.labelHeight);
+                          compoundNode.labelMarginTop = compoundNode.labelHeight;
+                        } else if (compoundNode.labelPosVertical == "center" && compoundNode.labelHeight > height) {
+                          compoundNode.rect.y -= (compoundNode.labelHeight - height) / 2;
+                          compoundNode.setHeight(compoundNode.labelHeight);
+                          compoundNode.labelMarginTop = (compoundNode.labelHeight - height) / 2;
+                        } else if (compoundNode.labelPosVertical == "bottom") {
+                          compoundNode.setHeight(height + compoundNode.labelHeight);
+                        }
+                      }
+                    }
+                  });
+                };
+                CoSELayout.prototype.tileNodes = function(nodes, minWidth) {
+                  var horizontalOrg = this.tileNodesByFavoringDim(nodes, minWidth, true);
+                  var verticalOrg = this.tileNodesByFavoringDim(nodes, minWidth, false);
+                  var horizontalRatio = this.getOrgRatio(horizontalOrg);
+                  var verticalRatio = this.getOrgRatio(verticalOrg);
+                  var bestOrg;
+                  if (verticalRatio < horizontalRatio) {
+                    bestOrg = verticalOrg;
+                  } else {
+                    bestOrg = horizontalOrg;
+                  }
+                  return bestOrg;
+                };
+                CoSELayout.prototype.getOrgRatio = function(organization) {
+                  var width = organization.width;
+                  var height = organization.height;
+                  var ratio = width / height;
+                  if (ratio < 1) {
+                    ratio = 1 / ratio;
+                  }
+                  return ratio;
+                };
+                CoSELayout.prototype.calcIdealRowWidth = function(members, favorHorizontalDim) {
+                  var verticalPadding = CoSEConstants.TILING_PADDING_VERTICAL;
+                  var horizontalPadding = CoSEConstants.TILING_PADDING_HORIZONTAL;
+                  var membersSize = members.length;
+                  var totalWidth = 0;
+                  var totalHeight = 0;
+                  var maxWidth = 0;
+                  members.forEach(function(node) {
+                    totalWidth += node.getWidth();
+                    totalHeight += node.getHeight();
+                    if (node.getWidth() > maxWidth) {
+                      maxWidth = node.getWidth();
+                    }
+                  });
+                  var averageWidth = totalWidth / membersSize;
+                  var averageHeight = totalHeight / membersSize;
+                  var delta = Math.pow(verticalPadding - horizontalPadding, 2) + 4 * (averageWidth + horizontalPadding) * (averageHeight + verticalPadding) * membersSize;
+                  var horizontalCountDouble = (horizontalPadding - verticalPadding + Math.sqrt(delta)) / (2 * (averageWidth + horizontalPadding));
+                  var horizontalCount;
+                  if (favorHorizontalDim) {
+                    horizontalCount = Math.ceil(horizontalCountDouble);
+                    if (horizontalCount == horizontalCountDouble) {
+                      horizontalCount++;
+                    }
+                  } else {
+                    horizontalCount = Math.floor(horizontalCountDouble);
+                  }
+                  var idealWidth = horizontalCount * (averageWidth + horizontalPadding) - horizontalPadding;
+                  if (maxWidth > idealWidth) {
+                    idealWidth = maxWidth;
+                  }
+                  idealWidth += horizontalPadding * 2;
+                  return idealWidth;
+                };
+                CoSELayout.prototype.tileNodesByFavoringDim = function(nodes, minWidth, favorHorizontalDim) {
+                  var verticalPadding = CoSEConstants.TILING_PADDING_VERTICAL;
+                  var horizontalPadding = CoSEConstants.TILING_PADDING_HORIZONTAL;
+                  var tilingCompareBy = CoSEConstants.TILING_COMPARE_BY;
+                  var organization = {
+                    rows: [],
+                    rowWidth: [],
+                    rowHeight: [],
+                    width: 0,
+                    height: minWidth,
+                    // assume minHeight equals to minWidth
+                    verticalPadding,
+                    horizontalPadding,
+                    centerX: 0,
+                    centerY: 0
+                  };
+                  if (tilingCompareBy) {
+                    organization.idealRowWidth = this.calcIdealRowWidth(nodes, favorHorizontalDim);
+                  }
+                  var getNodeArea = function getNodeArea2(n) {
+                    return n.rect.width * n.rect.height;
+                  };
+                  var areaCompareFcn = function areaCompareFcn2(n1, n2) {
+                    return getNodeArea(n2) - getNodeArea(n1);
+                  };
+                  nodes.sort(function(n1, n2) {
+                    var cmpBy = areaCompareFcn;
+                    if (organization.idealRowWidth) {
+                      cmpBy = tilingCompareBy;
+                      return cmpBy(n1.id, n2.id);
+                    }
+                    return cmpBy(n1, n2);
+                  });
+                  var sumCenterX = 0;
+                  var sumCenterY = 0;
+                  for (var i = 0; i < nodes.length; i++) {
+                    var lNode = nodes[i];
+                    sumCenterX += lNode.getCenterX();
+                    sumCenterY += lNode.getCenterY();
+                  }
+                  organization.centerX = sumCenterX / nodes.length;
+                  organization.centerY = sumCenterY / nodes.length;
+                  for (var i = 0; i < nodes.length; i++) {
+                    var lNode = nodes[i];
+                    if (organization.rows.length == 0) {
+                      this.insertNodeToRow(organization, lNode, 0, minWidth);
+                    } else if (this.canAddHorizontal(organization, lNode.rect.width, lNode.rect.height)) {
+                      var rowIndex = organization.rows.length - 1;
+                      if (!organization.idealRowWidth) {
+                        rowIndex = this.getShortestRowIndex(organization);
+                      }
+                      this.insertNodeToRow(organization, lNode, rowIndex, minWidth);
+                    } else {
+                      this.insertNodeToRow(organization, lNode, organization.rows.length, minWidth);
+                    }
+                    this.shiftToLastRow(organization);
+                  }
+                  return organization;
+                };
+                CoSELayout.prototype.insertNodeToRow = function(organization, node, rowIndex, minWidth) {
+                  var minCompoundSize = minWidth;
+                  if (rowIndex == organization.rows.length) {
+                    var secondDimension = [];
+                    organization.rows.push(secondDimension);
+                    organization.rowWidth.push(minCompoundSize);
+                    organization.rowHeight.push(0);
+                  }
+                  var w = organization.rowWidth[rowIndex] + node.rect.width;
+                  if (organization.rows[rowIndex].length > 0) {
+                    w += organization.horizontalPadding;
+                  }
+                  organization.rowWidth[rowIndex] = w;
+                  if (organization.width < w) {
+                    organization.width = w;
+                  }
+                  var h = node.rect.height;
+                  if (rowIndex > 0) h += organization.verticalPadding;
+                  var extraHeight = 0;
+                  if (h > organization.rowHeight[rowIndex]) {
+                    extraHeight = organization.rowHeight[rowIndex];
+                    organization.rowHeight[rowIndex] = h;
+                    extraHeight = organization.rowHeight[rowIndex] - extraHeight;
+                  }
+                  organization.height += extraHeight;
+                  organization.rows[rowIndex].push(node);
+                };
+                CoSELayout.prototype.getShortestRowIndex = function(organization) {
+                  var r = -1;
+                  var min = Number.MAX_VALUE;
+                  for (var i = 0; i < organization.rows.length; i++) {
+                    if (organization.rowWidth[i] < min) {
+                      r = i;
+                      min = organization.rowWidth[i];
+                    }
+                  }
+                  return r;
+                };
+                CoSELayout.prototype.getLongestRowIndex = function(organization) {
+                  var r = -1;
+                  var max = Number.MIN_VALUE;
+                  for (var i = 0; i < organization.rows.length; i++) {
+                    if (organization.rowWidth[i] > max) {
+                      r = i;
+                      max = organization.rowWidth[i];
+                    }
+                  }
+                  return r;
+                };
+                CoSELayout.prototype.canAddHorizontal = function(organization, extraWidth, extraHeight) {
+                  if (organization.idealRowWidth) {
+                    var lastRowIndex = organization.rows.length - 1;
+                    var lastRowWidth = organization.rowWidth[lastRowIndex];
+                    return lastRowWidth + extraWidth + organization.horizontalPadding <= organization.idealRowWidth;
+                  }
+                  var sri = this.getShortestRowIndex(organization);
+                  if (sri < 0) {
+                    return true;
+                  }
+                  var min = organization.rowWidth[sri];
+                  if (min + organization.horizontalPadding + extraWidth <= organization.width) return true;
+                  var hDiff = 0;
+                  if (organization.rowHeight[sri] < extraHeight) {
+                    if (sri > 0) hDiff = extraHeight + organization.verticalPadding - organization.rowHeight[sri];
+                  }
+                  var add_to_row_ratio;
+                  if (organization.width - min >= extraWidth + organization.horizontalPadding) {
+                    add_to_row_ratio = (organization.height + hDiff) / (min + extraWidth + organization.horizontalPadding);
+                  } else {
+                    add_to_row_ratio = (organization.height + hDiff) / organization.width;
+                  }
+                  hDiff = extraHeight + organization.verticalPadding;
+                  var add_new_row_ratio;
+                  if (organization.width < extraWidth) {
+                    add_new_row_ratio = (organization.height + hDiff) / extraWidth;
+                  } else {
+                    add_new_row_ratio = (organization.height + hDiff) / organization.width;
+                  }
+                  if (add_new_row_ratio < 1) add_new_row_ratio = 1 / add_new_row_ratio;
+                  if (add_to_row_ratio < 1) add_to_row_ratio = 1 / add_to_row_ratio;
+                  return add_to_row_ratio < add_new_row_ratio;
+                };
+                CoSELayout.prototype.shiftToLastRow = function(organization) {
+                  var longest = this.getLongestRowIndex(organization);
+                  var last = organization.rowWidth.length - 1;
+                  var row = organization.rows[longest];
+                  var node = row[row.length - 1];
+                  var diff = node.width + organization.horizontalPadding;
+                  if (organization.width - organization.rowWidth[last] > diff && longest != last) {
+                    row.splice(-1, 1);
+                    organization.rows[last].push(node);
+                    organization.rowWidth[longest] = organization.rowWidth[longest] - diff;
+                    organization.rowWidth[last] = organization.rowWidth[last] + diff;
+                    organization.width = organization.rowWidth[instance.getLongestRowIndex(organization)];
+                    var maxHeight = Number.MIN_VALUE;
+                    for (var i = 0; i < row.length; i++) {
+                      if (row[i].height > maxHeight) maxHeight = row[i].height;
+                    }
+                    if (longest > 0) maxHeight += organization.verticalPadding;
+                    var prevTotal = organization.rowHeight[longest] + organization.rowHeight[last];
+                    organization.rowHeight[longest] = maxHeight;
+                    if (organization.rowHeight[last] < node.height + organization.verticalPadding) organization.rowHeight[last] = node.height + organization.verticalPadding;
+                    var finalTotal = organization.rowHeight[longest] + organization.rowHeight[last];
+                    organization.height += finalTotal - prevTotal;
+                    this.shiftToLastRow(organization);
+                  }
+                };
+                CoSELayout.prototype.tilingPreLayout = function() {
+                  if (CoSEConstants.TILE) {
+                    this.groupZeroDegreeMembers();
+                    this.clearCompounds();
+                    this.clearZeroDegreeMembers();
+                  }
+                };
+                CoSELayout.prototype.tilingPostLayout = function() {
+                  if (CoSEConstants.TILE) {
+                    this.repopulateZeroDegreeMembers();
+                    this.repopulateCompounds();
+                  }
+                };
+                CoSELayout.prototype.reduceTrees = function() {
+                  var prunedNodesAll = [];
+                  var containsLeaf = true;
+                  var node;
+                  while (containsLeaf) {
+                    var allNodes = this.graphManager.getAllNodes();
+                    var prunedNodesInStepTemp = [];
+                    containsLeaf = false;
+                    for (var i = 0; i < allNodes.length; i++) {
+                      node = allNodes[i];
+                      if (node.getEdges().length == 1 && !node.getEdges()[0].isInterGraph && node.getChild() == null) {
+                        if (CoSEConstants.PURE_INCREMENTAL) {
+                          var otherEnd = node.getEdges()[0].getOtherEnd(node);
+                          var relativePosition = new DimensionD2(node.getCenterX() - otherEnd.getCenterX(), node.getCenterY() - otherEnd.getCenterY());
+                          prunedNodesInStepTemp.push([node, node.getEdges()[0], node.getOwner(), relativePosition]);
+                        } else {
+                          prunedNodesInStepTemp.push([node, node.getEdges()[0], node.getOwner()]);
+                        }
+                        containsLeaf = true;
+                      }
+                    }
+                    if (containsLeaf == true) {
+                      var prunedNodesInStep = [];
+                      for (var j = 0; j < prunedNodesInStepTemp.length; j++) {
+                        if (prunedNodesInStepTemp[j][0].getEdges().length == 1) {
+                          prunedNodesInStep.push(prunedNodesInStepTemp[j]);
+                          prunedNodesInStepTemp[j][0].getOwner().remove(prunedNodesInStepTemp[j][0]);
+                        }
+                      }
+                      prunedNodesAll.push(prunedNodesInStep);
+                      this.graphManager.resetAllNodes();
+                      this.graphManager.resetAllEdges();
+                    }
+                  }
+                  this.prunedNodesAll = prunedNodesAll;
+                };
+                CoSELayout.prototype.growTree = function(prunedNodesAll) {
+                  var lengthOfPrunedNodesInStep = prunedNodesAll.length;
+                  var prunedNodesInStep = prunedNodesAll[lengthOfPrunedNodesInStep - 1];
+                  var nodeData2;
+                  for (var i = 0; i < prunedNodesInStep.length; i++) {
+                    nodeData2 = prunedNodesInStep[i];
+                    this.findPlaceforPrunedNode(nodeData2);
+                    nodeData2[2].add(nodeData2[0]);
+                    nodeData2[2].add(nodeData2[1], nodeData2[1].source, nodeData2[1].target);
+                  }
+                  prunedNodesAll.splice(prunedNodesAll.length - 1, 1);
+                  this.graphManager.resetAllNodes();
+                  this.graphManager.resetAllEdges();
+                };
+                CoSELayout.prototype.findPlaceforPrunedNode = function(nodeData2) {
+                  var gridForPrunedNode;
+                  var nodeToConnect;
+                  var prunedNode = nodeData2[0];
+                  if (prunedNode == nodeData2[1].source) {
+                    nodeToConnect = nodeData2[1].target;
+                  } else {
+                    nodeToConnect = nodeData2[1].source;
+                  }
+                  if (CoSEConstants.PURE_INCREMENTAL) {
+                    prunedNode.setCenter(nodeToConnect.getCenterX() + nodeData2[3].getWidth(), nodeToConnect.getCenterY() + nodeData2[3].getHeight());
+                  } else {
+                    var startGridX = nodeToConnect.startX;
+                    var finishGridX = nodeToConnect.finishX;
+                    var startGridY = nodeToConnect.startY;
+                    var finishGridY = nodeToConnect.finishY;
+                    var upNodeCount = 0;
+                    var downNodeCount = 0;
+                    var rightNodeCount = 0;
+                    var leftNodeCount = 0;
+                    var controlRegions = [upNodeCount, rightNodeCount, downNodeCount, leftNodeCount];
+                    if (startGridY > 0) {
+                      for (var i = startGridX; i <= finishGridX; i++) {
+                        controlRegions[0] += this.grid[i][startGridY - 1].length + this.grid[i][startGridY].length - 1;
+                      }
+                    }
+                    if (finishGridX < this.grid.length - 1) {
+                      for (var i = startGridY; i <= finishGridY; i++) {
+                        controlRegions[1] += this.grid[finishGridX + 1][i].length + this.grid[finishGridX][i].length - 1;
+                      }
+                    }
+                    if (finishGridY < this.grid[0].length - 1) {
+                      for (var i = startGridX; i <= finishGridX; i++) {
+                        controlRegions[2] += this.grid[i][finishGridY + 1].length + this.grid[i][finishGridY].length - 1;
+                      }
+                    }
+                    if (startGridX > 0) {
+                      for (var i = startGridY; i <= finishGridY; i++) {
+                        controlRegions[3] += this.grid[startGridX - 1][i].length + this.grid[startGridX][i].length - 1;
+                      }
+                    }
+                    var min = Integer.MAX_VALUE;
+                    var minCount;
+                    var minIndex;
+                    for (var j = 0; j < controlRegions.length; j++) {
+                      if (controlRegions[j] < min) {
+                        min = controlRegions[j];
+                        minCount = 1;
+                        minIndex = j;
+                      } else if (controlRegions[j] == min) {
+                        minCount++;
+                      }
+                    }
+                    if (minCount == 3 && min == 0) {
+                      if (controlRegions[0] == 0 && controlRegions[1] == 0 && controlRegions[2] == 0) {
+                        gridForPrunedNode = 1;
+                      } else if (controlRegions[0] == 0 && controlRegions[1] == 0 && controlRegions[3] == 0) {
+                        gridForPrunedNode = 0;
+                      } else if (controlRegions[0] == 0 && controlRegions[2] == 0 && controlRegions[3] == 0) {
+                        gridForPrunedNode = 3;
+                      } else if (controlRegions[1] == 0 && controlRegions[2] == 0 && controlRegions[3] == 0) {
+                        gridForPrunedNode = 2;
+                      }
+                    } else if (minCount == 2 && min == 0) {
+                      var random = Math.floor(Math.random() * 2);
+                      if (controlRegions[0] == 0 && controlRegions[1] == 0) {
+                        if (random == 0) {
+                          gridForPrunedNode = 0;
+                        } else {
+                          gridForPrunedNode = 1;
+                        }
+                      } else if (controlRegions[0] == 0 && controlRegions[2] == 0) {
+                        if (random == 0) {
+                          gridForPrunedNode = 0;
+                        } else {
+                          gridForPrunedNode = 2;
+                        }
+                      } else if (controlRegions[0] == 0 && controlRegions[3] == 0) {
+                        if (random == 0) {
+                          gridForPrunedNode = 0;
+                        } else {
+                          gridForPrunedNode = 3;
+                        }
+                      } else if (controlRegions[1] == 0 && controlRegions[2] == 0) {
+                        if (random == 0) {
+                          gridForPrunedNode = 1;
+                        } else {
+                          gridForPrunedNode = 2;
+                        }
+                      } else if (controlRegions[1] == 0 && controlRegions[3] == 0) {
+                        if (random == 0) {
+                          gridForPrunedNode = 1;
+                        } else {
+                          gridForPrunedNode = 3;
+                        }
+                      } else {
+                        if (random == 0) {
+                          gridForPrunedNode = 2;
+                        } else {
+                          gridForPrunedNode = 3;
+                        }
+                      }
+                    } else if (minCount == 4 && min == 0) {
+                      var random = Math.floor(Math.random() * 4);
+                      gridForPrunedNode = random;
+                    } else {
+                      gridForPrunedNode = minIndex;
+                    }
+                    if (gridForPrunedNode == 0) {
+                      prunedNode.setCenter(nodeToConnect.getCenterX(), nodeToConnect.getCenterY() - nodeToConnect.getHeight() / 2 - FDLayoutConstants.DEFAULT_EDGE_LENGTH - prunedNode.getHeight() / 2);
+                    } else if (gridForPrunedNode == 1) {
+                      prunedNode.setCenter(nodeToConnect.getCenterX() + nodeToConnect.getWidth() / 2 + FDLayoutConstants.DEFAULT_EDGE_LENGTH + prunedNode.getWidth() / 2, nodeToConnect.getCenterY());
+                    } else if (gridForPrunedNode == 2) {
+                      prunedNode.setCenter(nodeToConnect.getCenterX(), nodeToConnect.getCenterY() + nodeToConnect.getHeight() / 2 + FDLayoutConstants.DEFAULT_EDGE_LENGTH + prunedNode.getHeight() / 2);
+                    } else {
+                      prunedNode.setCenter(nodeToConnect.getCenterX() - nodeToConnect.getWidth() / 2 - FDLayoutConstants.DEFAULT_EDGE_LENGTH - prunedNode.getWidth() / 2, nodeToConnect.getCenterY());
+                    }
+                  }
+                };
+                module2.exports = CoSELayout;
+              })
+            ),
+            /***/
+            991: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var FDLayoutNode = __webpack_require__2(551).FDLayoutNode;
+                var IMath = __webpack_require__2(551).IMath;
+                function CoSENode(gm, loc, size, vNode) {
+                  FDLayoutNode.call(this, gm, loc, size, vNode);
+                }
+                CoSENode.prototype = Object.create(FDLayoutNode.prototype);
+                for (var prop in FDLayoutNode) {
+                  CoSENode[prop] = FDLayoutNode[prop];
+                }
+                CoSENode.prototype.calculateDisplacement = function() {
+                  var layout = this.graphManager.getLayout();
+                  if (this.getChild() != null && this.fixedNodeWeight) {
+                    this.displacementX += layout.coolingFactor * (this.springForceX + this.repulsionForceX + this.gravitationForceX) / this.fixedNodeWeight;
+                    this.displacementY += layout.coolingFactor * (this.springForceY + this.repulsionForceY + this.gravitationForceY) / this.fixedNodeWeight;
+                  } else {
+                    this.displacementX += layout.coolingFactor * (this.springForceX + this.repulsionForceX + this.gravitationForceX) / this.noOfChildren;
+                    this.displacementY += layout.coolingFactor * (this.springForceY + this.repulsionForceY + this.gravitationForceY) / this.noOfChildren;
+                  }
+                  if (Math.abs(this.displacementX) > layout.coolingFactor * layout.maxNodeDisplacement) {
+                    this.displacementX = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementX);
+                  }
+                  if (Math.abs(this.displacementY) > layout.coolingFactor * layout.maxNodeDisplacement) {
+                    this.displacementY = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementY);
+                  }
+                  if (this.child && this.child.getNodes().length > 0) {
+                    this.propogateDisplacementToChildren(this.displacementX, this.displacementY);
+                  }
+                };
+                CoSENode.prototype.propogateDisplacementToChildren = function(dX, dY) {
+                  var nodes = this.getChild().getNodes();
+                  var node;
+                  for (var i = 0; i < nodes.length; i++) {
+                    node = nodes[i];
+                    if (node.getChild() == null) {
+                      node.displacementX += dX;
+                      node.displacementY += dY;
+                    } else {
+                      node.propogateDisplacementToChildren(dX, dY);
+                    }
+                  }
+                };
+                CoSENode.prototype.move = function() {
+                  var layout = this.graphManager.getLayout();
+                  if (this.child == null || this.child.getNodes().length == 0) {
+                    this.moveBy(this.displacementX, this.displacementY);
+                    layout.totalDisplacement += Math.abs(this.displacementX) + Math.abs(this.displacementY);
+                  }
+                  this.springForceX = 0;
+                  this.springForceY = 0;
+                  this.repulsionForceX = 0;
+                  this.repulsionForceY = 0;
+                  this.gravitationForceX = 0;
+                  this.gravitationForceY = 0;
+                  this.displacementX = 0;
+                  this.displacementY = 0;
+                };
+                CoSENode.prototype.setPred1 = function(pred12) {
+                  this.pred1 = pred12;
+                };
+                CoSENode.prototype.getPred1 = function() {
+                  return pred1;
+                };
+                CoSENode.prototype.getPred2 = function() {
+                  return pred2;
+                };
+                CoSENode.prototype.setNext = function(next2) {
+                  this.next = next2;
+                };
+                CoSENode.prototype.getNext = function() {
+                  return next;
+                };
+                CoSENode.prototype.setProcessed = function(processed2) {
+                  this.processed = processed2;
+                };
+                CoSENode.prototype.isProcessed = function() {
+                  return processed;
+                };
+                module2.exports = CoSENode;
+              })
+            ),
+            /***/
+            902: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                function _toConsumableArray(arr) {
+                  if (Array.isArray(arr)) {
+                    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                      arr2[i] = arr[i];
+                    }
+                    return arr2;
+                  } else {
+                    return Array.from(arr);
+                  }
+                }
+                var CoSEConstants = __webpack_require__2(806);
+                var LinkedList = __webpack_require__2(551).LinkedList;
+                var Matrix = __webpack_require__2(551).Matrix;
+                var SVD = __webpack_require__2(551).SVD;
+                function ConstraintHandler() {
+                }
+                ConstraintHandler.handleConstraints = function(layout) {
+                  var constraints = {};
+                  constraints.fixedNodeConstraint = layout.constraints.fixedNodeConstraint;
+                  constraints.alignmentConstraint = layout.constraints.alignmentConstraint;
+                  constraints.relativePlacementConstraint = layout.constraints.relativePlacementConstraint;
+                  var idToNodeMap = /* @__PURE__ */ new Map();
+                  var nodeIndexes = /* @__PURE__ */ new Map();
+                  var xCoords = [];
+                  var yCoords = [];
+                  var allNodes = layout.getAllNodes();
+                  var index = 0;
+                  for (var i = 0; i < allNodes.length; i++) {
+                    var node = allNodes[i];
+                    if (node.getChild() == null) {
+                      nodeIndexes.set(node.id, index++);
+                      xCoords.push(node.getCenterX());
+                      yCoords.push(node.getCenterY());
+                      idToNodeMap.set(node.id, node);
+                    }
+                  }
+                  if (constraints.relativePlacementConstraint) {
+                    constraints.relativePlacementConstraint.forEach(function(constraint) {
+                      if (!constraint.gap && constraint.gap != 0) {
+                        if (constraint.left) {
+                          constraint.gap = CoSEConstants.DEFAULT_EDGE_LENGTH + idToNodeMap.get(constraint.left).getWidth() / 2 + idToNodeMap.get(constraint.right).getWidth() / 2;
+                        } else {
+                          constraint.gap = CoSEConstants.DEFAULT_EDGE_LENGTH + idToNodeMap.get(constraint.top).getHeight() / 2 + idToNodeMap.get(constraint.bottom).getHeight() / 2;
+                        }
+                      }
+                    });
+                  }
+                  var calculatePositionDiff = function calculatePositionDiff2(pos1, pos2) {
+                    return { x: pos1.x - pos2.x, y: pos1.y - pos2.y };
+                  };
+                  var calculateAvgPosition = function calculateAvgPosition2(nodeIdSet) {
+                    var xPosSum = 0;
+                    var yPosSum = 0;
+                    nodeIdSet.forEach(function(nodeId) {
+                      xPosSum += xCoords[nodeIndexes.get(nodeId)];
+                      yPosSum += yCoords[nodeIndexes.get(nodeId)];
+                    });
+                    return { x: xPosSum / nodeIdSet.size, y: yPosSum / nodeIdSet.size };
+                  };
+                  var findAppropriatePositionForRelativePlacement = function findAppropriatePositionForRelativePlacement2(graph, direction, fixedNodes2, dummyPositions, componentSources) {
+                    function setUnion(setA, setB) {
+                      var union = new Set(setA);
+                      var _iteratorNormalCompletion = true;
+                      var _didIteratorError = false;
+                      var _iteratorError = void 0;
+                      try {
+                        for (var _iterator = setB[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                          var elem = _step.value;
+                          union.add(elem);
+                        }
+                      } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                      } finally {
+                        try {
+                          if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                          }
+                        } finally {
+                          if (_didIteratorError) {
+                            throw _iteratorError;
+                          }
+                        }
+                      }
+                      return union;
+                    }
+                    var inDegrees = /* @__PURE__ */ new Map();
+                    graph.forEach(function(value, key) {
+                      inDegrees.set(key, 0);
+                    });
+                    graph.forEach(function(value, key) {
+                      value.forEach(function(adjacent) {
+                        inDegrees.set(adjacent.id, inDegrees.get(adjacent.id) + 1);
+                      });
+                    });
+                    var positionMap = /* @__PURE__ */ new Map();
+                    var pastMap = /* @__PURE__ */ new Map();
+                    var queue = new LinkedList();
+                    inDegrees.forEach(function(value, key) {
+                      if (value == 0) {
+                        queue.push(key);
+                        if (!fixedNodes2) {
+                          if (direction == "horizontal") {
+                            positionMap.set(key, nodeIndexes.has(key) ? xCoords[nodeIndexes.get(key)] : dummyPositions.get(key));
+                          } else {
+                            positionMap.set(key, nodeIndexes.has(key) ? yCoords[nodeIndexes.get(key)] : dummyPositions.get(key));
+                          }
+                        }
+                      } else {
+                        positionMap.set(key, Number.NEGATIVE_INFINITY);
+                      }
+                      if (fixedNodes2) {
+                        pastMap.set(key, /* @__PURE__ */ new Set([key]));
+                      }
+                    });
+                    if (fixedNodes2) {
+                      componentSources.forEach(function(component) {
+                        var fixedIds = [];
+                        component.forEach(function(nodeId) {
+                          if (fixedNodes2.has(nodeId)) {
+                            fixedIds.push(nodeId);
+                          }
+                        });
+                        if (fixedIds.length > 0) {
+                          var position = 0;
+                          fixedIds.forEach(function(fixedId) {
+                            if (direction == "horizontal") {
+                              positionMap.set(fixedId, nodeIndexes.has(fixedId) ? xCoords[nodeIndexes.get(fixedId)] : dummyPositions.get(fixedId));
+                              position += positionMap.get(fixedId);
+                            } else {
+                              positionMap.set(fixedId, nodeIndexes.has(fixedId) ? yCoords[nodeIndexes.get(fixedId)] : dummyPositions.get(fixedId));
+                              position += positionMap.get(fixedId);
+                            }
+                          });
+                          position = position / fixedIds.length;
+                          component.forEach(function(nodeId) {
+                            if (!fixedNodes2.has(nodeId)) {
+                              positionMap.set(nodeId, position);
+                            }
+                          });
+                        } else {
+                          var _position = 0;
+                          component.forEach(function(nodeId) {
+                            if (direction == "horizontal") {
+                              _position += nodeIndexes.has(nodeId) ? xCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+                            } else {
+                              _position += nodeIndexes.has(nodeId) ? yCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+                            }
+                          });
+                          _position = _position / component.length;
+                          component.forEach(function(nodeId) {
+                            positionMap.set(nodeId, _position);
+                          });
+                        }
+                      });
+                    }
+                    var _loop = function _loop2() {
+                      var currentNode = queue.shift();
+                      var neighbors = graph.get(currentNode);
+                      neighbors.forEach(function(neighbor) {
+                        if (positionMap.get(neighbor.id) < positionMap.get(currentNode) + neighbor.gap) {
+                          if (fixedNodes2 && fixedNodes2.has(neighbor.id)) {
+                            var fixedPosition = void 0;
+                            if (direction == "horizontal") {
+                              fixedPosition = nodeIndexes.has(neighbor.id) ? xCoords[nodeIndexes.get(neighbor.id)] : dummyPositions.get(neighbor.id);
+                            } else {
+                              fixedPosition = nodeIndexes.has(neighbor.id) ? yCoords[nodeIndexes.get(neighbor.id)] : dummyPositions.get(neighbor.id);
+                            }
+                            positionMap.set(neighbor.id, fixedPosition);
+                            if (fixedPosition < positionMap.get(currentNode) + neighbor.gap) {
+                              var diff = positionMap.get(currentNode) + neighbor.gap - fixedPosition;
+                              pastMap.get(currentNode).forEach(function(nodeId) {
+                                positionMap.set(nodeId, positionMap.get(nodeId) - diff);
+                              });
+                            }
+                          } else {
+                            positionMap.set(neighbor.id, positionMap.get(currentNode) + neighbor.gap);
+                          }
+                        }
+                        inDegrees.set(neighbor.id, inDegrees.get(neighbor.id) - 1);
+                        if (inDegrees.get(neighbor.id) == 0) {
+                          queue.push(neighbor.id);
+                        }
+                        if (fixedNodes2) {
+                          pastMap.set(neighbor.id, setUnion(pastMap.get(currentNode), pastMap.get(neighbor.id)));
+                        }
+                      });
+                    };
+                    while (queue.length != 0) {
+                      _loop();
+                    }
+                    if (fixedNodes2) {
+                      var sinkNodes = /* @__PURE__ */ new Set();
+                      graph.forEach(function(value, key) {
+                        if (value.length == 0) {
+                          sinkNodes.add(key);
+                        }
+                      });
+                      var _components = [];
+                      pastMap.forEach(function(value, key) {
+                        if (sinkNodes.has(key)) {
+                          var isFixedComponent = false;
+                          var _iteratorNormalCompletion2 = true;
+                          var _didIteratorError2 = false;
+                          var _iteratorError2 = void 0;
+                          try {
+                            for (var _iterator2 = value[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                              var nodeId = _step2.value;
+                              if (fixedNodes2.has(nodeId)) {
+                                isFixedComponent = true;
+                              }
+                            }
+                          } catch (err) {
+                            _didIteratorError2 = true;
+                            _iteratorError2 = err;
+                          } finally {
+                            try {
+                              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                              }
+                            } finally {
+                              if (_didIteratorError2) {
+                                throw _iteratorError2;
+                              }
+                            }
+                          }
+                          if (!isFixedComponent) {
+                            var isExist = false;
+                            var existAt = void 0;
+                            _components.forEach(function(component, index2) {
+                              if (component.has([].concat(_toConsumableArray(value))[0])) {
+                                isExist = true;
+                                existAt = index2;
+                              }
+                            });
+                            if (!isExist) {
+                              _components.push(new Set(value));
+                            } else {
+                              value.forEach(function(ele) {
+                                _components[existAt].add(ele);
+                              });
+                            }
+                          }
+                        }
+                      });
+                      _components.forEach(function(component, index2) {
+                        var minBefore = Number.POSITIVE_INFINITY;
+                        var minAfter = Number.POSITIVE_INFINITY;
+                        var maxBefore = Number.NEGATIVE_INFINITY;
+                        var maxAfter = Number.NEGATIVE_INFINITY;
+                        var _iteratorNormalCompletion3 = true;
+                        var _didIteratorError3 = false;
+                        var _iteratorError3 = void 0;
+                        try {
+                          for (var _iterator3 = component[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                            var nodeId = _step3.value;
+                            var posBefore = void 0;
+                            if (direction == "horizontal") {
+                              posBefore = nodeIndexes.has(nodeId) ? xCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+                            } else {
+                              posBefore = nodeIndexes.has(nodeId) ? yCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+                            }
+                            var posAfter = positionMap.get(nodeId);
+                            if (posBefore < minBefore) {
+                              minBefore = posBefore;
+                            }
+                            if (posBefore > maxBefore) {
+                              maxBefore = posBefore;
+                            }
+                            if (posAfter < minAfter) {
+                              minAfter = posAfter;
+                            }
+                            if (posAfter > maxAfter) {
+                              maxAfter = posAfter;
+                            }
+                          }
+                        } catch (err) {
+                          _didIteratorError3 = true;
+                          _iteratorError3 = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                              _iterator3.return();
+                            }
+                          } finally {
+                            if (_didIteratorError3) {
+                              throw _iteratorError3;
+                            }
+                          }
+                        }
+                        var diff = (minBefore + maxBefore) / 2 - (minAfter + maxAfter) / 2;
+                        var _iteratorNormalCompletion4 = true;
+                        var _didIteratorError4 = false;
+                        var _iteratorError4 = void 0;
+                        try {
+                          for (var _iterator4 = component[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                            var _nodeId = _step4.value;
+                            positionMap.set(_nodeId, positionMap.get(_nodeId) + diff);
+                          }
+                        } catch (err) {
+                          _didIteratorError4 = true;
+                          _iteratorError4 = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                              _iterator4.return();
+                            }
+                          } finally {
+                            if (_didIteratorError4) {
+                              throw _iteratorError4;
+                            }
+                          }
+                        }
+                      });
+                    }
+                    return positionMap;
+                  };
+                  var applyReflectionForRelativePlacement = function applyReflectionForRelativePlacement2(relativePlacementConstraints) {
+                    var reflectOnY = 0, notReflectOnY = 0;
+                    var reflectOnX = 0, notReflectOnX = 0;
+                    relativePlacementConstraints.forEach(function(constraint) {
+                      if (constraint.left) {
+                        xCoords[nodeIndexes.get(constraint.left)] - xCoords[nodeIndexes.get(constraint.right)] >= 0 ? reflectOnY++ : notReflectOnY++;
+                      } else {
+                        yCoords[nodeIndexes.get(constraint.top)] - yCoords[nodeIndexes.get(constraint.bottom)] >= 0 ? reflectOnX++ : notReflectOnX++;
+                      }
+                    });
+                    if (reflectOnY > notReflectOnY && reflectOnX > notReflectOnX) {
+                      for (var _i = 0; _i < nodeIndexes.size; _i++) {
+                        xCoords[_i] = -1 * xCoords[_i];
+                        yCoords[_i] = -1 * yCoords[_i];
+                      }
+                    } else if (reflectOnY > notReflectOnY) {
+                      for (var _i2 = 0; _i2 < nodeIndexes.size; _i2++) {
+                        xCoords[_i2] = -1 * xCoords[_i2];
+                      }
+                    } else if (reflectOnX > notReflectOnX) {
+                      for (var _i3 = 0; _i3 < nodeIndexes.size; _i3++) {
+                        yCoords[_i3] = -1 * yCoords[_i3];
+                      }
+                    }
+                  };
+                  var findComponents = function findComponents2(graph) {
+                    var components2 = [];
+                    var queue = new LinkedList();
+                    var visited = /* @__PURE__ */ new Set();
+                    var count = 0;
+                    graph.forEach(function(value, key) {
+                      if (!visited.has(key)) {
+                        components2[count] = [];
+                        var _currentNode = key;
+                        queue.push(_currentNode);
+                        visited.add(_currentNode);
+                        components2[count].push(_currentNode);
+                        while (queue.length != 0) {
+                          _currentNode = queue.shift();
+                          var neighbors = graph.get(_currentNode);
+                          neighbors.forEach(function(neighbor) {
+                            if (!visited.has(neighbor.id)) {
+                              queue.push(neighbor.id);
+                              visited.add(neighbor.id);
+                              components2[count].push(neighbor.id);
+                            }
+                          });
+                        }
+                        count++;
+                      }
+                    });
+                    return components2;
+                  };
+                  var dagToUndirected = function dagToUndirected2(dag2) {
+                    var undirected = /* @__PURE__ */ new Map();
+                    dag2.forEach(function(value, key) {
+                      undirected.set(key, []);
+                    });
+                    dag2.forEach(function(value, key) {
+                      value.forEach(function(adjacent) {
+                        undirected.get(key).push(adjacent);
+                        undirected.get(adjacent.id).push({ id: key, gap: adjacent.gap, direction: adjacent.direction });
+                      });
+                    });
+                    return undirected;
+                  };
+                  var dagToReversed = function dagToReversed2(dag2) {
+                    var reversed = /* @__PURE__ */ new Map();
+                    dag2.forEach(function(value, key) {
+                      reversed.set(key, []);
+                    });
+                    dag2.forEach(function(value, key) {
+                      value.forEach(function(adjacent) {
+                        reversed.get(adjacent.id).push({ id: key, gap: adjacent.gap, direction: adjacent.direction });
+                      });
+                    });
+                    return reversed;
+                  };
+                  var targetMatrix = [];
+                  var sourceMatrix = [];
+                  var standardTransformation = false;
+                  var reflectionType = false;
+                  var fixedNodes = /* @__PURE__ */ new Set();
+                  var dag = /* @__PURE__ */ new Map();
+                  var dagUndirected = /* @__PURE__ */ new Map();
+                  var components = [];
+                  if (constraints.fixedNodeConstraint) {
+                    constraints.fixedNodeConstraint.forEach(function(nodeData2) {
+                      fixedNodes.add(nodeData2.nodeId);
+                    });
+                  }
+                  if (constraints.relativePlacementConstraint) {
+                    constraints.relativePlacementConstraint.forEach(function(constraint) {
+                      if (constraint.left) {
+                        if (dag.has(constraint.left)) {
+                          dag.get(constraint.left).push({ id: constraint.right, gap: constraint.gap, direction: "horizontal" });
+                        } else {
+                          dag.set(constraint.left, [{ id: constraint.right, gap: constraint.gap, direction: "horizontal" }]);
+                        }
+                        if (!dag.has(constraint.right)) {
+                          dag.set(constraint.right, []);
+                        }
+                      } else {
+                        if (dag.has(constraint.top)) {
+                          dag.get(constraint.top).push({ id: constraint.bottom, gap: constraint.gap, direction: "vertical" });
+                        } else {
+                          dag.set(constraint.top, [{ id: constraint.bottom, gap: constraint.gap, direction: "vertical" }]);
+                        }
+                        if (!dag.has(constraint.bottom)) {
+                          dag.set(constraint.bottom, []);
+                        }
+                      }
+                    });
+                    dagUndirected = dagToUndirected(dag);
+                    components = findComponents(dagUndirected);
+                  }
+                  if (CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING) {
+                    if (constraints.fixedNodeConstraint && constraints.fixedNodeConstraint.length > 1) {
+                      constraints.fixedNodeConstraint.forEach(function(nodeData2, i2) {
+                        targetMatrix[i2] = [nodeData2.position.x, nodeData2.position.y];
+                        sourceMatrix[i2] = [xCoords[nodeIndexes.get(nodeData2.nodeId)], yCoords[nodeIndexes.get(nodeData2.nodeId)]];
+                      });
+                      standardTransformation = true;
+                    } else if (constraints.alignmentConstraint) {
+                      (function() {
+                        var count = 0;
+                        if (constraints.alignmentConstraint.vertical) {
+                          var verticalAlign = constraints.alignmentConstraint.vertical;
+                          var _loop2 = function _loop22(_i42) {
+                            var alignmentSet = /* @__PURE__ */ new Set();
+                            verticalAlign[_i42].forEach(function(nodeId) {
+                              alignmentSet.add(nodeId);
+                            });
+                            var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function(x) {
+                              return fixedNodes.has(x);
+                            }));
+                            var xPos = void 0;
+                            if (intersection.size > 0) xPos = xCoords[nodeIndexes.get(intersection.values().next().value)];
+                            else xPos = calculateAvgPosition(alignmentSet).x;
+                            verticalAlign[_i42].forEach(function(nodeId) {
+                              targetMatrix[count] = [xPos, yCoords[nodeIndexes.get(nodeId)]];
+                              sourceMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+                              count++;
+                            });
+                          };
+                          for (var _i4 = 0; _i4 < verticalAlign.length; _i4++) {
+                            _loop2(_i4);
+                          }
+                          standardTransformation = true;
+                        }
+                        if (constraints.alignmentConstraint.horizontal) {
+                          var horizontalAlign = constraints.alignmentConstraint.horizontal;
+                          var _loop3 = function _loop32(_i52) {
+                            var alignmentSet = /* @__PURE__ */ new Set();
+                            horizontalAlign[_i52].forEach(function(nodeId) {
+                              alignmentSet.add(nodeId);
+                            });
+                            var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function(x) {
+                              return fixedNodes.has(x);
+                            }));
+                            var yPos = void 0;
+                            if (intersection.size > 0) yPos = xCoords[nodeIndexes.get(intersection.values().next().value)];
+                            else yPos = calculateAvgPosition(alignmentSet).y;
+                            horizontalAlign[_i52].forEach(function(nodeId) {
+                              targetMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yPos];
+                              sourceMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+                              count++;
+                            });
+                          };
+                          for (var _i5 = 0; _i5 < horizontalAlign.length; _i5++) {
+                            _loop3(_i5);
+                          }
+                          standardTransformation = true;
+                        }
+                        if (constraints.relativePlacementConstraint) {
+                          reflectionType = true;
+                        }
+                      })();
+                    } else if (constraints.relativePlacementConstraint) {
+                      var largestComponentSize = 0;
+                      var largestComponentIndex = 0;
+                      for (var _i6 = 0; _i6 < components.length; _i6++) {
+                        if (components[_i6].length > largestComponentSize) {
+                          largestComponentSize = components[_i6].length;
+                          largestComponentIndex = _i6;
+                        }
+                      }
+                      if (largestComponentSize < dagUndirected.size / 2) {
+                        applyReflectionForRelativePlacement(constraints.relativePlacementConstraint);
+                        standardTransformation = false;
+                        reflectionType = false;
+                      } else {
+                        var subGraphOnHorizontal = /* @__PURE__ */ new Map();
+                        var subGraphOnVertical = /* @__PURE__ */ new Map();
+                        var constraintsInlargestComponent = [];
+                        components[largestComponentIndex].forEach(function(nodeId) {
+                          dag.get(nodeId).forEach(function(adjacent) {
+                            if (adjacent.direction == "horizontal") {
+                              if (subGraphOnHorizontal.has(nodeId)) {
+                                subGraphOnHorizontal.get(nodeId).push(adjacent);
+                              } else {
+                                subGraphOnHorizontal.set(nodeId, [adjacent]);
+                              }
+                              if (!subGraphOnHorizontal.has(adjacent.id)) {
+                                subGraphOnHorizontal.set(adjacent.id, []);
+                              }
+                              constraintsInlargestComponent.push({ left: nodeId, right: adjacent.id });
+                            } else {
+                              if (subGraphOnVertical.has(nodeId)) {
+                                subGraphOnVertical.get(nodeId).push(adjacent);
+                              } else {
+                                subGraphOnVertical.set(nodeId, [adjacent]);
+                              }
+                              if (!subGraphOnVertical.has(adjacent.id)) {
+                                subGraphOnVertical.set(adjacent.id, []);
+                              }
+                              constraintsInlargestComponent.push({ top: nodeId, bottom: adjacent.id });
+                            }
+                          });
+                        });
+                        applyReflectionForRelativePlacement(constraintsInlargestComponent);
+                        reflectionType = false;
+                        var positionMapHorizontal = findAppropriatePositionForRelativePlacement(subGraphOnHorizontal, "horizontal");
+                        var positionMapVertical = findAppropriatePositionForRelativePlacement(subGraphOnVertical, "vertical");
+                        components[largestComponentIndex].forEach(function(nodeId, i2) {
+                          sourceMatrix[i2] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+                          targetMatrix[i2] = [];
+                          if (positionMapHorizontal.has(nodeId)) {
+                            targetMatrix[i2][0] = positionMapHorizontal.get(nodeId);
+                          } else {
+                            targetMatrix[i2][0] = xCoords[nodeIndexes.get(nodeId)];
+                          }
+                          if (positionMapVertical.has(nodeId)) {
+                            targetMatrix[i2][1] = positionMapVertical.get(nodeId);
+                          } else {
+                            targetMatrix[i2][1] = yCoords[nodeIndexes.get(nodeId)];
+                          }
+                        });
+                        standardTransformation = true;
+                      }
+                    }
+                    if (standardTransformation) {
+                      var transformationMatrix = void 0;
+                      var targetMatrixTranspose = Matrix.transpose(targetMatrix);
+                      var sourceMatrixTranspose = Matrix.transpose(sourceMatrix);
+                      for (var _i7 = 0; _i7 < targetMatrixTranspose.length; _i7++) {
+                        targetMatrixTranspose[_i7] = Matrix.multGamma(targetMatrixTranspose[_i7]);
+                        sourceMatrixTranspose[_i7] = Matrix.multGamma(sourceMatrixTranspose[_i7]);
+                      }
+                      var tempMatrix = Matrix.multMat(targetMatrixTranspose, Matrix.transpose(sourceMatrixTranspose));
+                      var SVDResult = SVD.svd(tempMatrix);
+                      transformationMatrix = Matrix.multMat(SVDResult.V, Matrix.transpose(SVDResult.U));
+                      for (var _i8 = 0; _i8 < nodeIndexes.size; _i8++) {
+                        var temp1 = [xCoords[_i8], yCoords[_i8]];
+                        var temp2 = [transformationMatrix[0][0], transformationMatrix[1][0]];
+                        var temp3 = [transformationMatrix[0][1], transformationMatrix[1][1]];
+                        xCoords[_i8] = Matrix.dotProduct(temp1, temp2);
+                        yCoords[_i8] = Matrix.dotProduct(temp1, temp3);
+                      }
+                      if (reflectionType) {
+                        applyReflectionForRelativePlacement(constraints.relativePlacementConstraint);
+                      }
+                    }
+                  }
+                  if (CoSEConstants.ENFORCE_CONSTRAINTS) {
+                    if (constraints.fixedNodeConstraint && constraints.fixedNodeConstraint.length > 0) {
+                      var translationAmount = { x: 0, y: 0 };
+                      constraints.fixedNodeConstraint.forEach(function(nodeData2, i2) {
+                        var posInTheory = { x: xCoords[nodeIndexes.get(nodeData2.nodeId)], y: yCoords[nodeIndexes.get(nodeData2.nodeId)] };
+                        var posDesired = nodeData2.position;
+                        var posDiff = calculatePositionDiff(posDesired, posInTheory);
+                        translationAmount.x += posDiff.x;
+                        translationAmount.y += posDiff.y;
+                      });
+                      translationAmount.x /= constraints.fixedNodeConstraint.length;
+                      translationAmount.y /= constraints.fixedNodeConstraint.length;
+                      xCoords.forEach(function(value, i2) {
+                        xCoords[i2] += translationAmount.x;
+                      });
+                      yCoords.forEach(function(value, i2) {
+                        yCoords[i2] += translationAmount.y;
+                      });
+                      constraints.fixedNodeConstraint.forEach(function(nodeData2) {
+                        xCoords[nodeIndexes.get(nodeData2.nodeId)] = nodeData2.position.x;
+                        yCoords[nodeIndexes.get(nodeData2.nodeId)] = nodeData2.position.y;
+                      });
+                    }
+                    if (constraints.alignmentConstraint) {
+                      if (constraints.alignmentConstraint.vertical) {
+                        var xAlign = constraints.alignmentConstraint.vertical;
+                        var _loop4 = function _loop42(_i92) {
+                          var alignmentSet = /* @__PURE__ */ new Set();
+                          xAlign[_i92].forEach(function(nodeId) {
+                            alignmentSet.add(nodeId);
+                          });
+                          var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function(x) {
+                            return fixedNodes.has(x);
+                          }));
+                          var xPos = void 0;
+                          if (intersection.size > 0) xPos = xCoords[nodeIndexes.get(intersection.values().next().value)];
+                          else xPos = calculateAvgPosition(alignmentSet).x;
+                          alignmentSet.forEach(function(nodeId) {
+                            if (!fixedNodes.has(nodeId)) xCoords[nodeIndexes.get(nodeId)] = xPos;
+                          });
+                        };
+                        for (var _i9 = 0; _i9 < xAlign.length; _i9++) {
+                          _loop4(_i9);
+                        }
+                      }
+                      if (constraints.alignmentConstraint.horizontal) {
+                        var yAlign = constraints.alignmentConstraint.horizontal;
+                        var _loop5 = function _loop52(_i102) {
+                          var alignmentSet = /* @__PURE__ */ new Set();
+                          yAlign[_i102].forEach(function(nodeId) {
+                            alignmentSet.add(nodeId);
+                          });
+                          var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function(x) {
+                            return fixedNodes.has(x);
+                          }));
+                          var yPos = void 0;
+                          if (intersection.size > 0) yPos = yCoords[nodeIndexes.get(intersection.values().next().value)];
+                          else yPos = calculateAvgPosition(alignmentSet).y;
+                          alignmentSet.forEach(function(nodeId) {
+                            if (!fixedNodes.has(nodeId)) yCoords[nodeIndexes.get(nodeId)] = yPos;
+                          });
+                        };
+                        for (var _i10 = 0; _i10 < yAlign.length; _i10++) {
+                          _loop5(_i10);
+                        }
+                      }
+                    }
+                    if (constraints.relativePlacementConstraint) {
+                      (function() {
+                        var nodeToDummyForVerticalAlignment = /* @__PURE__ */ new Map();
+                        var nodeToDummyForHorizontalAlignment = /* @__PURE__ */ new Map();
+                        var dummyToNodeForVerticalAlignment = /* @__PURE__ */ new Map();
+                        var dummyToNodeForHorizontalAlignment = /* @__PURE__ */ new Map();
+                        var dummyPositionsForVerticalAlignment = /* @__PURE__ */ new Map();
+                        var dummyPositionsForHorizontalAlignment = /* @__PURE__ */ new Map();
+                        var fixedNodesOnHorizontal = /* @__PURE__ */ new Set();
+                        var fixedNodesOnVertical = /* @__PURE__ */ new Set();
+                        fixedNodes.forEach(function(nodeId2) {
+                          fixedNodesOnHorizontal.add(nodeId2);
+                          fixedNodesOnVertical.add(nodeId2);
+                        });
+                        if (constraints.alignmentConstraint) {
+                          if (constraints.alignmentConstraint.vertical) {
+                            var verticalAlignment = constraints.alignmentConstraint.vertical;
+                            var _loop6 = function _loop62(_i112) {
+                              dummyToNodeForVerticalAlignment.set("dummy" + _i112, []);
+                              verticalAlignment[_i112].forEach(function(nodeId2) {
+                                nodeToDummyForVerticalAlignment.set(nodeId2, "dummy" + _i112);
+                                dummyToNodeForVerticalAlignment.get("dummy" + _i112).push(nodeId2);
+                                if (fixedNodes.has(nodeId2)) {
+                                  fixedNodesOnHorizontal.add("dummy" + _i112);
+                                }
+                              });
+                              dummyPositionsForVerticalAlignment.set("dummy" + _i112, xCoords[nodeIndexes.get(verticalAlignment[_i112][0])]);
+                            };
+                            for (var _i11 = 0; _i11 < verticalAlignment.length; _i11++) {
+                              _loop6(_i11);
+                            }
+                          }
+                          if (constraints.alignmentConstraint.horizontal) {
+                            var horizontalAlignment = constraints.alignmentConstraint.horizontal;
+                            var _loop7 = function _loop72(_i122) {
+                              dummyToNodeForHorizontalAlignment.set("dummy" + _i122, []);
+                              horizontalAlignment[_i122].forEach(function(nodeId2) {
+                                nodeToDummyForHorizontalAlignment.set(nodeId2, "dummy" + _i122);
+                                dummyToNodeForHorizontalAlignment.get("dummy" + _i122).push(nodeId2);
+                                if (fixedNodes.has(nodeId2)) {
+                                  fixedNodesOnVertical.add("dummy" + _i122);
+                                }
+                              });
+                              dummyPositionsForHorizontalAlignment.set("dummy" + _i122, yCoords[nodeIndexes.get(horizontalAlignment[_i122][0])]);
+                            };
+                            for (var _i12 = 0; _i12 < horizontalAlignment.length; _i12++) {
+                              _loop7(_i12);
+                            }
+                          }
+                        }
+                        var dagOnHorizontal = /* @__PURE__ */ new Map();
+                        var dagOnVertical = /* @__PURE__ */ new Map();
+                        var _loop8 = function _loop82(nodeId2) {
+                          dag.get(nodeId2).forEach(function(adjacent) {
+                            var sourceId = void 0;
+                            var targetNode = void 0;
+                            if (adjacent["direction"] == "horizontal") {
+                              sourceId = nodeToDummyForVerticalAlignment.get(nodeId2) ? nodeToDummyForVerticalAlignment.get(nodeId2) : nodeId2;
+                              if (nodeToDummyForVerticalAlignment.get(adjacent.id)) {
+                                targetNode = { id: nodeToDummyForVerticalAlignment.get(adjacent.id), gap: adjacent.gap, direction: adjacent.direction };
+                              } else {
+                                targetNode = adjacent;
+                              }
+                              if (dagOnHorizontal.has(sourceId)) {
+                                dagOnHorizontal.get(sourceId).push(targetNode);
+                              } else {
+                                dagOnHorizontal.set(sourceId, [targetNode]);
+                              }
+                              if (!dagOnHorizontal.has(targetNode.id)) {
+                                dagOnHorizontal.set(targetNode.id, []);
+                              }
+                            } else {
+                              sourceId = nodeToDummyForHorizontalAlignment.get(nodeId2) ? nodeToDummyForHorizontalAlignment.get(nodeId2) : nodeId2;
+                              if (nodeToDummyForHorizontalAlignment.get(adjacent.id)) {
+                                targetNode = { id: nodeToDummyForHorizontalAlignment.get(adjacent.id), gap: adjacent.gap, direction: adjacent.direction };
+                              } else {
+                                targetNode = adjacent;
+                              }
+                              if (dagOnVertical.has(sourceId)) {
+                                dagOnVertical.get(sourceId).push(targetNode);
+                              } else {
+                                dagOnVertical.set(sourceId, [targetNode]);
+                              }
+                              if (!dagOnVertical.has(targetNode.id)) {
+                                dagOnVertical.set(targetNode.id, []);
+                              }
+                            }
+                          });
+                        };
+                        var _iteratorNormalCompletion5 = true;
+                        var _didIteratorError5 = false;
+                        var _iteratorError5 = void 0;
+                        try {
+                          for (var _iterator5 = dag.keys()[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                            var nodeId = _step5.value;
+                            _loop8(nodeId);
+                          }
+                        } catch (err) {
+                          _didIteratorError5 = true;
+                          _iteratorError5 = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                              _iterator5.return();
+                            }
+                          } finally {
+                            if (_didIteratorError5) {
+                              throw _iteratorError5;
+                            }
+                          }
+                        }
+                        var undirectedOnHorizontal = dagToUndirected(dagOnHorizontal);
+                        var undirectedOnVertical = dagToUndirected(dagOnVertical);
+                        var componentsOnHorizontal = findComponents(undirectedOnHorizontal);
+                        var componentsOnVertical = findComponents(undirectedOnVertical);
+                        var reversedDagOnHorizontal = dagToReversed(dagOnHorizontal);
+                        var reversedDagOnVertical = dagToReversed(dagOnVertical);
+                        var componentSourcesOnHorizontal = [];
+                        var componentSourcesOnVertical = [];
+                        componentsOnHorizontal.forEach(function(component, index2) {
+                          componentSourcesOnHorizontal[index2] = [];
+                          component.forEach(function(nodeId2) {
+                            if (reversedDagOnHorizontal.get(nodeId2).length == 0) {
+                              componentSourcesOnHorizontal[index2].push(nodeId2);
+                            }
+                          });
+                        });
+                        componentsOnVertical.forEach(function(component, index2) {
+                          componentSourcesOnVertical[index2] = [];
+                          component.forEach(function(nodeId2) {
+                            if (reversedDagOnVertical.get(nodeId2).length == 0) {
+                              componentSourcesOnVertical[index2].push(nodeId2);
+                            }
+                          });
+                        });
+                        var positionMapHorizontal2 = findAppropriatePositionForRelativePlacement(dagOnHorizontal, "horizontal", fixedNodesOnHorizontal, dummyPositionsForVerticalAlignment, componentSourcesOnHorizontal);
+                        var positionMapVertical2 = findAppropriatePositionForRelativePlacement(dagOnVertical, "vertical", fixedNodesOnVertical, dummyPositionsForHorizontalAlignment, componentSourcesOnVertical);
+                        var _loop9 = function _loop92(key2) {
+                          if (dummyToNodeForVerticalAlignment.get(key2)) {
+                            dummyToNodeForVerticalAlignment.get(key2).forEach(function(nodeId2) {
+                              xCoords[nodeIndexes.get(nodeId2)] = positionMapHorizontal2.get(key2);
+                            });
+                          } else {
+                            xCoords[nodeIndexes.get(key2)] = positionMapHorizontal2.get(key2);
+                          }
+                        };
+                        var _iteratorNormalCompletion6 = true;
+                        var _didIteratorError6 = false;
+                        var _iteratorError6 = void 0;
+                        try {
+                          for (var _iterator6 = positionMapHorizontal2.keys()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                            var key = _step6.value;
+                            _loop9(key);
+                          }
+                        } catch (err) {
+                          _didIteratorError6 = true;
+                          _iteratorError6 = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                              _iterator6.return();
+                            }
+                          } finally {
+                            if (_didIteratorError6) {
+                              throw _iteratorError6;
+                            }
+                          }
+                        }
+                        var _loop10 = function _loop102(key2) {
+                          if (dummyToNodeForHorizontalAlignment.get(key2)) {
+                            dummyToNodeForHorizontalAlignment.get(key2).forEach(function(nodeId2) {
+                              yCoords[nodeIndexes.get(nodeId2)] = positionMapVertical2.get(key2);
+                            });
+                          } else {
+                            yCoords[nodeIndexes.get(key2)] = positionMapVertical2.get(key2);
+                          }
+                        };
+                        var _iteratorNormalCompletion7 = true;
+                        var _didIteratorError7 = false;
+                        var _iteratorError7 = void 0;
+                        try {
+                          for (var _iterator7 = positionMapVertical2.keys()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                            var key = _step7.value;
+                            _loop10(key);
+                          }
+                        } catch (err) {
+                          _didIteratorError7 = true;
+                          _iteratorError7 = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                              _iterator7.return();
+                            }
+                          } finally {
+                            if (_didIteratorError7) {
+                              throw _iteratorError7;
+                            }
+                          }
+                        }
+                      })();
+                    }
+                  }
+                  for (var _i13 = 0; _i13 < allNodes.length; _i13++) {
+                    var _node = allNodes[_i13];
+                    if (_node.getChild() == null) {
+                      _node.setCenter(xCoords[nodeIndexes.get(_node.id)], yCoords[nodeIndexes.get(_node.id)]);
+                    }
+                  }
+                };
+                module2.exports = ConstraintHandler;
+              })
+            ),
+            /***/
+            551: (
+              /***/
+              ((module2) => {
+                module2.exports = __WEBPACK_EXTERNAL_MODULE__551__;
+              })
+            )
+            /******/
+          };
+          var __webpack_module_cache__ = {};
+          function __webpack_require__(moduleId) {
+            var cachedModule = __webpack_module_cache__[moduleId];
+            if (cachedModule !== void 0) {
+              return cachedModule.exports;
+            }
+            var module2 = __webpack_module_cache__[moduleId] = {
+              /******/
+              // no module.id needed
+              /******/
+              // no module.loaded needed
+              /******/
+              exports: {}
+              /******/
+            };
+            __webpack_modules__[moduleId](module2, module2.exports, __webpack_require__);
+            return module2.exports;
+          }
+          var __webpack_exports__ = __webpack_require__(45);
+          return __webpack_exports__;
+        })()
+      );
+    });
+  })(coseBase$1);
+  return coseBase$1.exports;
+}
+var cytoscapeFcose = cytoscapeFcose$1.exports;
+var hasRequiredCytoscapeFcose;
+function requireCytoscapeFcose() {
+  if (hasRequiredCytoscapeFcose) return cytoscapeFcose$1.exports;
+  hasRequiredCytoscapeFcose = 1;
+  (function(module, exports) {
+    (function webpackUniversalModuleDefinition(root, factory) {
+      module.exports = factory(requireCoseBase());
+    })(cytoscapeFcose, function(__WEBPACK_EXTERNAL_MODULE__140__) {
+      return (
+        /******/
+        (() => {
+          var __webpack_modules__ = {
+            /***/
+            658: (
+              /***/
+              ((module2) => {
+                module2.exports = Object.assign != null ? Object.assign.bind(Object) : function(tgt) {
+                  for (var _len = arguments.length, srcs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                    srcs[_key - 1] = arguments[_key];
+                  }
+                  srcs.forEach(function(src) {
+                    Object.keys(src).forEach(function(k) {
+                      return tgt[k] = src[k];
+                    });
+                  });
+                  return tgt;
+                };
+              })
+            ),
+            /***/
+            548: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var _slicedToArray = /* @__PURE__ */ (function() {
+                  function sliceIterator(arr, i) {
+                    var _arr = [];
+                    var _n = true;
+                    var _d = false;
+                    var _e = void 0;
+                    try {
+                      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+                        _arr.push(_s.value);
+                        if (i && _arr.length === i) break;
+                      }
+                    } catch (err) {
+                      _d = true;
+                      _e = err;
+                    } finally {
+                      try {
+                        if (!_n && _i["return"]) _i["return"]();
+                      } finally {
+                        if (_d) throw _e;
+                      }
+                    }
+                    return _arr;
+                  }
+                  return function(arr, i) {
+                    if (Array.isArray(arr)) {
+                      return arr;
+                    } else if (Symbol.iterator in Object(arr)) {
+                      return sliceIterator(arr, i);
+                    } else {
+                      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+                    }
+                  };
+                })();
+                var LinkedList = __webpack_require__2(140).layoutBase.LinkedList;
+                var auxiliary = {};
+                auxiliary.getTopMostNodes = function(nodes) {
+                  var nodesMap = {};
+                  for (var i = 0; i < nodes.length; i++) {
+                    nodesMap[nodes[i].id()] = true;
+                  }
+                  var roots = nodes.filter(function(ele, i2) {
+                    if (typeof ele === "number") {
+                      ele = i2;
+                    }
+                    var parent = ele.parent()[0];
+                    while (parent != null) {
+                      if (nodesMap[parent.id()]) {
+                        return false;
+                      }
+                      parent = parent.parent()[0];
+                    }
+                    return true;
+                  });
+                  return roots;
+                };
+                auxiliary.connectComponents = function(cy, eles, topMostNodes, dummyNodes) {
+                  var queue = new LinkedList();
+                  var visited = /* @__PURE__ */ new Set();
+                  var visitedTopMostNodes = [];
+                  var currentNeighbor = void 0;
+                  var minDegreeNode = void 0;
+                  var minDegree = void 0;
+                  var isConnected = false;
+                  var count = 1;
+                  var nodesConnectedToDummy = [];
+                  var components = [];
+                  var _loop = function _loop2() {
+                    var cmpt = cy.collection();
+                    components.push(cmpt);
+                    var currentNode = topMostNodes[0];
+                    var childrenOfCurrentNode = cy.collection();
+                    childrenOfCurrentNode.merge(currentNode).merge(currentNode.descendants().intersection(eles));
+                    visitedTopMostNodes.push(currentNode);
+                    childrenOfCurrentNode.forEach(function(node) {
+                      queue.push(node);
+                      visited.add(node);
+                      cmpt.merge(node);
+                    });
+                    var _loop22 = function _loop23() {
+                      currentNode = queue.shift();
+                      var neighborNodes = cy.collection();
+                      currentNode.neighborhood().nodes().forEach(function(node) {
+                        if (eles.intersection(currentNode.edgesWith(node)).length > 0) {
+                          neighborNodes.merge(node);
+                        }
+                      });
+                      for (var i = 0; i < neighborNodes.length; i++) {
+                        var neighborNode = neighborNodes[i];
+                        currentNeighbor = topMostNodes.intersection(neighborNode.union(neighborNode.ancestors()));
+                        if (currentNeighbor != null && !visited.has(currentNeighbor[0])) {
+                          var childrenOfNeighbor = currentNeighbor.union(currentNeighbor.descendants());
+                          childrenOfNeighbor.forEach(function(node) {
+                            queue.push(node);
+                            visited.add(node);
+                            cmpt.merge(node);
+                            if (topMostNodes.has(node)) {
+                              visitedTopMostNodes.push(node);
+                            }
+                          });
+                        }
+                      }
+                    };
+                    while (queue.length != 0) {
+                      _loop22();
+                    }
+                    cmpt.forEach(function(node) {
+                      eles.intersection(node.connectedEdges()).forEach(function(e) {
+                        if (cmpt.has(e.source()) && cmpt.has(e.target())) {
+                          cmpt.merge(e);
+                        }
+                      });
+                    });
+                    if (visitedTopMostNodes.length == topMostNodes.length) {
+                      isConnected = true;
+                    }
+                    if (!isConnected || isConnected && count > 1) {
+                      minDegreeNode = visitedTopMostNodes[0];
+                      minDegree = minDegreeNode.connectedEdges().length;
+                      visitedTopMostNodes.forEach(function(node) {
+                        if (node.connectedEdges().length < minDegree) {
+                          minDegree = node.connectedEdges().length;
+                          minDegreeNode = node;
+                        }
+                      });
+                      nodesConnectedToDummy.push(minDegreeNode.id());
+                      var temp = cy.collection();
+                      temp.merge(visitedTopMostNodes[0]);
+                      visitedTopMostNodes.forEach(function(node) {
+                        temp.merge(node);
+                      });
+                      visitedTopMostNodes = [];
+                      topMostNodes = topMostNodes.difference(temp);
+                      count++;
+                    }
+                  };
+                  do {
+                    _loop();
+                  } while (!isConnected);
+                  if (dummyNodes) {
+                    if (nodesConnectedToDummy.length > 0) {
+                      dummyNodes.set("dummy" + (dummyNodes.size + 1), nodesConnectedToDummy);
+                    }
+                  }
+                  return components;
+                };
+                auxiliary.relocateComponent = function(originalCenter, componentResult, options) {
+                  if (!options.fixedNodeConstraint) {
+                    var minXCoord = Number.POSITIVE_INFINITY;
+                    var maxXCoord = Number.NEGATIVE_INFINITY;
+                    var minYCoord = Number.POSITIVE_INFINITY;
+                    var maxYCoord = Number.NEGATIVE_INFINITY;
+                    if (options.quality == "draft") {
+                      var _iteratorNormalCompletion = true;
+                      var _didIteratorError = false;
+                      var _iteratorError = void 0;
+                      try {
+                        for (var _iterator = componentResult.nodeIndexes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                          var _ref = _step.value;
+                          var _ref2 = _slicedToArray(_ref, 2);
+                          var key = _ref2[0];
+                          var value = _ref2[1];
+                          var cyNode = options.cy.getElementById(key);
+                          if (cyNode) {
+                            var nodeBB = cyNode.boundingBox();
+                            var leftX = componentResult.xCoords[value] - nodeBB.w / 2;
+                            var rightX = componentResult.xCoords[value] + nodeBB.w / 2;
+                            var topY = componentResult.yCoords[value] - nodeBB.h / 2;
+                            var bottomY = componentResult.yCoords[value] + nodeBB.h / 2;
+                            if (leftX < minXCoord) minXCoord = leftX;
+                            if (rightX > maxXCoord) maxXCoord = rightX;
+                            if (topY < minYCoord) minYCoord = topY;
+                            if (bottomY > maxYCoord) maxYCoord = bottomY;
+                          }
+                        }
+                      } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                      } finally {
+                        try {
+                          if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                          }
+                        } finally {
+                          if (_didIteratorError) {
+                            throw _iteratorError;
+                          }
+                        }
+                      }
+                      var diffOnX = originalCenter.x - (maxXCoord + minXCoord) / 2;
+                      var diffOnY = originalCenter.y - (maxYCoord + minYCoord) / 2;
+                      componentResult.xCoords = componentResult.xCoords.map(function(x) {
+                        return x + diffOnX;
+                      });
+                      componentResult.yCoords = componentResult.yCoords.map(function(y) {
+                        return y + diffOnY;
+                      });
+                    } else {
+                      Object.keys(componentResult).forEach(function(item) {
+                        var node = componentResult[item];
+                        var leftX2 = node.getRect().x;
+                        var rightX2 = node.getRect().x + node.getRect().width;
+                        var topY2 = node.getRect().y;
+                        var bottomY2 = node.getRect().y + node.getRect().height;
+                        if (leftX2 < minXCoord) minXCoord = leftX2;
+                        if (rightX2 > maxXCoord) maxXCoord = rightX2;
+                        if (topY2 < minYCoord) minYCoord = topY2;
+                        if (bottomY2 > maxYCoord) maxYCoord = bottomY2;
+                      });
+                      var _diffOnX = originalCenter.x - (maxXCoord + minXCoord) / 2;
+                      var _diffOnY = originalCenter.y - (maxYCoord + minYCoord) / 2;
+                      Object.keys(componentResult).forEach(function(item) {
+                        var node = componentResult[item];
+                        node.setCenter(node.getCenterX() + _diffOnX, node.getCenterY() + _diffOnY);
+                      });
+                    }
+                  }
+                };
+                auxiliary.calcBoundingBox = function(parentNode, xCoords, yCoords, nodeIndexes) {
+                  var left = Number.MAX_SAFE_INTEGER;
+                  var right = Number.MIN_SAFE_INTEGER;
+                  var top = Number.MAX_SAFE_INTEGER;
+                  var bottom = Number.MIN_SAFE_INTEGER;
+                  var nodeLeft = void 0;
+                  var nodeRight = void 0;
+                  var nodeTop = void 0;
+                  var nodeBottom = void 0;
+                  var nodes = parentNode.descendants().not(":parent");
+                  var s = nodes.length;
+                  for (var i = 0; i < s; i++) {
+                    var node = nodes[i];
+                    nodeLeft = xCoords[nodeIndexes.get(node.id())] - node.width() / 2;
+                    nodeRight = xCoords[nodeIndexes.get(node.id())] + node.width() / 2;
+                    nodeTop = yCoords[nodeIndexes.get(node.id())] - node.height() / 2;
+                    nodeBottom = yCoords[nodeIndexes.get(node.id())] + node.height() / 2;
+                    if (left > nodeLeft) {
+                      left = nodeLeft;
+                    }
+                    if (right < nodeRight) {
+                      right = nodeRight;
+                    }
+                    if (top > nodeTop) {
+                      top = nodeTop;
+                    }
+                    if (bottom < nodeBottom) {
+                      bottom = nodeBottom;
+                    }
+                  }
+                  var boundingBox = {};
+                  boundingBox.topLeftX = left;
+                  boundingBox.topLeftY = top;
+                  boundingBox.width = right - left;
+                  boundingBox.height = bottom - top;
+                  return boundingBox;
+                };
+                auxiliary.calcParentsWithoutChildren = function(cy, eles) {
+                  var parentsWithoutChildren = cy.collection();
+                  eles.nodes(":parent").forEach(function(parent) {
+                    var check = false;
+                    parent.children().forEach(function(child) {
+                      if (child.css("display") != "none") {
+                        check = true;
+                      }
+                    });
+                    if (!check) {
+                      parentsWithoutChildren.merge(parent);
+                    }
+                  });
+                  return parentsWithoutChildren;
+                };
+                module2.exports = auxiliary;
+              })
+            ),
+            /***/
+            816: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var aux = __webpack_require__2(548);
+                var CoSELayout = __webpack_require__2(140).CoSELayout;
+                var CoSENode = __webpack_require__2(140).CoSENode;
+                var PointD = __webpack_require__2(140).layoutBase.PointD;
+                var DimensionD2 = __webpack_require__2(140).layoutBase.DimensionD;
+                var LayoutConstants = __webpack_require__2(140).layoutBase.LayoutConstants;
+                var FDLayoutConstants = __webpack_require__2(140).layoutBase.FDLayoutConstants;
+                var CoSEConstants = __webpack_require__2(140).CoSEConstants;
+                var coseLayout = function coseLayout2(options, spectralResult) {
+                  var cy = options.cy;
+                  var eles = options.eles;
+                  var nodes = eles.nodes();
+                  var edges = eles.edges();
+                  var nodeIndexes = void 0;
+                  var xCoords = void 0;
+                  var yCoords = void 0;
+                  var idToLNode = {};
+                  if (options.randomize) {
+                    nodeIndexes = spectralResult["nodeIndexes"];
+                    xCoords = spectralResult["xCoords"];
+                    yCoords = spectralResult["yCoords"];
+                  }
+                  var isFn = function isFn2(fn) {
+                    return typeof fn === "function";
+                  };
+                  var optFn = function optFn2(opt, ele) {
+                    if (isFn(opt)) {
+                      return opt(ele);
+                    } else {
+                      return opt;
+                    }
+                  };
+                  var parentsWithoutChildren = aux.calcParentsWithoutChildren(cy, eles);
+                  var processChildrenList = function processChildrenList2(parent, children, layout, options2) {
+                    var size = children.length;
+                    for (var i = 0; i < size; i++) {
+                      var theChild = children[i];
+                      var children_of_children = null;
+                      if (theChild.intersection(parentsWithoutChildren).length == 0) {
+                        children_of_children = theChild.children();
+                      }
+                      var theNode = void 0;
+                      var dimensions = theChild.layoutDimensions({
+                        nodeDimensionsIncludeLabels: options2.nodeDimensionsIncludeLabels
+                      });
+                      if (theChild.outerWidth() != null && theChild.outerHeight() != null) {
+                        if (options2.randomize) {
+                          if (!theChild.isParent()) {
+                            theNode = parent.add(new CoSENode(layout.graphManager, new PointD(xCoords[nodeIndexes.get(theChild.id())] - dimensions.w / 2, yCoords[nodeIndexes.get(theChild.id())] - dimensions.h / 2), new DimensionD2(parseFloat(dimensions.w), parseFloat(dimensions.h))));
+                          } else {
+                            var parentInfo = aux.calcBoundingBox(theChild, xCoords, yCoords, nodeIndexes);
+                            if (theChild.intersection(parentsWithoutChildren).length == 0) {
+                              theNode = parent.add(new CoSENode(layout.graphManager, new PointD(parentInfo.topLeftX, parentInfo.topLeftY), new DimensionD2(parentInfo.width, parentInfo.height)));
+                            } else {
+                              theNode = parent.add(new CoSENode(layout.graphManager, new PointD(parentInfo.topLeftX, parentInfo.topLeftY), new DimensionD2(parseFloat(dimensions.w), parseFloat(dimensions.h))));
+                            }
+                          }
+                        } else {
+                          theNode = parent.add(new CoSENode(layout.graphManager, new PointD(theChild.position("x") - dimensions.w / 2, theChild.position("y") - dimensions.h / 2), new DimensionD2(parseFloat(dimensions.w), parseFloat(dimensions.h))));
+                        }
+                      } else {
+                        theNode = parent.add(new CoSENode(this.graphManager));
+                      }
+                      theNode.id = theChild.data("id");
+                      theNode.nodeRepulsion = optFn(options2.nodeRepulsion, theChild);
+                      theNode.paddingLeft = parseInt(theChild.css("padding"));
+                      theNode.paddingTop = parseInt(theChild.css("padding"));
+                      theNode.paddingRight = parseInt(theChild.css("padding"));
+                      theNode.paddingBottom = parseInt(theChild.css("padding"));
+                      if (options2.nodeDimensionsIncludeLabels) {
+                        theNode.labelWidth = theChild.boundingBox({ includeLabels: true, includeNodes: false, includeOverlays: false }).w;
+                        theNode.labelHeight = theChild.boundingBox({ includeLabels: true, includeNodes: false, includeOverlays: false }).h;
+                        theNode.labelPosVertical = theChild.css("text-valign");
+                        theNode.labelPosHorizontal = theChild.css("text-halign");
+                      }
+                      idToLNode[theChild.data("id")] = theNode;
+                      if (isNaN(theNode.rect.x)) {
+                        theNode.rect.x = 0;
+                      }
+                      if (isNaN(theNode.rect.y)) {
+                        theNode.rect.y = 0;
+                      }
+                      if (children_of_children != null && children_of_children.length > 0) {
+                        var theNewGraph = void 0;
+                        theNewGraph = layout.getGraphManager().add(layout.newGraph(), theNode);
+                        processChildrenList2(theNewGraph, children_of_children, layout, options2);
+                      }
+                    }
+                  };
+                  var processEdges = function processEdges2(layout, gm2, edges2) {
+                    var idealLengthTotal = 0;
+                    var edgeCount = 0;
+                    for (var i = 0; i < edges2.length; i++) {
+                      var edge = edges2[i];
+                      var sourceNode = idToLNode[edge.data("source")];
+                      var targetNode = idToLNode[edge.data("target")];
+                      if (sourceNode && targetNode && sourceNode !== targetNode && sourceNode.getEdgesBetween(targetNode).length == 0) {
+                        var e1 = gm2.add(layout.newEdge(), sourceNode, targetNode);
+                        e1.id = edge.id();
+                        e1.idealLength = optFn(options.idealEdgeLength, edge);
+                        e1.edgeElasticity = optFn(options.edgeElasticity, edge);
+                        idealLengthTotal += e1.idealLength;
+                        edgeCount++;
+                      }
+                    }
+                    if (options.idealEdgeLength != null) {
+                      if (edgeCount > 0) CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = idealLengthTotal / edgeCount;
+                      else if (!isFn(options.idealEdgeLength))
+                        CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = options.idealEdgeLength;
+                      else
+                        CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+                      CoSEConstants.MIN_REPULSION_DIST = FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10;
+                      CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+                    }
+                  };
+                  var processConstraints = function processConstraints2(layout, options2) {
+                    if (options2.fixedNodeConstraint) {
+                      layout.constraints["fixedNodeConstraint"] = options2.fixedNodeConstraint;
+                    }
+                    if (options2.alignmentConstraint) {
+                      layout.constraints["alignmentConstraint"] = options2.alignmentConstraint;
+                    }
+                    if (options2.relativePlacementConstraint) {
+                      layout.constraints["relativePlacementConstraint"] = options2.relativePlacementConstraint;
+                    }
+                  };
+                  if (options.nestingFactor != null) CoSEConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = options.nestingFactor;
+                  if (options.gravity != null) CoSEConstants.DEFAULT_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = options.gravity;
+                  if (options.numIter != null) CoSEConstants.MAX_ITERATIONS = FDLayoutConstants.MAX_ITERATIONS = options.numIter;
+                  if (options.gravityRange != null) CoSEConstants.DEFAULT_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = options.gravityRange;
+                  if (options.gravityCompound != null) CoSEConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = options.gravityCompound;
+                  if (options.gravityRangeCompound != null) CoSEConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = options.gravityRangeCompound;
+                  if (options.initialEnergyOnIncremental != null) CoSEConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = options.initialEnergyOnIncremental;
+                  if (options.tilingCompareBy != null) CoSEConstants.TILING_COMPARE_BY = options.tilingCompareBy;
+                  if (options.quality == "proof") LayoutConstants.QUALITY = 2;
+                  else LayoutConstants.QUALITY = 0;
+                  CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = options.nodeDimensionsIncludeLabels;
+                  CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = !options.randomize;
+                  CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = options.animate;
+                  CoSEConstants.TILE = options.tile;
+                  CoSEConstants.TILING_PADDING_VERTICAL = typeof options.tilingPaddingVertical === "function" ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
+                  CoSEConstants.TILING_PADDING_HORIZONTAL = typeof options.tilingPaddingHorizontal === "function" ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+                  CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = true;
+                  CoSEConstants.PURE_INCREMENTAL = !options.randomize;
+                  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+                  if (options.step == "transformed") {
+                    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;
+                    CoSEConstants.ENFORCE_CONSTRAINTS = false;
+                    CoSEConstants.APPLY_LAYOUT = false;
+                  }
+                  if (options.step == "enforced") {
+                    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+                    CoSEConstants.ENFORCE_CONSTRAINTS = true;
+                    CoSEConstants.APPLY_LAYOUT = false;
+                  }
+                  if (options.step == "cose") {
+                    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+                    CoSEConstants.ENFORCE_CONSTRAINTS = false;
+                    CoSEConstants.APPLY_LAYOUT = true;
+                  }
+                  if (options.step == "all") {
+                    if (options.randomize) CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;
+                    else CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+                    CoSEConstants.ENFORCE_CONSTRAINTS = true;
+                    CoSEConstants.APPLY_LAYOUT = true;
+                  }
+                  if (options.fixedNodeConstraint || options.alignmentConstraint || options.relativePlacementConstraint) {
+                    CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = false;
+                  } else {
+                    CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = true;
+                  }
+                  var coseLayout3 = new CoSELayout();
+                  var gm = coseLayout3.newGraphManager();
+                  processChildrenList(gm.addRoot(), aux.getTopMostNodes(nodes), coseLayout3, options);
+                  processEdges(coseLayout3, gm, edges);
+                  processConstraints(coseLayout3, options);
+                  coseLayout3.runLayout();
+                  return idToLNode;
+                };
+                module2.exports = { coseLayout };
+              })
+            ),
+            /***/
+            212: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var _createClass = /* @__PURE__ */ (function() {
+                  function defineProperties(target, props) {
+                    for (var i = 0; i < props.length; i++) {
+                      var descriptor = props[i];
+                      descriptor.enumerable = descriptor.enumerable || false;
+                      descriptor.configurable = true;
+                      if ("value" in descriptor) descriptor.writable = true;
+                      Object.defineProperty(target, descriptor.key, descriptor);
+                    }
+                  }
+                  return function(Constructor, protoProps, staticProps) {
+                    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                    if (staticProps) defineProperties(Constructor, staticProps);
+                    return Constructor;
+                  };
+                })();
+                function _classCallCheck(instance2, Constructor) {
+                  if (!(instance2 instanceof Constructor)) {
+                    throw new TypeError("Cannot call a class as a function");
+                  }
+                }
+                var assign = __webpack_require__2(658);
+                var aux = __webpack_require__2(548);
+                var _require = __webpack_require__2(657), spectralLayout = _require.spectralLayout;
+                var _require2 = __webpack_require__2(816), coseLayout = _require2.coseLayout;
+                var defaults = Object.freeze({
+                  // 'draft', 'default' or 'proof' 
+                  // - 'draft' only applies spectral layout 
+                  // - 'default' improves the quality with subsequent CoSE layout (fast cooling rate)
+                  // - 'proof' improves the quality with subsequent CoSE layout (slow cooling rate) 
+                  quality: "default",
+                  // Use random node positions at beginning of layout
+                  // if this is set to false, then quality option must be "proof"
+                  randomize: true,
+                  // Whether or not to animate the layout
+                  animate: true,
+                  // Duration of animation in ms, if enabled
+                  animationDuration: 1e3,
+                  // Easing of animation, if enabled
+                  animationEasing: void 0,
+                  // Fit the viewport to the repositioned nodes
+                  fit: true,
+                  // Padding around layout
+                  padding: 30,
+                  // Whether to include labels in node dimensions. Valid in "proof" quality
+                  nodeDimensionsIncludeLabels: false,
+                  // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
+                  uniformNodeDimensions: false,
+                  // Whether to pack disconnected components - valid only if randomize: true
+                  packComponents: true,
+                  // Layout step - all, transformed, enforced, cose - for debug purpose only
+                  step: "all",
+                  /* spectral layout options */
+                  // False for random, true for greedy
+                  samplingType: true,
+                  // Sample size to construct distance matrix
+                  sampleSize: 25,
+                  // Separation amount between nodes
+                  nodeSeparation: 75,
+                  // Power iteration tolerance
+                  piTol: 1e-7,
+                  /* CoSE layout options */
+                  // Node repulsion (non overlapping) multiplier
+                  nodeRepulsion: function nodeRepulsion(node) {
+                    return 4500;
+                  },
+                  // Ideal edge (non nested) length
+                  idealEdgeLength: function idealEdgeLength(edge) {
+                    return 50;
+                  },
+                  // Divisor to compute edge forces
+                  edgeElasticity: function edgeElasticity(edge) {
+                    return 0.45;
+                  },
+                  // Nesting factor (multiplier) to compute ideal edge length for nested edges
+                  nestingFactor: 0.1,
+                  // Gravity force (constant)
+                  gravity: 0.25,
+                  // Maximum number of iterations to perform
+                  numIter: 2500,
+                  // For enabling tiling
+                  tile: true,
+                  // The function that specifies the criteria for comparing nodes while sorting them during tiling operation.
+                  // Takes the node id as a parameter and the default tiling operation is perfomed when this option is not set.
+                  tilingCompareBy: void 0,
+                  // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
+                  tilingPaddingVertical: 10,
+                  // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
+                  tilingPaddingHorizontal: 10,
+                  // Gravity range (constant) for compounds
+                  gravityRangeCompound: 1.5,
+                  // Gravity force (constant) for compounds
+                  gravityCompound: 1,
+                  // Gravity range (constant)
+                  gravityRange: 3.8,
+                  // Initial cooling factor for incremental layout  
+                  initialEnergyOnIncremental: 0.3,
+                  /* constraint options */
+                  // Fix required nodes to predefined positions
+                  // [{nodeId: 'n1', position: {x: 100, y: 200}, {...}]
+                  fixedNodeConstraint: void 0,
+                  // Align required nodes in vertical/horizontal direction
+                  // {vertical: [['n1', 'n2')], ['n3', 'n4']], horizontal: ['n2', 'n4']}
+                  alignmentConstraint: void 0,
+                  // Place two nodes relatively in vertical/horizontal direction 
+                  // [{top: 'n1', bottom: 'n2', gap: 100}, {left: 'n3', right: 'n4', gap: 75}]
+                  relativePlacementConstraint: void 0,
+                  /* layout event callbacks */
+                  ready: function ready() {
+                  },
+                  // on layoutready
+                  stop: function stop() {
+                  }
+                  // on layoutstop
+                });
+                var Layout2 = (function() {
+                  function Layout3(options) {
+                    _classCallCheck(this, Layout3);
+                    this.options = assign({}, defaults, options);
+                  }
+                  _createClass(Layout3, [{
+                    key: "run",
+                    value: function run() {
+                      var layout = this;
+                      var options = this.options;
+                      var cy = options.cy;
+                      var eles = options.eles;
+                      var spectralResult = [];
+                      var coseResult = [];
+                      var components = void 0;
+                      var componentCenters = [];
+                      if (options.fixedNodeConstraint && (!Array.isArray(options.fixedNodeConstraint) || options.fixedNodeConstraint.length == 0)) {
+                        options.fixedNodeConstraint = void 0;
+                      }
+                      if (options.alignmentConstraint) {
+                        if (options.alignmentConstraint.vertical && (!Array.isArray(options.alignmentConstraint.vertical) || options.alignmentConstraint.vertical.length == 0)) {
+                          options.alignmentConstraint.vertical = void 0;
+                        }
+                        if (options.alignmentConstraint.horizontal && (!Array.isArray(options.alignmentConstraint.horizontal) || options.alignmentConstraint.horizontal.length == 0)) {
+                          options.alignmentConstraint.horizontal = void 0;
+                        }
+                      }
+                      if (options.relativePlacementConstraint && (!Array.isArray(options.relativePlacementConstraint) || options.relativePlacementConstraint.length == 0)) {
+                        options.relativePlacementConstraint = void 0;
+                      }
+                      var constraintExist = options.fixedNodeConstraint || options.alignmentConstraint || options.relativePlacementConstraint;
+                      if (constraintExist) {
+                        options.tile = false;
+                        options.packComponents = false;
+                      }
+                      var layUtil = void 0;
+                      var packingEnabled = false;
+                      if (cy.layoutUtilities && options.packComponents) {
+                        layUtil = cy.layoutUtilities("get");
+                        if (!layUtil) layUtil = cy.layoutUtilities();
+                        packingEnabled = true;
+                      }
+                      if (eles.nodes().length > 0) {
+                        if (!packingEnabled) {
+                          var boundingBox = options.eles.boundingBox();
+                          componentCenters.push({ x: boundingBox.x1 + boundingBox.w / 2, y: boundingBox.y1 + boundingBox.h / 2 });
+                          if (options.randomize) {
+                            var result = spectralLayout(options);
+                            spectralResult.push(result);
+                          }
+                          if (options.quality == "default" || options.quality == "proof") {
+                            coseResult.push(coseLayout(options, spectralResult[0]));
+                            aux.relocateComponent(componentCenters[0], coseResult[0], options);
+                          } else {
+                            aux.relocateComponent(componentCenters[0], spectralResult[0], options);
+                          }
+                        } else {
+                          var topMostNodes = aux.getTopMostNodes(options.eles.nodes());
+                          components = aux.connectComponents(cy, options.eles, topMostNodes);
+                          components.forEach(function(component) {
+                            var boundingBox2 = component.boundingBox();
+                            componentCenters.push({ x: boundingBox2.x1 + boundingBox2.w / 2, y: boundingBox2.y1 + boundingBox2.h / 2 });
+                          });
+                          if (options.randomize) {
+                            components.forEach(function(component) {
+                              options.eles = component;
+                              spectralResult.push(spectralLayout(options));
+                            });
+                          }
+                          if (options.quality == "default" || options.quality == "proof") {
+                            var toBeTiledNodes = cy.collection();
+                            if (options.tile) {
+                              var nodeIndexes = /* @__PURE__ */ new Map();
+                              var _xCoords = [];
+                              var _yCoords = [];
+                              var count = 0;
+                              var tempSpectralResult = { nodeIndexes, xCoords: _xCoords, yCoords: _yCoords };
+                              var indexesToBeDeleted = [];
+                              components.forEach(function(component, index) {
+                                if (component.edges().length == 0) {
+                                  component.nodes().forEach(function(node, i2) {
+                                    toBeTiledNodes.merge(component.nodes()[i2]);
+                                    if (!node.isParent()) {
+                                      tempSpectralResult.nodeIndexes.set(component.nodes()[i2].id(), count++);
+                                      tempSpectralResult.xCoords.push(component.nodes()[0].position().x);
+                                      tempSpectralResult.yCoords.push(component.nodes()[0].position().y);
+                                    }
+                                  });
+                                  indexesToBeDeleted.push(index);
+                                }
+                              });
+                              if (toBeTiledNodes.length > 1) {
+                                var _boundingBox = toBeTiledNodes.boundingBox();
+                                componentCenters.push({ x: _boundingBox.x1 + _boundingBox.w / 2, y: _boundingBox.y1 + _boundingBox.h / 2 });
+                                components.push(toBeTiledNodes);
+                                spectralResult.push(tempSpectralResult);
+                                for (var i = indexesToBeDeleted.length - 1; i >= 0; i--) {
+                                  components.splice(indexesToBeDeleted[i], 1);
+                                  spectralResult.splice(indexesToBeDeleted[i], 1);
+                                  componentCenters.splice(indexesToBeDeleted[i], 1);
+                                }
+                              }
+                            }
+                            components.forEach(function(component, index) {
+                              options.eles = component;
+                              coseResult.push(coseLayout(options, spectralResult[index]));
+                              aux.relocateComponent(componentCenters[index], coseResult[index], options);
+                            });
+                          } else {
+                            components.forEach(function(component, index) {
+                              aux.relocateComponent(componentCenters[index], spectralResult[index], options);
+                            });
+                          }
+                          var componentsEvaluated = /* @__PURE__ */ new Set();
+                          if (components.length > 1) {
+                            var subgraphs = [];
+                            var hiddenEles = eles.filter(function(ele) {
+                              return ele.css("display") == "none";
+                            });
+                            components.forEach(function(component, index) {
+                              var nodeIndexes2 = void 0;
+                              if (options.quality == "draft") {
+                                nodeIndexes2 = spectralResult[index].nodeIndexes;
+                              }
+                              if (component.nodes().not(hiddenEles).length > 0) {
+                                var subgraph = {};
+                                subgraph.edges = [];
+                                subgraph.nodes = [];
+                                var nodeIndex = void 0;
+                                component.nodes().not(hiddenEles).forEach(function(node) {
+                                  if (options.quality == "draft") {
+                                    if (!node.isParent()) {
+                                      nodeIndex = nodeIndexes2.get(node.id());
+                                      subgraph.nodes.push({ x: spectralResult[index].xCoords[nodeIndex] - node.boundingbox().w / 2, y: spectralResult[index].yCoords[nodeIndex] - node.boundingbox().h / 2, width: node.boundingbox().w, height: node.boundingbox().h });
+                                    } else {
+                                      var parentInfo = aux.calcBoundingBox(node, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes2);
+                                      subgraph.nodes.push({ x: parentInfo.topLeftX, y: parentInfo.topLeftY, width: parentInfo.width, height: parentInfo.height });
+                                    }
+                                  } else {
+                                    if (coseResult[index][node.id()]) {
+                                      subgraph.nodes.push({ x: coseResult[index][node.id()].getLeft(), y: coseResult[index][node.id()].getTop(), width: coseResult[index][node.id()].getWidth(), height: coseResult[index][node.id()].getHeight() });
+                                    }
+                                  }
+                                });
+                                component.edges().forEach(function(edge) {
+                                  var source = edge.source();
+                                  var target = edge.target();
+                                  if (source.css("display") != "none" && target.css("display") != "none") {
+                                    if (options.quality == "draft") {
+                                      var sourceNodeIndex = nodeIndexes2.get(source.id());
+                                      var targetNodeIndex = nodeIndexes2.get(target.id());
+                                      var sourceCenter = [];
+                                      var targetCenter = [];
+                                      if (source.isParent()) {
+                                        var parentInfo = aux.calcBoundingBox(source, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes2);
+                                        sourceCenter.push(parentInfo.topLeftX + parentInfo.width / 2);
+                                        sourceCenter.push(parentInfo.topLeftY + parentInfo.height / 2);
+                                      } else {
+                                        sourceCenter.push(spectralResult[index].xCoords[sourceNodeIndex]);
+                                        sourceCenter.push(spectralResult[index].yCoords[sourceNodeIndex]);
+                                      }
+                                      if (target.isParent()) {
+                                        var _parentInfo = aux.calcBoundingBox(target, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes2);
+                                        targetCenter.push(_parentInfo.topLeftX + _parentInfo.width / 2);
+                                        targetCenter.push(_parentInfo.topLeftY + _parentInfo.height / 2);
+                                      } else {
+                                        targetCenter.push(spectralResult[index].xCoords[targetNodeIndex]);
+                                        targetCenter.push(spectralResult[index].yCoords[targetNodeIndex]);
+                                      }
+                                      subgraph.edges.push({ startX: sourceCenter[0], startY: sourceCenter[1], endX: targetCenter[0], endY: targetCenter[1] });
+                                    } else {
+                                      if (coseResult[index][source.id()] && coseResult[index][target.id()]) {
+                                        subgraph.edges.push({ startX: coseResult[index][source.id()].getCenterX(), startY: coseResult[index][source.id()].getCenterY(), endX: coseResult[index][target.id()].getCenterX(), endY: coseResult[index][target.id()].getCenterY() });
+                                      }
+                                    }
+                                  }
+                                });
+                                if (subgraph.nodes.length > 0) {
+                                  subgraphs.push(subgraph);
+                                  componentsEvaluated.add(index);
+                                }
+                              }
+                            });
+                            var shiftResult = layUtil.packComponents(subgraphs, options.randomize).shifts;
+                            if (options.quality == "draft") {
+                              spectralResult.forEach(function(result2, index) {
+                                var newXCoords = result2.xCoords.map(function(x) {
+                                  return x + shiftResult[index].dx;
+                                });
+                                var newYCoords = result2.yCoords.map(function(y) {
+                                  return y + shiftResult[index].dy;
+                                });
+                                result2.xCoords = newXCoords;
+                                result2.yCoords = newYCoords;
+                              });
+                            } else {
+                              var _count = 0;
+                              componentsEvaluated.forEach(function(index) {
+                                Object.keys(coseResult[index]).forEach(function(item) {
+                                  var nodeRectangle = coseResult[index][item];
+                                  nodeRectangle.setCenter(nodeRectangle.getCenterX() + shiftResult[_count].dx, nodeRectangle.getCenterY() + shiftResult[_count].dy);
+                                });
+                                _count++;
+                              });
+                            }
+                          }
+                        }
+                      }
+                      var getPositions = function getPositions2(ele, i2) {
+                        if (options.quality == "default" || options.quality == "proof") {
+                          if (typeof ele === "number") {
+                            ele = i2;
+                          }
+                          var pos = void 0;
+                          var node = void 0;
+                          var theId = ele.data("id");
+                          coseResult.forEach(function(result2) {
+                            if (theId in result2) {
+                              pos = { x: result2[theId].getRect().getCenterX(), y: result2[theId].getRect().getCenterY() };
+                              node = result2[theId];
+                            }
+                          });
+                          if (options.nodeDimensionsIncludeLabels) {
+                            if (node.labelWidth) {
+                              if (node.labelPosHorizontal == "left") {
+                                pos.x += node.labelWidth / 2;
+                              } else if (node.labelPosHorizontal == "right") {
+                                pos.x -= node.labelWidth / 2;
+                              }
+                            }
+                            if (node.labelHeight) {
+                              if (node.labelPosVertical == "top") {
+                                pos.y += node.labelHeight / 2;
+                              } else if (node.labelPosVertical == "bottom") {
+                                pos.y -= node.labelHeight / 2;
+                              }
+                            }
+                          }
+                          if (pos == void 0) pos = { x: ele.position("x"), y: ele.position("y") };
+                          return {
+                            x: pos.x,
+                            y: pos.y
+                          };
+                        } else {
+                          var _pos = void 0;
+                          spectralResult.forEach(function(result2) {
+                            var index = result2.nodeIndexes.get(ele.id());
+                            if (index != void 0) {
+                              _pos = { x: result2.xCoords[index], y: result2.yCoords[index] };
+                            }
+                          });
+                          if (_pos == void 0) _pos = { x: ele.position("x"), y: ele.position("y") };
+                          return {
+                            x: _pos.x,
+                            y: _pos.y
+                          };
+                        }
+                      };
+                      if (options.quality == "default" || options.quality == "proof" || options.randomize) {
+                        var parentsWithoutChildren = aux.calcParentsWithoutChildren(cy, eles);
+                        var _hiddenEles = eles.filter(function(ele) {
+                          return ele.css("display") == "none";
+                        });
+                        options.eles = eles.not(_hiddenEles);
+                        eles.nodes().not(":parent").not(_hiddenEles).layoutPositions(layout, options, getPositions);
+                        if (parentsWithoutChildren.length > 0) {
+                          parentsWithoutChildren.forEach(function(ele) {
+                            ele.position(getPositions(ele));
+                          });
+                        }
+                      } else {
+                        console.log("If randomize option is set to false, then quality option must be 'default' or 'proof'.");
+                      }
+                    }
+                  }]);
+                  return Layout3;
+                })();
+                module2.exports = Layout2;
+              })
+            ),
+            /***/
+            657: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var aux = __webpack_require__2(548);
+                var Matrix = __webpack_require__2(140).layoutBase.Matrix;
+                var SVD = __webpack_require__2(140).layoutBase.SVD;
+                var spectralLayout = function spectralLayout2(options) {
+                  var cy = options.cy;
+                  var eles = options.eles;
+                  var nodes = eles.nodes();
+                  var parentNodes = eles.nodes(":parent");
+                  var dummyNodes = /* @__PURE__ */ new Map();
+                  var nodeIndexes = /* @__PURE__ */ new Map();
+                  var parentChildMap = /* @__PURE__ */ new Map();
+                  var allNodesNeighborhood = [];
+                  var xCoords = [];
+                  var yCoords = [];
+                  var samplesColumn = [];
+                  var minDistancesColumn = [];
+                  var C = [];
+                  var PHI = [];
+                  var INV = [];
+                  var nodeSize = void 0;
+                  var infinity = 1e8;
+                  var small = 1e-9;
+                  var piTol = options.piTol;
+                  var samplingType = options.samplingType;
+                  var nodeSeparation = options.nodeSeparation;
+                  var sampleSize = void 0;
+                  var randomSampleCR = function randomSampleCR2() {
+                    var sample2 = 0;
+                    var count = 0;
+                    var flag = false;
+                    while (count < sampleSize) {
+                      sample2 = Math.floor(Math.random() * nodeSize);
+                      flag = false;
+                      for (var i2 = 0; i2 < count; i2++) {
+                        if (samplesColumn[i2] == sample2) {
+                          flag = true;
+                          break;
+                        }
+                      }
+                      if (!flag) {
+                        samplesColumn[count] = sample2;
+                        count++;
+                      } else {
+                        continue;
+                      }
+                    }
+                  };
+                  var BFS = function BFS2(pivot, index2, samplingMethod) {
+                    var path = [];
+                    var front = 0;
+                    var back = 0;
+                    var current = 0;
+                    var temp = void 0;
+                    var distance = [];
+                    var max_dist = 0;
+                    var max_ind = 1;
+                    for (var i2 = 0; i2 < nodeSize; i2++) {
+                      distance[i2] = infinity;
+                    }
+                    path[back] = pivot;
+                    distance[pivot] = 0;
+                    while (back >= front) {
+                      current = path[front++];
+                      var neighbors = allNodesNeighborhood[current];
+                      for (var _i = 0; _i < neighbors.length; _i++) {
+                        temp = nodeIndexes.get(neighbors[_i]);
+                        if (distance[temp] == infinity) {
+                          distance[temp] = distance[current] + 1;
+                          path[++back] = temp;
+                        }
+                      }
+                      C[current][index2] = distance[current] * nodeSeparation;
+                    }
+                    if (samplingMethod) {
+                      for (var _i2 = 0; _i2 < nodeSize; _i2++) {
+                        if (C[_i2][index2] < minDistancesColumn[_i2]) minDistancesColumn[_i2] = C[_i2][index2];
+                      }
+                      for (var _i3 = 0; _i3 < nodeSize; _i3++) {
+                        if (minDistancesColumn[_i3] > max_dist) {
+                          max_dist = minDistancesColumn[_i3];
+                          max_ind = _i3;
+                        }
+                      }
+                    }
+                    return max_ind;
+                  };
+                  var allBFS = function allBFS2(samplingMethod) {
+                    var sample2 = void 0;
+                    if (!samplingMethod) {
+                      randomSampleCR();
+                      for (var i2 = 0; i2 < sampleSize; i2++) {
+                        BFS(samplesColumn[i2], i2, samplingMethod);
+                      }
+                    } else {
+                      sample2 = Math.floor(Math.random() * nodeSize);
+                      for (var _i4 = 0; _i4 < nodeSize; _i4++) {
+                        minDistancesColumn[_i4] = infinity;
+                      }
+                      for (var _i5 = 0; _i5 < sampleSize; _i5++) {
+                        samplesColumn[_i5] = sample2;
+                        sample2 = BFS(sample2, _i5, samplingMethod);
+                      }
+                    }
+                    for (var _i6 = 0; _i6 < nodeSize; _i6++) {
+                      for (var j = 0; j < sampleSize; j++) {
+                        C[_i6][j] *= C[_i6][j];
+                      }
+                    }
+                    for (var _i7 = 0; _i7 < sampleSize; _i7++) {
+                      PHI[_i7] = [];
+                    }
+                    for (var _i8 = 0; _i8 < sampleSize; _i8++) {
+                      for (var _j = 0; _j < sampleSize; _j++) {
+                        PHI[_i8][_j] = C[samplesColumn[_j]][_i8];
+                      }
+                    }
+                  };
+                  var sample = function sample2() {
+                    var SVDResult = SVD.svd(PHI);
+                    var a_q = SVDResult.S;
+                    var a_u = SVDResult.U;
+                    var a_v = SVDResult.V;
+                    var max_s = a_q[0] * a_q[0] * a_q[0];
+                    var a_Sig = [];
+                    for (var i2 = 0; i2 < sampleSize; i2++) {
+                      a_Sig[i2] = [];
+                      for (var j = 0; j < sampleSize; j++) {
+                        a_Sig[i2][j] = 0;
+                        if (i2 == j) {
+                          a_Sig[i2][j] = a_q[i2] / (a_q[i2] * a_q[i2] + max_s / (a_q[i2] * a_q[i2]));
+                        }
+                      }
+                    }
+                    INV = Matrix.multMat(Matrix.multMat(a_v, a_Sig), Matrix.transpose(a_u));
+                  };
+                  var powerIteration = function powerIteration2() {
+                    var theta1 = void 0;
+                    var theta2 = void 0;
+                    var Y1 = [];
+                    var Y2 = [];
+                    var V1 = [];
+                    var V2 = [];
+                    for (var i2 = 0; i2 < nodeSize; i2++) {
+                      Y1[i2] = Math.random();
+                      Y2[i2] = Math.random();
+                    }
+                    Y1 = Matrix.normalize(Y1);
+                    Y2 = Matrix.normalize(Y2);
+                    var current = small;
+                    var previous = small;
+                    var temp = void 0;
+                    while (true) {
+                      for (var _i9 = 0; _i9 < nodeSize; _i9++) {
+                        V1[_i9] = Y1[_i9];
+                      }
+                      Y1 = Matrix.multGamma(Matrix.multL(Matrix.multGamma(V1), C, INV));
+                      theta1 = Matrix.dotProduct(V1, Y1);
+                      Y1 = Matrix.normalize(Y1);
+                      current = Matrix.dotProduct(V1, Y1);
+                      temp = Math.abs(current / previous);
+                      if (temp <= 1 + piTol && temp >= 1) {
+                        break;
+                      }
+                      previous = current;
+                    }
+                    for (var _i10 = 0; _i10 < nodeSize; _i10++) {
+                      V1[_i10] = Y1[_i10];
+                    }
+                    previous = small;
+                    while (true) {
+                      for (var _i11 = 0; _i11 < nodeSize; _i11++) {
+                        V2[_i11] = Y2[_i11];
+                      }
+                      V2 = Matrix.minusOp(V2, Matrix.multCons(V1, Matrix.dotProduct(V1, V2)));
+                      Y2 = Matrix.multGamma(Matrix.multL(Matrix.multGamma(V2), C, INV));
+                      theta2 = Matrix.dotProduct(V2, Y2);
+                      Y2 = Matrix.normalize(Y2);
+                      current = Matrix.dotProduct(V2, Y2);
+                      temp = Math.abs(current / previous);
+                      if (temp <= 1 + piTol && temp >= 1) {
+                        break;
+                      }
+                      previous = current;
+                    }
+                    for (var _i12 = 0; _i12 < nodeSize; _i12++) {
+                      V2[_i12] = Y2[_i12];
+                    }
+                    xCoords = Matrix.multCons(V1, Math.sqrt(Math.abs(theta1)));
+                    yCoords = Matrix.multCons(V2, Math.sqrt(Math.abs(theta2)));
+                  };
+                  aux.connectComponents(cy, eles, aux.getTopMostNodes(nodes), dummyNodes);
+                  parentNodes.forEach(function(ele) {
+                    aux.connectComponents(cy, eles, aux.getTopMostNodes(ele.descendants().intersection(eles)), dummyNodes);
+                  });
+                  var index = 0;
+                  for (var i = 0; i < nodes.length; i++) {
+                    if (!nodes[i].isParent()) {
+                      nodeIndexes.set(nodes[i].id(), index++);
+                    }
+                  }
+                  var _iteratorNormalCompletion = true;
+                  var _didIteratorError = false;
+                  var _iteratorError = void 0;
+                  try {
+                    for (var _iterator = dummyNodes.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                      var key = _step.value;
+                      nodeIndexes.set(key, index++);
+                    }
+                  } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                  } finally {
+                    try {
+                      if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                      }
+                    } finally {
+                      if (_didIteratorError) {
+                        throw _iteratorError;
+                      }
+                    }
+                  }
+                  for (var _i13 = 0; _i13 < nodeIndexes.size; _i13++) {
+                    allNodesNeighborhood[_i13] = [];
+                  }
+                  parentNodes.forEach(function(ele) {
+                    var children = ele.children().intersection(eles);
+                    while (children.nodes(":childless").length == 0) {
+                      children = children.nodes()[0].children().intersection(eles);
+                    }
+                    var index2 = 0;
+                    var min = children.nodes(":childless")[0].connectedEdges().length;
+                    children.nodes(":childless").forEach(function(ele2, i2) {
+                      if (ele2.connectedEdges().length < min) {
+                        min = ele2.connectedEdges().length;
+                        index2 = i2;
+                      }
+                    });
+                    parentChildMap.set(ele.id(), children.nodes(":childless")[index2].id());
+                  });
+                  nodes.forEach(function(ele) {
+                    var eleIndex = void 0;
+                    if (ele.isParent()) eleIndex = nodeIndexes.get(parentChildMap.get(ele.id()));
+                    else eleIndex = nodeIndexes.get(ele.id());
+                    ele.neighborhood().nodes().forEach(function(node) {
+                      if (eles.intersection(ele.edgesWith(node)).length > 0) {
+                        if (node.isParent()) allNodesNeighborhood[eleIndex].push(parentChildMap.get(node.id()));
+                        else allNodesNeighborhood[eleIndex].push(node.id());
+                      }
+                    });
+                  });
+                  var _loop = function _loop2(_key2) {
+                    var eleIndex = nodeIndexes.get(_key2);
+                    var disconnectedId = void 0;
+                    dummyNodes.get(_key2).forEach(function(id) {
+                      if (cy.getElementById(id).isParent()) disconnectedId = parentChildMap.get(id);
+                      else disconnectedId = id;
+                      allNodesNeighborhood[eleIndex].push(disconnectedId);
+                      allNodesNeighborhood[nodeIndexes.get(disconnectedId)].push(_key2);
+                    });
+                  };
+                  var _iteratorNormalCompletion2 = true;
+                  var _didIteratorError2 = false;
+                  var _iteratorError2 = void 0;
+                  try {
+                    for (var _iterator2 = dummyNodes.keys()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                      var _key = _step2.value;
+                      _loop(_key);
+                    }
+                  } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                  } finally {
+                    try {
+                      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                      }
+                    } finally {
+                      if (_didIteratorError2) {
+                        throw _iteratorError2;
+                      }
+                    }
+                  }
+                  nodeSize = nodeIndexes.size;
+                  var spectralResult = void 0;
+                  if (nodeSize > 2) {
+                    sampleSize = nodeSize < options.sampleSize ? nodeSize : options.sampleSize;
+                    for (var _i14 = 0; _i14 < nodeSize; _i14++) {
+                      C[_i14] = [];
+                    }
+                    for (var _i15 = 0; _i15 < sampleSize; _i15++) {
+                      INV[_i15] = [];
+                    }
+                    if (options.quality == "draft" || options.step == "all") {
+                      allBFS(samplingType);
+                      sample();
+                      powerIteration();
+                      spectralResult = { nodeIndexes, xCoords, yCoords };
+                    } else {
+                      nodeIndexes.forEach(function(value, key2) {
+                        xCoords.push(cy.getElementById(key2).position("x"));
+                        yCoords.push(cy.getElementById(key2).position("y"));
+                      });
+                      spectralResult = { nodeIndexes, xCoords, yCoords };
+                    }
+                    return spectralResult;
+                  } else {
+                    var iterator = nodeIndexes.keys();
+                    var firstNode = cy.getElementById(iterator.next().value);
+                    var firstNodePos = firstNode.position();
+                    var firstNodeWidth = firstNode.outerWidth();
+                    xCoords.push(firstNodePos.x);
+                    yCoords.push(firstNodePos.y);
+                    if (nodeSize == 2) {
+                      var secondNode = cy.getElementById(iterator.next().value);
+                      var secondNodeWidth = secondNode.outerWidth();
+                      xCoords.push(firstNodePos.x + firstNodeWidth / 2 + secondNodeWidth / 2 + options.idealEdgeLength);
+                      yCoords.push(firstNodePos.y);
+                    }
+                    spectralResult = { nodeIndexes, xCoords, yCoords };
+                    return spectralResult;
+                  }
+                };
+                module2.exports = { spectralLayout };
+              })
+            ),
+            /***/
+            579: (
+              /***/
+              ((module2, __unused_webpack_exports, __webpack_require__2) => {
+                var impl = __webpack_require__2(212);
+                var register = function register2(cytoscape2) {
+                  if (!cytoscape2) {
+                    return;
+                  }
+                  cytoscape2("layout", "fcose", impl);
+                };
+                if (typeof cytoscape !== "undefined") {
+                  register(cytoscape);
+                }
+                module2.exports = register;
+              })
+            ),
+            /***/
+            140: (
+              /***/
+              ((module2) => {
+                module2.exports = __WEBPACK_EXTERNAL_MODULE__140__;
+              })
+            )
+            /******/
+          };
+          var __webpack_module_cache__ = {};
+          function __webpack_require__(moduleId) {
+            var cachedModule = __webpack_module_cache__[moduleId];
+            if (cachedModule !== void 0) {
+              return cachedModule.exports;
+            }
+            var module2 = __webpack_module_cache__[moduleId] = {
+              /******/
+              // no module.id needed
+              /******/
+              // no module.loaded needed
+              /******/
+              exports: {}
+              /******/
+            };
+            __webpack_modules__[moduleId](module2, module2.exports, __webpack_require__);
+            return module2.exports;
+          }
+          var __webpack_exports__ = __webpack_require__(579);
+          return __webpack_exports__;
+        })()
+      );
+    });
+  })(cytoscapeFcose$1);
+  return cytoscapeFcose$1.exports;
+}
+var cytoscapeFcoseExports = requireCytoscapeFcose();
+const fcose = /* @__PURE__ */ getDefaultExportFromCjs(cytoscapeFcoseExports);
+var ArchitectureDirectionName = {
+  L: "left",
+  R: "right",
+  T: "top",
+  B: "bottom"
+};
+var ArchitectureDirectionArrow = {
+  L: /* @__PURE__ */ __name((scale) => `${scale},${scale / 2} 0,${scale} 0,0`, "L"),
+  R: /* @__PURE__ */ __name((scale) => `0,${scale / 2} ${scale},0 ${scale},${scale}`, "R"),
+  T: /* @__PURE__ */ __name((scale) => `0,0 ${scale},0 ${scale / 2},${scale}`, "T"),
+  B: /* @__PURE__ */ __name((scale) => `${scale / 2},0 ${scale},${scale} 0,${scale}`, "B")
+};
+var ArchitectureDirectionArrowShift = {
+  L: /* @__PURE__ */ __name((orig, arrowSize) => orig - arrowSize + 2, "L"),
+  R: /* @__PURE__ */ __name((orig, _arrowSize) => orig - 2, "R"),
+  T: /* @__PURE__ */ __name((orig, arrowSize) => orig - arrowSize + 2, "T"),
+  B: /* @__PURE__ */ __name((orig, _arrowSize) => orig - 2, "B")
+};
+var getOppositeArchitectureDirection = /* @__PURE__ */ __name(function(x) {
+  if (isArchitectureDirectionX(x)) {
+    return x === "L" ? "R" : "L";
+  } else {
+    return x === "T" ? "B" : "T";
+  }
+}, "getOppositeArchitectureDirection");
+var isArchitectureDirection = /* @__PURE__ */ __name(function(x) {
+  const temp = x;
+  return temp === "L" || temp === "R" || temp === "T" || temp === "B";
+}, "isArchitectureDirection");
+var isArchitectureDirectionX = /* @__PURE__ */ __name(function(x) {
+  const temp = x;
+  return temp === "L" || temp === "R";
+}, "isArchitectureDirectionX");
+var isArchitectureDirectionY = /* @__PURE__ */ __name(function(x) {
+  const temp = x;
+  return temp === "T" || temp === "B";
+}, "isArchitectureDirectionY");
+var isArchitectureDirectionXY = /* @__PURE__ */ __name(function(a, b) {
+  const aX_bY = isArchitectureDirectionX(a) && isArchitectureDirectionY(b);
+  const aY_bX = isArchitectureDirectionY(a) && isArchitectureDirectionX(b);
+  return aX_bY || aY_bX;
+}, "isArchitectureDirectionXY");
+var isArchitecturePairXY = /* @__PURE__ */ __name(function(pair) {
+  const lhs = pair[0];
+  const rhs = pair[1];
+  const aX_bY = isArchitectureDirectionX(lhs) && isArchitectureDirectionY(rhs);
+  const aY_bX = isArchitectureDirectionY(lhs) && isArchitectureDirectionX(rhs);
+  return aX_bY || aY_bX;
+}, "isArchitecturePairXY");
+var isValidArchitectureDirectionPair = /* @__PURE__ */ __name(function(x) {
+  return x !== "LL" && x !== "RR" && x !== "TT" && x !== "BB";
+}, "isValidArchitectureDirectionPair");
+var getArchitectureDirectionPair = /* @__PURE__ */ __name(function(sourceDir, targetDir) {
+  const pair = `${sourceDir}${targetDir}`;
+  return isValidArchitectureDirectionPair(pair) ? pair : void 0;
+}, "getArchitectureDirectionPair");
+var shiftPositionByArchitectureDirectionPair = /* @__PURE__ */ __name(function([x, y], pair) {
+  const lhs = pair[0];
+  const rhs = pair[1];
+  if (isArchitectureDirectionX(lhs)) {
+    if (isArchitectureDirectionY(rhs)) {
+      return [x + (lhs === "L" ? -1 : 1), y + (rhs === "T" ? 1 : -1)];
+    } else {
+      return [x + (lhs === "L" ? -1 : 1), y];
+    }
+  } else {
+    if (isArchitectureDirectionX(rhs)) {
+      return [x + (rhs === "L" ? 1 : -1), y + (lhs === "T" ? 1 : -1)];
+    } else {
+      return [x, y + (lhs === "T" ? 1 : -1)];
+    }
+  }
+}, "shiftPositionByArchitectureDirectionPair");
+var getArchitectureDirectionXYFactors = /* @__PURE__ */ __name(function(pair) {
+  if (pair === "LT" || pair === "TL") {
+    return [1, 1];
+  } else if (pair === "BL" || pair === "LB") {
+    return [1, -1];
+  } else if (pair === "BR" || pair === "RB") {
+    return [-1, -1];
+  } else {
+    return [-1, 1];
+  }
+}, "getArchitectureDirectionXYFactors");
+var getArchitectureDirectionAlignment = /* @__PURE__ */ __name(function(a, b) {
+  if (isArchitectureDirectionXY(a, b)) {
+    return "bend";
+  } else if (isArchitectureDirectionX(a)) {
+    return "horizontal";
+  }
+  return "vertical";
+}, "getArchitectureDirectionAlignment");
+var isArchitectureService = /* @__PURE__ */ __name(function(x) {
+  const temp = x;
+  return temp.type === "service";
+}, "isArchitectureService");
+var isArchitectureJunction = /* @__PURE__ */ __name(function(x) {
+  const temp = x;
+  return temp.type === "junction";
+}, "isArchitectureJunction");
+var edgeData = /* @__PURE__ */ __name((edge) => {
+  return edge.data();
+}, "edgeData");
+var nodeData = /* @__PURE__ */ __name((node) => {
+  return node.data();
+}, "nodeData");
+var DEFAULT_ARCHITECTURE_CONFIG = defaultConfig_default.architecture;
+var ArchitectureDB = (_a = class {
+  constructor() {
+    this.nodes = {};
+    this.groups = {};
+    this.edges = [];
+    this.registeredIds = {};
+    this.elements = {};
+    this.setAccTitle = setAccTitle;
+    this.getAccTitle = getAccTitle;
+    this.setDiagramTitle = setDiagramTitle;
+    this.getDiagramTitle = getDiagramTitle;
+    this.getAccDescription = getAccDescription;
+    this.setAccDescription = setAccDescription;
+    this.clear();
+  }
+  clear() {
+    this.nodes = {};
+    this.groups = {};
+    this.edges = [];
+    this.registeredIds = {};
+    this.dataStructures = void 0;
+    this.elements = {};
+    clear();
+  }
+  addService({
+    id,
+    icon,
+    in: parent,
+    title,
+    iconText
+  }) {
+    if (this.registeredIds[id] !== void 0) {
+      throw new Error(
+        `The service id [${id}] is already in use by another ${this.registeredIds[id]}`
+      );
+    }
+    if (parent !== void 0) {
+      if (id === parent) {
+        throw new Error(`The service [${id}] cannot be placed within itself`);
+      }
+      if (this.registeredIds[parent] === void 0) {
+        throw new Error(
+          `The service [${id}]'s parent does not exist. Please make sure the parent is created before this service`
+        );
+      }
+      if (this.registeredIds[parent] === "node") {
+        throw new Error(`The service [${id}]'s parent is not a group`);
+      }
+    }
+    this.registeredIds[id] = "node";
+    this.nodes[id] = {
+      id,
+      type: "service",
+      icon,
+      iconText,
+      title,
+      edges: [],
+      in: parent
+    };
+  }
+  getServices() {
+    return Object.values(this.nodes).filter(isArchitectureService);
+  }
+  addJunction({ id, in: parent }) {
+    this.registeredIds[id] = "node";
+    this.nodes[id] = {
+      id,
+      type: "junction",
+      edges: [],
+      in: parent
+    };
+  }
+  getJunctions() {
+    return Object.values(this.nodes).filter(isArchitectureJunction);
+  }
+  getNodes() {
+    return Object.values(this.nodes);
+  }
+  getNode(id) {
+    return this.nodes[id] ?? null;
+  }
+  addGroup({ id, icon, in: parent, title }) {
+    if (this.registeredIds?.[id] !== void 0) {
+      throw new Error(
+        `The group id [${id}] is already in use by another ${this.registeredIds[id]}`
+      );
+    }
+    if (parent !== void 0) {
+      if (id === parent) {
+        throw new Error(`The group [${id}] cannot be placed within itself`);
+      }
+      if (this.registeredIds?.[parent] === void 0) {
+        throw new Error(
+          `The group [${id}]'s parent does not exist. Please make sure the parent is created before this group`
+        );
+      }
+      if (this.registeredIds?.[parent] === "node") {
+        throw new Error(`The group [${id}]'s parent is not a group`);
+      }
+    }
+    this.registeredIds[id] = "group";
+    this.groups[id] = {
+      id,
+      icon,
+      title,
+      in: parent
+    };
+  }
+  getGroups() {
+    return Object.values(this.groups);
+  }
+  addEdge({
+    lhsId,
+    rhsId,
+    lhsDir,
+    rhsDir,
+    lhsInto,
+    rhsInto,
+    lhsGroup,
+    rhsGroup,
+    title
+  }) {
+    if (!isArchitectureDirection(lhsDir)) {
+      throw new Error(
+        `Invalid direction given for left hand side of edge ${lhsId}--${rhsId}. Expected (L,R,T,B) got ${String(lhsDir)}`
+      );
+    }
+    if (!isArchitectureDirection(rhsDir)) {
+      throw new Error(
+        `Invalid direction given for right hand side of edge ${lhsId}--${rhsId}. Expected (L,R,T,B) got ${String(rhsDir)}`
+      );
+    }
+    if (this.nodes[lhsId] === void 0 && this.groups[lhsId] === void 0) {
+      throw new Error(
+        `The left-hand id [${lhsId}] does not yet exist. Please create the service/group before declaring an edge to it.`
+      );
+    }
+    if (this.nodes[rhsId] === void 0 && this.groups[rhsId] === void 0) {
+      throw new Error(
+        `The right-hand id [${rhsId}] does not yet exist. Please create the service/group before declaring an edge to it.`
+      );
+    }
+    const lhsGroupId = this.nodes[lhsId].in;
+    const rhsGroupId = this.nodes[rhsId].in;
+    if (lhsGroup && lhsGroupId && rhsGroupId && lhsGroupId == rhsGroupId) {
+      throw new Error(
+        `The left-hand id [${lhsId}] is modified to traverse the group boundary, but the edge does not pass through two groups.`
+      );
+    }
+    if (rhsGroup && lhsGroupId && rhsGroupId && lhsGroupId == rhsGroupId) {
+      throw new Error(
+        `The right-hand id [${rhsId}] is modified to traverse the group boundary, but the edge does not pass through two groups.`
+      );
+    }
+    const edge = {
+      lhsId,
+      lhsDir,
+      lhsInto,
+      lhsGroup,
+      rhsId,
+      rhsDir,
+      rhsInto,
+      rhsGroup,
+      title
+    };
+    this.edges.push(edge);
+    if (this.nodes[lhsId] && this.nodes[rhsId]) {
+      this.nodes[lhsId].edges.push(this.edges[this.edges.length - 1]);
+      this.nodes[rhsId].edges.push(this.edges[this.edges.length - 1]);
+    }
+  }
+  getEdges() {
+    return this.edges;
+  }
+  /**
+   * Returns the current diagram's adjacency list, spatial map, & group alignments.
+   * If they have not been created, run the algorithms to generate them.
+   * @returns
+   */
+  getDataStructures() {
+    if (this.dataStructures === void 0) {
+      const groupAlignments = {};
+      const adjList = Object.entries(this.nodes).reduce((prevOuter, [id, service]) => {
+        prevOuter[id] = service.edges.reduce((prevInner, edge) => {
+          const lhsGroupId = this.getNode(edge.lhsId)?.in;
+          const rhsGroupId = this.getNode(edge.rhsId)?.in;
+          if (lhsGroupId && rhsGroupId && lhsGroupId !== rhsGroupId) {
+            const alignment = getArchitectureDirectionAlignment(edge.lhsDir, edge.rhsDir);
+            if (alignment !== "bend") {
+              groupAlignments[lhsGroupId] ??= {};
+              groupAlignments[lhsGroupId][rhsGroupId] = alignment;
+              groupAlignments[rhsGroupId] ??= {};
+              groupAlignments[rhsGroupId][lhsGroupId] = alignment;
+            }
+          }
+          if (edge.lhsId === id) {
+            const pair = getArchitectureDirectionPair(edge.lhsDir, edge.rhsDir);
+            if (pair) {
+              prevInner[pair] = edge.rhsId;
+            }
+          } else {
+            const pair = getArchitectureDirectionPair(edge.rhsDir, edge.lhsDir);
+            if (pair) {
+              prevInner[pair] = edge.lhsId;
+            }
+          }
+          return prevInner;
+        }, {});
+        return prevOuter;
+      }, {});
+      const firstId = Object.keys(adjList)[0];
+      const visited = { [firstId]: 1 };
+      const notVisited = Object.keys(adjList).reduce(
+        (prev, id) => id === firstId ? prev : { ...prev, [id]: 1 },
+        {}
+      );
+      const BFS = /* @__PURE__ */ __name((startingId) => {
+        const spatialMap = { [startingId]: [0, 0] };
+        const queue = [startingId];
+        while (queue.length > 0) {
+          const id = queue.shift();
+          if (id) {
+            visited[id] = 1;
+            delete notVisited[id];
+            const adj = adjList[id];
+            const [posX, posY] = spatialMap[id];
+            Object.entries(adj).forEach(([dir, rhsId]) => {
+              if (!visited[rhsId]) {
+                spatialMap[rhsId] = shiftPositionByArchitectureDirectionPair(
+                  [posX, posY],
+                  dir
+                );
+                queue.push(rhsId);
+              }
+            });
+          }
+        }
+        return spatialMap;
+      }, "BFS");
+      const spatialMaps = [BFS(firstId)];
+      while (Object.keys(notVisited).length > 0) {
+        spatialMaps.push(BFS(Object.keys(notVisited)[0]));
+      }
+      this.dataStructures = {
+        adjList,
+        spatialMaps,
+        groupAlignments
+      };
+    }
+    return this.dataStructures;
+  }
+  setElementForId(id, element) {
+    this.elements[id] = element;
+  }
+  getElementById(id) {
+    return this.elements[id];
+  }
+  getConfig() {
+    return cleanAndMerge({
+      ...DEFAULT_ARCHITECTURE_CONFIG,
+      ...getConfig().architecture
+    });
+  }
+  getConfigField(field) {
+    return this.getConfig()[field];
+  }
+}, __name(_a, "ArchitectureDB"), _a);
+var populateDb = /* @__PURE__ */ __name((ast, db) => {
+  populateCommonDb(ast, db);
+  ast.groups.map((group) => db.addGroup(group));
+  ast.services.map((service) => db.addService({ ...service, type: "service" }));
+  ast.junctions.map((service) => db.addJunction({ ...service, type: "junction" }));
+  ast.edges.map((edge) => db.addEdge(edge));
+}, "populateDb");
+var parser = {
+  parser: {
+    // @ts-expect-error - ArchitectureDB is not assignable to DiagramDB
+    yy: void 0
+  },
+  parse: /* @__PURE__ */ __name(async (input) => {
+    const ast = await parse("architecture", input);
+    log.debug(ast);
+    const db = parser.parser?.yy;
+    if (!(db instanceof ArchitectureDB)) {
+      throw new Error(
+        "parser.parser?.yy was not a ArchitectureDB. This is due to a bug within Mermaid, please report this issue at https://github.com/mermaid-js/mermaid/issues."
+      );
+    }
+    populateDb(ast, db);
+  }, "parse")
+};
+var getStyles = /* @__PURE__ */ __name((options) => `
   .edge {
-    stroke-width: ${I.archEdgeWidth};
-    stroke: ${I.archEdgeColor};
+    stroke-width: ${options.archEdgeWidth};
+    stroke: ${options.archEdgeColor};
     fill: none;
   }
 
   .arrow {
-    fill: ${I.archEdgeArrowColor};
+    fill: ${options.archEdgeArrowColor};
   }
 
   .node-bkg {
     fill: none;
-    stroke: ${I.archGroupBorderColor};
-    stroke-width: ${I.archGroupBorderWidth};
+    stroke: ${options.archGroupBorderColor};
+    stroke-width: ${options.archGroupBorderWidth};
     stroke-dasharray: 8;
   }
   .node-icon-text {
@@ -29,8 +8002,679 @@ import{_ as dt,L as Ze,a3 as ke,l as Se,b as qe,a as Qe,t as Je,v as Ke,g as je,
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
-`,"getStyles"),Ir=xr,re=dt(I=>`<g><rect width="80" height="80" style="fill: #087ebf; stroke-width: 0px;"/>${I}</g>`,"wrapIcon"),ne={prefix:"mermaid-architecture",height:80,width:80,icons:{database:{body:re('<path id="b" data-name="4" d="m20,57.86c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path id="c" data-name="3" d="m20,45.95c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path id="d" data-name="2" d="m20,34.05c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse id="e" data-name="1" cx="40" cy="22.14" rx="20" ry="7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="20" y1="57.86" x2="20" y2="22.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="60" y1="57.86" x2="60" y2="22.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>')},server:{body:re('<rect x="17.5" y="17.5" width="45" height="45" rx="2" ry="2" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="32.5" x2="62.5" y2="32.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="47.5" x2="62.5" y2="47.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><g><path d="m56.25,25c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,25c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><path d="m56.25,40c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,40c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><path d="m56.25,55c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,55c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g>')},disk:{body:re('<rect x="20" y="15" width="40" height="50" rx="1" ry="1" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="24" cy="19.17" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="56" cy="19.17" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="24" cy="60.83" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="56" cy="60.83" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="40" cy="33.75" rx="14" ry="14.58" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="40" cy="33.75" rx="4" ry="4.17" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m37.51,42.52l-4.83,13.22c-.26.71-1.1,1.02-1.76.64l-4.18-2.42c-.66-.38-.81-1.26-.33-1.84l9.01-10.8c.88-1.05,2.56-.08,2.09,1.2Z" style="fill: #fff; stroke-width: 0px;"/>')},internet:{body:re('<circle cx="40" cy="40" r="22.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="40" y1="17.5" x2="40" y2="62.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="40" x2="62.5" y2="40" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m39.99,17.51c-15.28,11.1-15.28,33.88,0,44.98" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m40.01,17.51c15.28,11.1,15.28,33.88,0,44.98" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="19.75" y1="30.1" x2="60.25" y2="30.1" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="19.75" y1="49.9" x2="60.25" y2="49.9" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>')},cloud:{body:re('<path d="m65,47.5c0,2.76-2.24,5-5,5H20c-2.76,0-5-2.24-5-5,0-1.87,1.03-3.51,2.56-4.36-.04-.21-.06-.42-.06-.64,0-2.6,2.48-4.74,5.65-4.97,1.65-4.51,6.34-7.76,11.85-7.76.86,0,1.69.08,2.5.23,2.09-1.57,4.69-2.5,7.5-2.5,6.1,0,11.19,4.38,12.28,10.17,2.14.56,3.72,2.51,3.72,4.83,0,.03,0,.07-.01.1,2.29.46,4.01,2.48,4.01,4.9Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>')},unknown:sr,blank:{body:re("")}}},Rr=dt(async function(I,x,A){const P=A.getConfigField("padding"),N=A.getConfigField("iconSize"),u=N/2,h=N/6,a=h/2;await Promise.all(x.edges().map(async e=>{const{source:r,sourceDir:f,sourceArrow:i,sourceGroup:g,target:t,targetDir:o,targetArrow:s,targetGroup:c,label:l}=be(e);let{x:T,y:d}=e[0].sourceEndpoint();const{x:v,y:L}=e[0].midpoint();let{x:b,y:C}=e[0].targetEndpoint();const G=P+4;if(g&&(Wt(f)?T+=f==="L"?-G:G:d+=f==="T"?-G:G+18),c&&(Wt(o)?b+=o==="L"?-G:G:C+=o==="T"?-G:G+18),!g&&A.getNode(r)?.type==="junction"&&(Wt(f)?T+=f==="L"?u:-u:d+=f==="T"?u:-u),!c&&A.getNode(t)?.type==="junction"&&(Wt(o)?b+=o==="L"?u:-u:C+=o==="T"?u:-u),e[0]._private.rscratch){const k=I.insert("g");if(k.insert("path").attr("d",`M ${T},${d} L ${v},${L} L${b},${C} `).attr("class","edge"),i){const Y=Wt(f)?se[f](T,h):T-a,K=qt(f)?se[f](d,h):d-a;k.insert("polygon").attr("points",Ie[f](h)).attr("transform",`translate(${Y},${K})`).attr("class","arrow")}if(s){const Y=Wt(o)?se[o](b,h):b-a,K=qt(o)?se[o](C,h):C-a;k.insert("polygon").attr("points",Ie[o](h)).attr("transform",`translate(${Y},${K})`).attr("class","arrow")}if(l){const Y=Te(f,o)?"XY":Wt(f)?"X":"Y";let K=0;Y==="X"?K=Math.abs(T-b):Y==="Y"?K=Math.abs(d-C)/1.5:K=Math.abs(T-b)/2;const O=k.append("g");if(await me(O,l,{useHtmlLabels:!1,width:K,classes:"architecture-service-label"},Ee()),O.attr("dy","1em").attr("alignment-baseline","middle").attr("dominant-baseline","middle").attr("text-anchor","middle"),Y==="X")O.attr("transform","translate("+v+", "+L+")");else if(Y==="Y")O.attr("transform","translate("+v+", "+L+") rotate(-90)");else if(Y==="XY"){const it=ye(f,o);if(it&&Tr(it)){const n=O.node().getBoundingClientRect(),[m,p]=Cr(it);O.attr("dominant-baseline","auto").attr("transform",`rotate(${-1*m*p*45})`);const E=O.node().getBoundingClientRect();O.attr("transform",`
-                translate(${v}, ${L-n.height/2})
-                translate(${m*E.width/2}, ${p*E.height/2})
-                rotate(${-1*m*p*45}, 0, ${n.height/2})
-              `)}}}}}))},"drawEdges"),Sr=dt(async function(I,x,A){const N=A.getConfigField("padding")*.75,u=A.getConfigField("fontSize"),a=A.getConfigField("iconSize")/2;await Promise.all(x.nodes().map(async e=>{const r=ie(e);if(r.type==="group"){const{h:f,w:i,x1:g,y1:t}=e.boundingBox();I.append("rect").attr("x",g+a).attr("y",t+a).attr("width",i).attr("height",f).attr("class","node-bkg");const o=I.append("g");let s=g,c=t;if(r.icon){const l=o.append("g");l.html(`<g>${await pe(r.icon,{height:N,width:N,fallbackPrefix:ne.prefix})}</g>`),l.attr("transform","translate("+(s+a+1)+", "+(c+a+1)+")"),s+=N,c+=u/2-1-2}if(r.label){const l=o.append("g");await me(l,r.label,{useHtmlLabels:!1,width:i,classes:"architecture-service-label"},Ee()),l.attr("dy","1em").attr("alignment-baseline","middle").attr("dominant-baseline","start").attr("text-anchor","start"),l.attr("transform","translate("+(s+a+4)+", "+(c+a+2)+")")}}}))},"drawGroups"),Fr=dt(async function(I,x,A){const P=Ee();for(const N of A){const u=x.append("g"),h=I.getConfigField("iconSize");if(N.title){const f=u.append("g");await me(f,N.title,{useHtmlLabels:!1,width:h*1.5,classes:"architecture-service-label"},P),f.attr("dy","1em").attr("alignment-baseline","middle").attr("dominant-baseline","middle").attr("text-anchor","middle"),f.attr("transform","translate("+h/2+", "+h+")")}const a=u.append("g");if(N.icon)a.html(`<g>${await pe(N.icon,{height:h,width:h,fallbackPrefix:ne.prefix})}</g>`);else if(N.iconText){a.html(`<g>${await pe("blank",{height:h,width:h,fallbackPrefix:ne.prefix})}</g>`);const g=a.append("g").append("foreignObject").attr("width",h).attr("height",h).append("div").attr("class","node-icon-text").attr("style",`height: ${h}px;`).append("div").html(ar(N.iconText,P)),t=parseInt(window.getComputedStyle(g.node(),null).getPropertyValue("font-size").replace(/\D/g,""))??16;g.attr("style",`-webkit-line-clamp: ${Math.floor((h-2)/t)};`)}else a.append("path").attr("class","node-bkg").attr("id","node-"+N.id).attr("d",`M0 ${h} v${-h} q0,-5 5,-5 h${h} q5,0 5,5 v${h} H0 Z`);u.attr("class","architecture-service");const{width:e,height:r}=u._groups[0][0].getBBox();N.width=e,N.height=r,I.setElementForId(N.id,u)}return 0},"drawServices"),br=dt(function(I,x,A){A.forEach(P=>{const N=x.append("g"),u=I.getConfigField("iconSize");N.append("g").append("rect").attr("id","node-"+P.id).attr("fill-opacity","0").attr("width",u).attr("height",u),N.attr("class","architecture-junction");const{width:a,height:e}=N._groups[0][0].getBBox();N.width=a,N.height=e,I.setElementForId(P.id,N)})},"drawJunctions");or([{name:ne.prefix,icons:ne}]);Fe.use(Er);function Ue(I,x,A){I.forEach(P=>{x.add({group:"nodes",data:{type:"service",id:P.id,icon:P.icon,label:P.title,parent:P.in,width:A.getConfigField("iconSize"),height:A.getConfigField("iconSize")},classes:"node-service"})})}dt(Ue,"addServices");function Ye(I,x,A){I.forEach(P=>{x.add({group:"nodes",data:{type:"junction",id:P.id,parent:P.in,width:A.getConfigField("iconSize"),height:A.getConfigField("iconSize")},classes:"node-junction"})})}dt(Ye,"addJunctions");function Xe(I,x){x.nodes().map(A=>{const P=ie(A);if(P.type==="group")return;P.x=A.position().x,P.y=A.position().y,I.getElementById(P.id).attr("transform","translate("+(P.x||0)+","+(P.y||0)+")")})}dt(Xe,"positionNodes");function He(I,x){I.forEach(A=>{x.add({group:"nodes",data:{type:"group",id:A.id,icon:A.icon,label:A.title,parent:A.in},classes:"node-group"})})}dt(He,"addGroups");function We(I,x){I.forEach(A=>{const{lhsId:P,rhsId:N,lhsInto:u,lhsGroup:h,rhsInto:a,lhsDir:e,rhsDir:r,rhsGroup:f,title:i}=A,g=Te(A.lhsDir,A.rhsDir)?"segments":"straight",t={id:`${P}-${N}`,label:i,source:P,sourceDir:e,sourceArrow:u,sourceGroup:h,sourceEndpoint:e==="L"?"0 50%":e==="R"?"100% 50%":e==="T"?"50% 0":"50% 100%",target:N,targetDir:r,targetArrow:a,targetGroup:f,targetEndpoint:r==="L"?"0 50%":r==="R"?"100% 50%":r==="T"?"50% 0":"50% 100%"};x.add({group:"edges",data:t,classes:g})})}dt(We,"addEdges");function Ve(I,x,A){const P=dt((a,e)=>Object.entries(a).reduce((r,[f,i])=>{let g=0;const t=Object.entries(i);if(t.length===1)return r[f]=t[0][1],r;for(let o=0;o<t.length-1;o++)for(let s=o+1;s<t.length;s++){const[c,l]=t[o],[T,d]=t[s];if(A[c]?.[T]===e)r[f]??=[],r[f]=[...r[f],...l,...d];else if(c==="default"||T==="default")r[f]??=[],r[f]=[...r[f],...l,...d];else{const L=`${f}-${g++}`;r[L]=l;const b=`${f}-${g++}`;r[b]=d}}return r},{}),"flattenAlignments"),N=x.map(a=>{const e={},r={};return Object.entries(a).forEach(([f,[i,g]])=>{const t=I.getNode(f)?.in??"default";e[g]??={},e[g][t]??=[],e[g][t].push(f),r[i]??={},r[i][t]??=[],r[i][t].push(f)}),{horiz:Object.values(P(e,"horizontal")).filter(f=>f.length>1),vert:Object.values(P(r,"vertical")).filter(f=>f.length>1)}}),[u,h]=N.reduce(([a,e],{horiz:r,vert:f})=>[[...a,...r],[...e,...f]],[[],[]]);return{horizontal:u,vertical:h}}dt(Ve,"getAlignments");function ze(I,x){const A=[],P=dt(u=>`${u[0]},${u[1]}`,"posToStr"),N=dt(u=>u.split(",").map(h=>parseInt(h)),"strToPos");return I.forEach(u=>{const h=Object.fromEntries(Object.entries(u).map(([f,i])=>[P(i),f])),a=[P([0,0])],e={},r={L:[-1,0],R:[1,0],T:[0,1],B:[0,-1]};for(;a.length>0;){const f=a.shift();if(f){e[f]=1;const i=h[f];if(i){const g=N(f);Object.entries(r).forEach(([t,o])=>{const s=P([g[0]+o[0],g[1]+o[1]]),c=h[s];c&&!e[s]&&(a.push(s),A.push({[xe[t]]:c,[xe[mr(t)]]:i,gap:1.5*x.getConfigField("iconSize")}))})}}}}),A}dt(ze,"getRelativeConstraints");function Be(I,x,A,P,N,{spatialMaps:u,groupAlignments:h}){return new Promise(a=>{const e=nr("body").append("div").attr("id","cy").attr("style","display:none"),r=Fe({container:document.getElementById("cy"),style:[{selector:"edge",style:{"curve-style":"straight",label:"data(label)","source-endpoint":"data(sourceEndpoint)","target-endpoint":"data(targetEndpoint)"}},{selector:"edge.segments",style:{"curve-style":"segments","segment-weights":"0","segment-distances":[.5],"edge-distances":"endpoints","source-endpoint":"data(sourceEndpoint)","target-endpoint":"data(targetEndpoint)"}},{selector:"node",style:{"compound-sizing-wrt-labels":"include"}},{selector:"node[label]",style:{"text-valign":"bottom","text-halign":"center","font-size":`${N.getConfigField("fontSize")}px`}},{selector:".node-service",style:{label:"data(label)",width:"data(width)",height:"data(height)"}},{selector:".node-junction",style:{width:"data(width)",height:"data(height)"}},{selector:".node-group",style:{padding:`${N.getConfigField("padding")}px`}}],layout:{name:"grid",boundingBox:{x1:0,x2:100,y1:0,y2:100}}});e.remove(),He(A,r),Ue(I,r,N),Ye(x,r,N),We(P,r);const f=Ve(N,u,h),i=ze(u,N),g=r.layout({name:"fcose",quality:"proof",styleEnabled:!1,animate:!1,nodeDimensionsIncludeLabels:!1,idealEdgeLength(t){const[o,s]=t.connectedNodes(),{parent:c}=ie(o),{parent:l}=ie(s);return c===l?1.5*N.getConfigField("iconSize"):.5*N.getConfigField("iconSize")},edgeElasticity(t){const[o,s]=t.connectedNodes(),{parent:c}=ie(o),{parent:l}=ie(s);return c===l?.45:.001},alignmentConstraint:f,relativePlacementConstraint:i});g.one("layoutstop",()=>{function t(o,s,c,l){let T,d;const{x:v,y:L}=o,{x:b,y:C}=s;d=(l-L+(v-c)*(L-C)/(v-b))/Math.sqrt(1+Math.pow((L-C)/(v-b),2)),T=Math.sqrt(Math.pow(l-L,2)+Math.pow(c-v,2)-Math.pow(d,2));const G=Math.sqrt(Math.pow(b-v,2)+Math.pow(C-L,2));T=T/G;let k=(b-v)*(l-L)-(C-L)*(c-v);switch(!0){case k>=0:k=1;break;case k<0:k=-1;break}let Y=(b-v)*(c-v)+(C-L)*(l-L);switch(!0){case Y>=0:Y=1;break;case Y<0:Y=-1;break}return d=Math.abs(d)*k,T=T*Y,{distances:d,weights:T}}dt(t,"getSegmentWeights"),r.startBatch();for(const o of Object.values(r.edges()))if(o.data?.()){const{x:s,y:c}=o.source().position(),{x:l,y:T}=o.target().position();if(s!==l&&c!==T){const d=o.sourceEndpoint(),v=o.targetEndpoint(),{sourceDir:L}=be(o),[b,C]=qt(L)?[d.x,v.y]:[v.x,d.y],{weights:G,distances:k}=t(d,v,b,C);o.style("segment-distances",k),o.style("segment-weights",G)}}r.endBatch(),g.run()}),g.run(),r.ready(t=>{Se.info("Ready",t),a(r)})})}dt(Be,"layoutArchitecture");var Pr=dt(async(I,x,A,P)=>{const N=P.db,u=N.getServices(),h=N.getJunctions(),a=N.getGroups(),e=N.getEdges(),r=N.getDataStructures(),f=Ze(x),i=f.append("g");i.attr("class","architecture-edges");const g=f.append("g");g.attr("class","architecture-services");const t=f.append("g");t.attr("class","architecture-groups"),await Fr(N,g,u),br(N,g,h);const o=await Be(u,h,a,e,N,r);await Rr(i,o,N),await Sr(t,o,N),Xe(N,o),ke(void 0,f,N.getConfigField("padding"),N.getConfigField("useMaxWidth"))},"draw"),Gr={draw:Pr},Vr={parser:Ge,get db(){return new Pe},renderer:Gr,styles:Ir};export{Vr as diagram};
+`, "getStyles");
+var architectureStyles_default = getStyles;
+var wrapIcon = /* @__PURE__ */ __name((icon) => {
+  return `<g><rect width="80" height="80" style="fill: #087ebf; stroke-width: 0px;"/>${icon}</g>`;
+}, "wrapIcon");
+var architectureIcons = {
+  prefix: "mermaid-architecture",
+  height: 80,
+  width: 80,
+  icons: {
+    database: {
+      body: wrapIcon(
+        '<path id="b" data-name="4" d="m20,57.86c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path id="c" data-name="3" d="m20,45.95c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path id="d" data-name="2" d="m20,34.05c0,3.94,8.95,7.14,20,7.14s20-3.2,20-7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse id="e" data-name="1" cx="40" cy="22.14" rx="20" ry="7.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="20" y1="57.86" x2="20" y2="22.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="60" y1="57.86" x2="60" y2="22.14" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>'
+      )
+    },
+    server: {
+      body: wrapIcon(
+        '<rect x="17.5" y="17.5" width="45" height="45" rx="2" ry="2" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="32.5" x2="62.5" y2="32.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="47.5" x2="62.5" y2="47.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><g><path d="m56.25,25c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,25c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><path d="m56.25,40c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,40c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><path d="m56.25,55c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: #fff; stroke-width: 0px;"/><path d="m56.25,55c0,.27-.45.5-1,.5h-10.5c-.55,0-1-.23-1-.5s.45-.5,1-.5h10.5c.55,0,1,.23,1,.5Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="25" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="40" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g><g><circle cx="32.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="27.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/><circle cx="22.5" cy="55" r=".75" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10;"/></g>'
+      )
+    },
+    disk: {
+      body: wrapIcon(
+        '<rect x="20" y="15" width="40" height="50" rx="1" ry="1" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="24" cy="19.17" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="56" cy="19.17" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="24" cy="60.83" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="56" cy="60.83" rx=".8" ry=".83" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="40" cy="33.75" rx="14" ry="14.58" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><ellipse cx="40" cy="33.75" rx="4" ry="4.17" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m37.51,42.52l-4.83,13.22c-.26.71-1.1,1.02-1.76.64l-4.18-2.42c-.66-.38-.81-1.26-.33-1.84l9.01-10.8c.88-1.05,2.56-.08,2.09,1.2Z" style="fill: #fff; stroke-width: 0px;"/>'
+      )
+    },
+    internet: {
+      body: wrapIcon(
+        '<circle cx="40" cy="40" r="22.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="40" y1="17.5" x2="40" y2="62.5" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="17.5" y1="40" x2="62.5" y2="40" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m39.99,17.51c-15.28,11.1-15.28,33.88,0,44.98" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><path d="m40.01,17.51c15.28,11.1,15.28,33.88,0,44.98" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="19.75" y1="30.1" x2="60.25" y2="30.1" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/><line x1="19.75" y1="49.9" x2="60.25" y2="49.9" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>'
+      )
+    },
+    cloud: {
+      body: wrapIcon(
+        '<path d="m65,47.5c0,2.76-2.24,5-5,5H20c-2.76,0-5-2.24-5-5,0-1.87,1.03-3.51,2.56-4.36-.04-.21-.06-.42-.06-.64,0-2.6,2.48-4.74,5.65-4.97,1.65-4.51,6.34-7.76,11.85-7.76.86,0,1.69.08,2.5.23,2.09-1.57,4.69-2.5,7.5-2.5,6.1,0,11.19,4.38,12.28,10.17,2.14.56,3.72,2.51,3.72,4.83,0,.03,0,.07-.01.1,2.29.46,4.01,2.48,4.01,4.9Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>'
+      )
+    },
+    unknown: unknownIcon,
+    blank: {
+      body: wrapIcon("")
+    }
+  }
+};
+var drawEdges = /* @__PURE__ */ __name(async function(edgesEl, cy, db) {
+  const padding = db.getConfigField("padding");
+  const iconSize = db.getConfigField("iconSize");
+  const halfIconSize = iconSize / 2;
+  const arrowSize = iconSize / 6;
+  const halfArrowSize = arrowSize / 2;
+  await Promise.all(
+    cy.edges().map(async (edge) => {
+      const {
+        source,
+        sourceDir,
+        sourceArrow,
+        sourceGroup,
+        target,
+        targetDir,
+        targetArrow,
+        targetGroup,
+        label
+      } = edgeData(edge);
+      let { x: startX, y: startY } = edge[0].sourceEndpoint();
+      const { x: midX, y: midY } = edge[0].midpoint();
+      let { x: endX, y: endY } = edge[0].targetEndpoint();
+      const groupEdgeShift = padding + 4;
+      if (sourceGroup) {
+        if (isArchitectureDirectionX(sourceDir)) {
+          startX += sourceDir === "L" ? -groupEdgeShift : groupEdgeShift;
+        } else {
+          startY += sourceDir === "T" ? -groupEdgeShift : groupEdgeShift + 18;
+        }
+      }
+      if (targetGroup) {
+        if (isArchitectureDirectionX(targetDir)) {
+          endX += targetDir === "L" ? -groupEdgeShift : groupEdgeShift;
+        } else {
+          endY += targetDir === "T" ? -groupEdgeShift : groupEdgeShift + 18;
+        }
+      }
+      if (!sourceGroup && db.getNode(source)?.type === "junction") {
+        if (isArchitectureDirectionX(sourceDir)) {
+          startX += sourceDir === "L" ? halfIconSize : -halfIconSize;
+        } else {
+          startY += sourceDir === "T" ? halfIconSize : -halfIconSize;
+        }
+      }
+      if (!targetGroup && db.getNode(target)?.type === "junction") {
+        if (isArchitectureDirectionX(targetDir)) {
+          endX += targetDir === "L" ? halfIconSize : -halfIconSize;
+        } else {
+          endY += targetDir === "T" ? halfIconSize : -halfIconSize;
+        }
+      }
+      if (edge[0]._private.rscratch) {
+        const g = edgesEl.insert("g");
+        g.insert("path").attr("d", `M ${startX},${startY} L ${midX},${midY} L${endX},${endY} `).attr("class", "edge");
+        if (sourceArrow) {
+          const xShift = isArchitectureDirectionX(sourceDir) ? ArchitectureDirectionArrowShift[sourceDir](startX, arrowSize) : startX - halfArrowSize;
+          const yShift = isArchitectureDirectionY(sourceDir) ? ArchitectureDirectionArrowShift[sourceDir](startY, arrowSize) : startY - halfArrowSize;
+          g.insert("polygon").attr("points", ArchitectureDirectionArrow[sourceDir](arrowSize)).attr("transform", `translate(${xShift},${yShift})`).attr("class", "arrow");
+        }
+        if (targetArrow) {
+          const xShift = isArchitectureDirectionX(targetDir) ? ArchitectureDirectionArrowShift[targetDir](endX, arrowSize) : endX - halfArrowSize;
+          const yShift = isArchitectureDirectionY(targetDir) ? ArchitectureDirectionArrowShift[targetDir](endY, arrowSize) : endY - halfArrowSize;
+          g.insert("polygon").attr("points", ArchitectureDirectionArrow[targetDir](arrowSize)).attr("transform", `translate(${xShift},${yShift})`).attr("class", "arrow");
+        }
+        if (label) {
+          const axis = !isArchitectureDirectionXY(sourceDir, targetDir) ? isArchitectureDirectionX(sourceDir) ? "X" : "Y" : "XY";
+          let width = 0;
+          if (axis === "X") {
+            width = Math.abs(startX - endX);
+          } else if (axis === "Y") {
+            width = Math.abs(startY - endY) / 1.5;
+          } else {
+            width = Math.abs(startX - endX) / 2;
+          }
+          const textElem = g.append("g");
+          await createText(
+            textElem,
+            label,
+            {
+              useHtmlLabels: false,
+              width,
+              classes: "architecture-service-label"
+            },
+            getConfig2()
+          );
+          textElem.attr("dy", "1em").attr("alignment-baseline", "middle").attr("dominant-baseline", "middle").attr("text-anchor", "middle");
+          if (axis === "X") {
+            textElem.attr("transform", "translate(" + midX + ", " + midY + ")");
+          } else if (axis === "Y") {
+            textElem.attr("transform", "translate(" + midX + ", " + midY + ") rotate(-90)");
+          } else if (axis === "XY") {
+            const pair = getArchitectureDirectionPair(sourceDir, targetDir);
+            if (pair && isArchitecturePairXY(pair)) {
+              const bboxOrig = textElem.node().getBoundingClientRect();
+              const [x, y] = getArchitectureDirectionXYFactors(pair);
+              textElem.attr("dominant-baseline", "auto").attr("transform", `rotate(${-1 * x * y * 45})`);
+              const bboxNew = textElem.node().getBoundingClientRect();
+              textElem.attr(
+                "transform",
+                `
+                translate(${midX}, ${midY - bboxOrig.height / 2})
+                translate(${x * bboxNew.width / 2}, ${y * bboxNew.height / 2})
+                rotate(${-1 * x * y * 45}, 0, ${bboxOrig.height / 2})
+              `
+              );
+            }
+          }
+        }
+      }
+    })
+  );
+}, "drawEdges");
+var drawGroups = /* @__PURE__ */ __name(async function(groupsEl, cy, db) {
+  const padding = db.getConfigField("padding");
+  const groupIconSize = padding * 0.75;
+  const fontSize = db.getConfigField("fontSize");
+  const iconSize = db.getConfigField("iconSize");
+  const halfIconSize = iconSize / 2;
+  await Promise.all(
+    cy.nodes().map(async (node) => {
+      const data = nodeData(node);
+      if (data.type === "group") {
+        const { h, w, x1, y1 } = node.boundingBox();
+        groupsEl.append("rect").attr("x", x1 + halfIconSize).attr("y", y1 + halfIconSize).attr("width", w).attr("height", h).attr("class", "node-bkg");
+        const groupLabelContainer = groupsEl.append("g");
+        let shiftedX1 = x1;
+        let shiftedY1 = y1;
+        if (data.icon) {
+          const bkgElem = groupLabelContainer.append("g");
+          bkgElem.html(
+            `<g>${await getIconSVG(data.icon, { height: groupIconSize, width: groupIconSize, fallbackPrefix: architectureIcons.prefix })}</g>`
+          );
+          bkgElem.attr(
+            "transform",
+            "translate(" + (shiftedX1 + halfIconSize + 1) + ", " + (shiftedY1 + halfIconSize + 1) + ")"
+          );
+          shiftedX1 += groupIconSize;
+          shiftedY1 += fontSize / 2 - 1 - 2;
+        }
+        if (data.label) {
+          const textElem = groupLabelContainer.append("g");
+          await createText(
+            textElem,
+            data.label,
+            {
+              useHtmlLabels: false,
+              width: w,
+              classes: "architecture-service-label"
+            },
+            getConfig2()
+          );
+          textElem.attr("dy", "1em").attr("alignment-baseline", "middle").attr("dominant-baseline", "start").attr("text-anchor", "start");
+          textElem.attr(
+            "transform",
+            "translate(" + (shiftedX1 + halfIconSize + 4) + ", " + (shiftedY1 + halfIconSize + 2) + ")"
+          );
+        }
+      }
+    })
+  );
+}, "drawGroups");
+var drawServices = /* @__PURE__ */ __name(async function(db, elem, services) {
+  const config = getConfig2();
+  for (const service of services) {
+    const serviceElem = elem.append("g");
+    const iconSize = db.getConfigField("iconSize");
+    if (service.title) {
+      const textElem = serviceElem.append("g");
+      await createText(
+        textElem,
+        service.title,
+        {
+          useHtmlLabels: false,
+          width: iconSize * 1.5,
+          classes: "architecture-service-label"
+        },
+        config
+      );
+      textElem.attr("dy", "1em").attr("alignment-baseline", "middle").attr("dominant-baseline", "middle").attr("text-anchor", "middle");
+      textElem.attr("transform", "translate(" + iconSize / 2 + ", " + iconSize + ")");
+    }
+    const bkgElem = serviceElem.append("g");
+    if (service.icon) {
+      bkgElem.html(
+        `<g>${await getIconSVG(service.icon, { height: iconSize, width: iconSize, fallbackPrefix: architectureIcons.prefix })}</g>`
+      );
+    } else if (service.iconText) {
+      bkgElem.html(
+        `<g>${await getIconSVG("blank", { height: iconSize, width: iconSize, fallbackPrefix: architectureIcons.prefix })}</g>`
+      );
+      const textElemContainer = bkgElem.append("g");
+      const fo = textElemContainer.append("foreignObject").attr("width", iconSize).attr("height", iconSize);
+      const divElem = fo.append("div").attr("class", "node-icon-text").attr("style", `height: ${iconSize}px;`).append("div").html(sanitizeText(service.iconText, config));
+      const fontSize = parseInt(
+        window.getComputedStyle(divElem.node(), null).getPropertyValue("font-size").replace(/\D/g, "")
+      ) ?? 16;
+      divElem.attr("style", `-webkit-line-clamp: ${Math.floor((iconSize - 2) / fontSize)};`);
+    } else {
+      bkgElem.append("path").attr("class", "node-bkg").attr("id", "node-" + service.id).attr(
+        "d",
+        `M0 ${iconSize} v${-iconSize} q0,-5 5,-5 h${iconSize} q5,0 5,5 v${iconSize} H0 Z`
+      );
+    }
+    serviceElem.attr("class", "architecture-service");
+    const { width, height } = serviceElem._groups[0][0].getBBox();
+    service.width = width;
+    service.height = height;
+    db.setElementForId(service.id, serviceElem);
+  }
+  return 0;
+}, "drawServices");
+var drawJunctions = /* @__PURE__ */ __name(function(db, elem, junctions) {
+  junctions.forEach((junction) => {
+    const junctionElem = elem.append("g");
+    const iconSize = db.getConfigField("iconSize");
+    const bkgElem = junctionElem.append("g");
+    bkgElem.append("rect").attr("id", "node-" + junction.id).attr("fill-opacity", "0").attr("width", iconSize).attr("height", iconSize);
+    junctionElem.attr("class", "architecture-junction");
+    const { width, height } = junctionElem._groups[0][0].getBBox();
+    junctionElem.width = width;
+    junctionElem.height = height;
+    db.setElementForId(junction.id, junctionElem);
+  });
+}, "drawJunctions");
+registerIconPacks([
+  {
+    name: architectureIcons.prefix,
+    icons: architectureIcons
+  }
+]);
+cytoscape$1.use(fcose);
+function addServices(services, cy, db) {
+  services.forEach((service) => {
+    cy.add({
+      group: "nodes",
+      data: {
+        type: "service",
+        id: service.id,
+        icon: service.icon,
+        label: service.title,
+        parent: service.in,
+        width: db.getConfigField("iconSize"),
+        height: db.getConfigField("iconSize")
+      },
+      classes: "node-service"
+    });
+  });
+}
+__name(addServices, "addServices");
+function addJunctions(junctions, cy, db) {
+  junctions.forEach((junction) => {
+    cy.add({
+      group: "nodes",
+      data: {
+        type: "junction",
+        id: junction.id,
+        parent: junction.in,
+        width: db.getConfigField("iconSize"),
+        height: db.getConfigField("iconSize")
+      },
+      classes: "node-junction"
+    });
+  });
+}
+__name(addJunctions, "addJunctions");
+function positionNodes(db, cy) {
+  cy.nodes().map((node) => {
+    const data = nodeData(node);
+    if (data.type === "group") {
+      return;
+    }
+    data.x = node.position().x;
+    data.y = node.position().y;
+    const nodeElem = db.getElementById(data.id);
+    nodeElem.attr("transform", "translate(" + (data.x || 0) + "," + (data.y || 0) + ")");
+  });
+}
+__name(positionNodes, "positionNodes");
+function addGroups(groups, cy) {
+  groups.forEach((group) => {
+    cy.add({
+      group: "nodes",
+      data: {
+        type: "group",
+        id: group.id,
+        icon: group.icon,
+        label: group.title,
+        parent: group.in
+      },
+      classes: "node-group"
+    });
+  });
+}
+__name(addGroups, "addGroups");
+function addEdges(edges, cy) {
+  edges.forEach((parsedEdge) => {
+    const { lhsId, rhsId, lhsInto, lhsGroup, rhsInto, lhsDir, rhsDir, rhsGroup, title } = parsedEdge;
+    const edgeType = isArchitectureDirectionXY(parsedEdge.lhsDir, parsedEdge.rhsDir) ? "segments" : "straight";
+    const edge = {
+      id: `${lhsId}-${rhsId}`,
+      label: title,
+      source: lhsId,
+      sourceDir: lhsDir,
+      sourceArrow: lhsInto,
+      sourceGroup: lhsGroup,
+      sourceEndpoint: lhsDir === "L" ? "0 50%" : lhsDir === "R" ? "100% 50%" : lhsDir === "T" ? "50% 0" : "50% 100%",
+      target: rhsId,
+      targetDir: rhsDir,
+      targetArrow: rhsInto,
+      targetGroup: rhsGroup,
+      targetEndpoint: rhsDir === "L" ? "0 50%" : rhsDir === "R" ? "100% 50%" : rhsDir === "T" ? "50% 0" : "50% 100%"
+    };
+    cy.add({
+      group: "edges",
+      data: edge,
+      classes: edgeType
+    });
+  });
+}
+__name(addEdges, "addEdges");
+function getAlignments(db, spatialMaps, groupAlignments) {
+  const flattenAlignments = /* @__PURE__ */ __name((alignmentObj, alignmentDir) => {
+    return Object.entries(alignmentObj).reduce(
+      (prev, [dir, alignments2]) => {
+        let cnt = 0;
+        const arr = Object.entries(alignments2);
+        if (arr.length === 1) {
+          prev[dir] = arr[0][1];
+          return prev;
+        }
+        for (let i = 0; i < arr.length - 1; i++) {
+          for (let j = i + 1; j < arr.length; j++) {
+            const [aGroupId, aNodeIds] = arr[i];
+            const [bGroupId, bNodeIds] = arr[j];
+            const alignment = groupAlignments[aGroupId]?.[bGroupId];
+            if (alignment === alignmentDir) {
+              prev[dir] ??= [];
+              prev[dir] = [...prev[dir], ...aNodeIds, ...bNodeIds];
+            } else if (aGroupId === "default" || bGroupId === "default") {
+              prev[dir] ??= [];
+              prev[dir] = [...prev[dir], ...aNodeIds, ...bNodeIds];
+            } else {
+              const keyA = `${dir}-${cnt++}`;
+              prev[keyA] = aNodeIds;
+              const keyB = `${dir}-${cnt++}`;
+              prev[keyB] = bNodeIds;
+            }
+          }
+        }
+        return prev;
+      },
+      {}
+    );
+  }, "flattenAlignments");
+  const alignments = spatialMaps.map((spatialMap) => {
+    const horizontalAlignments = {};
+    const verticalAlignments = {};
+    Object.entries(spatialMap).forEach(([id, [x, y]]) => {
+      const nodeGroup = db.getNode(id)?.in ?? "default";
+      horizontalAlignments[y] ??= {};
+      horizontalAlignments[y][nodeGroup] ??= [];
+      horizontalAlignments[y][nodeGroup].push(id);
+      verticalAlignments[x] ??= {};
+      verticalAlignments[x][nodeGroup] ??= [];
+      verticalAlignments[x][nodeGroup].push(id);
+    });
+    return {
+      horiz: Object.values(flattenAlignments(horizontalAlignments, "horizontal")).filter(
+        (arr) => arr.length > 1
+      ),
+      vert: Object.values(flattenAlignments(verticalAlignments, "vertical")).filter(
+        (arr) => arr.length > 1
+      )
+    };
+  });
+  const [horizontal, vertical] = alignments.reduce(
+    ([prevHoriz, prevVert], { horiz, vert }) => {
+      return [
+        [...prevHoriz, ...horiz],
+        [...prevVert, ...vert]
+      ];
+    },
+    [[], []]
+  );
+  return {
+    horizontal,
+    vertical
+  };
+}
+__name(getAlignments, "getAlignments");
+function getRelativeConstraints(spatialMaps, db) {
+  const relativeConstraints = [];
+  const posToStr = /* @__PURE__ */ __name((pos) => `${pos[0]},${pos[1]}`, "posToStr");
+  const strToPos = /* @__PURE__ */ __name((pos) => pos.split(",").map((p) => parseInt(p)), "strToPos");
+  spatialMaps.forEach((spatialMap) => {
+    const invSpatialMap = Object.fromEntries(
+      Object.entries(spatialMap).map(([id, pos]) => [posToStr(pos), id])
+    );
+    const queue = [posToStr([0, 0])];
+    const visited = {};
+    const directions = {
+      L: [-1, 0],
+      R: [1, 0],
+      T: [0, 1],
+      B: [0, -1]
+    };
+    while (queue.length > 0) {
+      const curr = queue.shift();
+      if (curr) {
+        visited[curr] = 1;
+        const currId = invSpatialMap[curr];
+        if (currId) {
+          const currPos = strToPos(curr);
+          Object.entries(directions).forEach(([dir, shift]) => {
+            const newPos = posToStr([currPos[0] + shift[0], currPos[1] + shift[1]]);
+            const newId = invSpatialMap[newPos];
+            if (newId && !visited[newPos]) {
+              queue.push(newPos);
+              relativeConstraints.push({
+                [ArchitectureDirectionName[dir]]: newId,
+                [ArchitectureDirectionName[getOppositeArchitectureDirection(dir)]]: currId,
+                gap: 1.5 * db.getConfigField("iconSize")
+              });
+            }
+          });
+        }
+      }
+    }
+  });
+  return relativeConstraints;
+}
+__name(getRelativeConstraints, "getRelativeConstraints");
+function layoutArchitecture(services, junctions, groups, edges, db, { spatialMaps, groupAlignments }) {
+  return new Promise((resolve) => {
+    const renderEl = select("body").append("div").attr("id", "cy").attr("style", "display:none");
+    const cy = cytoscape$1({
+      container: document.getElementById("cy"),
+      style: [
+        {
+          selector: "edge",
+          style: {
+            "curve-style": "straight",
+            label: "data(label)",
+            "source-endpoint": "data(sourceEndpoint)",
+            "target-endpoint": "data(targetEndpoint)"
+          }
+        },
+        {
+          selector: "edge.segments",
+          style: {
+            "curve-style": "segments",
+            "segment-weights": "0",
+            "segment-distances": [0.5],
+            // @ts-ignore Incorrect library types
+            "edge-distances": "endpoints",
+            "source-endpoint": "data(sourceEndpoint)",
+            "target-endpoint": "data(targetEndpoint)"
+          }
+        },
+        {
+          selector: "node",
+          style: {
+            // @ts-ignore Incorrect library types
+            "compound-sizing-wrt-labels": "include"
+          }
+        },
+        {
+          selector: "node[label]",
+          style: {
+            "text-valign": "bottom",
+            "text-halign": "center",
+            "font-size": `${db.getConfigField("fontSize")}px`
+          }
+        },
+        {
+          selector: ".node-service",
+          style: {
+            label: "data(label)",
+            width: "data(width)",
+            height: "data(height)"
+          }
+        },
+        {
+          selector: ".node-junction",
+          style: {
+            width: "data(width)",
+            height: "data(height)"
+          }
+        },
+        {
+          selector: ".node-group",
+          style: {
+            // @ts-ignore Incorrect library types
+            padding: `${db.getConfigField("padding")}px`
+          }
+        }
+      ],
+      layout: {
+        name: "grid",
+        boundingBox: {
+          x1: 0,
+          x2: 100,
+          y1: 0,
+          y2: 100
+        }
+      }
+    });
+    renderEl.remove();
+    addGroups(groups, cy);
+    addServices(services, cy, db);
+    addJunctions(junctions, cy, db);
+    addEdges(edges, cy);
+    const alignmentConstraint = getAlignments(db, spatialMaps, groupAlignments);
+    const relativePlacementConstraint = getRelativeConstraints(spatialMaps, db);
+    const layout = cy.layout({
+      name: "fcose",
+      quality: "proof",
+      styleEnabled: false,
+      animate: false,
+      nodeDimensionsIncludeLabels: false,
+      // Adjust the edge parameters if it passes through the border of a group
+      // Hacky fix for: https://github.com/iVis-at-Bilkent/cytoscape.js-fcose/issues/67
+      idealEdgeLength(edge) {
+        const [nodeA, nodeB] = edge.connectedNodes();
+        const { parent: parentA } = nodeData(nodeA);
+        const { parent: parentB } = nodeData(nodeB);
+        const elasticity = parentA === parentB ? 1.5 * db.getConfigField("iconSize") : 0.5 * db.getConfigField("iconSize");
+        return elasticity;
+      },
+      edgeElasticity(edge) {
+        const [nodeA, nodeB] = edge.connectedNodes();
+        const { parent: parentA } = nodeData(nodeA);
+        const { parent: parentB } = nodeData(nodeB);
+        const elasticity = parentA === parentB ? 0.45 : 1e-3;
+        return elasticity;
+      },
+      alignmentConstraint,
+      relativePlacementConstraint
+    });
+    layout.one("layoutstop", () => {
+      function getSegmentWeights(source, target, pointX, pointY) {
+        let W, D;
+        const { x: sX, y: sY } = source;
+        const { x: tX, y: tY } = target;
+        D = (pointY - sY + (sX - pointX) * (sY - tY) / (sX - tX)) / Math.sqrt(1 + Math.pow((sY - tY) / (sX - tX), 2));
+        W = Math.sqrt(Math.pow(pointY - sY, 2) + Math.pow(pointX - sX, 2) - Math.pow(D, 2));
+        const distAB = Math.sqrt(Math.pow(tX - sX, 2) + Math.pow(tY - sY, 2));
+        W = W / distAB;
+        let delta1 = (tX - sX) * (pointY - sY) - (tY - sY) * (pointX - sX);
+        switch (true) {
+          case delta1 >= 0:
+            delta1 = 1;
+            break;
+          case delta1 < 0:
+            delta1 = -1;
+            break;
+        }
+        let delta2 = (tX - sX) * (pointX - sX) + (tY - sY) * (pointY - sY);
+        switch (true) {
+          case delta2 >= 0:
+            delta2 = 1;
+            break;
+          case delta2 < 0:
+            delta2 = -1;
+            break;
+        }
+        D = Math.abs(D) * delta1;
+        W = W * delta2;
+        return {
+          distances: D,
+          weights: W
+        };
+      }
+      __name(getSegmentWeights, "getSegmentWeights");
+      cy.startBatch();
+      for (const edge of Object.values(cy.edges())) {
+        if (edge.data?.()) {
+          const { x: sX, y: sY } = edge.source().position();
+          const { x: tX, y: tY } = edge.target().position();
+          if (sX !== tX && sY !== tY) {
+            const sEP = edge.sourceEndpoint();
+            const tEP = edge.targetEndpoint();
+            const { sourceDir } = edgeData(edge);
+            const [pointX, pointY] = isArchitectureDirectionY(sourceDir) ? [sEP.x, tEP.y] : [tEP.x, sEP.y];
+            const { weights, distances } = getSegmentWeights(sEP, tEP, pointX, pointY);
+            edge.style("segment-distances", distances);
+            edge.style("segment-weights", weights);
+          }
+        }
+      }
+      cy.endBatch();
+      layout.run();
+    });
+    layout.run();
+    cy.ready((e) => {
+      log.info("Ready", e);
+      resolve(cy);
+    });
+  });
+}
+__name(layoutArchitecture, "layoutArchitecture");
+var draw = /* @__PURE__ */ __name(async (text, id, _version, diagObj) => {
+  const db = diagObj.db;
+  const services = db.getServices();
+  const junctions = db.getJunctions();
+  const groups = db.getGroups();
+  const edges = db.getEdges();
+  const ds = db.getDataStructures();
+  const svg = selectSvgElement(id);
+  const edgesElem = svg.append("g");
+  edgesElem.attr("class", "architecture-edges");
+  const servicesElem = svg.append("g");
+  servicesElem.attr("class", "architecture-services");
+  const groupElem = svg.append("g");
+  groupElem.attr("class", "architecture-groups");
+  await drawServices(db, servicesElem, services);
+  drawJunctions(db, servicesElem, junctions);
+  const cy = await layoutArchitecture(services, junctions, groups, edges, db, ds);
+  await drawEdges(edgesElem, cy, db);
+  await drawGroups(groupElem, cy, db);
+  positionNodes(db, cy);
+  setupGraphViewbox(void 0, svg, db.getConfigField("padding"), db.getConfigField("useMaxWidth"));
+}, "draw");
+var renderer = { draw };
+var diagram = {
+  parser,
+  get db() {
+    return new ArchitectureDB();
+  },
+  renderer,
+  styles: architectureStyles_default
+};
+export {
+  diagram
+};

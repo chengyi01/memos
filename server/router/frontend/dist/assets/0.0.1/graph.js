@@ -1,1 +1,420 @@
-import{c as f,d as b,k as _,f as g,e as o,h as l,u as L,v as p,j,i as E}from"./utils-vendor.js";var v="\0",u="\0",O="";class N{constructor(e={}){this._isDirected=Object.prototype.hasOwnProperty.call(e,"directed")?e.directed:!0,this._isMultigraph=Object.prototype.hasOwnProperty.call(e,"multigraph")?e.multigraph:!1,this._isCompound=Object.prototype.hasOwnProperty.call(e,"compound")?e.compound:!1,this._label=void 0,this._defaultNodeLabelFn=f(void 0),this._defaultEdgeLabelFn=f(void 0),this._nodes={},this._isCompound&&(this._parent={},this._children={},this._children[u]={}),this._in={},this._preds={},this._out={},this._sucs={},this._edgeObjs={},this._edgeLabels={}}isDirected(){return this._isDirected}isMultigraph(){return this._isMultigraph}isCompound(){return this._isCompound}setGraph(e){return this._label=e,this}graph(){return this._label}setDefaultNodeLabel(e){return b(e)||(e=f(e)),this._defaultNodeLabelFn=e,this}nodeCount(){return this._nodeCount}nodes(){return _(this._nodes)}sources(){var e=this;return g(this.nodes(),function(t){return E(e._in[t])})}sinks(){var e=this;return g(this.nodes(),function(t){return E(e._out[t])})}setNodes(e,t){var s=arguments,i=this;return o(e,function(r){s.length>1?i.setNode(r,t):i.setNode(r)}),this}setNode(e,t){return Object.prototype.hasOwnProperty.call(this._nodes,e)?(arguments.length>1&&(this._nodes[e]=t),this):(this._nodes[e]=arguments.length>1?t:this._defaultNodeLabelFn(e),this._isCompound&&(this._parent[e]=u,this._children[e]={},this._children[u][e]=!0),this._in[e]={},this._preds[e]={},this._out[e]={},this._sucs[e]={},++this._nodeCount,this)}node(e){return this._nodes[e]}hasNode(e){return Object.prototype.hasOwnProperty.call(this._nodes,e)}removeNode(e){if(Object.prototype.hasOwnProperty.call(this._nodes,e)){var t=s=>this.removeEdge(this._edgeObjs[s]);delete this._nodes[e],this._isCompound&&(this._removeFromParentsChildList(e),delete this._parent[e],o(this.children(e),s=>{this.setParent(s)}),delete this._children[e]),o(_(this._in[e]),t),delete this._in[e],delete this._preds[e],o(_(this._out[e]),t),delete this._out[e],delete this._sucs[e],--this._nodeCount}return this}setParent(e,t){if(!this._isCompound)throw new Error("Cannot set parent in a non-compound graph");if(l(t))t=u;else{t+="";for(var s=t;!l(s);s=this.parent(s))if(s===e)throw new Error("Setting "+t+" as parent of "+e+" would create a cycle");this.setNode(t)}return this.setNode(e),this._removeFromParentsChildList(e),this._parent[e]=t,this._children[t][e]=!0,this}_removeFromParentsChildList(e){delete this._children[this._parent[e]][e]}parent(e){if(this._isCompound){var t=this._parent[e];if(t!==u)return t}}children(e){if(l(e)&&(e=u),this._isCompound){var t=this._children[e];if(t)return _(t)}else{if(e===u)return this.nodes();if(this.hasNode(e))return[]}}predecessors(e){var t=this._preds[e];if(t)return _(t)}successors(e){var t=this._sucs[e];if(t)return _(t)}neighbors(e){var t=this.predecessors(e);if(t)return L(t,this.successors(e))}isLeaf(e){var t;return this.isDirected()?t=this.successors(e):t=this.neighbors(e),t.length===0}filterNodes(e){var t=new this.constructor({directed:this._isDirected,multigraph:this._isMultigraph,compound:this._isCompound});t.setGraph(this.graph());var s=this;o(this._nodes,function(n,h){e(h)&&t.setNode(h,n)}),o(this._edgeObjs,function(n){t.hasNode(n.v)&&t.hasNode(n.w)&&t.setEdge(n,s.edge(n))});var i={};function r(n){var h=s.parent(n);return h===void 0||t.hasNode(h)?(i[n]=h,h):h in i?i[h]:r(h)}return this._isCompound&&o(t.nodes(),function(n){t.setParent(n,r(n))}),t}setDefaultEdgeLabel(e){return b(e)||(e=f(e)),this._defaultEdgeLabelFn=e,this}edgeCount(){return this._edgeCount}edges(){return p(this._edgeObjs)}setPath(e,t){var s=this,i=arguments;return j(e,function(r,n){return i.length>1?s.setEdge(r,n,t):s.setEdge(r,n),n}),this}setEdge(){var e,t,s,i,r=!1,n=arguments[0];typeof n=="object"&&n!==null&&"v"in n?(e=n.v,t=n.w,s=n.name,arguments.length===2&&(i=arguments[1],r=!0)):(e=n,t=arguments[1],s=arguments[3],arguments.length>2&&(i=arguments[2],r=!0)),e=""+e,t=""+t,l(s)||(s=""+s);var h=c(this._isDirected,e,t,s);if(Object.prototype.hasOwnProperty.call(this._edgeLabels,h))return r&&(this._edgeLabels[h]=i),this;if(!l(s)&&!this._isMultigraph)throw new Error("Cannot set a named edge when isMultigraph = false");this.setNode(e),this.setNode(t),this._edgeLabels[h]=r?i:this._defaultEdgeLabelFn(e,t,s);var a=P(this._isDirected,e,t,s);return e=a.v,t=a.w,Object.freeze(a),this._edgeObjs[h]=a,C(this._preds[t],e),C(this._sucs[e],t),this._in[t][h]=a,this._out[e][h]=a,this._edgeCount++,this}edge(e,t,s){var i=arguments.length===1?m(this._isDirected,arguments[0]):c(this._isDirected,e,t,s);return this._edgeLabels[i]}hasEdge(e,t,s){var i=arguments.length===1?m(this._isDirected,arguments[0]):c(this._isDirected,e,t,s);return Object.prototype.hasOwnProperty.call(this._edgeLabels,i)}removeEdge(e,t,s){var i=arguments.length===1?m(this._isDirected,arguments[0]):c(this._isDirected,e,t,s),r=this._edgeObjs[i];return r&&(e=r.v,t=r.w,delete this._edgeLabels[i],delete this._edgeObjs[i],y(this._preds[t],e),y(this._sucs[e],t),delete this._in[t][i],delete this._out[e][i],this._edgeCount--),this}inEdges(e,t){var s=this._in[e];if(s){var i=p(s);return t?g(i,function(r){return r.v===t}):i}}outEdges(e,t){var s=this._out[e];if(s){var i=p(s);return t?g(i,function(r){return r.w===t}):i}}nodeEdges(e,t){var s=this.inEdges(e,t);if(s)return s.concat(this.outEdges(e,t))}}N.prototype._nodeCount=0;N.prototype._edgeCount=0;function C(d,e){d[e]?d[e]++:d[e]=1}function y(d,e){--d[e]||delete d[e]}function c(d,e,t,s){var i=""+e,r=""+t;if(!d&&i>r){var n=i;i=r,r=n}return i+O+r+O+(l(s)?v:s)}function P(d,e,t,s){var i=""+e,r=""+t;if(!d&&i>r){var n=i;i=r,r=n}var h={v:i,w:r};return s&&(h.name=s),h}function m(d,e){return c(d,e.v,e.w,e.name)}export{N as G};
+import { c as constant, d as isFunction, k as keys, f as filter, e as forEach, h as isUndefined, u as union, v as values, j as reduce, i as isEmpty } from "./utils-vendor.js";
+var DEFAULT_EDGE_NAME = "\0";
+var GRAPH_NODE = "\0";
+var EDGE_KEY_DELIM = "";
+class Graph {
+  constructor(opts = {}) {
+    this._isDirected = Object.prototype.hasOwnProperty.call(opts, "directed") ? opts.directed : true;
+    this._isMultigraph = Object.prototype.hasOwnProperty.call(opts, "multigraph") ? opts.multigraph : false;
+    this._isCompound = Object.prototype.hasOwnProperty.call(opts, "compound") ? opts.compound : false;
+    this._label = void 0;
+    this._defaultNodeLabelFn = constant(void 0);
+    this._defaultEdgeLabelFn = constant(void 0);
+    this._nodes = {};
+    if (this._isCompound) {
+      this._parent = {};
+      this._children = {};
+      this._children[GRAPH_NODE] = {};
+    }
+    this._in = {};
+    this._preds = {};
+    this._out = {};
+    this._sucs = {};
+    this._edgeObjs = {};
+    this._edgeLabels = {};
+  }
+  /* === Graph functions ========= */
+  isDirected() {
+    return this._isDirected;
+  }
+  isMultigraph() {
+    return this._isMultigraph;
+  }
+  isCompound() {
+    return this._isCompound;
+  }
+  setGraph(label) {
+    this._label = label;
+    return this;
+  }
+  graph() {
+    return this._label;
+  }
+  /* === Node functions ========== */
+  setDefaultNodeLabel(newDefault) {
+    if (!isFunction(newDefault)) {
+      newDefault = constant(newDefault);
+    }
+    this._defaultNodeLabelFn = newDefault;
+    return this;
+  }
+  nodeCount() {
+    return this._nodeCount;
+  }
+  nodes() {
+    return keys(this._nodes);
+  }
+  sources() {
+    var self = this;
+    return filter(this.nodes(), function(v) {
+      return isEmpty(self._in[v]);
+    });
+  }
+  sinks() {
+    var self = this;
+    return filter(this.nodes(), function(v) {
+      return isEmpty(self._out[v]);
+    });
+  }
+  setNodes(vs, value) {
+    var args = arguments;
+    var self = this;
+    forEach(vs, function(v) {
+      if (args.length > 1) {
+        self.setNode(v, value);
+      } else {
+        self.setNode(v);
+      }
+    });
+    return this;
+  }
+  setNode(v, value) {
+    if (Object.prototype.hasOwnProperty.call(this._nodes, v)) {
+      if (arguments.length > 1) {
+        this._nodes[v] = value;
+      }
+      return this;
+    }
+    this._nodes[v] = arguments.length > 1 ? value : this._defaultNodeLabelFn(v);
+    if (this._isCompound) {
+      this._parent[v] = GRAPH_NODE;
+      this._children[v] = {};
+      this._children[GRAPH_NODE][v] = true;
+    }
+    this._in[v] = {};
+    this._preds[v] = {};
+    this._out[v] = {};
+    this._sucs[v] = {};
+    ++this._nodeCount;
+    return this;
+  }
+  node(v) {
+    return this._nodes[v];
+  }
+  hasNode(v) {
+    return Object.prototype.hasOwnProperty.call(this._nodes, v);
+  }
+  removeNode(v) {
+    if (Object.prototype.hasOwnProperty.call(this._nodes, v)) {
+      var removeEdge = (e) => this.removeEdge(this._edgeObjs[e]);
+      delete this._nodes[v];
+      if (this._isCompound) {
+        this._removeFromParentsChildList(v);
+        delete this._parent[v];
+        forEach(this.children(v), (child) => {
+          this.setParent(child);
+        });
+        delete this._children[v];
+      }
+      forEach(keys(this._in[v]), removeEdge);
+      delete this._in[v];
+      delete this._preds[v];
+      forEach(keys(this._out[v]), removeEdge);
+      delete this._out[v];
+      delete this._sucs[v];
+      --this._nodeCount;
+    }
+    return this;
+  }
+  setParent(v, parent) {
+    if (!this._isCompound) {
+      throw new Error("Cannot set parent in a non-compound graph");
+    }
+    if (isUndefined(parent)) {
+      parent = GRAPH_NODE;
+    } else {
+      parent += "";
+      for (var ancestor = parent; !isUndefined(ancestor); ancestor = this.parent(ancestor)) {
+        if (ancestor === v) {
+          throw new Error("Setting " + parent + " as parent of " + v + " would create a cycle");
+        }
+      }
+      this.setNode(parent);
+    }
+    this.setNode(v);
+    this._removeFromParentsChildList(v);
+    this._parent[v] = parent;
+    this._children[parent][v] = true;
+    return this;
+  }
+  _removeFromParentsChildList(v) {
+    delete this._children[this._parent[v]][v];
+  }
+  parent(v) {
+    if (this._isCompound) {
+      var parent = this._parent[v];
+      if (parent !== GRAPH_NODE) {
+        return parent;
+      }
+    }
+  }
+  children(v) {
+    if (isUndefined(v)) {
+      v = GRAPH_NODE;
+    }
+    if (this._isCompound) {
+      var children = this._children[v];
+      if (children) {
+        return keys(children);
+      }
+    } else if (v === GRAPH_NODE) {
+      return this.nodes();
+    } else if (this.hasNode(v)) {
+      return [];
+    }
+  }
+  predecessors(v) {
+    var predsV = this._preds[v];
+    if (predsV) {
+      return keys(predsV);
+    }
+  }
+  successors(v) {
+    var sucsV = this._sucs[v];
+    if (sucsV) {
+      return keys(sucsV);
+    }
+  }
+  neighbors(v) {
+    var preds = this.predecessors(v);
+    if (preds) {
+      return union(preds, this.successors(v));
+    }
+  }
+  isLeaf(v) {
+    var neighbors;
+    if (this.isDirected()) {
+      neighbors = this.successors(v);
+    } else {
+      neighbors = this.neighbors(v);
+    }
+    return neighbors.length === 0;
+  }
+  filterNodes(filter2) {
+    var copy = new this.constructor({
+      directed: this._isDirected,
+      multigraph: this._isMultigraph,
+      compound: this._isCompound
+    });
+    copy.setGraph(this.graph());
+    var self = this;
+    forEach(this._nodes, function(value, v) {
+      if (filter2(v)) {
+        copy.setNode(v, value);
+      }
+    });
+    forEach(this._edgeObjs, function(e) {
+      if (copy.hasNode(e.v) && copy.hasNode(e.w)) {
+        copy.setEdge(e, self.edge(e));
+      }
+    });
+    var parents = {};
+    function findParent(v) {
+      var parent = self.parent(v);
+      if (parent === void 0 || copy.hasNode(parent)) {
+        parents[v] = parent;
+        return parent;
+      } else if (parent in parents) {
+        return parents[parent];
+      } else {
+        return findParent(parent);
+      }
+    }
+    if (this._isCompound) {
+      forEach(copy.nodes(), function(v) {
+        copy.setParent(v, findParent(v));
+      });
+    }
+    return copy;
+  }
+  /* === Edge functions ========== */
+  setDefaultEdgeLabel(newDefault) {
+    if (!isFunction(newDefault)) {
+      newDefault = constant(newDefault);
+    }
+    this._defaultEdgeLabelFn = newDefault;
+    return this;
+  }
+  edgeCount() {
+    return this._edgeCount;
+  }
+  edges() {
+    return values(this._edgeObjs);
+  }
+  setPath(vs, value) {
+    var self = this;
+    var args = arguments;
+    reduce(vs, function(v, w) {
+      if (args.length > 1) {
+        self.setEdge(v, w, value);
+      } else {
+        self.setEdge(v, w);
+      }
+      return w;
+    });
+    return this;
+  }
+  /*
+   * setEdge(v, w, [value, [name]])
+   * setEdge({ v, w, [name] }, [value])
+   */
+  setEdge() {
+    var v, w, name, value;
+    var valueSpecified = false;
+    var arg0 = arguments[0];
+    if (typeof arg0 === "object" && arg0 !== null && "v" in arg0) {
+      v = arg0.v;
+      w = arg0.w;
+      name = arg0.name;
+      if (arguments.length === 2) {
+        value = arguments[1];
+        valueSpecified = true;
+      }
+    } else {
+      v = arg0;
+      w = arguments[1];
+      name = arguments[3];
+      if (arguments.length > 2) {
+        value = arguments[2];
+        valueSpecified = true;
+      }
+    }
+    v = "" + v;
+    w = "" + w;
+    if (!isUndefined(name)) {
+      name = "" + name;
+    }
+    var e = edgeArgsToId(this._isDirected, v, w, name);
+    if (Object.prototype.hasOwnProperty.call(this._edgeLabels, e)) {
+      if (valueSpecified) {
+        this._edgeLabels[e] = value;
+      }
+      return this;
+    }
+    if (!isUndefined(name) && !this._isMultigraph) {
+      throw new Error("Cannot set a named edge when isMultigraph = false");
+    }
+    this.setNode(v);
+    this.setNode(w);
+    this._edgeLabels[e] = valueSpecified ? value : this._defaultEdgeLabelFn(v, w, name);
+    var edgeObj = edgeArgsToObj(this._isDirected, v, w, name);
+    v = edgeObj.v;
+    w = edgeObj.w;
+    Object.freeze(edgeObj);
+    this._edgeObjs[e] = edgeObj;
+    incrementOrInitEntry(this._preds[w], v);
+    incrementOrInitEntry(this._sucs[v], w);
+    this._in[w][e] = edgeObj;
+    this._out[v][e] = edgeObj;
+    this._edgeCount++;
+    return this;
+  }
+  edge(v, w, name) {
+    var e = arguments.length === 1 ? edgeObjToId(this._isDirected, arguments[0]) : edgeArgsToId(this._isDirected, v, w, name);
+    return this._edgeLabels[e];
+  }
+  hasEdge(v, w, name) {
+    var e = arguments.length === 1 ? edgeObjToId(this._isDirected, arguments[0]) : edgeArgsToId(this._isDirected, v, w, name);
+    return Object.prototype.hasOwnProperty.call(this._edgeLabels, e);
+  }
+  removeEdge(v, w, name) {
+    var e = arguments.length === 1 ? edgeObjToId(this._isDirected, arguments[0]) : edgeArgsToId(this._isDirected, v, w, name);
+    var edge = this._edgeObjs[e];
+    if (edge) {
+      v = edge.v;
+      w = edge.w;
+      delete this._edgeLabels[e];
+      delete this._edgeObjs[e];
+      decrementOrRemoveEntry(this._preds[w], v);
+      decrementOrRemoveEntry(this._sucs[v], w);
+      delete this._in[w][e];
+      delete this._out[v][e];
+      this._edgeCount--;
+    }
+    return this;
+  }
+  inEdges(v, u) {
+    var inV = this._in[v];
+    if (inV) {
+      var edges = values(inV);
+      if (!u) {
+        return edges;
+      }
+      return filter(edges, function(edge) {
+        return edge.v === u;
+      });
+    }
+  }
+  outEdges(v, w) {
+    var outV = this._out[v];
+    if (outV) {
+      var edges = values(outV);
+      if (!w) {
+        return edges;
+      }
+      return filter(edges, function(edge) {
+        return edge.w === w;
+      });
+    }
+  }
+  nodeEdges(v, w) {
+    var inEdges = this.inEdges(v, w);
+    if (inEdges) {
+      return inEdges.concat(this.outEdges(v, w));
+    }
+  }
+}
+Graph.prototype._nodeCount = 0;
+Graph.prototype._edgeCount = 0;
+function incrementOrInitEntry(map, k) {
+  if (map[k]) {
+    map[k]++;
+  } else {
+    map[k] = 1;
+  }
+}
+function decrementOrRemoveEntry(map, k) {
+  if (!--map[k]) {
+    delete map[k];
+  }
+}
+function edgeArgsToId(isDirected, v_, w_, name) {
+  var v = "" + v_;
+  var w = "" + w_;
+  if (!isDirected && v > w) {
+    var tmp = v;
+    v = w;
+    w = tmp;
+  }
+  return v + EDGE_KEY_DELIM + w + EDGE_KEY_DELIM + (isUndefined(name) ? DEFAULT_EDGE_NAME : name);
+}
+function edgeArgsToObj(isDirected, v_, w_, name) {
+  var v = "" + v_;
+  var w = "" + w_;
+  if (!isDirected && v > w) {
+    var tmp = v;
+    v = w;
+    w = tmp;
+  }
+  var edgeObj = { v, w };
+  if (name) {
+    edgeObj.name = name;
+  }
+  return edgeObj;
+}
+function edgeObjToId(isDirected, edgeObj) {
+  return edgeArgsToId(isDirected, edgeObj.v, edgeObj.w, edgeObj.name);
+}
+export {
+  Graph as G
+};

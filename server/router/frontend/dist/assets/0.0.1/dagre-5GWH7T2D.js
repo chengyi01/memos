@@ -1,4 +1,692 @@
-import{_ as w,an as F,ao as Y,ap as _,aq as H,l as i,c as V,ar as q,as as U,a9 as $,ae as z,aa as P,a8 as K,at as Q,au as W,av as Z}from"./mermaid-vendor.js";import{G as B}from"./graph.js";import{l as I}from"./layout.js";import{h as b,n as L,o as A}from"./utils-vendor.js";function h(e){var t={options:{directed:e.isDirected(),multigraph:e.isMultigraph(),compound:e.isCompound()},nodes:ee(e),edges:ne(e)};return b(e.graph())||(t.value=L(e.graph())),t}function ee(e){return A(e.nodes(),function(t){var n=e.node(t),a=e.parent(t),r={v:t};return b(n)||(r.value=n),b(a)||(r.parent=a),r})}function ne(e){return A(e.edges(),function(t){var n=e.edge(t),a={v:t.v,w:t.w};return b(t.name)||(a.name=t.name),b(n)||(a.value=n),a})}var d=new Map,y=new Map,J=new Map,te=w(()=>{y.clear(),J.clear(),d.clear()},"clear"),D=w((e,t)=>{const n=y.get(t)||[];return i.trace("In isDescendant",t," ",e," = ",n.includes(e)),n.includes(e)},"isDescendant"),se=w((e,t)=>{const n=y.get(t)||[];return i.info("Descendants of ",t," is ",n),i.info("Edge is ",e),e.v===t||e.w===t?!1:n?n.includes(e.v)||D(e.v,t)||D(e.w,t)||n.includes(e.w):(i.debug("Tilt, ",t,",not in descendants"),!1)},"edgeInCluster"),G=w((e,t,n,a)=>{i.warn("Copying children of ",e,"root",a,"data",t.node(e),a);const r=t.children(e)||[];e!==a&&r.push(e),i.warn("Copying (nodes) clusterId",e,"nodes",r),r.forEach(o=>{if(t.children(o).length>0)G(o,t,n,a);else{const l=t.node(o);i.info("cp ",o," to ",a," with parent ",e),n.setNode(o,l),a!==t.parent(o)&&(i.warn("Setting parent",o,t.parent(o)),n.setParent(o,t.parent(o))),e!==a&&o!==e?(i.debug("Setting parent",o,e),n.setParent(o,e)):(i.info("In copy ",e,"root",a,"data",t.node(e),a),i.debug("Not Setting parent for node=",o,"cluster!==rootId",e!==a,"node!==clusterId",o!==e));const u=t.edges(o);i.debug("Copying Edges",u),u.forEach(c=>{i.info("Edge",c);const m=t.edge(c.v,c.w,c.name);i.info("Edge data",m,a);try{se(c,a)?(i.info("Copying as ",c.v,c.w,m,c.name),n.setEdge(c.v,c.w,m,c.name),i.info("newGraph edges ",n.edges(),n.edge(n.edges()[0]))):i.info("Skipping copy of edge ",c.v,"-->",c.w," rootId: ",a," clusterId:",e)}catch(v){i.error(v)}})}i.debug("Removing node",o),t.removeNode(o)})},"copy"),R=w((e,t)=>{const n=t.children(e);let a=[...n];for(const r of n)J.set(r,e),a=[...a,...R(r,t)];return a},"extractDescendants"),ie=w((e,t,n)=>{const a=e.edges().filter(c=>c.v===t||c.w===t),r=e.edges().filter(c=>c.v===n||c.w===n),o=a.map(c=>({v:c.v===t?n:c.v,w:c.w===t?t:c.w})),l=r.map(c=>({v:c.v,w:c.w}));return o.filter(c=>l.some(m=>c.v===m.v&&c.w===m.w))},"findCommonEdges"),C=w((e,t,n)=>{const a=t.children(e);if(i.trace("Searching children of id ",e,a),a.length<1)return e;let r;for(const o of a){const l=C(o,t,n),u=ie(t,n,l);if(l)if(u.length>0)r=l;else return l}return r},"findNonClusterChild"),k=w(e=>!d.has(e)||!d.get(e).externalConnections?e:d.has(e)?d.get(e).id:e,"getAnchorId"),re=w((e,t)=>{if(!e||t>10){i.debug("Opting out, no graph ");return}else i.debug("Opting in, graph ");e.nodes().forEach(function(n){e.children(n).length>0&&(i.warn("Cluster identified",n," Replacement id in edges: ",C(n,e,n)),y.set(n,R(n,e)),d.set(n,{id:C(n,e,n),clusterData:e.node(n)}))}),e.nodes().forEach(function(n){const a=e.children(n),r=e.edges();a.length>0?(i.debug("Cluster identified",n,y),r.forEach(o=>{const l=D(o.v,n),u=D(o.w,n);l^u&&(i.warn("Edge: ",o," leaves cluster ",n),i.warn("Descendants of XXX ",n,": ",y.get(n)),d.get(n).externalConnections=!0)})):i.debug("Not a cluster ",n,y)});for(let n of d.keys()){const a=d.get(n).id,r=e.parent(a);r!==n&&d.has(r)&&!d.get(r).externalConnections&&(d.get(n).id=r)}e.edges().forEach(function(n){const a=e.edge(n);i.warn("Edge "+n.v+" -> "+n.w+": "+JSON.stringify(n)),i.warn("Edge "+n.v+" -> "+n.w+": "+JSON.stringify(e.edge(n)));let r=n.v,o=n.w;if(i.warn("Fix XXX",d,"ids:",n.v,n.w,"Translating: ",d.get(n.v)," --- ",d.get(n.w)),d.get(n.v)||d.get(n.w)){if(i.warn("Fixing and trying - removing XXX",n.v,n.w,n.name),r=k(n.v),o=k(n.w),e.removeEdge(n.v,n.w,n.name),r!==n.v){const l=e.parent(r);d.get(l).externalConnections=!0,a.fromCluster=n.v}if(o!==n.w){const l=e.parent(o);d.get(l).externalConnections=!0,a.toCluster=n.w}i.warn("Fix Replacing with XXX",r,o,n.name),e.setEdge(r,o,a,n.name)}}),i.warn("Adjusted Graph",h(e)),T(e,0),i.trace(d)},"adjustClustersAndEdges"),T=w((e,t)=>{if(i.warn("extractor - ",t,h(e),e.children("D")),t>10){i.error("Bailing out");return}let n=e.nodes(),a=!1;for(const r of n){const o=e.children(r);a=a||o.length>0}if(!a){i.debug("Done, no node has children",e.nodes());return}i.debug("Nodes = ",n,t);for(const r of n)if(i.debug("Extracting node",r,d,d.has(r)&&!d.get(r).externalConnections,!e.parent(r),e.node(r),e.children("D")," Depth ",t),!d.has(r))i.debug("Not a cluster",r,t);else if(!d.get(r).externalConnections&&e.children(r)&&e.children(r).length>0){i.warn("Cluster without external connections, without a parent and with children",r,t);let l=e.graph().rankdir==="TB"?"LR":"TB";d.get(r)?.clusterData?.dir&&(l=d.get(r).clusterData.dir,i.warn("Fixing dir",d.get(r).clusterData.dir,l));const u=new B({multigraph:!0,compound:!0}).setGraph({rankdir:l,nodesep:50,ranksep:50,marginx:8,marginy:8}).setDefaultEdgeLabel(function(){return{}});i.warn("Old graph before copy",h(e)),G(r,e,u,r),e.setNode(r,{clusterNode:!0,id:r,clusterData:d.get(r).clusterData,label:d.get(r).label,graph:u}),i.warn("New graph after copy node: (",r,")",h(u)),i.debug("Old graph after copy",h(e))}else i.warn("Cluster ** ",r," **not meeting the criteria !externalConnections:",!d.get(r).externalConnections," no parent: ",!e.parent(r)," children ",e.children(r)&&e.children(r).length>0,e.children("D"),t),i.debug(d);n=e.nodes(),i.warn("New list of nodes",n);for(const r of n){const o=e.node(r);i.warn(" Now next level",r,o),o?.clusterNode&&T(o.graph,t+1)}},"extractor"),M=w((e,t)=>{if(t.length===0)return[];let n=Object.assign([],t);return t.forEach(a=>{const r=e.children(a),o=M(e,r);n=[...n,...o]}),n},"sorter"),oe=w(e=>M(e,e.children()),"sortNodesByHierarchy"),j=w(async(e,t,n,a,r,o)=>{i.warn("Graph in recursive render:XAX",h(t),r);const l=t.graph().rankdir;i.trace("Dir in recursive render - dir:",l);const u=e.insert("g").attr("class","root");t.nodes()?i.info("Recursive render XXX",t.nodes()):i.info("No nodes found for",t),t.edges().length>0&&i.info("Recursive edges",t.edge(t.edges()[0]));const c=u.insert("g").attr("class","clusters"),m=u.insert("g").attr("class","edgePaths"),v=u.insert("g").attr("class","edgeLabels"),X=u.insert("g").attr("class","nodes");await Promise.all(t.nodes().map(async function(f){const s=t.node(f);if(r!==void 0){const g=JSON.parse(JSON.stringify(r.clusterData));i.trace(`Setting data for parent cluster XXX
- Node.id = `,f,`
- data=`,g.height,`
-Parent cluster`,r.height),t.setNode(r.id,g),t.parent(f)||(i.trace("Setting parent",f,r.id),t.setParent(f,r.id,g))}if(i.info("(Insert) Node XXX"+f+": "+JSON.stringify(t.node(f))),s?.clusterNode){i.info("Cluster identified XBX",f,s.width,t.node(f));const{ranksep:g,nodesep:E}=t.graph();s.graph.setGraph({...s.graph.graph(),ranksep:g+25,nodesep:E});const N=await j(X,s.graph,n,a,t.node(f),o),x=N.elem;q(s,x),s.diff=N.diff||0,i.info("New compound node after recursive render XAX",f,"width",s.width,"height",s.height),U(x,s)}else t.children(f).length>0?(i.trace("Cluster - the non recursive path XBX",f,s.id,s,s.width,"Graph:",t),i.trace(C(s.id,t)),d.set(s.id,{id:C(s.id,t),node:s})):(i.trace("Node - the non recursive path XAX",f,X,t.node(f),l),await $(X,t.node(f),{config:o,dir:l}))})),await w(async()=>{const f=t.edges().map(async function(s){const g=t.edge(s.v,s.w,s.name);i.info("Edge "+s.v+" -> "+s.w+": "+JSON.stringify(s)),i.info("Edge "+s.v+" -> "+s.w+": ",s," ",JSON.stringify(t.edge(s))),i.info("Fix",d,"ids:",s.v,s.w,"Translating: ",d.get(s.v),d.get(s.w)),await Z(v,g)});await Promise.all(f)},"processEdges")(),i.info("Graph before layout:",JSON.stringify(h(t))),i.info("############################################# XXX"),i.info("###                Layout                 ### XXX"),i.info("############################################# XXX"),I(t),i.info("Graph after layout:",JSON.stringify(h(t)));let O=0,{subGraphTitleTotalMargin:S}=z(o);return await Promise.all(oe(t).map(async function(f){const s=t.node(f);if(i.info("Position XBX => "+f+": ("+s.x,","+s.y,") width: ",s.width," height: ",s.height),s?.clusterNode)s.y+=S,i.info("A tainted cluster node XBX1",f,s.id,s.width,s.height,s.x,s.y,t.parent(f)),d.get(s.id).node=s,P(s);else if(t.children(f).length>0){i.info("A pure cluster node XBX1",f,s.id,s.x,s.y,s.width,s.height,t.parent(f)),s.height+=S,t.node(s.parentId);const g=s?.padding/2||0,E=s?.labelBBox?.height||0,N=E-g||0;i.debug("OffsetY",N,"labelHeight",E,"halfPadding",g),await K(c,s),d.get(s.id).node=s}else{const g=t.node(s.parentId);s.y+=S/2,i.info("A regular node XBX1 - using the padding",s.id,"parent",s.parentId,s.width,s.height,s.x,s.y,"offsetY",s.offsetY,"parent",g,g?.offsetY,s),P(s)}})),t.edges().forEach(function(f){const s=t.edge(f);i.info("Edge "+f.v+" -> "+f.w+": "+JSON.stringify(s),s),s.points.forEach(x=>x.y+=S/2);const g=t.node(f.v);var E=t.node(f.w);const N=Q(m,s,d,n,g,E,a);W(s,N)}),t.nodes().forEach(function(f){const s=t.node(f);i.info(f,s.type,s.diff),s.isGroup&&(O=s.diff)}),i.warn("Returning from recursive render XAX",u,O),{elem:u,diff:O}},"recursiveRender"),fe=w(async(e,t)=>{const n=new B({multigraph:!0,compound:!0}).setGraph({rankdir:e.direction,nodesep:e.config?.nodeSpacing||e.config?.flowchart?.nodeSpacing||e.nodeSpacing,ranksep:e.config?.rankSpacing||e.config?.flowchart?.rankSpacing||e.rankSpacing,marginx:8,marginy:8}).setDefaultEdgeLabel(function(){return{}}),a=t.select("g");F(a,e.markers,e.type,e.diagramId),Y(),_(),H(),te(),e.nodes.forEach(o=>{n.setNode(o.id,{...o}),o.parentId&&n.setParent(o.id,o.parentId)}),i.debug("Edges:",e.edges),e.edges.forEach(o=>{if(o.start===o.end){const l=o.start,u=l+"---"+l+"---1",c=l+"---"+l+"---2",m=n.node(l);n.setNode(u,{domId:u,id:u,parentId:m.parentId,labelStyle:"",label:"",padding:0,shape:"labelRect",style:"",width:10,height:10}),n.setParent(u,m.parentId),n.setNode(c,{domId:c,id:c,parentId:m.parentId,labelStyle:"",padding:0,shape:"labelRect",label:"",style:"",width:10,height:10}),n.setParent(c,m.parentId);const v=structuredClone(o),X=structuredClone(o),p=structuredClone(o);v.label="",v.arrowTypeEnd="none",v.id=l+"-cyclic-special-1",X.arrowTypeStart="none",X.arrowTypeEnd="none",X.id=l+"-cyclic-special-mid",p.label="",m.isGroup&&(v.fromCluster=l,p.toCluster=l),p.id=l+"-cyclic-special-2",p.arrowTypeStart="none",n.setEdge(l,u,v,l+"-cyclic-special-0"),n.setEdge(u,c,X,l+"-cyclic-special-1"),n.setEdge(c,l,p,l+"-cyc<lic-special-2")}else n.setEdge(o.start,o.end,{...o},o.id)}),i.warn("Graph at first:",JSON.stringify(h(n))),re(n),i.warn("Graph after XAX:",JSON.stringify(h(n)));const r=V();await j(a,n,e.type,e.diagramId,void 0,r)},"render");export{fe as render};
+import { _ as __name, an as markers_default, ao as clear2, ap as clear, aq as clear$1, l as log, c as getConfig2, ar as updateNodeBounds, as as setNodeElem, a9 as insertNode, ae as getSubGraphTitleMargins, aa as positionNode, a8 as insertCluster, at as insertEdge, au as positionEdgeLabel, av as insertEdgeLabel } from "./mermaid-vendor.js";
+import { G as Graph } from "./graph.js";
+import { l as layout } from "./layout.js";
+import { h as isUndefined, n as clone, o as map } from "./utils-vendor.js";
+function write(g) {
+  var json = {
+    options: {
+      directed: g.isDirected(),
+      multigraph: g.isMultigraph(),
+      compound: g.isCompound()
+    },
+    nodes: writeNodes(g),
+    edges: writeEdges(g)
+  };
+  if (!isUndefined(g.graph())) {
+    json.value = clone(g.graph());
+  }
+  return json;
+}
+function writeNodes(g) {
+  return map(g.nodes(), function(v) {
+    var nodeValue = g.node(v);
+    var parent = g.parent(v);
+    var node = { v };
+    if (!isUndefined(nodeValue)) {
+      node.value = nodeValue;
+    }
+    if (!isUndefined(parent)) {
+      node.parent = parent;
+    }
+    return node;
+  });
+}
+function writeEdges(g) {
+  return map(g.edges(), function(e) {
+    var edgeValue = g.edge(e);
+    var edge = { v: e.v, w: e.w };
+    if (!isUndefined(e.name)) {
+      edge.name = e.name;
+    }
+    if (!isUndefined(edgeValue)) {
+      edge.value = edgeValue;
+    }
+    return edge;
+  });
+}
+var clusterDb = /* @__PURE__ */ new Map();
+var descendants = /* @__PURE__ */ new Map();
+var parents = /* @__PURE__ */ new Map();
+var clear4 = /* @__PURE__ */ __name(() => {
+  descendants.clear();
+  parents.clear();
+  clusterDb.clear();
+}, "clear");
+var isDescendant = /* @__PURE__ */ __name((id, ancestorId) => {
+  const ancestorDescendants = descendants.get(ancestorId) || [];
+  log.trace("In isDescendant", ancestorId, " ", id, " = ", ancestorDescendants.includes(id));
+  return ancestorDescendants.includes(id);
+}, "isDescendant");
+var edgeInCluster = /* @__PURE__ */ __name((edge, clusterId) => {
+  const clusterDescendants = descendants.get(clusterId) || [];
+  log.info("Descendants of ", clusterId, " is ", clusterDescendants);
+  log.info("Edge is ", edge);
+  if (edge.v === clusterId || edge.w === clusterId) {
+    return false;
+  }
+  if (!clusterDescendants) {
+    log.debug("Tilt, ", clusterId, ",not in descendants");
+    return false;
+  }
+  return clusterDescendants.includes(edge.v) || isDescendant(edge.v, clusterId) || isDescendant(edge.w, clusterId) || clusterDescendants.includes(edge.w);
+}, "edgeInCluster");
+var copy = /* @__PURE__ */ __name((clusterId, graph, newGraph, rootId) => {
+  log.warn(
+    "Copying children of ",
+    clusterId,
+    "root",
+    rootId,
+    "data",
+    graph.node(clusterId),
+    rootId
+  );
+  const nodes = graph.children(clusterId) || [];
+  if (clusterId !== rootId) {
+    nodes.push(clusterId);
+  }
+  log.warn("Copying (nodes) clusterId", clusterId, "nodes", nodes);
+  nodes.forEach((node) => {
+    if (graph.children(node).length > 0) {
+      copy(node, graph, newGraph, rootId);
+    } else {
+      const data = graph.node(node);
+      log.info("cp ", node, " to ", rootId, " with parent ", clusterId);
+      newGraph.setNode(node, data);
+      if (rootId !== graph.parent(node)) {
+        log.warn("Setting parent", node, graph.parent(node));
+        newGraph.setParent(node, graph.parent(node));
+      }
+      if (clusterId !== rootId && node !== clusterId) {
+        log.debug("Setting parent", node, clusterId);
+        newGraph.setParent(node, clusterId);
+      } else {
+        log.info("In copy ", clusterId, "root", rootId, "data", graph.node(clusterId), rootId);
+        log.debug(
+          "Not Setting parent for node=",
+          node,
+          "cluster!==rootId",
+          clusterId !== rootId,
+          "node!==clusterId",
+          node !== clusterId
+        );
+      }
+      const edges = graph.edges(node);
+      log.debug("Copying Edges", edges);
+      edges.forEach((edge) => {
+        log.info("Edge", edge);
+        const data2 = graph.edge(edge.v, edge.w, edge.name);
+        log.info("Edge data", data2, rootId);
+        try {
+          if (edgeInCluster(edge, rootId)) {
+            log.info("Copying as ", edge.v, edge.w, data2, edge.name);
+            newGraph.setEdge(edge.v, edge.w, data2, edge.name);
+            log.info("newGraph edges ", newGraph.edges(), newGraph.edge(newGraph.edges()[0]));
+          } else {
+            log.info(
+              "Skipping copy of edge ",
+              edge.v,
+              "-->",
+              edge.w,
+              " rootId: ",
+              rootId,
+              " clusterId:",
+              clusterId
+            );
+          }
+        } catch (e) {
+          log.error(e);
+        }
+      });
+    }
+    log.debug("Removing node", node);
+    graph.removeNode(node);
+  });
+}, "copy");
+var extractDescendants = /* @__PURE__ */ __name((id, graph) => {
+  const children = graph.children(id);
+  let res = [...children];
+  for (const child of children) {
+    parents.set(child, id);
+    res = [...res, ...extractDescendants(child, graph)];
+  }
+  return res;
+}, "extractDescendants");
+var findCommonEdges = /* @__PURE__ */ __name((graph, id1, id2) => {
+  const edges1 = graph.edges().filter((edge) => edge.v === id1 || edge.w === id1);
+  const edges2 = graph.edges().filter((edge) => edge.v === id2 || edge.w === id2);
+  const edges1Prim = edges1.map((edge) => {
+    return { v: edge.v === id1 ? id2 : edge.v, w: edge.w === id1 ? id1 : edge.w };
+  });
+  const edges2Prim = edges2.map((edge) => {
+    return { v: edge.v, w: edge.w };
+  });
+  const result = edges1Prim.filter((edgeIn1) => {
+    return edges2Prim.some((edge) => edgeIn1.v === edge.v && edgeIn1.w === edge.w);
+  });
+  return result;
+}, "findCommonEdges");
+var findNonClusterChild = /* @__PURE__ */ __name((id, graph, clusterId) => {
+  const children = graph.children(id);
+  log.trace("Searching children of id ", id, children);
+  if (children.length < 1) {
+    return id;
+  }
+  let reserve;
+  for (const child of children) {
+    const _id = findNonClusterChild(child, graph, clusterId);
+    const commonEdges = findCommonEdges(graph, clusterId, _id);
+    if (_id) {
+      if (commonEdges.length > 0) {
+        reserve = _id;
+      } else {
+        return _id;
+      }
+    }
+  }
+  return reserve;
+}, "findNonClusterChild");
+var getAnchorId = /* @__PURE__ */ __name((id) => {
+  if (!clusterDb.has(id)) {
+    return id;
+  }
+  if (!clusterDb.get(id).externalConnections) {
+    return id;
+  }
+  if (clusterDb.has(id)) {
+    return clusterDb.get(id).id;
+  }
+  return id;
+}, "getAnchorId");
+var adjustClustersAndEdges = /* @__PURE__ */ __name((graph, depth) => {
+  if (!graph || depth > 10) {
+    log.debug("Opting out, no graph ");
+    return;
+  } else {
+    log.debug("Opting in, graph ");
+  }
+  graph.nodes().forEach(function(id) {
+    const children = graph.children(id);
+    if (children.length > 0) {
+      log.warn(
+        "Cluster identified",
+        id,
+        " Replacement id in edges: ",
+        findNonClusterChild(id, graph, id)
+      );
+      descendants.set(id, extractDescendants(id, graph));
+      clusterDb.set(id, { id: findNonClusterChild(id, graph, id), clusterData: graph.node(id) });
+    }
+  });
+  graph.nodes().forEach(function(id) {
+    const children = graph.children(id);
+    const edges = graph.edges();
+    if (children.length > 0) {
+      log.debug("Cluster identified", id, descendants);
+      edges.forEach((edge) => {
+        const d1 = isDescendant(edge.v, id);
+        const d2 = isDescendant(edge.w, id);
+        if (d1 ^ d2) {
+          log.warn("Edge: ", edge, " leaves cluster ", id);
+          log.warn("Descendants of XXX ", id, ": ", descendants.get(id));
+          clusterDb.get(id).externalConnections = true;
+        }
+      });
+    } else {
+      log.debug("Not a cluster ", id, descendants);
+    }
+  });
+  for (let id of clusterDb.keys()) {
+    const nonClusterChild = clusterDb.get(id).id;
+    const parent = graph.parent(nonClusterChild);
+    if (parent !== id && clusterDb.has(parent) && !clusterDb.get(parent).externalConnections) {
+      clusterDb.get(id).id = parent;
+    }
+  }
+  graph.edges().forEach(function(e) {
+    const edge = graph.edge(e);
+    log.warn("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(e));
+    log.warn("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(graph.edge(e)));
+    let v = e.v;
+    let w = e.w;
+    log.warn(
+      "Fix XXX",
+      clusterDb,
+      "ids:",
+      e.v,
+      e.w,
+      "Translating: ",
+      clusterDb.get(e.v),
+      " --- ",
+      clusterDb.get(e.w)
+    );
+    if (clusterDb.get(e.v) || clusterDb.get(e.w)) {
+      log.warn("Fixing and trying - removing XXX", e.v, e.w, e.name);
+      v = getAnchorId(e.v);
+      w = getAnchorId(e.w);
+      graph.removeEdge(e.v, e.w, e.name);
+      if (v !== e.v) {
+        const parent = graph.parent(v);
+        clusterDb.get(parent).externalConnections = true;
+        edge.fromCluster = e.v;
+      }
+      if (w !== e.w) {
+        const parent = graph.parent(w);
+        clusterDb.get(parent).externalConnections = true;
+        edge.toCluster = e.w;
+      }
+      log.warn("Fix Replacing with XXX", v, w, e.name);
+      graph.setEdge(v, w, edge, e.name);
+    }
+  });
+  log.warn("Adjusted Graph", write(graph));
+  extractor(graph, 0);
+  log.trace(clusterDb);
+}, "adjustClustersAndEdges");
+var extractor = /* @__PURE__ */ __name((graph, depth) => {
+  log.warn("extractor - ", depth, write(graph), graph.children("D"));
+  if (depth > 10) {
+    log.error("Bailing out");
+    return;
+  }
+  let nodes = graph.nodes();
+  let hasChildren = false;
+  for (const node of nodes) {
+    const children = graph.children(node);
+    hasChildren = hasChildren || children.length > 0;
+  }
+  if (!hasChildren) {
+    log.debug("Done, no node has children", graph.nodes());
+    return;
+  }
+  log.debug("Nodes = ", nodes, depth);
+  for (const node of nodes) {
+    log.debug(
+      "Extracting node",
+      node,
+      clusterDb,
+      clusterDb.has(node) && !clusterDb.get(node).externalConnections,
+      !graph.parent(node),
+      graph.node(node),
+      graph.children("D"),
+      " Depth ",
+      depth
+    );
+    if (!clusterDb.has(node)) {
+      log.debug("Not a cluster", node, depth);
+    } else if (!clusterDb.get(node).externalConnections && graph.children(node) && graph.children(node).length > 0) {
+      log.warn(
+        "Cluster without external connections, without a parent and with children",
+        node,
+        depth
+      );
+      const graphSettings = graph.graph();
+      let dir = graphSettings.rankdir === "TB" ? "LR" : "TB";
+      if (clusterDb.get(node)?.clusterData?.dir) {
+        dir = clusterDb.get(node).clusterData.dir;
+        log.warn("Fixing dir", clusterDb.get(node).clusterData.dir, dir);
+      }
+      const clusterGraph = new Graph({
+        multigraph: true,
+        compound: true
+      }).setGraph({
+        rankdir: dir,
+        nodesep: 50,
+        ranksep: 50,
+        marginx: 8,
+        marginy: 8
+      }).setDefaultEdgeLabel(function() {
+        return {};
+      });
+      log.warn("Old graph before copy", write(graph));
+      copy(node, graph, clusterGraph, node);
+      graph.setNode(node, {
+        clusterNode: true,
+        id: node,
+        clusterData: clusterDb.get(node).clusterData,
+        label: clusterDb.get(node).label,
+        graph: clusterGraph
+      });
+      log.warn("New graph after copy node: (", node, ")", write(clusterGraph));
+      log.debug("Old graph after copy", write(graph));
+    } else {
+      log.warn(
+        "Cluster ** ",
+        node,
+        " **not meeting the criteria !externalConnections:",
+        !clusterDb.get(node).externalConnections,
+        " no parent: ",
+        !graph.parent(node),
+        " children ",
+        graph.children(node) && graph.children(node).length > 0,
+        graph.children("D"),
+        depth
+      );
+      log.debug(clusterDb);
+    }
+  }
+  nodes = graph.nodes();
+  log.warn("New list of nodes", nodes);
+  for (const node of nodes) {
+    const data = graph.node(node);
+    log.warn(" Now next level", node, data);
+    if (data?.clusterNode) {
+      extractor(data.graph, depth + 1);
+    }
+  }
+}, "extractor");
+var sorter = /* @__PURE__ */ __name((graph, nodes) => {
+  if (nodes.length === 0) {
+    return [];
+  }
+  let result = Object.assign([], nodes);
+  nodes.forEach((node) => {
+    const children = graph.children(node);
+    const sorted = sorter(graph, children);
+    result = [...result, ...sorted];
+  });
+  return result;
+}, "sorter");
+var sortNodesByHierarchy = /* @__PURE__ */ __name((graph) => sorter(graph, graph.children()), "sortNodesByHierarchy");
+var recursiveRender = /* @__PURE__ */ __name(async (_elem, graph, diagramType, id, parentCluster, siteConfig) => {
+  log.warn("Graph in recursive render:XAX", write(graph), parentCluster);
+  const dir = graph.graph().rankdir;
+  log.trace("Dir in recursive render - dir:", dir);
+  const elem = _elem.insert("g").attr("class", "root");
+  if (!graph.nodes()) {
+    log.info("No nodes found for", graph);
+  } else {
+    log.info("Recursive render XXX", graph.nodes());
+  }
+  if (graph.edges().length > 0) {
+    log.info("Recursive edges", graph.edge(graph.edges()[0]));
+  }
+  const clusters = elem.insert("g").attr("class", "clusters");
+  const edgePaths = elem.insert("g").attr("class", "edgePaths");
+  const edgeLabels = elem.insert("g").attr("class", "edgeLabels");
+  const nodes = elem.insert("g").attr("class", "nodes");
+  await Promise.all(
+    graph.nodes().map(async function(v) {
+      const node = graph.node(v);
+      if (parentCluster !== void 0) {
+        const data = JSON.parse(JSON.stringify(parentCluster.clusterData));
+        log.trace(
+          "Setting data for parent cluster XXX\n Node.id = ",
+          v,
+          "\n data=",
+          data.height,
+          "\nParent cluster",
+          parentCluster.height
+        );
+        graph.setNode(parentCluster.id, data);
+        if (!graph.parent(v)) {
+          log.trace("Setting parent", v, parentCluster.id);
+          graph.setParent(v, parentCluster.id, data);
+        }
+      }
+      log.info("(Insert) Node XXX" + v + ": " + JSON.stringify(graph.node(v)));
+      if (node?.clusterNode) {
+        log.info("Cluster identified XBX", v, node.width, graph.node(v));
+        const { ranksep, nodesep } = graph.graph();
+        node.graph.setGraph({
+          ...node.graph.graph(),
+          ranksep: ranksep + 25,
+          nodesep
+        });
+        const o = await recursiveRender(
+          nodes,
+          node.graph,
+          diagramType,
+          id,
+          graph.node(v),
+          siteConfig
+        );
+        const newEl = o.elem;
+        updateNodeBounds(node, newEl);
+        node.diff = o.diff || 0;
+        log.info(
+          "New compound node after recursive render XAX",
+          v,
+          "width",
+          // node,
+          node.width,
+          "height",
+          node.height
+          // node.x,
+          // node.y
+        );
+        setNodeElem(newEl, node);
+      } else {
+        if (graph.children(v).length > 0) {
+          log.trace(
+            "Cluster - the non recursive path XBX",
+            v,
+            node.id,
+            node,
+            node.width,
+            "Graph:",
+            graph
+          );
+          log.trace(findNonClusterChild(node.id, graph));
+          clusterDb.set(node.id, { id: findNonClusterChild(node.id, graph), node });
+        } else {
+          log.trace("Node - the non recursive path XAX", v, nodes, graph.node(v), dir);
+          await insertNode(nodes, graph.node(v), { config: siteConfig, dir });
+        }
+      }
+    })
+  );
+  const processEdges = /* @__PURE__ */ __name(async () => {
+    const edgePromises = graph.edges().map(async function(e) {
+      const edge = graph.edge(e.v, e.w, e.name);
+      log.info("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(e));
+      log.info("Edge " + e.v + " -> " + e.w + ": ", e, " ", JSON.stringify(graph.edge(e)));
+      log.info(
+        "Fix",
+        clusterDb,
+        "ids:",
+        e.v,
+        e.w,
+        "Translating: ",
+        clusterDb.get(e.v),
+        clusterDb.get(e.w)
+      );
+      await insertEdgeLabel(edgeLabels, edge);
+    });
+    await Promise.all(edgePromises);
+  }, "processEdges");
+  await processEdges();
+  log.info("Graph before layout:", JSON.stringify(write(graph)));
+  log.info("############################################# XXX");
+  log.info("###                Layout                 ### XXX");
+  log.info("############################################# XXX");
+  layout(graph);
+  log.info("Graph after layout:", JSON.stringify(write(graph)));
+  let diff = 0;
+  let { subGraphTitleTotalMargin } = getSubGraphTitleMargins(siteConfig);
+  await Promise.all(
+    sortNodesByHierarchy(graph).map(async function(v) {
+      const node = graph.node(v);
+      log.info(
+        "Position XBX => " + v + ": (" + node.x,
+        "," + node.y,
+        ") width: ",
+        node.width,
+        " height: ",
+        node.height
+      );
+      if (node?.clusterNode) {
+        node.y += subGraphTitleTotalMargin;
+        log.info(
+          "A tainted cluster node XBX1",
+          v,
+          node.id,
+          node.width,
+          node.height,
+          node.x,
+          node.y,
+          graph.parent(v)
+        );
+        clusterDb.get(node.id).node = node;
+        positionNode(node);
+      } else {
+        if (graph.children(v).length > 0) {
+          log.info(
+            "A pure cluster node XBX1",
+            v,
+            node.id,
+            node.x,
+            node.y,
+            node.width,
+            node.height,
+            graph.parent(v)
+          );
+          node.height += subGraphTitleTotalMargin;
+          graph.node(node.parentId);
+          const halfPadding = node?.padding / 2 || 0;
+          const labelHeight = node?.labelBBox?.height || 0;
+          const offsetY = labelHeight - halfPadding || 0;
+          log.debug("OffsetY", offsetY, "labelHeight", labelHeight, "halfPadding", halfPadding);
+          await insertCluster(clusters, node);
+          clusterDb.get(node.id).node = node;
+        } else {
+          const parent = graph.node(node.parentId);
+          node.y += subGraphTitleTotalMargin / 2;
+          log.info(
+            "A regular node XBX1 - using the padding",
+            node.id,
+            "parent",
+            node.parentId,
+            node.width,
+            node.height,
+            node.x,
+            node.y,
+            "offsetY",
+            node.offsetY,
+            "parent",
+            parent,
+            parent?.offsetY,
+            node
+          );
+          positionNode(node);
+        }
+      }
+    })
+  );
+  graph.edges().forEach(function(e) {
+    const edge = graph.edge(e);
+    log.info("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(edge), edge);
+    edge.points.forEach((point) => point.y += subGraphTitleTotalMargin / 2);
+    const startNode = graph.node(e.v);
+    var endNode = graph.node(e.w);
+    const paths = insertEdge(edgePaths, edge, clusterDb, diagramType, startNode, endNode, id);
+    positionEdgeLabel(edge, paths);
+  });
+  graph.nodes().forEach(function(v) {
+    const n = graph.node(v);
+    log.info(v, n.type, n.diff);
+    if (n.isGroup) {
+      diff = n.diff;
+    }
+  });
+  log.warn("Returning from recursive render XAX", elem, diff);
+  return { elem, diff };
+}, "recursiveRender");
+var render = /* @__PURE__ */ __name(async (data4Layout, svg) => {
+  const graph = new Graph({
+    multigraph: true,
+    compound: true
+  }).setGraph({
+    rankdir: data4Layout.direction,
+    nodesep: data4Layout.config?.nodeSpacing || data4Layout.config?.flowchart?.nodeSpacing || data4Layout.nodeSpacing,
+    ranksep: data4Layout.config?.rankSpacing || data4Layout.config?.flowchart?.rankSpacing || data4Layout.rankSpacing,
+    marginx: 8,
+    marginy: 8
+  }).setDefaultEdgeLabel(function() {
+    return {};
+  });
+  const element = svg.select("g");
+  markers_default(element, data4Layout.markers, data4Layout.type, data4Layout.diagramId);
+  clear2();
+  clear();
+  clear$1();
+  clear4();
+  data4Layout.nodes.forEach((node) => {
+    graph.setNode(node.id, { ...node });
+    if (node.parentId) {
+      graph.setParent(node.id, node.parentId);
+    }
+  });
+  log.debug("Edges:", data4Layout.edges);
+  data4Layout.edges.forEach((edge) => {
+    if (edge.start === edge.end) {
+      const nodeId = edge.start;
+      const specialId1 = nodeId + "---" + nodeId + "---1";
+      const specialId2 = nodeId + "---" + nodeId + "---2";
+      const node = graph.node(nodeId);
+      graph.setNode(specialId1, {
+        domId: specialId1,
+        id: specialId1,
+        parentId: node.parentId,
+        labelStyle: "",
+        label: "",
+        padding: 0,
+        shape: "labelRect",
+        // shape: 'rect',
+        style: "",
+        width: 10,
+        height: 10
+      });
+      graph.setParent(specialId1, node.parentId);
+      graph.setNode(specialId2, {
+        domId: specialId2,
+        id: specialId2,
+        parentId: node.parentId,
+        labelStyle: "",
+        padding: 0,
+        // shape: 'rect',
+        shape: "labelRect",
+        label: "",
+        style: "",
+        width: 10,
+        height: 10
+      });
+      graph.setParent(specialId2, node.parentId);
+      const edge1 = structuredClone(edge);
+      const edgeMid = structuredClone(edge);
+      const edge2 = structuredClone(edge);
+      edge1.label = "";
+      edge1.arrowTypeEnd = "none";
+      edge1.id = nodeId + "-cyclic-special-1";
+      edgeMid.arrowTypeStart = "none";
+      edgeMid.arrowTypeEnd = "none";
+      edgeMid.id = nodeId + "-cyclic-special-mid";
+      edge2.label = "";
+      if (node.isGroup) {
+        edge1.fromCluster = nodeId;
+        edge2.toCluster = nodeId;
+      }
+      edge2.id = nodeId + "-cyclic-special-2";
+      edge2.arrowTypeStart = "none";
+      graph.setEdge(nodeId, specialId1, edge1, nodeId + "-cyclic-special-0");
+      graph.setEdge(specialId1, specialId2, edgeMid, nodeId + "-cyclic-special-1");
+      graph.setEdge(specialId2, nodeId, edge2, nodeId + "-cyc<lic-special-2");
+    } else {
+      graph.setEdge(edge.start, edge.end, { ...edge }, edge.id);
+    }
+  });
+  log.warn("Graph at first:", JSON.stringify(write(graph)));
+  adjustClustersAndEdges(graph);
+  log.warn("Graph after XAX:", JSON.stringify(write(graph)));
+  const siteConfig = getConfig2();
+  await recursiveRender(
+    element,
+    graph,
+    data4Layout.type,
+    data4Layout.diagramId,
+    void 0,
+    siteConfig
+  );
+}, "render");
+export {
+  render
+};

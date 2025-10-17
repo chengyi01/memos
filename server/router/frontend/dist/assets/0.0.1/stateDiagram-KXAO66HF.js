@@ -1,1 +1,450 @@
-import{s as R,a as W,S as N}from"./chunk-TVAH2DTR.js";import{_ as f,c as t,e as H,l as S,f as P,m as z,V as _,a1 as U,Y as C,u as F}from"./mermaid-vendor.js";import{G as O}from"./graph.js";import{l as J}from"./layout.js";import"./chunk-55IACEB6.js";import"./chunk-QN33PNHL.js";import"./utils-vendor.js";var X=f(e=>e.append("circle").attr("class","start-state").attr("r",t().state.sizeUnit).attr("cx",t().state.padding+t().state.sizeUnit).attr("cy",t().state.padding+t().state.sizeUnit),"drawStartState"),Y=f(e=>e.append("line").style("stroke","grey").style("stroke-dasharray","3").attr("x1",t().state.textHeight).attr("class","divider").attr("x2",t().state.textHeight*2).attr("y1",0).attr("y2",0),"drawDivider"),D=f((e,i)=>{const d=e.append("text").attr("x",2*t().state.padding).attr("y",t().state.textHeight+2*t().state.padding).attr("font-size",t().state.fontSize).attr("class","state-title").text(i.id),c=d.node().getBBox();return e.insert("rect",":first-child").attr("x",t().state.padding).attr("y",t().state.padding).attr("width",c.width+2*t().state.padding).attr("height",c.height+2*t().state.padding).attr("rx",t().state.radius),d},"drawSimpleState"),I=f((e,i)=>{const d=f(function(g,B,m){const E=g.append("tspan").attr("x",2*t().state.padding).text(B);m||E.attr("dy",t().state.textHeight)},"addTspan"),n=e.append("text").attr("x",2*t().state.padding).attr("y",t().state.textHeight+1.3*t().state.padding).attr("font-size",t().state.fontSize).attr("class","state-title").text(i.descriptions[0]).node().getBBox(),l=n.height,x=e.append("text").attr("x",t().state.padding).attr("y",l+t().state.padding*.4+t().state.dividerMargin+t().state.textHeight).attr("class","state-description");let a=!0,s=!0;i.descriptions.forEach(function(g){a||(d(x,g,s),s=!1),a=!1});const w=e.append("line").attr("x1",t().state.padding).attr("y1",t().state.padding+l+t().state.dividerMargin/2).attr("y2",t().state.padding+l+t().state.dividerMargin/2).attr("class","descr-divider"),p=x.node().getBBox(),o=Math.max(p.width,n.width);return w.attr("x2",o+3*t().state.padding),e.insert("rect",":first-child").attr("x",t().state.padding).attr("y",t().state.padding).attr("width",o+2*t().state.padding).attr("height",p.height+l+2*t().state.padding).attr("rx",t().state.radius),e},"drawDescrState"),$=f((e,i,d)=>{const c=t().state.padding,n=2*t().state.padding,l=e.node().getBBox(),x=l.width,a=l.x,s=e.append("text").attr("x",0).attr("y",t().state.titleShift).attr("font-size",t().state.fontSize).attr("class","state-title").text(i.id),p=s.node().getBBox().width+n;let o=Math.max(p,x);o===x&&(o=o+n);let g;const B=e.node().getBBox();i.doc,g=a-c,p>x&&(g=(x-o)/2+c),Math.abs(a-B.x)<c&&p>x&&(g=a-(p-x)/2);const m=1-t().state.textHeight;return e.insert("rect",":first-child").attr("x",g).attr("y",m).attr("class",d?"alt-composit":"composit").attr("width",o).attr("height",B.height+t().state.textHeight+t().state.titleShift+1).attr("rx","0"),s.attr("x",g+c),p<=x&&s.attr("x",a+(o-n)/2-p/2+c),e.insert("rect",":first-child").attr("x",g).attr("y",t().state.titleShift-t().state.textHeight-t().state.padding).attr("width",o).attr("height",t().state.textHeight*3).attr("rx",t().state.radius),e.insert("rect",":first-child").attr("x",g).attr("y",t().state.titleShift-t().state.textHeight-t().state.padding).attr("width",o).attr("height",B.height+3+2*t().state.textHeight).attr("rx",t().state.radius),e},"addTitleAndBox"),q=f(e=>(e.append("circle").attr("class","end-state-outer").attr("r",t().state.sizeUnit+t().state.miniPadding).attr("cx",t().state.padding+t().state.sizeUnit+t().state.miniPadding).attr("cy",t().state.padding+t().state.sizeUnit+t().state.miniPadding),e.append("circle").attr("class","end-state-inner").attr("r",t().state.sizeUnit).attr("cx",t().state.padding+t().state.sizeUnit+2).attr("cy",t().state.padding+t().state.sizeUnit+2)),"drawEndState"),V=f((e,i)=>{let d=t().state.forkWidth,c=t().state.forkHeight;if(i.parentId){let n=d;d=c,c=n}return e.append("rect").style("stroke","black").style("fill","black").attr("width",d).attr("height",c).attr("x",t().state.padding).attr("y",t().state.padding)},"drawForkJoinState"),Z=f((e,i,d,c)=>{let n=0;const l=c.append("text");l.style("text-anchor","start"),l.attr("class","noteText");let x=e.replace(/\r\n/g,"<br/>");x=x.replace(/\n/g,"<br/>");const a=x.split(z.lineBreakRegex);let s=1.25*t().state.noteMargin;for(const w of a){const p=w.trim();if(p.length>0){const o=l.append("tspan");if(o.text(p),s===0){const g=o.node().getBBox();s+=g.height}n+=s,o.attr("x",i+t().state.noteMargin),o.attr("y",d+n+1.25*t().state.noteMargin)}}return{textWidth:l.node().getBBox().width,textHeight:n}},"_drawLongText"),j=f((e,i)=>{i.attr("class","state-note");const d=i.append("rect").attr("x",0).attr("y",t().state.padding),c=i.append("g"),{textWidth:n,textHeight:l}=Z(e,0,0,c);return d.attr("height",l+2*t().state.noteMargin),d.attr("width",n+t().state.noteMargin*2),d},"drawNote"),L=f(function(e,i){const d=i.id,c={id:d,label:i.id,width:0,height:0},n=e.append("g").attr("id",d).attr("class","stateGroup");i.type==="start"&&X(n),i.type==="end"&&q(n),(i.type==="fork"||i.type==="join")&&V(n,i),i.type==="note"&&j(i.note.text,n),i.type==="divider"&&Y(n),i.type==="default"&&i.descriptions.length===0&&D(n,i),i.type==="default"&&i.descriptions.length>0&&I(n,i);const l=n.node().getBBox();return c.width=l.width+2*t().state.padding,c.height=l.height+2*t().state.padding,c},"drawState"),A=0,K=f(function(e,i,d){const c=f(function(s){switch(s){case N.relationType.AGGREGATION:return"aggregation";case N.relationType.EXTENSION:return"extension";case N.relationType.COMPOSITION:return"composition";case N.relationType.DEPENDENCY:return"dependency"}},"getRelationType");i.points=i.points.filter(s=>!Number.isNaN(s.y));const n=i.points,l=_().x(function(s){return s.x}).y(function(s){return s.y}).curve(U),x=e.append("path").attr("d",l(n)).attr("id","edge"+A).attr("class","transition");let a="";if(t().state.arrowMarkerAbsolute&&(a=C(!0)),x.attr("marker-end","url("+a+"#"+c(N.relationType.DEPENDENCY)+"End)"),d.title!==void 0){const s=e.append("g").attr("class","stateLabel"),{x:w,y:p}=F.calcLabelPosition(i.points),o=z.getRows(d.title);let g=0;const B=[];let m=0,E=0;for(let u=0;u<=o.length;u++){const h=s.append("text").attr("text-anchor","middle").text(o[u]).attr("x",w).attr("y",p+g),y=h.node().getBBox();m=Math.max(m,y.width),E=Math.min(E,y.x),S.info(y.x,w,p+g),g===0&&(g=h.node().getBBox().height,S.info("Title height",g,p)),B.push(h)}let k=g*o.length;if(o.length>1){const u=(o.length-1)*g*.5;B.forEach((h,y)=>h.attr("y",p+y*g-u)),k=g*o.length}const r=s.node().getBBox();s.insert("rect",":first-child").attr("class","box").attr("x",w-m/2-t().state.padding/2).attr("y",p-k/2-t().state.padding/2-3.5).attr("width",m+t().state.padding).attr("height",k+t().state.padding),S.info(r)}A++},"drawEdge"),b,T={},Q=f(function(){},"setConf"),tt=f(function(e){e.append("defs").append("marker").attr("id","dependencyEnd").attr("refX",19).attr("refY",7).attr("markerWidth",20).attr("markerHeight",28).attr("orient","auto").append("path").attr("d","M 19,7 L9,13 L14,7 L9,1 Z")},"insertMarkers"),et=f(function(e,i,d,c){b=t().state;const n=t().securityLevel;let l;n==="sandbox"&&(l=H("#i"+i));const x=n==="sandbox"?H(l.nodes()[0].contentDocument.body):H("body"),a=n==="sandbox"?l.nodes()[0].contentDocument:document;S.debug("Rendering diagram "+e);const s=x.select(`[id='${i}']`);tt(s);const w=c.db.getRootDoc();G(w,s,void 0,!1,x,a,c);const p=b.padding,o=s.node().getBBox(),g=o.width+p*2,B=o.height+p*2,m=g*1.75;P(s,B,m,b.useMaxWidth),s.attr("viewBox",`${o.x-b.padding}  ${o.y-b.padding} `+g+" "+B)},"draw"),at=f(e=>e?e.length*b.fontSizeFactor:1,"getLabelWidth"),G=f((e,i,d,c,n,l,x)=>{const a=new O({compound:!0,multigraph:!0});let s,w=!0;for(s=0;s<e.length;s++)if(e[s].stmt==="relation"){w=!1;break}d?a.setGraph({rankdir:"LR",multigraph:!0,compound:!0,ranker:"tight-tree",ranksep:w?1:b.edgeLengthFactor,nodeSep:w?1:50,isMultiGraph:!0}):a.setGraph({rankdir:"TB",multigraph:!0,compound:!0,ranksep:w?1:b.edgeLengthFactor,nodeSep:w?1:50,ranker:"tight-tree",isMultiGraph:!0}),a.setDefaultEdgeLabel(function(){return{}});const p=x.db.getStates(),o=x.db.getRelations(),g=Object.keys(p);for(const r of g){const u=p[r];d&&(u.parentId=d);let h;if(u.doc){let y=i.append("g").attr("id",u.id).attr("class","stateGroup");h=G(u.doc,y,u.id,!c,n,l,x);{y=$(y,u,c);let v=y.node().getBBox();h.width=v.width,h.height=v.height+b.padding/2,T[u.id]={y:b.compositTitleSize}}}else h=L(i,u,a);if(u.note){const y={descriptions:[],id:u.id+"-note",note:u.note,type:"note"},v=L(i,y,a);u.note.position==="left of"?(a.setNode(h.id+"-note",v),a.setNode(h.id,h)):(a.setNode(h.id,h),a.setNode(h.id+"-note",v)),a.setParent(h.id,h.id+"-group"),a.setParent(h.id+"-note",h.id+"-group")}else a.setNode(h.id,h)}S.debug("Count=",a.nodeCount(),a);let B=0;o.forEach(function(r){B++,S.debug("Setting edge",r),a.setEdge(r.id1,r.id2,{relation:r,width:at(r.title),height:b.labelHeight*z.getRows(r.title).length,labelpos:"c"},"id"+B)}),J(a),S.debug("Graph after layout",a.nodes());const m=i.node();a.nodes().forEach(function(r){r!==void 0&&a.node(r)!==void 0?(S.warn("Node "+r+": "+JSON.stringify(a.node(r))),n.select("#"+m.id+" #"+r).attr("transform","translate("+(a.node(r).x-a.node(r).width/2)+","+(a.node(r).y+(T[r]?T[r].y:0)-a.node(r).height/2)+" )"),n.select("#"+m.id+" #"+r).attr("data-x-shift",a.node(r).x-a.node(r).width/2),l.querySelectorAll("#"+m.id+" #"+r+" .divider").forEach(h=>{const y=h.parentElement;let v=0,M=0;y&&(y.parentElement&&(v=y.parentElement.getBBox().width),M=parseInt(y.getAttribute("data-x-shift"),10),Number.isNaN(M)&&(M=0)),h.setAttribute("x1",0-M+8),h.setAttribute("x2",v-M-8)})):S.debug("No Node "+r+": "+JSON.stringify(a.node(r)))});let E=m.getBBox();a.edges().forEach(function(r){r!==void 0&&a.edge(r)!==void 0&&(S.debug("Edge "+r.v+" -> "+r.w+": "+JSON.stringify(a.edge(r))),K(i,a.edge(r),a.edge(r).relation))}),E=m.getBBox();const k={id:d||"root",label:d||"root",width:0,height:0};return k.width=E.width+2*b.padding,k.height=E.height+2*b.padding,S.debug("Doc rendered",k,a),k},"renderDoc"),it={setConf:Q,draw:et},lt={parser:W,get db(){return new N(1)},renderer:it,styles:R,init:f(e=>{e.state||(e.state={}),e.state.arrowMarkerAbsolute=e.arrowMarkerAbsolute},"init")};export{lt as diagram};
+import { s as styles_default, a as stateDiagram_default, S as StateDB } from "./chunk-TVAH2DTR.js";
+import { _ as __name, c as getConfig2, e as select, l as log, f as configureSvgSize, m as common_default, V as line, a1 as curveBasis, Y as getUrl, u as utils_default } from "./mermaid-vendor.js";
+import { G as Graph } from "./graph.js";
+import { l as layout } from "./layout.js";
+import "./chunk-55IACEB6.js";
+import "./chunk-QN33PNHL.js";
+import "./utils-vendor.js";
+var drawStartState = /* @__PURE__ */ __name((g) => g.append("circle").attr("class", "start-state").attr("r", getConfig2().state.sizeUnit).attr("cx", getConfig2().state.padding + getConfig2().state.sizeUnit).attr("cy", getConfig2().state.padding + getConfig2().state.sizeUnit), "drawStartState");
+var drawDivider = /* @__PURE__ */ __name((g) => g.append("line").style("stroke", "grey").style("stroke-dasharray", "3").attr("x1", getConfig2().state.textHeight).attr("class", "divider").attr("x2", getConfig2().state.textHeight * 2).attr("y1", 0).attr("y2", 0), "drawDivider");
+var drawSimpleState = /* @__PURE__ */ __name((g, stateDef) => {
+  const state = g.append("text").attr("x", 2 * getConfig2().state.padding).attr("y", getConfig2().state.textHeight + 2 * getConfig2().state.padding).attr("font-size", getConfig2().state.fontSize).attr("class", "state-title").text(stateDef.id);
+  const classBox = state.node().getBBox();
+  g.insert("rect", ":first-child").attr("x", getConfig2().state.padding).attr("y", getConfig2().state.padding).attr("width", classBox.width + 2 * getConfig2().state.padding).attr("height", classBox.height + 2 * getConfig2().state.padding).attr("rx", getConfig2().state.radius);
+  return state;
+}, "drawSimpleState");
+var drawDescrState = /* @__PURE__ */ __name((g, stateDef) => {
+  const addTspan = /* @__PURE__ */ __name(function(textEl, txt, isFirst2) {
+    const tSpan = textEl.append("tspan").attr("x", 2 * getConfig2().state.padding).text(txt);
+    if (!isFirst2) {
+      tSpan.attr("dy", getConfig2().state.textHeight);
+    }
+  }, "addTspan");
+  const title = g.append("text").attr("x", 2 * getConfig2().state.padding).attr("y", getConfig2().state.textHeight + 1.3 * getConfig2().state.padding).attr("font-size", getConfig2().state.fontSize).attr("class", "state-title").text(stateDef.descriptions[0]);
+  const titleBox = title.node().getBBox();
+  const titleHeight = titleBox.height;
+  const description = g.append("text").attr("x", getConfig2().state.padding).attr(
+    "y",
+    titleHeight + getConfig2().state.padding * 0.4 + getConfig2().state.dividerMargin + getConfig2().state.textHeight
+  ).attr("class", "state-description");
+  let isFirst = true;
+  let isSecond = true;
+  stateDef.descriptions.forEach(function(descr) {
+    if (!isFirst) {
+      addTspan(description, descr, isSecond);
+      isSecond = false;
+    }
+    isFirst = false;
+  });
+  const descrLine = g.append("line").attr("x1", getConfig2().state.padding).attr("y1", getConfig2().state.padding + titleHeight + getConfig2().state.dividerMargin / 2).attr("y2", getConfig2().state.padding + titleHeight + getConfig2().state.dividerMargin / 2).attr("class", "descr-divider");
+  const descrBox = description.node().getBBox();
+  const width = Math.max(descrBox.width, titleBox.width);
+  descrLine.attr("x2", width + 3 * getConfig2().state.padding);
+  g.insert("rect", ":first-child").attr("x", getConfig2().state.padding).attr("y", getConfig2().state.padding).attr("width", width + 2 * getConfig2().state.padding).attr("height", descrBox.height + titleHeight + 2 * getConfig2().state.padding).attr("rx", getConfig2().state.radius);
+  return g;
+}, "drawDescrState");
+var addTitleAndBox = /* @__PURE__ */ __name((g, stateDef, altBkg) => {
+  const pad = getConfig2().state.padding;
+  const dblPad = 2 * getConfig2().state.padding;
+  const orgBox = g.node().getBBox();
+  const orgWidth = orgBox.width;
+  const orgX = orgBox.x;
+  const title = g.append("text").attr("x", 0).attr("y", getConfig2().state.titleShift).attr("font-size", getConfig2().state.fontSize).attr("class", "state-title").text(stateDef.id);
+  const titleBox = title.node().getBBox();
+  const titleWidth = titleBox.width + dblPad;
+  let width = Math.max(titleWidth, orgWidth);
+  if (width === orgWidth) {
+    width = width + dblPad;
+  }
+  let startX;
+  const graphBox = g.node().getBBox();
+  if (stateDef.doc) ;
+  startX = orgX - pad;
+  if (titleWidth > orgWidth) {
+    startX = (orgWidth - width) / 2 + pad;
+  }
+  if (Math.abs(orgX - graphBox.x) < pad && titleWidth > orgWidth) {
+    startX = orgX - (titleWidth - orgWidth) / 2;
+  }
+  const lineY = 1 - getConfig2().state.textHeight;
+  g.insert("rect", ":first-child").attr("x", startX).attr("y", lineY).attr("class", altBkg ? "alt-composit" : "composit").attr("width", width).attr(
+    "height",
+    graphBox.height + getConfig2().state.textHeight + getConfig2().state.titleShift + 1
+  ).attr("rx", "0");
+  title.attr("x", startX + pad);
+  if (titleWidth <= orgWidth) {
+    title.attr("x", orgX + (width - dblPad) / 2 - titleWidth / 2 + pad);
+  }
+  g.insert("rect", ":first-child").attr("x", startX).attr(
+    "y",
+    getConfig2().state.titleShift - getConfig2().state.textHeight - getConfig2().state.padding
+  ).attr("width", width).attr("height", getConfig2().state.textHeight * 3).attr("rx", getConfig2().state.radius);
+  g.insert("rect", ":first-child").attr("x", startX).attr(
+    "y",
+    getConfig2().state.titleShift - getConfig2().state.textHeight - getConfig2().state.padding
+  ).attr("width", width).attr("height", graphBox.height + 3 + 2 * getConfig2().state.textHeight).attr("rx", getConfig2().state.radius);
+  return g;
+}, "addTitleAndBox");
+var drawEndState = /* @__PURE__ */ __name((g) => {
+  g.append("circle").attr("class", "end-state-outer").attr("r", getConfig2().state.sizeUnit + getConfig2().state.miniPadding).attr(
+    "cx",
+    getConfig2().state.padding + getConfig2().state.sizeUnit + getConfig2().state.miniPadding
+  ).attr(
+    "cy",
+    getConfig2().state.padding + getConfig2().state.sizeUnit + getConfig2().state.miniPadding
+  );
+  return g.append("circle").attr("class", "end-state-inner").attr("r", getConfig2().state.sizeUnit).attr("cx", getConfig2().state.padding + getConfig2().state.sizeUnit + 2).attr("cy", getConfig2().state.padding + getConfig2().state.sizeUnit + 2);
+}, "drawEndState");
+var drawForkJoinState = /* @__PURE__ */ __name((g, stateDef) => {
+  let width = getConfig2().state.forkWidth;
+  let height = getConfig2().state.forkHeight;
+  if (stateDef.parentId) {
+    let tmp = width;
+    width = height;
+    height = tmp;
+  }
+  return g.append("rect").style("stroke", "black").style("fill", "black").attr("width", width).attr("height", height).attr("x", getConfig2().state.padding).attr("y", getConfig2().state.padding);
+}, "drawForkJoinState");
+var _drawLongText = /* @__PURE__ */ __name((_text, x, y, g) => {
+  let textHeight = 0;
+  const textElem = g.append("text");
+  textElem.style("text-anchor", "start");
+  textElem.attr("class", "noteText");
+  let text = _text.replace(/\r\n/g, "<br/>");
+  text = text.replace(/\n/g, "<br/>");
+  const lines = text.split(common_default.lineBreakRegex);
+  let tHeight = 1.25 * getConfig2().state.noteMargin;
+  for (const line2 of lines) {
+    const txt = line2.trim();
+    if (txt.length > 0) {
+      const span = textElem.append("tspan");
+      span.text(txt);
+      if (tHeight === 0) {
+        const textBounds = span.node().getBBox();
+        tHeight += textBounds.height;
+      }
+      textHeight += tHeight;
+      span.attr("x", x + getConfig2().state.noteMargin);
+      span.attr("y", y + textHeight + 1.25 * getConfig2().state.noteMargin);
+    }
+  }
+  return { textWidth: textElem.node().getBBox().width, textHeight };
+}, "_drawLongText");
+var drawNote = /* @__PURE__ */ __name((text, g) => {
+  g.attr("class", "state-note");
+  const note = g.append("rect").attr("x", 0).attr("y", getConfig2().state.padding);
+  const rectElem = g.append("g");
+  const { textWidth, textHeight } = _drawLongText(text, 0, 0, rectElem);
+  note.attr("height", textHeight + 2 * getConfig2().state.noteMargin);
+  note.attr("width", textWidth + getConfig2().state.noteMargin * 2);
+  return note;
+}, "drawNote");
+var drawState = /* @__PURE__ */ __name(function(elem, stateDef) {
+  const id = stateDef.id;
+  const stateInfo = {
+    id,
+    label: stateDef.id,
+    width: 0,
+    height: 0
+  };
+  const g = elem.append("g").attr("id", id).attr("class", "stateGroup");
+  if (stateDef.type === "start") {
+    drawStartState(g);
+  }
+  if (stateDef.type === "end") {
+    drawEndState(g);
+  }
+  if (stateDef.type === "fork" || stateDef.type === "join") {
+    drawForkJoinState(g, stateDef);
+  }
+  if (stateDef.type === "note") {
+    drawNote(stateDef.note.text, g);
+  }
+  if (stateDef.type === "divider") {
+    drawDivider(g);
+  }
+  if (stateDef.type === "default" && stateDef.descriptions.length === 0) {
+    drawSimpleState(g, stateDef);
+  }
+  if (stateDef.type === "default" && stateDef.descriptions.length > 0) {
+    drawDescrState(g, stateDef);
+  }
+  const stateBox = g.node().getBBox();
+  stateInfo.width = stateBox.width + 2 * getConfig2().state.padding;
+  stateInfo.height = stateBox.height + 2 * getConfig2().state.padding;
+  return stateInfo;
+}, "drawState");
+var edgeCount = 0;
+var drawEdge = /* @__PURE__ */ __name(function(elem, path, relation) {
+  const getRelationType = /* @__PURE__ */ __name(function(type) {
+    switch (type) {
+      case StateDB.relationType.AGGREGATION:
+        return "aggregation";
+      case StateDB.relationType.EXTENSION:
+        return "extension";
+      case StateDB.relationType.COMPOSITION:
+        return "composition";
+      case StateDB.relationType.DEPENDENCY:
+        return "dependency";
+    }
+  }, "getRelationType");
+  path.points = path.points.filter((p) => !Number.isNaN(p.y));
+  const lineData = path.points;
+  const lineFunction = line().x(function(d) {
+    return d.x;
+  }).y(function(d) {
+    return d.y;
+  }).curve(curveBasis);
+  const svgPath = elem.append("path").attr("d", lineFunction(lineData)).attr("id", "edge" + edgeCount).attr("class", "transition");
+  let url = "";
+  if (getConfig2().state.arrowMarkerAbsolute) {
+    url = getUrl(true);
+  }
+  svgPath.attr(
+    "marker-end",
+    "url(" + url + "#" + getRelationType(StateDB.relationType.DEPENDENCY) + "End)"
+  );
+  if (relation.title !== void 0) {
+    const label = elem.append("g").attr("class", "stateLabel");
+    const { x, y } = utils_default.calcLabelPosition(path.points);
+    const rows = common_default.getRows(relation.title);
+    let titleHeight = 0;
+    const titleRows = [];
+    let maxWidth = 0;
+    let minX = 0;
+    for (let i = 0; i <= rows.length; i++) {
+      const title = label.append("text").attr("text-anchor", "middle").text(rows[i]).attr("x", x).attr("y", y + titleHeight);
+      const boundsTmp = title.node().getBBox();
+      maxWidth = Math.max(maxWidth, boundsTmp.width);
+      minX = Math.min(minX, boundsTmp.x);
+      log.info(boundsTmp.x, x, y + titleHeight);
+      if (titleHeight === 0) {
+        const titleBox = title.node().getBBox();
+        titleHeight = titleBox.height;
+        log.info("Title height", titleHeight, y);
+      }
+      titleRows.push(title);
+    }
+    let boxHeight = titleHeight * rows.length;
+    if (rows.length > 1) {
+      const heightAdj = (rows.length - 1) * titleHeight * 0.5;
+      titleRows.forEach((title, i) => title.attr("y", y + i * titleHeight - heightAdj));
+      boxHeight = titleHeight * rows.length;
+    }
+    const bounds = label.node().getBBox();
+    label.insert("rect", ":first-child").attr("class", "box").attr("x", x - maxWidth / 2 - getConfig2().state.padding / 2).attr("y", y - boxHeight / 2 - getConfig2().state.padding / 2 - 3.5).attr("width", maxWidth + getConfig2().state.padding).attr("height", boxHeight + getConfig2().state.padding);
+    log.info(bounds);
+  }
+  edgeCount++;
+}, "drawEdge");
+var conf;
+var transformationLog = {};
+var setConf = /* @__PURE__ */ __name(function() {
+}, "setConf");
+var insertMarkers = /* @__PURE__ */ __name(function(elem) {
+  elem.append("defs").append("marker").attr("id", "dependencyEnd").attr("refX", 19).attr("refY", 7).attr("markerWidth", 20).attr("markerHeight", 28).attr("orient", "auto").append("path").attr("d", "M 19,7 L9,13 L14,7 L9,1 Z");
+}, "insertMarkers");
+var draw = /* @__PURE__ */ __name(function(text, id, _version, diagObj) {
+  conf = getConfig2().state;
+  const securityLevel = getConfig2().securityLevel;
+  let sandboxElement;
+  if (securityLevel === "sandbox") {
+    sandboxElement = select("#i" + id);
+  }
+  const root = securityLevel === "sandbox" ? select(sandboxElement.nodes()[0].contentDocument.body) : select("body");
+  const doc = securityLevel === "sandbox" ? sandboxElement.nodes()[0].contentDocument : document;
+  log.debug("Rendering diagram " + text);
+  const diagram2 = root.select(`[id='${id}']`);
+  insertMarkers(diagram2);
+  const rootDoc = diagObj.db.getRootDoc();
+  renderDoc(rootDoc, diagram2, void 0, false, root, doc, diagObj);
+  const padding = conf.padding;
+  const bounds = diagram2.node().getBBox();
+  const width = bounds.width + padding * 2;
+  const height = bounds.height + padding * 2;
+  const svgWidth = width * 1.75;
+  configureSvgSize(diagram2, height, svgWidth, conf.useMaxWidth);
+  diagram2.attr(
+    "viewBox",
+    `${bounds.x - conf.padding}  ${bounds.y - conf.padding} ` + width + " " + height
+  );
+}, "draw");
+var getLabelWidth = /* @__PURE__ */ __name((text) => {
+  return text ? text.length * conf.fontSizeFactor : 1;
+}, "getLabelWidth");
+var renderDoc = /* @__PURE__ */ __name((doc, diagram2, parentId, altBkg, root, domDocument, diagObj) => {
+  const graph = new Graph({
+    compound: true,
+    multigraph: true
+  });
+  let i;
+  let edgeFreeDoc = true;
+  for (i = 0; i < doc.length; i++) {
+    if (doc[i].stmt === "relation") {
+      edgeFreeDoc = false;
+      break;
+    }
+  }
+  if (parentId) {
+    graph.setGraph({
+      rankdir: "LR",
+      multigraph: true,
+      compound: true,
+      // acyclicer: 'greedy',
+      ranker: "tight-tree",
+      ranksep: edgeFreeDoc ? 1 : conf.edgeLengthFactor,
+      nodeSep: edgeFreeDoc ? 1 : 50,
+      isMultiGraph: true
+      // ranksep: 5,
+      // nodesep: 1
+    });
+  } else {
+    graph.setGraph({
+      rankdir: "TB",
+      multigraph: true,
+      compound: true,
+      // isCompound: true,
+      // acyclicer: 'greedy',
+      // ranker: 'longest-path'
+      ranksep: edgeFreeDoc ? 1 : conf.edgeLengthFactor,
+      nodeSep: edgeFreeDoc ? 1 : 50,
+      ranker: "tight-tree",
+      // ranker: 'network-simplex'
+      isMultiGraph: true
+    });
+  }
+  graph.setDefaultEdgeLabel(function() {
+    return {};
+  });
+  const states = diagObj.db.getStates();
+  const relations = diagObj.db.getRelations();
+  const keys = Object.keys(states);
+  for (const key of keys) {
+    const stateDef = states[key];
+    if (parentId) {
+      stateDef.parentId = parentId;
+    }
+    let node;
+    if (stateDef.doc) {
+      let sub = diagram2.append("g").attr("id", stateDef.id).attr("class", "stateGroup");
+      node = renderDoc(stateDef.doc, sub, stateDef.id, !altBkg, root, domDocument, diagObj);
+      {
+        sub = addTitleAndBox(sub, stateDef, altBkg);
+        let boxBounds = sub.node().getBBox();
+        node.width = boxBounds.width;
+        node.height = boxBounds.height + conf.padding / 2;
+        transformationLog[stateDef.id] = { y: conf.compositTitleSize };
+      }
+    } else {
+      node = drawState(diagram2, stateDef, graph);
+    }
+    if (stateDef.note) {
+      const noteDef = {
+        descriptions: [],
+        id: stateDef.id + "-note",
+        note: stateDef.note,
+        type: "note"
+      };
+      const note = drawState(diagram2, noteDef, graph);
+      if (stateDef.note.position === "left of") {
+        graph.setNode(node.id + "-note", note);
+        graph.setNode(node.id, node);
+      } else {
+        graph.setNode(node.id, node);
+        graph.setNode(node.id + "-note", note);
+      }
+      graph.setParent(node.id, node.id + "-group");
+      graph.setParent(node.id + "-note", node.id + "-group");
+    } else {
+      graph.setNode(node.id, node);
+    }
+  }
+  log.debug("Count=", graph.nodeCount(), graph);
+  let cnt = 0;
+  relations.forEach(function(relation) {
+    cnt++;
+    log.debug("Setting edge", relation);
+    graph.setEdge(
+      relation.id1,
+      relation.id2,
+      {
+        relation,
+        width: getLabelWidth(relation.title),
+        height: conf.labelHeight * common_default.getRows(relation.title).length,
+        labelpos: "c"
+      },
+      "id" + cnt
+    );
+  });
+  layout(graph);
+  log.debug("Graph after layout", graph.nodes());
+  const svgElem = diagram2.node();
+  graph.nodes().forEach(function(v) {
+    if (v !== void 0 && graph.node(v) !== void 0) {
+      log.warn("Node " + v + ": " + JSON.stringify(graph.node(v)));
+      root.select("#" + svgElem.id + " #" + v).attr(
+        "transform",
+        "translate(" + (graph.node(v).x - graph.node(v).width / 2) + "," + (graph.node(v).y + (transformationLog[v] ? transformationLog[v].y : 0) - graph.node(v).height / 2) + " )"
+      );
+      root.select("#" + svgElem.id + " #" + v).attr("data-x-shift", graph.node(v).x - graph.node(v).width / 2);
+      const dividers = domDocument.querySelectorAll("#" + svgElem.id + " #" + v + " .divider");
+      dividers.forEach((divider) => {
+        const parent = divider.parentElement;
+        let pWidth = 0;
+        let pShift = 0;
+        if (parent) {
+          if (parent.parentElement) {
+            pWidth = parent.parentElement.getBBox().width;
+          }
+          pShift = parseInt(parent.getAttribute("data-x-shift"), 10);
+          if (Number.isNaN(pShift)) {
+            pShift = 0;
+          }
+        }
+        divider.setAttribute("x1", 0 - pShift + 8);
+        divider.setAttribute("x2", pWidth - pShift - 8);
+      });
+    } else {
+      log.debug("No Node " + v + ": " + JSON.stringify(graph.node(v)));
+    }
+  });
+  let stateBox = svgElem.getBBox();
+  graph.edges().forEach(function(e) {
+    if (e !== void 0 && graph.edge(e) !== void 0) {
+      log.debug("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(graph.edge(e)));
+      drawEdge(diagram2, graph.edge(e), graph.edge(e).relation);
+    }
+  });
+  stateBox = svgElem.getBBox();
+  const stateInfo = {
+    id: parentId ? parentId : "root",
+    label: parentId ? parentId : "root",
+    width: 0,
+    height: 0
+  };
+  stateInfo.width = stateBox.width + 2 * conf.padding;
+  stateInfo.height = stateBox.height + 2 * conf.padding;
+  log.debug("Doc rendered", stateInfo, graph);
+  return stateInfo;
+}, "renderDoc");
+var stateRenderer_default = {
+  setConf,
+  draw
+};
+var diagram = {
+  parser: stateDiagram_default,
+  get db() {
+    return new StateDB(1);
+  },
+  renderer: stateRenderer_default,
+  styles: styles_default,
+  init: /* @__PURE__ */ __name((cnf) => {
+    if (!cnf.state) {
+      cnf.state = {};
+    }
+    cnf.state.arrowMarkerAbsolute = cnf.arrowMarkerAbsolute;
+  }, "init")
+};
+export {
+  diagram
+};

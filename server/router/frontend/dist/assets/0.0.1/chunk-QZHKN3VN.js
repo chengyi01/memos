@@ -1,1 +1,17 @@
-import{_ as s}from"./mermaid-vendor.js";var t,e=(t=class{constructor(i){this.init=i,this.records=this.init()}reset(){this.records=this.init()}},s(t,"ImperativeState"),t);export{e as I};
+var _a;
+import { _ as __name } from "./mermaid-vendor.js";
+var ImperativeState = (_a = class {
+  /**
+   * @param init - Function that creates the default state.
+   */
+  constructor(init) {
+    this.init = init;
+    this.records = this.init();
+  }
+  reset() {
+    this.records = this.init();
+  }
+}, __name(_a, "ImperativeState"), _a);
+export {
+  ImperativeState as I
+};
