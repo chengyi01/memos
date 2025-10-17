@@ -252,6 +252,33 @@ export async function generateMemoImage(memo: Memo, options: Partial<ShareImageO
         // 忽略style标签，避免被截图
         return element.tagName === "STYLE";
       },
+      onclone: (clonedDoc) => {
+        // 移除所有样式表，避免 Tailwind 的 oklch 颜色被应用
+        const styles = clonedDoc.querySelectorAll("style, link[rel='stylesheet']");
+        styles.forEach(style => style.remove());
+        
+        const clonedElement = clonedDoc.querySelector(".memo-share-card");
+        if (clonedElement) {
+          const allEls = [clonedElement, ...Array.from(clonedElement.querySelectorAll("*"))];
+          
+          // 移除所有 class 属性，只保留内联样式
+          allEls.forEach((el) => {
+            const htmlEl = el as HTMLElement;
+            htmlEl.removeAttribute("class");
+            
+            // 强制设置默认颜色（如果没有内联样式）
+            if (!htmlEl.style.color) {
+              htmlEl.style.setProperty("color", "#1f2937", "important");
+            }
+            if (htmlEl !== clonedElement && !htmlEl.style.backgroundColor) {
+              htmlEl.style.setProperty("background-color", "transparent", "important");
+            }
+          });
+          
+          // 恢复根元素的标识类
+          clonedElement.classList.add("memo-share-card");
+        }
+      },
     });
 
     // 4. 转换为 Data URL

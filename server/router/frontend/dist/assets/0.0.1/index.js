@@ -107884,6 +107884,25 @@ async function generateMemoImage(memo, options = {}) {
       allowTaint: false,
       ignoreElements: (element2) => {
         return element2.tagName === "STYLE";
+      },
+      onclone: (clonedDoc) => {
+        const styles = clonedDoc.querySelectorAll("style, link[rel='stylesheet']");
+        styles.forEach((style) => style.remove());
+        const clonedElement = clonedDoc.querySelector(".memo-share-card");
+        if (clonedElement) {
+          const allEls = [clonedElement, ...Array.from(clonedElement.querySelectorAll("*"))];
+          allEls.forEach((el) => {
+            const htmlEl = el;
+            htmlEl.removeAttribute("class");
+            if (!htmlEl.style.color) {
+              htmlEl.style.setProperty("color", "#1f2937", "important");
+            }
+            if (htmlEl !== clonedElement && !htmlEl.style.backgroundColor) {
+              htmlEl.style.setProperty("background-color", "transparent", "important");
+            }
+          });
+          clonedElement.classList.add("memo-share-card");
+        }
       }
     });
     const imageUrl = canvas.toDataURL("image/png");
