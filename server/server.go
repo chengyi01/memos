@@ -25,6 +25,7 @@ import (
 	apiv1 "github.com/usememos/memos/server/router/api/v1"
 	"github.com/usememos/memos/server/router/frontend"
 	"github.com/usememos/memos/server/router/rss"
+	"github.com/usememos/memos/server/runner/osspresign"
 	"github.com/usememos/memos/server/runner/s3presign"
 	"github.com/usememos/memos/store"
 )
@@ -211,9 +212,10 @@ func (s *Server) StartBackgroundRunners(ctx context.Context) {
 	// Create a separate context for each background runner
 	// This allows us to control cancellation for each runner independently
 	s3Context, s3Cancel := context.WithCancel(ctx)
+	ossContext, ossCancel := context.WithCancel(ctx)
 
-	// Store the cancel function so we can properly shut down runners
-	s.runnerCancelFuncs = append(s.runnerCancelFuncs, s3Cancel)
+	// Store the cancel functions so we can properly shut down runners
+	s.runnerCancelFuncs = append(s.runnerCancelFuncs, s3Cancel, ossCancel)
 
 	// Create and start S3 presign runner
 	s3presignRunner := s3presign.NewRunner(s.Store)
@@ -223,6 +225,16 @@ func (s *Server) StartBackgroundRunners(ctx context.Context) {
 	go func() {
 		s3presignRunner.Run(s3Context)
 		slog.Info("s3presign runner stopped")
+	}()
+
+	// Create and start OSS presign runner
+	osspresignRunner := osspresign.NewRunner(s.Store)
+	osspresignRunner.RunOnce(ctx)
+
+	// Start continuous OSS presign runner
+	go func() {
+		osspresignRunner.Run(ossContext)
+		slog.Info("osspresign runner stopped")
 	}()
 
 	// Log the number of goroutines running

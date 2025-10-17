@@ -141,7 +141,11 @@ export interface WorkspaceSetting_StorageSetting {
   /** The max upload size in megabytes. */
   uploadSizeLimitMb: number;
   /** The S3 config. */
-  s3Config?: WorkspaceSetting_StorageSetting_S3Config | undefined;
+  s3Config?:
+    | WorkspaceSetting_StorageSetting_S3Config
+    | undefined;
+  /** The OSS config. */
+  ossConfig?: WorkspaceSetting_StorageSetting_OSSConfig | undefined;
 }
 
 /** Storage type enumeration for different storage backends. */
@@ -153,6 +157,8 @@ export enum WorkspaceSetting_StorageSetting_StorageType {
   LOCAL = "LOCAL",
   /** S3 - S3 is the S3 storage type. */
   S3 = "S3",
+  /** ALIYUN_OSS - ALIYUN_OSS is the Aliyun OSS storage type. */
+  ALIYUN_OSS = "ALIYUN_OSS",
   UNRECOGNIZED = "UNRECOGNIZED",
 }
 
@@ -172,6 +178,9 @@ export function workspaceSetting_StorageSetting_StorageTypeFromJSON(
     case 3:
     case "S3":
       return WorkspaceSetting_StorageSetting_StorageType.S3;
+    case 4:
+    case "ALIYUN_OSS":
+      return WorkspaceSetting_StorageSetting_StorageType.ALIYUN_OSS;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -191,6 +200,8 @@ export function workspaceSetting_StorageSetting_StorageTypeToNumber(
       return 2;
     case WorkspaceSetting_StorageSetting_StorageType.S3:
       return 3;
+    case WorkspaceSetting_StorageSetting_StorageType.ALIYUN_OSS:
+      return 4;
     case WorkspaceSetting_StorageSetting_StorageType.UNRECOGNIZED:
     default:
       return -1;
@@ -208,6 +219,16 @@ export interface WorkspaceSetting_StorageSetting_S3Config {
   region: string;
   bucket: string;
   usePathStyle: boolean;
+}
+
+/** OSS configuration for Aliyun OSS storage backend. */
+export interface WorkspaceSetting_StorageSetting_OSSConfig {
+  endpoint: string;
+  region: string;
+  accessKeyId: string;
+  accessKeySecret: string;
+  bucket: string;
+  useSsl: boolean;
 }
 
 /** Memo-related workspace settings and policies. */
@@ -705,6 +726,7 @@ function createBaseWorkspaceSetting_StorageSetting(): WorkspaceSetting_StorageSe
     filepathTemplate: "",
     uploadSizeLimitMb: 0,
     s3Config: undefined,
+    ossConfig: undefined,
   };
 }
 
@@ -721,6 +743,9 @@ export const WorkspaceSetting_StorageSetting: MessageFns<WorkspaceSetting_Storag
     }
     if (message.s3Config !== undefined) {
       WorkspaceSetting_StorageSetting_S3Config.encode(message.s3Config, writer.uint32(34).fork()).join();
+    }
+    if (message.ossConfig !== undefined) {
+      WorkspaceSetting_StorageSetting_OSSConfig.encode(message.ossConfig, writer.uint32(42).fork()).join();
     }
     return writer;
   },
@@ -764,6 +789,14 @@ export const WorkspaceSetting_StorageSetting: MessageFns<WorkspaceSetting_Storag
           message.s3Config = WorkspaceSetting_StorageSetting_S3Config.decode(reader, reader.uint32());
           continue;
         }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.ossConfig = WorkspaceSetting_StorageSetting_OSSConfig.decode(reader, reader.uint32());
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -783,6 +816,9 @@ export const WorkspaceSetting_StorageSetting: MessageFns<WorkspaceSetting_Storag
     message.uploadSizeLimitMb = object.uploadSizeLimitMb ?? 0;
     message.s3Config = (object.s3Config !== undefined && object.s3Config !== null)
       ? WorkspaceSetting_StorageSetting_S3Config.fromPartial(object.s3Config)
+      : undefined;
+    message.ossConfig = (object.ossConfig !== undefined && object.ossConfig !== null)
+      ? WorkspaceSetting_StorageSetting_OSSConfig.fromPartial(object.ossConfig)
       : undefined;
     return message;
   },
@@ -890,6 +926,114 @@ export const WorkspaceSetting_StorageSetting_S3Config: MessageFns<WorkspaceSetti
     message.region = object.region ?? "";
     message.bucket = object.bucket ?? "";
     message.usePathStyle = object.usePathStyle ?? false;
+    return message;
+  },
+};
+
+function createBaseWorkspaceSetting_StorageSetting_OSSConfig(): WorkspaceSetting_StorageSetting_OSSConfig {
+  return { endpoint: "", region: "", accessKeyId: "", accessKeySecret: "", bucket: "", useSsl: false };
+}
+
+export const WorkspaceSetting_StorageSetting_OSSConfig: MessageFns<WorkspaceSetting_StorageSetting_OSSConfig> = {
+  encode(message: WorkspaceSetting_StorageSetting_OSSConfig, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.endpoint !== "") {
+      writer.uint32(10).string(message.endpoint);
+    }
+    if (message.region !== "") {
+      writer.uint32(18).string(message.region);
+    }
+    if (message.accessKeyId !== "") {
+      writer.uint32(26).string(message.accessKeyId);
+    }
+    if (message.accessKeySecret !== "") {
+      writer.uint32(34).string(message.accessKeySecret);
+    }
+    if (message.bucket !== "") {
+      writer.uint32(42).string(message.bucket);
+    }
+    if (message.useSsl !== false) {
+      writer.uint32(48).bool(message.useSsl);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): WorkspaceSetting_StorageSetting_OSSConfig {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWorkspaceSetting_StorageSetting_OSSConfig();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.endpoint = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.region = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.accessKeyId = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.accessKeySecret = reader.string();
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.bucket = reader.string();
+          continue;
+        }
+        case 6: {
+          if (tag !== 48) {
+            break;
+          }
+
+          message.useSsl = reader.bool();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<WorkspaceSetting_StorageSetting_OSSConfig>): WorkspaceSetting_StorageSetting_OSSConfig {
+    return WorkspaceSetting_StorageSetting_OSSConfig.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<WorkspaceSetting_StorageSetting_OSSConfig>,
+  ): WorkspaceSetting_StorageSetting_OSSConfig {
+    const message = createBaseWorkspaceSetting_StorageSetting_OSSConfig();
+    message.endpoint = object.endpoint ?? "";
+    message.region = object.region ?? "";
+    message.accessKeyId = object.accessKeyId ?? "";
+    message.accessKeySecret = object.accessKeySecret ?? "";
+    message.bucket = object.bucket ?? "";
+    message.useSsl = object.useSsl ?? false;
     return message;
   },
 };

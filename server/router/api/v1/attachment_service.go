@@ -27,6 +27,7 @@ import (
 
 	"github.com/usememos/memos/internal/profile"
 	"github.com/usememos/memos/internal/util"
+	osstorage "github.com/usememos/memos/plugin/storage/oss"
 	"github.com/usememos/memos/plugin/storage/s3"
 	v1pb "github.com/usememos/memos/proto/gen/api/v1"
 	storepb "github.com/usememos/memos/proto/gen/store"
@@ -395,7 +396,9 @@ func convertAttachmentFromStore(attachment *store.Attachment) *v1pb.Attachment {
 		memoName := fmt.Sprintf("%s%s", MemoNamePrefix, *attachment.MemoUID)
 		attachmentMessage.Memo = &memoName
 	}
-	if attachment.StorageType == storepb.AttachmentStorageType_EXTERNAL || attachment.StorageType == storepb.AttachmentStorageType_S3 {
+	if attachment.StorageType == storepb.AttachmentStorageType_EXTERNAL ||
+		attachment.StorageType == storepb.AttachmentStorageType_S3 ||
+		attachment.StorageType == storepb.AttachmentStorageType(4) { // ALIYUN_OSS = 4
 		attachmentMessage.ExternalLink = attachment.Reference
 	}
 
@@ -475,6 +478,42 @@ func SaveAttachmentBlob(ctx context.Context, profile *profile.Profile, stores *s
 			Payload: &storepb.AttachmentPayload_S3Object_{
 				S3Object: &storepb.AttachmentPayload_S3Object{
 					S3Config:          s3Config,
+					Key:               key,
+					LastPresignedTime: timestamppb.New(time.Now()),
+				},
+			},
+		}
+	} else if workspaceStorageSetting.StorageType == storepb.WorkspaceStorageSetting_StorageType(4) { // ALIYUN_OSS = 4
+		ossConfig := workspaceStorageSetting.OssConfig
+		if ossConfig == nil {
+			return errors.Errorf("No actived OSS storage found")
+		}
+		ossClient, err := osstorage.NewClient(ctx, ossConfig)
+		if err != nil {
+			return errors.Wrap(err, "Failed to create oss client")
+		}
+
+		filepathTemplate := workspaceStorageSetting.FilepathTemplate
+		if !strings.Contains(filepathTemplate, "{filename}") {
+			filepathTemplate = filepath.Join(filepathTemplate, "{filename}")
+		}
+		filepathTemplate = replaceFilenameWithPathTemplate(filepathTemplate, create.Filename)
+		key, err := ossClient.UploadObject(ctx, filepathTemplate, create.Type, bytes.NewReader(create.Blob))
+		if err != nil {
+			return errors.Wrap(err, "Failed to upload via oss client")
+		}
+		presignURL, err := ossClient.PresignGetObject(ctx, key)
+		if err != nil {
+			return errors.Wrap(err, "Failed to presign via oss client")
+		}
+
+		create.Reference = presignURL
+		create.Blob = nil
+		create.StorageType = storepb.AttachmentStorageType(4) // ALIYUN_OSS = 4
+		create.Payload = &storepb.AttachmentPayload{
+			Payload: &storepb.AttachmentPayload_OssObject{
+				OssObject: &storepb.AttachmentPayload_OSSObject{
+					OssConfig:         ossConfig,
 					Key:               key,
 					LastPresignedTime: timestamppb.New(time.Now()),
 				},

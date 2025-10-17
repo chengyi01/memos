@@ -222,6 +222,16 @@ func convertWorkspaceStorageSettingFromStore(settingpb *storepb.WorkspaceStorage
 			UsePathStyle:    settingpb.S3Config.UsePathStyle,
 		}
 	}
+	if settingpb.OssConfig != nil {
+		setting.OssConfig = &v1pb.WorkspaceSetting_StorageSetting_OSSConfig{
+			Endpoint:        settingpb.OssConfig.Endpoint,
+			Region:          settingpb.OssConfig.Region,
+			AccessKeyId:     settingpb.OssConfig.AccessKeyId,
+			AccessKeySecret: settingpb.OssConfig.AccessKeySecret,
+			Bucket:          settingpb.OssConfig.Bucket,
+			UseSsl:          settingpb.OssConfig.UseSsl,
+		}
+	}
 	return setting
 }
 
@@ -242,6 +252,16 @@ func convertWorkspaceStorageSettingToStore(setting *v1pb.WorkspaceSetting_Storag
 			Region:          setting.S3Config.Region,
 			Bucket:          setting.S3Config.Bucket,
 			UsePathStyle:    setting.S3Config.UsePathStyle,
+		}
+	}
+	if setting.OssConfig != nil {
+		settingpb.OssConfig = &storepb.StorageOSSConfig{
+			Endpoint:        setting.OssConfig.Endpoint,
+			Region:          setting.OssConfig.Region,
+			AccessKeyId:     setting.OssConfig.AccessKeyId,
+			AccessKeySecret: setting.OssConfig.AccessKeySecret,
+			Bucket:          setting.OssConfig.Bucket,
+			UseSsl:          setting.OssConfig.UseSsl,
 		}
 	}
 	return settingpb

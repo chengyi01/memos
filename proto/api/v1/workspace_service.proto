@@ -126,6 +126,8 @@ message WorkspaceSetting {
       LOCAL = 2;
       // S3 is the S3 storage type.
       S3 = 3;
+      // ALIYUN_OSS is the Aliyun OSS storage type.
+      ALIYUN_OSS = 4;
     }
     // storage_type is the storage type.
     StorageType storage_type = 1;
@@ -147,6 +149,18 @@ message WorkspaceSetting {
     }
     // The S3 config.
     S3Config s3_config = 4;
+
+    // OSS configuration for Aliyun OSS storage backend.
+    message OSSConfig {
+      string endpoint = 1;
+      string region = 2;
+      string access_key_id = 3;
+      string access_key_secret = 4;
+      string bucket = 5;
+      bool use_ssl = 6;
+    }
+    // The OSS config.
+    OSSConfig oss_config = 5;
   }
 
   // Memo-related workspace settings and policies.

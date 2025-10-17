@@ -73,6 +73,8 @@ message WorkspaceStorageSetting {
     LOCAL = 2;
     // STORAGE_TYPE_S3 is the S3 storage type.
     S3 = 3;
+    // STORAGE_TYPE_ALIYUN_OSS is the Aliyun OSS storage type.
+    ALIYUN_OSS = 4;
   }
   // storage_type is the storage type.
   StorageType storage_type = 1;
@@ -83,6 +85,8 @@ message WorkspaceStorageSetting {
   int64 upload_size_limit_mb = 3;
   // The S3 config.
   StorageS3Config s3_config = 4;
+  // The Aliyun OSS config.
+  StorageOSSConfig oss_config = 7;
 }
 
 // Reference: https://developers.cloudflare.com/r2/examples/aws/aws-sdk-go/
@@ -93,6 +97,26 @@ message StorageS3Config {
   string region = 4;
   string bucket = 5;
   bool use_path_style = 6;
+}
+
+// StorageOSSConfig is the configuration for Aliyun OSS storage.
+message StorageOSSConfig {
+  // endpoint is the OSS endpoint (e.g., oss-cn-hangzhou.aliyuncs.com)
+  string endpoint = 1;
+  // region is the OSS region (e.g., cn-hangzhou)
+  string region = 2;
+  // access_key_id is the OSS access key ID
+  string access_key_id = 3;
+  // access_key_secret is the OSS access key secret
+  string access_key_secret = 4;
+  // bucket is the OSS bucket name
+  string bucket = 5;
+  // use_ssl indicates whether to use HTTPS (default: true)
+  bool use_ssl = 6;
+  // use_custom_domain indicates whether to use a custom domain
+  bool use_custom_domain = 7;
+  // custom_domain is the custom domain URL
+  string custom_domain = 8;
 }
 
 message WorkspaceMemoRelatedSetting {

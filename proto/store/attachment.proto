@@ -15,16 +15,28 @@ enum AttachmentStorageType {
   S3 = 2;
   // Attachment is stored in an external storage. The reference is a URL.
   EXTERNAL = 3;
+  // Attachment is stored in Aliyun OSS.
+  ALIYUN_OSS = 4;
 }
 
 message AttachmentPayload {
   oneof payload {
     S3Object s3_object = 1;
+    OSSObject oss_object = 2;
   }
 
   message S3Object {
     StorageS3Config s3_config = 1;
     // key is the S3 object key.
+    string key = 2;
+    // last_presigned_time is the last time the object was presigned.
+    // This is used to determine if the presigned URL is still valid.
+    google.protobuf.Timestamp last_presigned_time = 3;
+  }
+
+  message OSSObject {
+    StorageOSSConfig oss_config = 1;
+    // key is the OSS object key.
     string key = 2;
     // last_presigned_time is the last time the object was presigned.
     // This is used to determine if the presigned URL is still valid.

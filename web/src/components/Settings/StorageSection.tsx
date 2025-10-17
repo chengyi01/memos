@@ -57,6 +57,16 @@ const StorageSection = observer(() => {
       ) {
         return false;
       }
+    } else if (workspaceStorageSetting.storageType === WorkspaceSetting_StorageSetting_StorageType.ALIYUN_OSS) {
+      if (
+        !workspaceStorageSetting.ossConfig?.accessKeyId ||
+        !workspaceStorageSetting.ossConfig?.accessKeySecret ||
+        !workspaceStorageSetting.ossConfig?.endpoint ||
+        !workspaceStorageSetting.ossConfig?.region ||
+        !workspaceStorageSetting.ossConfig?.bucket
+      ) {
+        return false;
+      }
     }
     return !isEqual(origin, workspaceStorageSetting);
   }, [workspaceStorageSetting, workspaceStore.state]);
@@ -118,6 +128,41 @@ const StorageSection = observer(() => {
     });
   };
 
+  const handlePartialOSSConfigChanged = async (ossConfig: any) => {
+    const update: WorkspaceSetting_StorageSetting = {
+      ...workspaceStorageSetting,
+      ossConfig: {
+        ...workspaceStorageSetting.ossConfig,
+        ...ossConfig,
+      } as any,
+    };
+    setWorkspaceStorageSetting(update);
+  };
+
+  const handleOSSConfigEndpointChanged = async (event: React.FocusEvent<HTMLInputElement>) => {
+    handlePartialOSSConfigChanged({ endpoint: event.target.value });
+  };
+
+  const handleOSSConfigRegionChanged = async (event: React.FocusEvent<HTMLInputElement>) => {
+    handlePartialOSSConfigChanged({ region: event.target.value });
+  };
+
+  const handleOSSConfigAccessKeyIdChanged = async (event: React.FocusEvent<HTMLInputElement>) => {
+    handlePartialOSSConfigChanged({ accessKeyId: event.target.value });
+  };
+
+  const handleOSSConfigAccessKeySecretChanged = async (event: React.FocusEvent<HTMLInputElement>) => {
+    handlePartialOSSConfigChanged({ accessKeySecret: event.target.value });
+  };
+
+  const handleOSSConfigBucketChanged = async (event: React.FocusEvent<HTMLInputElement>) => {
+    handlePartialOSSConfigChanged({ bucket: event.target.value });
+  };
+
+  const handleOSSConfigUseSSLChanged = (checked: boolean) => {
+    handlePartialOSSConfigChanged({ useSsl: checked });
+  };
+
   const handleStorageTypeChanged = async (storageType: WorkspaceSetting_StorageSetting_StorageType) => {
     const update: WorkspaceSetting_StorageSetting = {
       ...workspaceStorageSetting,
@@ -155,6 +200,10 @@ const StorageSection = observer(() => {
         <div className="flex items-center space-x-2">
           <RadioGroupItem value={WorkspaceSetting_StorageSetting_StorageType.S3} id="s3" />
           <Label htmlFor="s3">S3</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value={WorkspaceSetting_StorageSetting_StorageType.ALIYUN_OSS} id="aliyun_oss" />
+          <Label htmlFor="aliyun_oss">{t("setting.storage-section.type-aliyun-oss")}</Label>
         </div>
       </RadioGroup>
       <div className="w-full flex flex-row justify-between items-center">
@@ -236,6 +285,63 @@ const StorageSection = observer(() => {
             <Switch
               checked={workspaceStorageSetting.s3Config?.usePathStyle}
               onCheckedChange={(checked) => handleS3ConfigUsePathStyleChanged({ target: { checked } } as any)}
+            />
+          </div>
+        </>
+      )}
+      {workspaceStorageSetting.storageType === WorkspaceSetting_StorageSetting_StorageType.ALIYUN_OSS && (
+        <>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-endpoint")}</span>
+            <Input
+              className="w-64"
+              value={workspaceStorageSetting.ossConfig?.endpoint || ""}
+              placeholder="oss-cn-hangzhou.aliyuncs.com"
+              onChange={handleOSSConfigEndpointChanged}
+            />
+          </div>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-region")}</span>
+            <Input
+              className="w-64"
+              value={workspaceStorageSetting.ossConfig?.region || ""}
+              placeholder="cn-hangzhou"
+              onChange={handleOSSConfigRegionChanged}
+            />
+          </div>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-access-key-id")}</span>
+            <Input
+              className="w-64"
+              value={workspaceStorageSetting.ossConfig?.accessKeyId || ""}
+              placeholder="LTAI5t..."
+              onChange={handleOSSConfigAccessKeyIdChanged}
+            />
+          </div>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-access-key-secret")}</span>
+            <Input
+              className="w-64"
+              type="password"
+              value={workspaceStorageSetting.ossConfig?.accessKeySecret || ""}
+              placeholder="••••••••"
+              onChange={handleOSSConfigAccessKeySecretChanged}
+            />
+          </div>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-bucket")}</span>
+            <Input
+              className="w-64"
+              value={workspaceStorageSetting.ossConfig?.bucket || ""}
+              placeholder="memos-attachments"
+              onChange={handleOSSConfigBucketChanged}
+            />
+          </div>
+          <div className="w-full flex flex-row justify-between items-center">
+            <span className="text-muted-foreground mr-1">{t("setting.storage-section.oss-use-ssl")}</span>
+            <Switch
+              checked={workspaceStorageSetting.ossConfig?.useSsl !== false}
+              onCheckedChange={handleOSSConfigUseSSLChanged}
             />
           </div>
         </>
