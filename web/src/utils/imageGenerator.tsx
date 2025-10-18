@@ -190,6 +190,28 @@ export async function generateMemoImage(memo: Memo, options: Partial<ShareImageO
         htmBlockquote.style.setProperty("margin", "8px 0", "important");
       });
 
+      // 处理表格样式
+      const tables = element.querySelectorAll("table");
+      tables.forEach((table) => {
+        const htmlTable = table as HTMLElement;
+        htmlTable.style.setProperty("border", "0.5px solid #e7e3dd", "important");
+        htmlTable.style.setProperty("border-collapse", "collapse", "important");
+        
+        // 处理所有单元格
+        const cells = htmlTable.querySelectorAll("th, td");
+        cells.forEach((cell) => {
+          const htmlCell = cell as HTMLElement;
+          htmlCell.style.setProperty("border", "0.5px solid #e7e3dd", "important");
+          htmlCell.style.setProperty("padding", "0px 8px 0px 8px", "important");
+
+          const paragraphs = htmlCell.querySelectorAll("p");
+          paragraphs.forEach((p) => {
+            const htmlP = p as HTMLElement;
+            htmlP.style.setProperty("margin-top", "0", "important");
+          });
+        });
+      });
+
       // ===== 新增：强制应用列表样式 =====
       const lists = element.querySelectorAll("ul, ol");
       lists.forEach((list) => {

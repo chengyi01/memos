@@ -1,183 +1,30 @@
-import { _ as __name, g as getAccDescription, s as setAccDescription, a as getAccTitle, b as setAccTitle, v as getDiagramTitle, t as setDiagramTitle, l as log, c as getConfig2$1, G as cleanAndMerge, L as selectSvgElement, N as parseFontSize, O as d3arc, P as ordinal, f as configureSvgSize, A as clear, Q as d3pie, I as defaultConfig_default } from "./mermaid-vendor.js";
-import { p as populateCommonDb } from "./chunk-4BX2VUAB.js";
-import { p as parse } from "./treemap-75Q7IDZK.js";
-import "./utils-vendor.js";
-var DEFAULT_PIE_CONFIG = defaultConfig_default.pie;
-var DEFAULT_PIE_DB = {
-  sections: /* @__PURE__ */ new Map(),
-  showData: false
-};
-var sections = DEFAULT_PIE_DB.sections;
-var showData = DEFAULT_PIE_DB.showData;
-var config = structuredClone(DEFAULT_PIE_CONFIG);
-var getConfig2 = /* @__PURE__ */ __name(() => structuredClone(config), "getConfig");
-var clear2 = /* @__PURE__ */ __name(() => {
-  sections = /* @__PURE__ */ new Map();
-  showData = DEFAULT_PIE_DB.showData;
-  clear();
-}, "clear");
-var addSection = /* @__PURE__ */ __name(({ label, value }) => {
-  if (value < 0) {
-    throw new Error(
-      `"${label}" has invalid value: ${value}. Negative values are not allowed in pie charts. All slice values must be >= 0.`
-    );
-  }
-  if (!sections.has(label)) {
-    sections.set(label, value);
-    log.debug(`added new section: ${label}, with value: ${value}`);
-  }
-}, "addSection");
-var getSections = /* @__PURE__ */ __name(() => sections, "getSections");
-var setShowData = /* @__PURE__ */ __name((toggle) => {
-  showData = toggle;
-}, "setShowData");
-var getShowData = /* @__PURE__ */ __name(() => showData, "getShowData");
-var db = {
-  getConfig: getConfig2,
-  clear: clear2,
-  setDiagramTitle,
-  getDiagramTitle,
-  setAccTitle,
-  getAccTitle,
-  setAccDescription,
-  getAccDescription,
-  addSection,
-  getSections,
-  setShowData,
-  getShowData
-};
-var populateDb = /* @__PURE__ */ __name((ast, db2) => {
-  populateCommonDb(ast, db2);
-  db2.setShowData(ast.showData);
-  ast.sections.map(db2.addSection);
-}, "populateDb");
-var parser = {
-  parse: /* @__PURE__ */ __name(async (input) => {
-    const ast = await parse("pie", input);
-    log.debug(ast);
-    populateDb(ast, db);
-  }, "parse")
-};
-var getStyles = /* @__PURE__ */ __name((options) => `
+import{_ as s,g as U,s as Q,a as V,b as Z,v as j,t as q,l as w,c as H,G as J,L as K,N as X,O as G,P as Y,f as ee,A as te,Q as ae,I as re}from"./mermaid-vendor.js";import{p as ie}from"./chunk-4BX2VUAB.js";import{p as se}from"./treemap-75Q7IDZK.js";import"./utils-vendor.js";var le=re.pie,D={sections:new Map,showData:!1},g=D.sections,C=D.showData,oe=structuredClone(le),ne=s(()=>structuredClone(oe),"getConfig"),ce=s(()=>{g=new Map,C=D.showData,te()},"clear"),de=s(({label:e,value:a})=>{if(a<0)throw new Error(`"${e}" has invalid value: ${a}. Negative values are not allowed in pie charts. All slice values must be >= 0.`);g.has(e)||(g.set(e,a),w.debug(`added new section: ${e}, with value: ${a}`))},"addSection"),pe=s(()=>g,"getSections"),ge=s(e=>{C=e},"setShowData"),ue=s(()=>C,"getShowData"),O={getConfig:ne,clear:ce,setDiagramTitle:q,getDiagramTitle:j,setAccTitle:Z,getAccTitle:V,setAccDescription:Q,getAccDescription:U,addSection:de,getSections:pe,setShowData:ge,getShowData:ue},fe=s((e,a)=>{ie(e,a),a.setShowData(e.showData),e.sections.map(a.addSection)},"populateDb"),he={parse:s(async e=>{const a=await se("pie",e);w.debug(a),fe(a,O)},"parse")},me=s(e=>`
   .pieCircle{
-    stroke: ${options.pieStrokeColor};
-    stroke-width : ${options.pieStrokeWidth};
-    opacity : ${options.pieOpacity};
+    stroke: ${e.pieStrokeColor};
+    stroke-width : ${e.pieStrokeWidth};
+    opacity : ${e.pieOpacity};
   }
   .pieOuterCircle{
-    stroke: ${options.pieOuterStrokeColor};
-    stroke-width: ${options.pieOuterStrokeWidth};
+    stroke: ${e.pieOuterStrokeColor};
+    stroke-width: ${e.pieOuterStrokeWidth};
     fill: none;
   }
   .pieTitleText {
     text-anchor: middle;
-    font-size: ${options.pieTitleTextSize};
-    fill: ${options.pieTitleTextColor};
-    font-family: ${options.fontFamily};
+    font-size: ${e.pieTitleTextSize};
+    fill: ${e.pieTitleTextColor};
+    font-family: ${e.fontFamily};
   }
   .slice {
-    font-family: ${options.fontFamily};
-    fill: ${options.pieSectionTextColor};
-    font-size:${options.pieSectionTextSize};
+    font-family: ${e.fontFamily};
+    fill: ${e.pieSectionTextColor};
+    font-size:${e.pieSectionTextSize};
     // fill: white;
   }
   .legend text {
-    fill: ${options.pieLegendTextColor};
-    font-family: ${options.fontFamily};
-    font-size: ${options.pieLegendTextSize};
+    fill: ${e.pieLegendTextColor};
+    font-family: ${e.fontFamily};
+    font-size: ${e.pieLegendTextSize};
   }
-`, "getStyles");
-var pieStyles_default = getStyles;
-var createPieArcs = /* @__PURE__ */ __name((sections2) => {
-  const sum = [...sections2.values()].reduce((acc, val) => acc + val, 0);
-  const pieData = [...sections2.entries()].map(([label, value]) => ({ label, value })).filter((d) => d.value / sum * 100 >= 1).sort((a, b) => b.value - a.value);
-  const pie = d3pie().value((d) => d.value);
-  return pie(pieData);
-}, "createPieArcs");
-var draw = /* @__PURE__ */ __name((text, id, _version, diagObj) => {
-  log.debug("rendering pie chart\n" + text);
-  const db2 = diagObj.db;
-  const globalConfig = getConfig2$1();
-  const pieConfig = cleanAndMerge(db2.getConfig(), globalConfig.pie);
-  const MARGIN = 40;
-  const LEGEND_RECT_SIZE = 18;
-  const LEGEND_SPACING = 4;
-  const height = 450;
-  const pieWidth = height;
-  const svg = selectSvgElement(id);
-  const group = svg.append("g");
-  group.attr("transform", "translate(" + pieWidth / 2 + "," + height / 2 + ")");
-  const { themeVariables } = globalConfig;
-  let [outerStrokeWidth] = parseFontSize(themeVariables.pieOuterStrokeWidth);
-  outerStrokeWidth ??= 2;
-  const textPosition = pieConfig.textPosition;
-  const radius = Math.min(pieWidth, height) / 2 - MARGIN;
-  const arcGenerator = d3arc().innerRadius(0).outerRadius(radius);
-  const labelArcGenerator = d3arc().innerRadius(radius * textPosition).outerRadius(radius * textPosition);
-  group.append("circle").attr("cx", 0).attr("cy", 0).attr("r", radius + outerStrokeWidth / 2).attr("class", "pieOuterCircle");
-  const sections2 = db2.getSections();
-  const arcs = createPieArcs(sections2);
-  const myGeneratedColors = [
-    themeVariables.pie1,
-    themeVariables.pie2,
-    themeVariables.pie3,
-    themeVariables.pie4,
-    themeVariables.pie5,
-    themeVariables.pie6,
-    themeVariables.pie7,
-    themeVariables.pie8,
-    themeVariables.pie9,
-    themeVariables.pie10,
-    themeVariables.pie11,
-    themeVariables.pie12
-  ];
-  let sum = 0;
-  sections2.forEach((section) => {
-    sum += section;
-  });
-  const filteredArcs = arcs.filter((datum) => (datum.data.value / sum * 100).toFixed(0) !== "0");
-  const color = ordinal(myGeneratedColors);
-  group.selectAll("mySlices").data(filteredArcs).enter().append("path").attr("d", arcGenerator).attr("fill", (datum) => {
-    return color(datum.data.label);
-  }).attr("class", "pieCircle");
-  group.selectAll("mySlices").data(filteredArcs).enter().append("text").text((datum) => {
-    return (datum.data.value / sum * 100).toFixed(0) + "%";
-  }).attr("transform", (datum) => {
-    return "translate(" + labelArcGenerator.centroid(datum) + ")";
-  }).style("text-anchor", "middle").attr("class", "slice");
-  group.append("text").text(db2.getDiagramTitle()).attr("x", 0).attr("y", -400 / 2).attr("class", "pieTitleText");
-  const allSectionData = [...sections2.entries()].map(([label, value]) => ({
-    label,
-    value
-  }));
-  const legend = group.selectAll(".legend").data(allSectionData).enter().append("g").attr("class", "legend").attr("transform", (_datum, index) => {
-    const height2 = LEGEND_RECT_SIZE + LEGEND_SPACING;
-    const offset = height2 * allSectionData.length / 2;
-    const horizontal = 12 * LEGEND_RECT_SIZE;
-    const vertical = index * height2 - offset;
-    return "translate(" + horizontal + "," + vertical + ")";
-  });
-  legend.append("rect").attr("width", LEGEND_RECT_SIZE).attr("height", LEGEND_RECT_SIZE).style("fill", (d) => color(d.label)).style("stroke", (d) => color(d.label));
-  legend.append("text").attr("x", LEGEND_RECT_SIZE + LEGEND_SPACING).attr("y", LEGEND_RECT_SIZE - LEGEND_SPACING).text((d) => {
-    if (db2.getShowData()) {
-      return `${d.label} [${d.value}]`;
-    }
-    return d.label;
-  });
-  const longestTextWidth = Math.max(
-    ...legend.selectAll("text").nodes().map((node) => node?.getBoundingClientRect().width ?? 0)
-  );
-  const totalWidth = pieWidth + MARGIN + LEGEND_RECT_SIZE + LEGEND_SPACING + longestTextWidth;
-  svg.attr("viewBox", `0 0 ${totalWidth} ${height}`);
-  configureSvgSize(svg, height, totalWidth, pieConfig.useMaxWidth);
-}, "draw");
-var renderer = { draw };
-var diagram = {
-  parser,
-  db,
-  renderer,
-  styles: pieStyles_default
-};
-export {
-  diagram
-};
+`,"getStyles"),ve=me,Se=s(e=>{const a=[...e.values()].reduce((r,l)=>r+l,0),$=[...e.entries()].map(([r,l])=>({label:r,value:l})).filter(r=>r.value/a*100>=1).sort((r,l)=>l.value-r.value);return ae().value(r=>r.value)($)},"createPieArcs"),xe=s((e,a,$,y)=>{w.debug(`rendering pie chart
+`+e);const r=y.db,l=H(),T=J(r.getConfig(),l.pie),A=40,o=18,d=4,c=450,u=c,f=K(a),n=f.append("g");n.attr("transform","translate("+u/2+","+c/2+")");const{themeVariables:i}=l;let[b]=X(i.pieOuterStrokeWidth);b??=2;const _=T.textPosition,p=Math.min(u,c)/2-A,P=G().innerRadius(0).outerRadius(p),W=G().innerRadius(p*_).outerRadius(p*_);n.append("circle").attr("cx",0).attr("cy",0).attr("r",p+b/2).attr("class","pieOuterCircle");const h=r.getSections(),I=Se(h),L=[i.pie1,i.pie2,i.pie3,i.pie4,i.pie5,i.pie6,i.pie7,i.pie8,i.pie9,i.pie10,i.pie11,i.pie12];let m=0;h.forEach(t=>{m+=t});const E=I.filter(t=>(t.data.value/m*100).toFixed(0)!=="0"),v=Y(L);n.selectAll("mySlices").data(E).enter().append("path").attr("d",P).attr("fill",t=>v(t.data.label)).attr("class","pieCircle"),n.selectAll("mySlices").data(E).enter().append("text").text(t=>(t.data.value/m*100).toFixed(0)+"%").attr("transform",t=>"translate("+W.centroid(t)+")").style("text-anchor","middle").attr("class","slice"),n.append("text").text(r.getDiagramTitle()).attr("x",0).attr("y",-400/2).attr("class","pieTitleText");const k=[...h.entries()].map(([t,x])=>({label:t,value:x})),S=n.selectAll(".legend").data(k).enter().append("g").attr("class","legend").attr("transform",(t,x)=>{const F=o+d,N=F*k.length/2,R=12*o,B=x*F-N;return"translate("+R+","+B+")"});S.append("rect").attr("width",o).attr("height",o).style("fill",t=>v(t.label)).style("stroke",t=>v(t.label)),S.append("text").attr("x",o+d).attr("y",o-d).text(t=>r.getShowData()?`${t.label} [${t.value}]`:t.label);const M=Math.max(...S.selectAll("text").nodes().map(t=>t?.getBoundingClientRect().width??0)),z=u+A+o+d+M;f.attr("viewBox",`0 0 ${z} ${c}`),ee(f,c,z,T.useMaxWidth)},"draw"),we={draw:xe},Te={parser:he,db:O,renderer:we,styles:ve};export{Te as diagram};

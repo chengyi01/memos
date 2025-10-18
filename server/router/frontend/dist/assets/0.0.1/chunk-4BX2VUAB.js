@@ -1,16 +1,1 @@
-import { _ as __name } from "./mermaid-vendor.js";
-function populateCommonDb(ast, db) {
-  if (ast.accDescr) {
-    db.setAccDescription?.(ast.accDescr);
-  }
-  if (ast.accTitle) {
-    db.setAccTitle?.(ast.accTitle);
-  }
-  if (ast.title) {
-    db.setDiagramTitle?.(ast.title);
-  }
-}
-__name(populateCommonDb, "populateCommonDb");
-export {
-  populateCommonDb as p
-};
+import{_ as i}from"./mermaid-vendor.js";function t(c,e){c.accDescr&&e.setAccDescription?.(c.accDescr),c.accTitle&&e.setAccTitle?.(c.accTitle),c.title&&e.setDiagramTitle?.(c.title)}i(t,"populateCommonDb");export{t as p};

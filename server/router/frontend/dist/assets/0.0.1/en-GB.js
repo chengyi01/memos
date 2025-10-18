@@ -1,4 +1,1 @@
-const enGB = {};
-export {
-  enGB as default
-};
+const e={};export{e as default};
