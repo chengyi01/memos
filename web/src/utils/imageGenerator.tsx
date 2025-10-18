@@ -218,46 +218,79 @@ export async function generateMemoImage(memo: Memo, options: Partial<ShareImageO
         const htmlList = list as HTMLElement;
         htmlList.style.setProperty("margin", "8px 0", "important");
         htmlList.style.setProperty("padding-left", "0px", "important");
-        
-        if (list.tagName === "UL") {
-          htmlList.style.setProperty("list-style-type", "disc", "important");
-        } else {
-          htmlList.style.setProperty("list-style-type", "decimal", "important");
+
+        const buttons = htmlList.querySelectorAll("button[role=checkbox]");
+        if (buttons.length == 0) {
+          if (list.tagName === "UL") {
+            htmlList.style.setProperty("list-style-type", "disc", "important");
+          } else {
+            htmlList.style.setProperty("list-style-type", "decimal", "important");
+          }
         }
       });
       
       const listItems = element.querySelectorAll("li");
       listItems.forEach((li) => {
         const htmlLi = li as HTMLElement;
-        const parentList = htmlLi.closest("ul, ol");
-        
-        // 移除原生标记
-        htmlLi.style.setProperty("list-style-type", "none", "important");
-        htmlLi.style.setProperty("margin", "6px 0", "important");
-        htmlLi.style.setProperty("padding-left", "0px", "important");
-        htmlLi.style.setProperty("line-height", "1.5", "important");
-        htmlLi.style.setProperty("display", "flex", "important");
-        htmlLi.style.setProperty("align-items", "flex-start", "important");
-        
-        // 创建自定义标记
-        const marker = document.createElement("span");
-        marker.style.marginRight = "8px";
-        marker.style.color = "#6b7280";
-        marker.style.flexShrink = "0";
-        marker.style.marginTop = "2px";  // 微调垂直位置
-        
-        if (parentList?.tagName === "UL") {
-          marker.textContent = "•";  // 圆点
+
+        const buttons = htmlLi.querySelectorAll("button[role=checkbox]");
+        if (buttons.length == 0) {
+          const parentList = htmlLi.closest("ul, ol");
+          
+          // 移除原生标记
+          htmlLi.style.setProperty("list-style-type", "none", "important");
+          htmlLi.style.setProperty("margin", "6px 0", "important");
+          htmlLi.style.setProperty("padding-left", "0px", "important");
+          htmlLi.style.setProperty("line-height", "1.5", "important");
+          htmlLi.style.setProperty("display", "flex", "important");
+          htmlLi.style.setProperty("align-items", "flex-start", "important");
+          
+          // 创建自定义标记
+          const marker = document.createElement("span");
+          marker.style.marginRight = "8px";
+          marker.style.color = "#6b7280";
+          marker.style.flexShrink = "0";
+          marker.style.marginTop = "2px";  // 微调垂直位置
+          
+          if (parentList?.tagName === "UL") {
+            marker.textContent = "•";  // 圆点
+          } else {
+            // 有序列表：获取当前序号
+            const listIndex = Array.from(parentList?.children || []).indexOf(li) + 1;
+            const start = parseInt(parentList?.getAttribute("start") || "1");
+            marker.textContent = `${listIndex + start - 1}.`;  // 数字
+            marker.style.fontWeight = "500";
+          }
+          
+          // 将标记插入到 li 的最前面
+          htmlLi.insertBefore(marker, htmlLi.firstChild);
         } else {
-          // 有序列表：获取当前序号
-          const listIndex = Array.from(parentList?.children || []).indexOf(li) + 1;
-          const start = parseInt(parentList?.getAttribute("start") || "1");
-          marker.textContent = `${listIndex + start - 1}.`;  // 数字
-          marker.style.fontWeight = "500";
+          // 包含 checkbox 的列表项，转换为纯文本格式
+          const button = buttons[0] as HTMLButtonElement;
+          const isChecked = button.getAttribute("aria-checked") === "true" || 
+                           button.getAttribute("data-state") === "checked";
+          
+          // 获取 li 中的文本内容（排除 button 本身）
+          const textContent = Array.from(htmlLi.childNodes)
+            .filter(node => node !== button && node !== button.parentElement)
+            .map(node => node.textContent || "")
+            .join("")
+            .trim();
+          
+          // 替换整个 li 的内容为纯文本格式
+          htmlLi.textContent = isChecked ? `☑ ${textContent}` : `☐ ${textContent}`;
+          
+          // 设置样式
+          htmlLi.style.setProperty("display", "block", "important");
+          htmlLi.style.setProperty("list-style-type", "none", "important");
+          htmlLi.style.setProperty("margin", "6px 0", "important");
+          htmlLi.style.setProperty("padding-left", "0px", "important");
+          htmlLi.style.setProperty("line-height", "1.5", "important");
+          if (isChecked) {
+            htmlLi.style.setProperty("color", "#0000ff0", "important");
+            htmlLi.style.setProperty("font-weight", "bold", "important");
+          }
         }
-        
-        // 将标记插入到 li 的最前面
-        htmlLi.insertBefore(marker, htmlLi.firstChild);
       });
       // ===== 结束新增 =====
     }

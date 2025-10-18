@@ -41,10 +41,39 @@ const List: React.FC<Props> = ({ kind, indent, children }: Props) => {
     return attrs;
   };
 
+  // Check if this is a task list to avoid displaying list markers
+  // Need to check:
+  // 1. If children contain TASK_LIST_ITEM (properly parsed)
+  // 2. If children contain UNORDERED_LIST_ITEM with [ ] text (mis-parsed by backend)
+  const isTaskList = children.some((child) => {
+    if (child.type === NodeType.TASK_LIST_ITEM) {
+      return true;
+    }
+    // Check if this is a mis-parsed task list item (UNORDERED_LIST_ITEM with [ ] text)
+    if (child.type === NodeType.UNORDERED_LIST_ITEM && child.unorderedListItemNode?.children) {
+      const firstGrandchild = child.unorderedListItemNode.children[0];
+      return (
+        firstGrandchild &&
+        firstGrandchild.type === NodeType.TEXT &&
+        firstGrandchild.textNode?.content &&
+        /^\s*\[\s*[xX]?\s*\]\s*/.test(firstGrandchild.textNode.content)
+      );
+    }
+    return false;
+  });
+
   return React.createElement(
     getListContainer(),
     {
-      className: cn(kind === ListNode_Kind.ORDERED ? "list-decimal" : kind === ListNode_Kind.UNORDERED ? "list-disc" : "list-none"),
+      className: cn(
+        isTaskList
+          ? "list-none"
+          : kind === ListNode_Kind.ORDERED
+            ? "list-decimal"
+            : kind === ListNode_Kind.UNORDERED
+              ? "list-disc"
+              : "list-none",
+      ),
       ...getAttributes(),
     },
     children.map((child, index) => {
