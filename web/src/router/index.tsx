@@ -5,6 +5,7 @@ import HomeLayout from "@/layouts/HomeLayout";
 import RootLayout from "@/layouts/RootLayout";
 import Home from "@/pages/Home";
 import Loading from "@/pages/Loading";
+import Setting from "@/pages/Setting";
 
 const AdminSignIn = lazy(() => import("@/pages/AdminSignIn"));
 const Archived = lazy(() => import("@/pages/Archived"));
@@ -15,7 +16,6 @@ const MemoDetail = lazy(() => import("@/pages/MemoDetail"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const PermissionDenied = lazy(() => import("@/pages/PermissionDenied"));
 const Attachments = lazy(() => import("@/pages/Attachments"));
-const Setting = lazy(() => import("@/pages/Setting"));
 const SignIn = lazy(() => import("@/pages/SignIn"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const UserProfile = lazy(() => import("@/pages/UserProfile"));
@@ -128,11 +128,7 @@ const router = createBrowserRouter([
           },
           {
             path: Routes.SETTING,
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Setting />
-              </Suspense>
-            ),
+            element: <Setting />,
           },
           {
             path: "memos/:uid",
