@@ -2495,6 +2495,12 @@ components:
                     type: object
                     additionalProperties:
                         type: string
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Node'
+                isSelfClosing:
+                    type: boolean
         HeadingNode:
             type: object
             properties:

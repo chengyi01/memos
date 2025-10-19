@@ -29,6 +29,9 @@ func (s *APIV1Service) CreateMemo(ctx context.Context, request *v1pb.CreateMemoR
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get user")
 	}
+	if user == nil {
+		return nil, status.Errorf(codes.Unauthenticated, "user not authenticated")
+	}
 
 	create := &store.Memo{
 		UID:        shortuuid.New(),
@@ -197,20 +200,18 @@ func (s *APIV1Service) ListMemos(ctx context.Context, request *v1pb.ListMemosReq
 	}
 
 	reactionMap := make(map[string][]*store.Reaction)
-	memoNames := make([]string, 0, len(memos))
+	contentIDs := make([]string, 0, len(memos))
 
 	attachmentMap := make(map[int32][]*store.Attachment)
-	memoIDs := make([]string, 0, len(memos))
+	memoIDs := make([]int32, 0, len(memos))
 
 	for _, m := range memos {
-		memoNames = append(memoNames, fmt.Sprintf("'%s%s'", MemoNamePrefix, m.UID))
-		memoIDs = append(memoIDs, fmt.Sprintf("'%d'", m.ID))
+		contentIDs = append(contentIDs, fmt.Sprintf("%s%s", MemoNamePrefix, m.UID))
+		memoIDs = append(memoIDs, m.ID)
 	}
 
 	// REACTIONS
-	reactions, err := s.Store.ListReactions(ctx, &store.FindReaction{
-		Filters: []string{fmt.Sprintf("content_id in [%s]", strings.Join(memoNames, ", "))},
-	})
+	reactions, err := s.Store.ListReactions(ctx, &store.FindReaction{ContentIDList: contentIDs})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list reactions")
 	}
@@ -219,9 +220,7 @@ func (s *APIV1Service) ListMemos(ctx context.Context, request *v1pb.ListMemosReq
 	}
 
 	// ATTACHMENTS
-	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{
-		Filters: []string{fmt.Sprintf("memo_id in [%s]", strings.Join(memoIDs, ", "))},
-	})
+	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{MemoIDList: memoIDs})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list attachments")
 	}
@@ -317,6 +316,9 @@ func (s *APIV1Service) UpdateMemo(ctx context.Context, request *v1pb.UpdateMemoR
 	user, err := s.GetCurrentUser(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get current user")
+	}
+	if user == nil {
+		return nil, status.Errorf(codes.Unauthenticated, "user not authenticated")
 	}
 	// Only the creator or admin can update the memo.
 	if memo.CreatorID != user.ID && !isSuperUser(user) {
@@ -452,6 +454,9 @@ func (s *APIV1Service) DeleteMemo(ctx context.Context, request *v1pb.DeleteMemoR
 	user, err := s.GetCurrentUser(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get current user")
+	}
+	if user == nil {
+		return nil, status.Errorf(codes.Unauthenticated, "user not authenticated")
 	}
 	// Only the creator or admin can update the memo.
 	if memo.CreatorID != user.ID && !isSuperUser(user) {
@@ -621,30 +626,26 @@ func (s *APIV1Service) ListMemoComments(ctx context.Context, request *v1pb.ListM
 		return response, nil
 	}
 
-	memoRelationIDs := make([]string, 0, len(memoRelations))
+	memoRelationIDs := make([]int32, 0, len(memoRelations))
 	for _, m := range memoRelations {
-		memoRelationIDs = append(memoRelationIDs, fmt.Sprintf("%d", m.MemoID))
+		memoRelationIDs = append(memoRelationIDs, m.MemoID)
 	}
-	memos, err := s.Store.ListMemos(ctx, &store.FindMemo{
-		Filters: []string{fmt.Sprintf("id in [%s]", strings.Join(memoRelationIDs, ", "))},
-	})
+	memos, err := s.Store.ListMemos(ctx, &store.FindMemo{IDList: memoRelationIDs})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list memos")
 	}
 
 	memoIDToNameMap := make(map[int32]string)
-	memoNamesForQuery := make([]string, 0, len(memos))
-	memoIDsForQuery := make([]string, 0, len(memos))
+	contentIDs := make([]string, 0, len(memos))
+	memoIDsForAttachments := make([]int32, 0, len(memos))
 
 	for _, memo := range memos {
 		memoName := fmt.Sprintf("%s%s", MemoNamePrefix, memo.UID)
 		memoIDToNameMap[memo.ID] = memoName
-		memoNamesForQuery = append(memoNamesForQuery, fmt.Sprintf("'%s'", memoName))
-		memoIDsForQuery = append(memoIDsForQuery, fmt.Sprintf("'%d'", memo.ID))
+		contentIDs = append(contentIDs, memoName)
+		memoIDsForAttachments = append(memoIDsForAttachments, memo.ID)
 	}
-	reactions, err := s.Store.ListReactions(ctx, &store.FindReaction{
-		Filters: []string{fmt.Sprintf("content_id in [%s]", strings.Join(memoNamesForQuery, ", "))},
-	})
+	reactions, err := s.Store.ListReactions(ctx, &store.FindReaction{ContentIDList: contentIDs})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list reactions")
 	}
@@ -654,9 +655,7 @@ func (s *APIV1Service) ListMemoComments(ctx context.Context, request *v1pb.ListM
 		memoReactionsMap[reaction.ContentID] = append(memoReactionsMap[reaction.ContentID], reaction)
 	}
 
-	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{
-		Filters: []string{fmt.Sprintf("memo_id in [%s]", strings.Join(memoIDsForQuery, ", "))},
-	})
+	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{MemoIDList: memoIDsForAttachments})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list attachments")
 	}
@@ -688,6 +687,9 @@ func (s *APIV1Service) RenameMemoTag(ctx context.Context, request *v1pb.RenameMe
 	user, err := s.GetCurrentUser(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get current user")
+	}
+	if user == nil {
+		return nil, status.Errorf(codes.Unauthenticated, "user not authenticated")
 	}
 
 	memoFind := &store.FindMemo{
@@ -738,6 +740,9 @@ func (s *APIV1Service) DeleteMemoTag(ctx context.Context, request *v1pb.DeleteMe
 	user, err := s.GetCurrentUser(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get current user")
+	}
+	if user == nil {
+		return nil, status.Errorf(codes.Unauthenticated, "user not authenticated")
 	}
 
 	memoFind := &store.FindMemo{
@@ -887,15 +892,10 @@ func (*APIV1Service) parseMemoOrderBy(orderBy string, memoFind *store.FindMemo) 
 	}
 
 	switch field {
-	case "display_time":
-		memoFind.OrderByTimeAsc = direction == "asc"
-	case "create_time":
+	case "display_time", "create_time", "name":
 		memoFind.OrderByTimeAsc = direction == "asc"
 	case "update_time":
 		memoFind.OrderByUpdatedTs = true
-		memoFind.OrderByTimeAsc = direction == "asc"
-	case "name":
-		// For ordering by memo name/id - not commonly used but supported
 		memoFind.OrderByTimeAsc = direction == "asc"
 	default:
 		return errors.Errorf("unsupported order field: %s, supported fields are: display_time, create_time, update_time, name", field)
