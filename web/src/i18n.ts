@@ -50,10 +50,12 @@ const LazyImportPlugin: BackendModule = {
     const matchedLanguage = findNearestMatchedLanguage(language);
     import(`./locales/${matchedLanguage}.json`)
       .then((translation: any) => {
-        callback(null, translation);
+        // Use .default for ES module imports
+        callback(null, translation.default || translation);
       })
-      .catch(() => {
-        // Fallback to English.
+      .catch((error) => {
+        console.error(`Failed to load translations for ${matchedLanguage}:`, error);
+        callback(error, null);
       });
   },
 };

@@ -40,7 +40,7 @@ const LocationSelector = (props: Props) => {
     setState((state) => ({
       ...state,
       placeholder: props.location?.placeholder || "",
-      position: new LatLng(props.location?.latitude || 0, props.location?.longitude || 0),
+      position: props.location ? new LatLng(props.location.latitude, props.location.longitude) : undefined,
       latInput: String(props.location?.latitude) || "",
       lngInput: String(props.location?.longitude) || "",
     }));
@@ -80,6 +80,11 @@ const LocationSelector = (props: Props) => {
   useEffect(() => {
     if (!state.position) {
       setState((prev) => ({ ...prev, placeholder: "" }));
+      return;
+    }
+
+    // 跳过无效坐标 (0, 0)
+    if (state.position.lat === 0 && state.position.lng === 0) {
       return;
     }
 

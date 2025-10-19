@@ -457,6 +457,50 @@
       "saturday": "Saturday",
       "sunday": "Sunday",
       "week-start-day": "Week start day"
+    },
+    "ai-agent": {
+      "title": "AI Agent",
+      "description": "Configure Alibaba Cloud Bailian AI agent to provide AI chat functionality for users",
+      "enabled": "Enable AI",
+      "enabled-hint": "Users can use AI chat after enabled",
+      "api-key": "API Key",
+      "api-key-hint": "Get from Alibaba Cloud Bailian Console",
+      "agent-id": "Agent ID",
+      "agent-id-hint": "Unique identifier of the agent application",
+      "endpoint": "API Endpoint",
+      "endpoint-hint": "Keep the default value",
+      "advanced": "Advanced Settings",
+      "temperature": "Temperature",
+      "temperature-hint": "Controls randomness: 0=deterministic, 2=creative",
+      "max-tokens": "Max Tokens",
+      "max-tokens-hint": "Maximum length of AI response",
+      "test-connection": "Test Connection",
+      "test-success": "Connection successful",
+      "test-failed": "Connection failed",
+      "testing": "Testing...",
+      "help-title": "How to get configuration?",
+      "help-step1": "Login to Alibaba Cloud Bailian Console",
+      "help-step2": "Create or select an agent application",
+      "help-step3": "Get Agent ID from application details",
+      "help-step4": "Create API Key in API key management"
+    }
+  },
+  "ai-chat": {
+    "title": "AI Assistant",
+    "welcome": "Hi, I'm AI assistant. How can I help you?",
+    "hint": "You can ask me questions, upload images for analysis, or ask me to help organize your notes",
+    "input-placeholder": "Type a message... (Enter to send, Shift+Enter for new line)",
+    "new-conversation": "New Conversation",
+    "thinking": "AI is thinking...",
+    "send": "Send",
+    "upload-attachment": "Upload Attachment",
+    "error": {
+      "not-configured": "AI not configured by admin",
+      "send-failed": "Send failed, please retry",
+      "rate-limit": "Too many requests, please try again later",
+      "network-error": "Network error, please check your connection",
+      "too-many-attachments": "Maximum 5 attachments allowed",
+      "missing-credentials": "Please fill in API Key and Agent ID first"
     }
   },
   "tag": {
