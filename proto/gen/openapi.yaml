@@ -304,6 +304,146 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v1/conversations:
+        post:
+            tags:
+                - ConversationService
+            description: CreateConversation creates a new conversation.
+            operationId: ConversationService_CreateConversation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateConversationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Conversation'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/conversations/active:
+        get:
+            tags:
+                - ConversationService
+            description: GetActiveConversation gets the active (most recent) conversation for the current user.
+            operationId: ConversationService_GetActiveConversation
+            parameters:
+                - name: createIfNotExists
+                  in: query
+                  description: 'create_if_not_exists: If true, create a new conversation if none exists.'
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Conversation'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/conversations/{conversation}:
+        delete:
+            tags:
+                - ConversationService
+            description: DeleteConversation deletes a conversation.
+            operationId: ConversationService_DeleteConversation
+            parameters:
+                - name: conversation
+                  in: path
+                  description: The conversation id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/conversations/{conversation}/messages:
+        get:
+            tags:
+                - ConversationService
+            description: ListMessages lists messages in a conversation.
+            operationId: ConversationService_ListMessages
+            parameters:
+                - name: conversation
+                  in: path
+                  description: The conversation id.
+                  required: true
+                  schema:
+                    type: string
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageToken
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListMessagesResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/conversations/{conversation}/messages:send:
+        post:
+            tags:
+                - ConversationService
+            description: SendMessage sends a message and streams back AI response chunks.
+            operationId: ConversationService_SendMessage
+            parameters:
+                - name: conversation
+                  in: path
+                  description: The conversation id.
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SendMessageRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendMessageChunk'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/v1/identityProviders:
         get:
             tags:
@@ -2083,6 +2223,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v1/workspace/ai/test-agent:
+        post:
+            tags:
+                - WorkspaceService
+            description: Tests the connection to a specific AI agent.
+            operationId: WorkspaceService_TestAIAgent
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TestAIAgentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TestAIAgentResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/v1/workspace/profile:
         get:
             tags:
@@ -2202,6 +2367,22 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
+        AISetting_AIAgent:
+            type: object
+            properties:
+                id:
+                    type: string
+                    description: id is the unique identifier (agent_id from Bailian).
+                name:
+                    type: string
+                    description: name is the display name of the agent.
+                description:
+                    type: string
+                    description: description is the description/note about the agent.
+                createdTs:
+                    type: string
+                    description: created_ts is the creation timestamp.
+            description: AIAgent represents a single AI agent configuration.
         Activity:
             type: object
             properties:
@@ -2347,6 +2528,34 @@ components:
             type: object
             properties:
                 content:
+                    type: string
+        Conversation:
+            type: object
+            properties:
+                uid:
+                    type: string
+                    description: 'uid: conversations/{uid}'
+                title:
+                    type: string
+                creatorId:
+                    type: integer
+                    format: int32
+                messageCount:
+                    type: integer
+                    format: int32
+                lastMessageAt:
+                    type: string
+                    format: date-time
+                createTime:
+                    type: string
+                    format: date-time
+                updateTime:
+                    type: string
+                    format: date-time
+        CreateConversationRequest:
+            type: object
+            properties:
+                title:
                     type: string
         CreateSessionRequest:
             type: object
@@ -2782,6 +2991,15 @@ components:
                     type: integer
                     description: The total count of memos (may be approximate).
                     format: int32
+        ListMessagesResponse:
+            type: object
+            properties:
+                messages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Message'
+                nextPageToken:
+                    type: string
         ListNode:
             type: object
             properties:
@@ -3049,6 +3267,27 @@ components:
                 hasIncompleteTasks:
                     type: boolean
             description: Computed properties of a memo.
+        Message:
+            type: object
+            properties:
+                uid:
+                    type: string
+                    description: 'uid: messages/{uid}'
+                conversation:
+                    type: string
+                    description: 'conversation: conversations/{uid}'
+                role:
+                    type: string
+                    description: 'role: user or assistant'
+                content:
+                    type: string
+                attachments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Attachment'
+                createTime:
+                    type: string
+                    format: date-time
         Node:
             type: object
             properties:
@@ -3283,6 +3522,48 @@ components:
                 markdown:
                     type: string
                     description: The restored markdown content.
+        SendMessageChunk:
+            type: object
+            properties:
+                type:
+                    enum:
+                        - CHUNK_TYPE_UNSPECIFIED
+                        - USER_MESSAGE
+                        - ASSISTANT_START
+                        - ASSISTANT_CONTENT
+                        - ASSISTANT_END
+                        - ERROR
+                    type: string
+                    format: enum
+                message:
+                    allOf:
+                        - $ref: '#/components/schemas/Message'
+                    description: 'message: Full message for USER_MESSAGE and ASSISTANT_END'
+                contentDelta:
+                    type: string
+                    description: 'content_delta: Content chunk for ASSISTANT_CONTENT'
+                error:
+                    type: string
+                    description: 'error: Error message for ERROR type'
+        SendMessageRequest:
+            required:
+                - conversation
+                - content
+            type: object
+            properties:
+                conversation:
+                    type: string
+                    description: 'conversation: conversations/{uid}'
+                content:
+                    type: string
+                attachments:
+                    type: array
+                    items:
+                        type: string
+                    description: 'attachments: List of attachment UIDs'
+                agentId:
+                    type: string
+                    description: 'agent_id: Specific AI agent to use (optional, uses default if not specified)'
         SetMemoAttachmentsRequest:
             required:
                 - name
@@ -3458,6 +3739,37 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Node'
+        TestAIAgentRequest:
+            required:
+                - apiKey
+                - endpoint
+                - agentId
+            type: object
+            properties:
+                apiKey:
+                    type: string
+                    description: api_key is the Bailian API Key to test.
+                endpoint:
+                    type: string
+                    description: endpoint is the API endpoint (e.g., "dashscope.aliyuncs.com").
+                agentId:
+                    type: string
+                    description: agent_id is the specific agent ID to test.
+            description: Request message for TestAIAgent method.
+        TestAIAgentResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                    description: success indicates whether the test passed.
+                message:
+                    type: string
+                    description: message contains the test result message.
+                latencyMs:
+                    type: integer
+                    description: latency_ms is the test latency in milliseconds (optional).
+                    format: int32
+            description: Response message for TestAIAgent method.
         TextNode:
             type: object
             properties:
@@ -3788,7 +4100,38 @@ components:
                     $ref: '#/components/schemas/WorkspaceSetting_StorageSetting'
                 memoRelatedSetting:
                     $ref: '#/components/schemas/WorkspaceSetting_MemoRelatedSetting'
+                aiSetting:
+                    $ref: '#/components/schemas/WorkspaceSetting_AISetting'
             description: A workspace setting resource.
+        WorkspaceSetting_AISetting:
+            type: object
+            properties:
+                apiKey:
+                    type: string
+                    description: api_key is the Bailian API Key.
+                endpoint:
+                    type: string
+                    description: 'endpoint is the API endpoint (default: https://dashscope.aliyuncs.com/api/v1).'
+                temperature:
+                    type: number
+                    description: temperature is the default temperature (0.0-2.0).
+                    format: double
+                maxTokens:
+                    type: integer
+                    description: max_tokens is the default max tokens per response.
+                    format: int32
+                enabled:
+                    type: boolean
+                    description: enabled indicates whether AI feature is enabled.
+                agents:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AISetting_AIAgent'
+                    description: agents is the list of available AI agents.
+                defaultAgentId:
+                    type: string
+                    description: default_agent_id is the default agent ID to use.
+            description: AI workspace settings for Alibaba Cloud Bailian integration.
         WorkspaceSetting_GeneralSetting:
             type: object
             properties:
@@ -3897,6 +4240,7 @@ tags:
     - name: ActivityService
     - name: AttachmentService
     - name: AuthService
+    - name: ConversationService
     - name: IdentityProviderService
     - name: InboxService
     - name: MarkdownService

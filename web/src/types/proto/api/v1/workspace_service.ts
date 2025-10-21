@@ -39,6 +39,7 @@ export interface WorkspaceSetting {
   generalSetting?: WorkspaceSetting_GeneralSetting | undefined;
   storageSetting?: WorkspaceSetting_StorageSetting | undefined;
   memoRelatedSetting?: WorkspaceSetting_MemoRelatedSetting | undefined;
+  aiSetting?: WorkspaceSetting_AISetting | undefined;
 }
 
 /** Enumeration of workspace setting keys. */
@@ -50,6 +51,8 @@ export enum WorkspaceSetting_Key {
   STORAGE = "STORAGE",
   /** MEMO_RELATED - MEMO_RELATED is the key for memo related settings. */
   MEMO_RELATED = "MEMO_RELATED",
+  /** AI - AI is the key for AI agent settings. */
+  AI = "AI",
   UNRECOGNIZED = "UNRECOGNIZED",
 }
 
@@ -67,6 +70,9 @@ export function workspaceSetting_KeyFromJSON(object: any): WorkspaceSetting_Key 
     case 3:
     case "MEMO_RELATED":
       return WorkspaceSetting_Key.MEMO_RELATED;
+    case 4:
+    case "AI":
+      return WorkspaceSetting_Key.AI;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -84,6 +90,8 @@ export function workspaceSetting_KeyToNumber(object: WorkspaceSetting_Key): numb
       return 2;
     case WorkspaceSetting_Key.MEMO_RELATED:
       return 3;
+    case WorkspaceSetting_Key.AI:
+      return 4;
     case WorkspaceSetting_Key.UNRECOGNIZED:
     default:
       return -1;
@@ -253,6 +261,36 @@ export interface WorkspaceSetting_MemoRelatedSetting {
   nsfwTags: string[];
 }
 
+/** AI workspace settings for Alibaba Cloud Bailian integration. */
+export interface WorkspaceSetting_AISetting {
+  /** api_key is the Bailian API Key. */
+  apiKey: string;
+  /** endpoint is the API endpoint (default: https://dashscope.aliyuncs.com/api/v1). */
+  endpoint: string;
+  /** temperature is the default temperature (0.0-2.0). */
+  temperature: number;
+  /** max_tokens is the default max tokens per response. */
+  maxTokens: number;
+  /** enabled indicates whether AI feature is enabled. */
+  enabled: boolean;
+  /** agents is the list of available AI agents. */
+  agents: WorkspaceSetting_AISetting_AIAgent[];
+  /** default_agent_id is the default agent ID to use. */
+  defaultAgentId: string;
+}
+
+/** AIAgent represents a single AI agent configuration. */
+export interface WorkspaceSetting_AISetting_AIAgent {
+  /** id is the unique identifier (agent_id from Bailian). */
+  id: string;
+  /** name is the display name of the agent. */
+  name: string;
+  /** description is the description/note about the agent. */
+  description: string;
+  /** created_ts is the creation timestamp. */
+  createdTs: number;
+}
+
 /** Request message for GetWorkspaceSetting method. */
 export interface GetWorkspaceSettingRequest {
   /**
@@ -270,6 +308,26 @@ export interface UpdateWorkspaceSettingRequest {
     | undefined;
   /** The list of fields to update. */
   updateMask?: string[] | undefined;
+}
+
+/** Request message for TestAIAgent method. */
+export interface TestAIAgentRequest {
+  /** api_key is the Bailian API Key to test. */
+  apiKey: string;
+  /** endpoint is the API endpoint (e.g., "dashscope.aliyuncs.com"). */
+  endpoint: string;
+  /** agent_id is the specific agent ID to test. */
+  agentId: string;
+}
+
+/** Response message for TestAIAgent method. */
+export interface TestAIAgentResponse {
+  /** success indicates whether the test passed. */
+  success: boolean;
+  /** message contains the test result message. */
+  message: string;
+  /** latency_ms is the test latency in milliseconds (optional). */
+  latencyMs: number;
 }
 
 function createBaseWorkspaceProfile(): WorkspaceProfile {
@@ -389,7 +447,13 @@ export const GetWorkspaceProfileRequest: MessageFns<GetWorkspaceProfileRequest> 
 };
 
 function createBaseWorkspaceSetting(): WorkspaceSetting {
-  return { name: "", generalSetting: undefined, storageSetting: undefined, memoRelatedSetting: undefined };
+  return {
+    name: "",
+    generalSetting: undefined,
+    storageSetting: undefined,
+    memoRelatedSetting: undefined,
+    aiSetting: undefined,
+  };
 }
 
 export const WorkspaceSetting: MessageFns<WorkspaceSetting> = {
@@ -405,6 +469,9 @@ export const WorkspaceSetting: MessageFns<WorkspaceSetting> = {
     }
     if (message.memoRelatedSetting !== undefined) {
       WorkspaceSetting_MemoRelatedSetting.encode(message.memoRelatedSetting, writer.uint32(34).fork()).join();
+    }
+    if (message.aiSetting !== undefined) {
+      WorkspaceSetting_AISetting.encode(message.aiSetting, writer.uint32(42).fork()).join();
     }
     return writer;
   },
@@ -448,6 +515,14 @@ export const WorkspaceSetting: MessageFns<WorkspaceSetting> = {
           message.memoRelatedSetting = WorkspaceSetting_MemoRelatedSetting.decode(reader, reader.uint32());
           continue;
         }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.aiSetting = WorkspaceSetting_AISetting.decode(reader, reader.uint32());
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -471,6 +546,9 @@ export const WorkspaceSetting: MessageFns<WorkspaceSetting> = {
       : undefined;
     message.memoRelatedSetting = (object.memoRelatedSetting !== undefined && object.memoRelatedSetting !== null)
       ? WorkspaceSetting_MemoRelatedSetting.fromPartial(object.memoRelatedSetting)
+      : undefined;
+    message.aiSetting = (object.aiSetting !== undefined && object.aiSetting !== null)
+      ? WorkspaceSetting_AISetting.fromPartial(object.aiSetting)
       : undefined;
     return message;
   },
@@ -1190,6 +1268,206 @@ export const WorkspaceSetting_MemoRelatedSetting: MessageFns<WorkspaceSetting_Me
   },
 };
 
+function createBaseWorkspaceSetting_AISetting(): WorkspaceSetting_AISetting {
+  return { apiKey: "", endpoint: "", temperature: 0, maxTokens: 0, enabled: false, agents: [], defaultAgentId: "" };
+}
+
+export const WorkspaceSetting_AISetting: MessageFns<WorkspaceSetting_AISetting> = {
+  encode(message: WorkspaceSetting_AISetting, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.apiKey !== "") {
+      writer.uint32(10).string(message.apiKey);
+    }
+    if (message.endpoint !== "") {
+      writer.uint32(18).string(message.endpoint);
+    }
+    if (message.temperature !== 0) {
+      writer.uint32(25).double(message.temperature);
+    }
+    if (message.maxTokens !== 0) {
+      writer.uint32(32).int32(message.maxTokens);
+    }
+    if (message.enabled !== false) {
+      writer.uint32(40).bool(message.enabled);
+    }
+    for (const v of message.agents) {
+      WorkspaceSetting_AISetting_AIAgent.encode(v!, writer.uint32(50).fork()).join();
+    }
+    if (message.defaultAgentId !== "") {
+      writer.uint32(58).string(message.defaultAgentId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): WorkspaceSetting_AISetting {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWorkspaceSetting_AISetting();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.apiKey = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.endpoint = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 25) {
+            break;
+          }
+
+          message.temperature = reader.double();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.maxTokens = reader.int32();
+          continue;
+        }
+        case 5: {
+          if (tag !== 40) {
+            break;
+          }
+
+          message.enabled = reader.bool();
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.agents.push(WorkspaceSetting_AISetting_AIAgent.decode(reader, reader.uint32()));
+          continue;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
+          message.defaultAgentId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<WorkspaceSetting_AISetting>): WorkspaceSetting_AISetting {
+    return WorkspaceSetting_AISetting.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<WorkspaceSetting_AISetting>): WorkspaceSetting_AISetting {
+    const message = createBaseWorkspaceSetting_AISetting();
+    message.apiKey = object.apiKey ?? "";
+    message.endpoint = object.endpoint ?? "";
+    message.temperature = object.temperature ?? 0;
+    message.maxTokens = object.maxTokens ?? 0;
+    message.enabled = object.enabled ?? false;
+    message.agents = object.agents?.map((e) => WorkspaceSetting_AISetting_AIAgent.fromPartial(e)) || [];
+    message.defaultAgentId = object.defaultAgentId ?? "";
+    return message;
+  },
+};
+
+function createBaseWorkspaceSetting_AISetting_AIAgent(): WorkspaceSetting_AISetting_AIAgent {
+  return { id: "", name: "", description: "", createdTs: 0 };
+}
+
+export const WorkspaceSetting_AISetting_AIAgent: MessageFns<WorkspaceSetting_AISetting_AIAgent> = {
+  encode(message: WorkspaceSetting_AISetting_AIAgent, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.description !== "") {
+      writer.uint32(26).string(message.description);
+    }
+    if (message.createdTs !== 0) {
+      writer.uint32(32).int64(message.createdTs);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): WorkspaceSetting_AISetting_AIAgent {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWorkspaceSetting_AISetting_AIAgent();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.description = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.createdTs = longToNumber(reader.int64());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<WorkspaceSetting_AISetting_AIAgent>): WorkspaceSetting_AISetting_AIAgent {
+    return WorkspaceSetting_AISetting_AIAgent.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<WorkspaceSetting_AISetting_AIAgent>): WorkspaceSetting_AISetting_AIAgent {
+    const message = createBaseWorkspaceSetting_AISetting_AIAgent();
+    message.id = object.id ?? "";
+    message.name = object.name ?? "";
+    message.description = object.description ?? "";
+    message.createdTs = object.createdTs ?? 0;
+    return message;
+  },
+};
+
 function createBaseGetWorkspaceSettingRequest(): GetWorkspaceSettingRequest {
   return { name: "" };
 }
@@ -1292,6 +1570,146 @@ export const UpdateWorkspaceSettingRequest: MessageFns<UpdateWorkspaceSettingReq
       ? WorkspaceSetting.fromPartial(object.setting)
       : undefined;
     message.updateMask = object.updateMask ?? undefined;
+    return message;
+  },
+};
+
+function createBaseTestAIAgentRequest(): TestAIAgentRequest {
+  return { apiKey: "", endpoint: "", agentId: "" };
+}
+
+export const TestAIAgentRequest: MessageFns<TestAIAgentRequest> = {
+  encode(message: TestAIAgentRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.apiKey !== "") {
+      writer.uint32(10).string(message.apiKey);
+    }
+    if (message.endpoint !== "") {
+      writer.uint32(18).string(message.endpoint);
+    }
+    if (message.agentId !== "") {
+      writer.uint32(26).string(message.agentId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): TestAIAgentRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTestAIAgentRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.apiKey = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.endpoint = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.agentId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<TestAIAgentRequest>): TestAIAgentRequest {
+    return TestAIAgentRequest.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<TestAIAgentRequest>): TestAIAgentRequest {
+    const message = createBaseTestAIAgentRequest();
+    message.apiKey = object.apiKey ?? "";
+    message.endpoint = object.endpoint ?? "";
+    message.agentId = object.agentId ?? "";
+    return message;
+  },
+};
+
+function createBaseTestAIAgentResponse(): TestAIAgentResponse {
+  return { success: false, message: "", latencyMs: 0 };
+}
+
+export const TestAIAgentResponse: MessageFns<TestAIAgentResponse> = {
+  encode(message: TestAIAgentResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.success !== false) {
+      writer.uint32(8).bool(message.success);
+    }
+    if (message.message !== "") {
+      writer.uint32(18).string(message.message);
+    }
+    if (message.latencyMs !== 0) {
+      writer.uint32(24).int32(message.latencyMs);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): TestAIAgentResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTestAIAgentResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.success = reader.bool();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.message = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.latencyMs = reader.int32();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<TestAIAgentResponse>): TestAIAgentResponse {
+    return TestAIAgentResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<TestAIAgentResponse>): TestAIAgentResponse {
+    const message = createBaseTestAIAgentResponse();
+    message.success = object.success ?? false;
+    message.message = object.message ?? "";
+    message.latencyMs = object.latencyMs ?? 0;
     return message;
   },
 };
@@ -1490,6 +1908,59 @@ export const WorkspaceServiceDefinition = {
               47,
               42,
               125,
+            ]),
+          ],
+        },
+      },
+    },
+    /** Tests the connection to a specific AI agent. */
+    testAIAgent: {
+      name: "TestAIAgent",
+      requestType: TestAIAgentRequest,
+      requestStream: false,
+      responseType: TestAIAgentResponse,
+      responseStream: false,
+      options: {
+        _unknownFields: {
+          578365826: [
+            new Uint8Array([
+              36,
+              58,
+              1,
+              42,
+              34,
+              31,
+              47,
+              97,
+              112,
+              105,
+              47,
+              118,
+              49,
+              47,
+              119,
+              111,
+              114,
+              107,
+              115,
+              112,
+              97,
+              99,
+              101,
+              47,
+              97,
+              105,
+              47,
+              116,
+              101,
+              115,
+              116,
+              45,
+              97,
+              103,
+              101,
+              110,
+              116,
             ]),
           ],
         },

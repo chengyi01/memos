@@ -34,14 +34,14 @@ const MessageList = observer(() => {
     <div className="flex-1 overflow-y-auto">
       {/* Existing messages */}
       {messages.map((message) => (
-        <MessageItem key={message.name} message={message} />
+        <MessageItem key={message.uid} message={message} />
       ))}
 
       {/* Streaming message from AI */}
       {isStreaming && streamingContent && (
         <MessageItem
           message={{
-            name: "streaming",
+            uid: "streaming-temp",
             conversation: "",
             role: "assistant",
             content: "",

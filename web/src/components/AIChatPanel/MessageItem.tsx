@@ -98,7 +98,7 @@ const MessageItem = observer(({ message, isStreaming, streamingContent }: Messag
         {/* Timestamp */}
         {message.createTime && (
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            {dayjs(message.createTime.seconds * 1000).fromNow()}
+            {dayjs(message.createTime).fromNow()}
           </span>
         )}
       </div>

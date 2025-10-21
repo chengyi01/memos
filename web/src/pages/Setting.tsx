@@ -1,8 +1,9 @@
-import { CogIcon, DatabaseIcon, KeyIcon, LibraryIcon, LucideIcon, Settings2Icon, UserIcon, UsersIcon } from "lucide-react";
+import { CogIcon, DatabaseIcon, KeyIcon, LibraryIcon, LucideIcon, Settings2Icon, SparklesIcon, UserIcon, UsersIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MobileHeader from "@/components/MobileHeader";
+import BailianConfigSection from "@/components/Settings/BailianConfigSection";
 import MemberSection from "@/components/Settings/MemberSection";
 import MemoRelatedSettings from "@/components/Settings/MemoRelatedSettings";
 import MyAccountSection from "@/components/Settings/MyAccountSection";
@@ -19,14 +20,14 @@ import { User_Role } from "@/types/proto/api/v1/user_service";
 import { WorkspaceSetting_Key } from "@/types/proto/api/v1/workspace_service";
 import { useTranslate } from "@/utils/i18n";
 
-type SettingSection = "my-account" | "preference" | "member" | "system" | "memo-related" | "storage" | "sso";
+type SettingSection = "my-account" | "preference" | "member" | "system" | "memo-related" | "storage" | "sso" | "ai-agent";
 
 interface State {
   selectedSection: SettingSection;
 }
 
 const BASIC_SECTIONS: SettingSection[] = ["my-account", "preference"];
-const ADMIN_SECTIONS: SettingSection[] = ["member", "system", "memo-related", "storage", "sso"];
+const ADMIN_SECTIONS: SettingSection[] = ["member", "system", "memo-related", "storage", "sso", "ai-agent"];
 const SECTION_ICON_MAP: Record<SettingSection, LucideIcon> = {
   "my-account": UserIcon,
   preference: CogIcon,
@@ -35,6 +36,7 @@ const SECTION_ICON_MAP: Record<SettingSection, LucideIcon> = {
   "memo-related": LibraryIcon,
   storage: DatabaseIcon,
   sso: KeyIcon,
+  "ai-agent": SparklesIcon,
 };
 
 const Setting = observer(() => {
@@ -150,6 +152,8 @@ const Setting = observer(() => {
               <StorageSection />
             ) : state.selectedSection === "sso" ? (
               <SSOSection />
+            ) : state.selectedSection === "ai-agent" ? (
+              <BailianConfigSection />
             ) : null}
           </div>
         </div>

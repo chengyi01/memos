@@ -399,6 +399,11 @@
       "url-suffix-placeholder": "Custom URL suffix, optional",
       "warning-text": "Are you sure you want to delete storage service `{{name}}`? THIS ACTION IS IRREVERSIBLE"
     },
+    "ai-agent": "AI Assistant",
+    "save": "Save",
+    "save-success": "Saved successfully",
+    "save-failed": "Failed to save",
+    "saving": "Saving...",
     "system": "System",
     "system-section": {
       "additional-script": "Additional script",
@@ -458,7 +463,7 @@
       "sunday": "Sunday",
       "week-start-day": "Week start day"
     },
-    "ai-agent": {
+    "ai-agent-section": {
       "title": "AI Agent",
       "description": "Configure Alibaba Cloud Bailian AI agent to provide AI chat functionality for users",
       "enabled": "Enable AI",
@@ -474,15 +479,40 @@
       "temperature-hint": "Controls randomness: 0=deterministic, 2=creative",
       "max-tokens": "Max Tokens",
       "max-tokens-hint": "Maximum length of AI response",
+      "test": "Test",
       "test-connection": "Test Connection",
-      "test-success": "Connection successful",
-      "test-failed": "Connection failed",
+      "test-success": "Test successful",
+      "test-failed": "Test failed",
       "testing": "Testing...",
+      "test-agent-hint": "Test this agent's connection",
       "help-title": "How to get configuration?",
       "help-step1": "Login to Alibaba Cloud Bailian Console",
       "help-step2": "Create or select an agent application",
       "help-step3": "Get Agent ID from application details",
-      "help-step4": "Create API Key in API key management"
+      "help-step4": "Create API Key in API key management",
+      "help-step5": "You can add multiple agents and users can switch between them",
+      "agents-title": "AI Agents",
+      "agents-description": "Manage available AI agents, users can switch during conversations",
+      "add-agent": "Add Agent",
+      "edit-agent": "Edit Agent",
+      "agent-name": "Agent Name",
+      "agent-name-placeholder": "e.g., General Assistant",
+      "agent-description": "Description",
+      "agent-description-placeholder": "Describe the features or purpose of this agent",
+      "no-agents": "No agents yet, click button above to add",
+      "default": "Default",
+      "set-default": "Set as Default",
+      "default-agent-set": "Default agent has been set",
+      "confirm-delete": "Are you sure you want to delete this agent?",
+      "agent-added": "Agent has been added",
+      "agent-updated": "Agent has been updated",
+      "agent-deleted": "Agent has been deleted",
+      "error": {
+        "missing-credentials": "Please fill in API Key and Agent ID first",
+        "missing-api-key": "Please fill in API Key first",
+        "missing-agent-info": "Please fill in Agent ID and Name",
+        "duplicate-id": "Agent ID already exists"
+      }
     }
   },
   "ai-chat": {
@@ -494,7 +524,13 @@
     "thinking": "AI is thinking...",
     "send": "Send",
     "upload-attachment": "Upload Attachment",
+    "select-agent": "Select Agent",
+    "current-agent": "Current Agent",
+    "switch-agent": "Switch Agent",
+    "switched-to": "Switched to",
+    "conversation-created": "Conversation created",
     "error": {
+      "create-failed": "Failed to create conversation",
       "not-configured": "AI not configured by admin",
       "send-failed": "Send failed, please retry",
       "rate-limit": "Too many requests, please try again later",

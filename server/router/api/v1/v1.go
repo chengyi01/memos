@@ -59,6 +59,7 @@ func NewAPIV1Service(secret string, profile *profile.Profile, store *store.Store
 	v1pb.RegisterActivityServiceServer(grpcServer, apiv1Service)
 	v1pb.RegisterMarkdownServiceServer(grpcServer, apiv1Service)
 	v1pb.RegisterIdentityProviderServiceServer(grpcServer, apiv1Service)
+	v1pb.RegisterConversationServiceServer(grpcServer, NewConversationService(store, secret))
 	reflection.Register(grpcServer)
 	return apiv1Service
 }
@@ -113,6 +114,9 @@ func (s *APIV1Service) RegisterGateway(ctx context.Context, echoServer *echo.Ech
 		return err
 	}
 	if err := v1pb.RegisterIdentityProviderServiceHandler(ctx, gwMux, conn); err != nil {
+		return err
+	}
+	if err := v1pb.RegisterConversationServiceHandler(ctx, gwMux, conn); err != nil {
 		return err
 	}
 	gwGroup := echoServer.Group("")

@@ -30,6 +30,14 @@ service WorkspaceService {
     };
     option (google.api.method_signature) = "setting,update_mask";
   }
+
+  // Tests the connection to a specific AI agent.
+  rpc TestAIAgent(TestAIAgentRequest) returns (TestAIAgentResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/workspace/ai/test-agent"
+      body: "*"
+    };
+  }
 }
 
 // Workspace profile message containing basic workspace information.
@@ -68,6 +76,7 @@ message WorkspaceSetting {
     GeneralSetting general_setting = 2;
     StorageSetting storage_setting = 3;
     MemoRelatedSetting memo_related_setting = 4;
+    AISetting ai_setting = 5;
   }
 
   // Enumeration of workspace setting keys.
@@ -79,6 +88,8 @@ message WorkspaceSetting {
     STORAGE = 2;
     // MEMO_RELATED is the key for memo related settings.
     MEMO_RELATED = 3;
+    // AI is the key for AI agent settings.
+    AI = 4;
   }
 
   // General workspace settings configuration.
@@ -184,6 +195,36 @@ message WorkspaceSetting {
     // nsfw_tags is the list of tags that mark content as NSFW for blurring.
     repeated string nsfw_tags = 10;
   }
+
+  // AI workspace settings for Alibaba Cloud Bailian integration.
+  message AISetting {
+    // api_key is the Bailian API Key.
+    string api_key = 1;
+    // endpoint is the API endpoint (default: https://dashscope.aliyuncs.com/api/v1).
+    string endpoint = 2;
+    // temperature is the default temperature (0.0-2.0).
+    double temperature = 3;
+    // max_tokens is the default max tokens per response.
+    int32 max_tokens = 4;
+    // enabled indicates whether AI feature is enabled.
+    bool enabled = 5;
+    // agents is the list of available AI agents.
+    repeated AIAgent agents = 6;
+    // default_agent_id is the default agent ID to use.
+    string default_agent_id = 7;
+
+    // AIAgent represents a single AI agent configuration.
+    message AIAgent {
+      // id is the unique identifier (agent_id from Bailian).
+      string id = 1;
+      // name is the display name of the agent.
+      string name = 2;
+      // description is the description/note about the agent.
+      string description = 3;
+      // created_ts is the creation timestamp.
+      int64 created_ts = 4;
+    }
+  }
 }
 
 // Request message for GetWorkspaceSetting method.
@@ -203,4 +244,24 @@ message UpdateWorkspaceSettingRequest {
 
   // The list of fields to update.
   google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for TestAIAgent method.
+message TestAIAgentRequest {
+  // api_key is the Bailian API Key to test.
+  string api_key = 1 [(google.api.field_behavior) = REQUIRED];
+  // endpoint is the API endpoint (e.g., "dashscope.aliyuncs.com").
+  string endpoint = 2 [(google.api.field_behavior) = REQUIRED];
+  // agent_id is the specific agent ID to test.
+  string agent_id = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for TestAIAgent method.
+message TestAIAgentResponse {
+  // success indicates whether the test passed.
+  bool success = 1;
+  // message contains the test result message.
+  string message = 2;
+  // latency_ms is the test latency in milliseconds (optional).
+  int32 latency_ms = 3;
 }

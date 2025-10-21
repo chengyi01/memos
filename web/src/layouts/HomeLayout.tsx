@@ -51,7 +51,7 @@ const HomeLayout = observer(() => {
       {/* Main Content Area - Memos List */}
       <div 
         className={cn(
-          "w-full min-h-full",
+          "w-full h-svh overflow-y-auto",
           // Left padding for left sidebar
           lg ? "pl-72" : md ? "pl-56" : "",
           // Right padding for AI sidebar (always visible on desktop)

@@ -95,7 +95,11 @@ func NewServer(ctx context.Context, profile *profile.Profile, store *store.Store
 			apiv1.NewLoggerInterceptor(logStacktraces).LoggerInterceptor,
 			newRecoveryInterceptor(logStacktraces),
 			apiv1.NewGRPCAuthInterceptor(store, secret).AuthenticationInterceptor,
-		))
+		),
+		grpc.ChainStreamInterceptor(
+			apiv1.NewGRPCAuthInterceptor(store, secret).AuthenticationStreamInterceptor,
+		),
+	)
 	s.grpcServer = grpcServer
 
 	apiV1Service := apiv1.NewAPIV1Service(s.Secret, profile, store, grpcServer)

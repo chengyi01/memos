@@ -260,3 +260,78 @@ func validateAccessToken(accessTokenString string, userAccessTokens []*storepb.A
 	}
 	return false
 }
+
+// AuthenticationStreamInterceptor is the stream interceptor for gRPC API.
+func (in *GRPCAuthInterceptor) AuthenticationStreamInterceptor(
+	srv interface{},
+	ss grpc.ServerStream,
+	info *grpc.StreamServerInfo,
+	handler grpc.StreamHandler,
+) error {
+	ctx := ss.Context()
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return status.Errorf(codes.Unauthenticated, "failed to parse metadata from incoming context")
+	}
+
+	// Try to authenticate via session ID (from cookie) first
+	if sessionCookieValue, err := getSessionIDFromMetadata(md); err == nil && sessionCookieValue != "" {
+		user, err := in.authenticateBySession(ctx, sessionCookieValue)
+		if err == nil && user != nil {
+			// Check user status
+			if user.RowStatus == store.Archived {
+				return status.Errorf(codes.Unauthenticated, "user is archived")
+			}
+			if isOnlyForAdminAllowedMethod(info.FullMethod) && user.Role != store.RoleHost && user.Role != store.RoleAdmin {
+				return status.Errorf(codes.PermissionDenied, "admin access required")
+			}
+
+			// Extract sessionID and inject into context
+			_, sessionID, parseErr := ParseSessionCookieValue(sessionCookieValue)
+			if parseErr != nil {
+				return status.Errorf(codes.Internal, "failed to parse session cookie: %v", parseErr)
+			}
+			ctx = context.WithValue(ctx, userIDContextKey, user.ID)
+			ctx = context.WithValue(ctx, sessionIDContextKey, sessionID)
+			_ = in.updateSessionLastAccessed(ctx, user.ID, sessionID)
+
+			return handler(srv, &wrappedServerStream{ServerStream: ss, ctx: ctx})
+		}
+	}
+
+	// Try to authenticate via JWT access token
+	if accessToken, err := getAccessTokenFromMetadata(md); err == nil && accessToken != "" {
+		user, err := in.authenticateByJWT(ctx, accessToken)
+		if err == nil && user != nil {
+			// Check user status
+			if user.RowStatus == store.Archived {
+				return status.Errorf(codes.Unauthenticated, "user is archived")
+			}
+			if isOnlyForAdminAllowedMethod(info.FullMethod) && user.Role != store.RoleHost && user.Role != store.RoleAdmin {
+				return status.Errorf(codes.PermissionDenied, "admin access required")
+			}
+
+			ctx = context.WithValue(ctx, userIDContextKey, user.ID)
+			ctx = context.WithValue(ctx, accessTokenContextKey, accessToken)
+
+			return handler(srv, &wrappedServerStream{ServerStream: ss, ctx: ctx})
+		}
+	}
+
+	// Check if this method is in the allowlist
+	if isUnauthorizeAllowedMethod(info.FullMethod) {
+		return handler(srv, ss)
+	}
+
+	return status.Errorf(codes.Unauthenticated, "authentication required")
+}
+
+// wrappedServerStream wraps grpc.ServerStream to override Context()
+type wrappedServerStream struct {
+	grpc.ServerStream
+	ctx context.Context
+}
+
+func (w *wrappedServerStream) Context() context.Context {
+	return w.ctx
+}

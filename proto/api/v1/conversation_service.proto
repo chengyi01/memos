@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package memos.api.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "api/v1/attachment_service.proto";
+
+option go_package = "github.com/usememos/memos/proto/gen/api/v1";
+
+service ConversationService {
+  // CreateConversation creates a new conversation.
+  rpc CreateConversation(CreateConversationRequest) returns (Conversation) {
+    option (google.api.http) = {
+      post: "/api/v1/conversations"
+      body: "*"
+    };
+  }
+
+  // GetActiveConversation gets the active (most recent) conversation for the current user.
+  rpc GetActiveConversation(GetActiveConversationRequest) returns (Conversation) {
+    option (google.api.http) = {get: "/api/v1/conversations/active"};
+  }
+
+  // SendMessage sends a message and streams back AI response chunks.
+  rpc SendMessage(SendMessageRequest) returns (stream SendMessageChunk) {
+    option (google.api.http) = {
+      post: "/api/v1/{conversation=conversations/*}/messages:send"
+      body: "*"
+    };
+  }
+
+  // ListMessages lists messages in a conversation.
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse) {
+    option (google.api.http) = {get: "/api/v1/{conversation=conversations/*}/messages"};
+  }
+
+  // DeleteConversation deletes a conversation.
+  rpc DeleteConversation(DeleteConversationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/api/v1/{name=conversations/*}"};
+  }
+}
+
+message Conversation {
+  // uid: conversations/{uid}
+  string uid = 1;
+
+  string title = 2;
+
+  int32 creator_id = 3;
+
+  int32 message_count = 4;
+
+  google.protobuf.Timestamp last_message_at = 5;
+
+  google.protobuf.Timestamp create_time = 6;
+
+  google.protobuf.Timestamp update_time = 7;
+}
+
+message Message {
+  // uid: messages/{uid}
+  string uid = 1;
+
+  // conversation: conversations/{uid}
+  string conversation = 2;
+
+  // role: user or assistant
+  string role = 3;
+
+  string content = 4;
+
+  repeated Attachment attachments = 5;
+
+  google.protobuf.Timestamp create_time = 6;
+}
+
+message CreateConversationRequest {
+  string title = 1;
+}
+
+message GetActiveConversationRequest {
+  // create_if_not_exists: If true, create a new conversation if none exists.
+  bool create_if_not_exists = 1;
+}
+
+message SendMessageRequest {
+  // conversation: conversations/{uid}
+  string conversation = 1 [(google.api.field_behavior) = REQUIRED];
+
+  string content = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // attachments: List of attachment UIDs
+  repeated string attachments = 3;
+
+  // agent_id: Specific AI agent to use (optional, uses default if not specified)
+  string agent_id = 4;
+}
+
+message SendMessageChunk {
+  enum ChunkType {
+    CHUNK_TYPE_UNSPECIFIED = 0;
+    USER_MESSAGE = 1;         // 用户消息已保存
+    ASSISTANT_START = 2;      // AI开始回复
+    ASSISTANT_CONTENT = 3;    // AI内容chunk
+    ASSISTANT_END = 4;        // AI回复完成
+    ERROR = 5;                // 错误
+  }
+
+  ChunkType type = 1;
+
+  // message: Full message for USER_MESSAGE and ASSISTANT_END
+  Message message = 2;
+
+  // content_delta: Content chunk for ASSISTANT_CONTENT
+  string content_delta = 3;
+
+  // error: Error message for ERROR type
+  string error = 4;
+}
+
+message ListMessagesRequest {
+  // conversation: conversations/{uid}
+  string conversation = 1 [(google.api.field_behavior) = REQUIRED];
+
+  int32 page_size = 2;
+
+  string page_token = 3;
+}
+
+message ListMessagesResponse {
+  repeated Message messages = 1;
+
+  string next_page_token = 2;
+}
+
+message DeleteConversationRequest {
+  // name: conversations/{uid}
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+

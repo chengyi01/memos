@@ -22,6 +22,7 @@ const (
 	WorkspaceService_GetWorkspaceProfile_FullMethodName    = "/memos.api.v1.WorkspaceService/GetWorkspaceProfile"
 	WorkspaceService_GetWorkspaceSetting_FullMethodName    = "/memos.api.v1.WorkspaceService/GetWorkspaceSetting"
 	WorkspaceService_UpdateWorkspaceSetting_FullMethodName = "/memos.api.v1.WorkspaceService/UpdateWorkspaceSetting"
+	WorkspaceService_TestAIAgent_FullMethodName            = "/memos.api.v1.WorkspaceService/TestAIAgent"
 )
 
 // WorkspaceServiceClient is the client API for WorkspaceService service.
@@ -34,6 +35,8 @@ type WorkspaceServiceClient interface {
 	GetWorkspaceSetting(ctx context.Context, in *GetWorkspaceSettingRequest, opts ...grpc.CallOption) (*WorkspaceSetting, error)
 	// Updates a workspace setting.
 	UpdateWorkspaceSetting(ctx context.Context, in *UpdateWorkspaceSettingRequest, opts ...grpc.CallOption) (*WorkspaceSetting, error)
+	// Tests the connection to a specific AI agent.
+	TestAIAgent(ctx context.Context, in *TestAIAgentRequest, opts ...grpc.CallOption) (*TestAIAgentResponse, error)
 }
 
 type workspaceServiceClient struct {
@@ -74,6 +77,16 @@ func (c *workspaceServiceClient) UpdateWorkspaceSetting(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *workspaceServiceClient) TestAIAgent(ctx context.Context, in *TestAIAgentRequest, opts ...grpc.CallOption) (*TestAIAgentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TestAIAgentResponse)
+	err := c.cc.Invoke(ctx, WorkspaceService_TestAIAgent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WorkspaceServiceServer is the server API for WorkspaceService service.
 // All implementations must embed UnimplementedWorkspaceServiceServer
 // for forward compatibility.
@@ -84,6 +97,8 @@ type WorkspaceServiceServer interface {
 	GetWorkspaceSetting(context.Context, *GetWorkspaceSettingRequest) (*WorkspaceSetting, error)
 	// Updates a workspace setting.
 	UpdateWorkspaceSetting(context.Context, *UpdateWorkspaceSettingRequest) (*WorkspaceSetting, error)
+	// Tests the connection to a specific AI agent.
+	TestAIAgent(context.Context, *TestAIAgentRequest) (*TestAIAgentResponse, error)
 	mustEmbedUnimplementedWorkspaceServiceServer()
 }
 
@@ -102,6 +117,9 @@ func (UnimplementedWorkspaceServiceServer) GetWorkspaceSetting(context.Context, 
 }
 func (UnimplementedWorkspaceServiceServer) UpdateWorkspaceSetting(context.Context, *UpdateWorkspaceSettingRequest) (*WorkspaceSetting, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateWorkspaceSetting not implemented")
+}
+func (UnimplementedWorkspaceServiceServer) TestAIAgent(context.Context, *TestAIAgentRequest) (*TestAIAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestAIAgent not implemented")
 }
 func (UnimplementedWorkspaceServiceServer) mustEmbedUnimplementedWorkspaceServiceServer() {}
 func (UnimplementedWorkspaceServiceServer) testEmbeddedByValue()                          {}
@@ -178,6 +196,24 @@ func _WorkspaceService_UpdateWorkspaceSetting_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WorkspaceService_TestAIAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestAIAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkspaceServiceServer).TestAIAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkspaceService_TestAIAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkspaceServiceServer).TestAIAgent(ctx, req.(*TestAIAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WorkspaceService_ServiceDesc is the grpc.ServiceDesc for WorkspaceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -196,6 +232,10 @@ var WorkspaceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateWorkspaceSetting",
 			Handler:    _WorkspaceService_UpdateWorkspaceSetting_Handler,
+		},
+		{
+			MethodName: "TestAIAgent",
+			Handler:    _WorkspaceService_TestAIAgent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

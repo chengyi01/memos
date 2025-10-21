@@ -22,18 +22,27 @@ const MessageInput = observer(() => {
   const handleSend = async () => {
     if (!content.trim() || isStreaming) return;
 
+    // 保存消息内容
+    const messageContent = content.trim();
+    const messageAttachments = [...attachments];
+
+    // 立即清空输入框（在发送之前）
+    setContent("");
+    setAttachments([]);
+
     try {
       // TODO: Upload attachments and get attachment IDs
       // For now, just pass empty array
       const attachmentIds: string[] = [];
 
-      await conversationStore.sendMessage(content.trim(), attachmentIds);
-      setContent("");
-      setAttachments([]);
+      await conversationStore.sendMessage(messageContent, attachmentIds);
       
       // Focus back to textarea after sending
       textareaRef.current?.focus();
     } catch (error) {
+      // 发送失败，恢复输入内容
+      setContent(messageContent);
+      setAttachments(messageAttachments);
       toast.error(t("ai-chat.error.send-failed"));
       console.error("Failed to send message:", error);
     }

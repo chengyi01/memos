@@ -33,6 +33,8 @@ const (
 	WorkspaceSettingKey_STORAGE WorkspaceSettingKey = 3
 	// MEMO_RELATED is the key for memo related settings.
 	WorkspaceSettingKey_MEMO_RELATED WorkspaceSettingKey = 4
+	// AI is the key for AI agent settings.
+	WorkspaceSettingKey_AI WorkspaceSettingKey = 5
 )
 
 // Enum value maps for WorkspaceSettingKey.
@@ -43,6 +45,7 @@ var (
 		2: "GENERAL",
 		3: "STORAGE",
 		4: "MEMO_RELATED",
+		5: "AI",
 	}
 	WorkspaceSettingKey_value = map[string]int32{
 		"WORKSPACE_SETTING_KEY_UNSPECIFIED": 0,
@@ -50,6 +53,7 @@ var (
 		"GENERAL":                           2,
 		"STORAGE":                           3,
 		"MEMO_RELATED":                      4,
+		"AI":                                5,
 	}
 )
 
@@ -148,6 +152,7 @@ type WorkspaceSetting struct {
 	//	*WorkspaceSetting_GeneralSetting
 	//	*WorkspaceSetting_StorageSetting
 	//	*WorkspaceSetting_MemoRelatedSetting
+	//	*WorkspaceSetting_AiSetting
 	Value         isWorkspaceSetting_Value `protobuf_oneof:"value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -233,6 +238,15 @@ func (x *WorkspaceSetting) GetMemoRelatedSetting() *WorkspaceMemoRelatedSetting 
 	return nil
 }
 
+func (x *WorkspaceSetting) GetAiSetting() *WorkspaceAISetting {
+	if x != nil {
+		if x, ok := x.Value.(*WorkspaceSetting_AiSetting); ok {
+			return x.AiSetting
+		}
+	}
+	return nil
+}
+
 type isWorkspaceSetting_Value interface {
 	isWorkspaceSetting_Value()
 }
@@ -253,6 +267,10 @@ type WorkspaceSetting_MemoRelatedSetting struct {
 	MemoRelatedSetting *WorkspaceMemoRelatedSetting `protobuf:"bytes,5,opt,name=memo_related_setting,json=memoRelatedSetting,proto3,oneof"`
 }
 
+type WorkspaceSetting_AiSetting struct {
+	AiSetting *WorkspaceAISetting `protobuf:"bytes,6,opt,name=ai_setting,json=aiSetting,proto3,oneof"`
+}
+
 func (*WorkspaceSetting_BasicSetting) isWorkspaceSetting_Value() {}
 
 func (*WorkspaceSetting_GeneralSetting) isWorkspaceSetting_Value() {}
@@ -260,6 +278,8 @@ func (*WorkspaceSetting_GeneralSetting) isWorkspaceSetting_Value() {}
 func (*WorkspaceSetting_StorageSetting) isWorkspaceSetting_Value() {}
 
 func (*WorkspaceSetting_MemoRelatedSetting) isWorkspaceSetting_Value() {}
+
+func (*WorkspaceSetting_AiSetting) isWorkspaceSetting_Value() {}
 
 type WorkspaceBasicSetting struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -896,17 +916,192 @@ func (x *WorkspaceMemoRelatedSetting) GetNsfwTags() []string {
 	return nil
 }
 
+// WorkspaceAISetting is the configuration for AI agent.
+type WorkspaceAISetting struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// api_key is the Bailian API Key
+	ApiKey string `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	// endpoint is the API endpoint (default: https://dashscope.aliyuncs.com/api/v1)
+	Endpoint string `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	// temperature is the default temperature (0.0-2.0)
+	Temperature float64 `protobuf:"fixed64,3,opt,name=temperature,proto3" json:"temperature,omitempty"`
+	// max_tokens is the default max tokens per response
+	MaxTokens int32 `protobuf:"varint,4,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
+	// enabled indicates whether AI feature is enabled
+	Enabled bool `protobuf:"varint,5,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	// agents is the list of available AI agents
+	Agents []*AIAgent `protobuf:"bytes,6,rep,name=agents,proto3" json:"agents,omitempty"`
+	// default_agent_id is the default agent ID to use
+	DefaultAgentId string `protobuf:"bytes,7,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *WorkspaceAISetting) Reset() {
+	*x = WorkspaceAISetting{}
+	mi := &file_store_workspace_setting_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkspaceAISetting) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkspaceAISetting) ProtoMessage() {}
+
+func (x *WorkspaceAISetting) ProtoReflect() protoreflect.Message {
+	mi := &file_store_workspace_setting_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkspaceAISetting.ProtoReflect.Descriptor instead.
+func (*WorkspaceAISetting) Descriptor() ([]byte, []int) {
+	return file_store_workspace_setting_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *WorkspaceAISetting) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *WorkspaceAISetting) GetEndpoint() string {
+	if x != nil {
+		return x.Endpoint
+	}
+	return ""
+}
+
+func (x *WorkspaceAISetting) GetTemperature() float64 {
+	if x != nil {
+		return x.Temperature
+	}
+	return 0
+}
+
+func (x *WorkspaceAISetting) GetMaxTokens() int32 {
+	if x != nil {
+		return x.MaxTokens
+	}
+	return 0
+}
+
+func (x *WorkspaceAISetting) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *WorkspaceAISetting) GetAgents() []*AIAgent {
+	if x != nil {
+		return x.Agents
+	}
+	return nil
+}
+
+func (x *WorkspaceAISetting) GetDefaultAgentId() string {
+	if x != nil {
+		return x.DefaultAgentId
+	}
+	return ""
+}
+
+// AIAgent represents a single AI agent configuration
+type AIAgent struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// id is the unique identifier (agent_id from Bailian)
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// name is the display name of the agent
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// description is the description/note about the agent
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// created_ts is the creation timestamp
+	CreatedTs     int64 `protobuf:"varint,4,opt,name=created_ts,json=createdTs,proto3" json:"created_ts,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AIAgent) Reset() {
+	*x = AIAgent{}
+	mi := &file_store_workspace_setting_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AIAgent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AIAgent) ProtoMessage() {}
+
+func (x *AIAgent) ProtoReflect() protoreflect.Message {
+	mi := &file_store_workspace_setting_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AIAgent.ProtoReflect.Descriptor instead.
+func (*AIAgent) Descriptor() ([]byte, []int) {
+	return file_store_workspace_setting_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *AIAgent) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *AIAgent) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AIAgent) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *AIAgent) GetCreatedTs() int64 {
+	if x != nil {
+		return x.CreatedTs
+	}
+	return 0
+}
+
 var File_store_workspace_setting_proto protoreflect.FileDescriptor
 
 const file_store_workspace_setting_proto_rawDesc = "" +
 	"\n" +
-	"\x1dstore/workspace_setting.proto\x12\vmemos.store\"\x9a\x03\n" +
+	"\x1dstore/workspace_setting.proto\x12\vmemos.store\"\xdc\x03\n" +
 	"\x10WorkspaceSetting\x122\n" +
 	"\x03key\x18\x01 \x01(\x0e2 .memos.store.WorkspaceSettingKeyR\x03key\x12I\n" +
 	"\rbasic_setting\x18\x02 \x01(\v2\".memos.store.WorkspaceBasicSettingH\x00R\fbasicSetting\x12O\n" +
 	"\x0fgeneral_setting\x18\x03 \x01(\v2$.memos.store.WorkspaceGeneralSettingH\x00R\x0egeneralSetting\x12O\n" +
 	"\x0fstorage_setting\x18\x04 \x01(\v2$.memos.store.WorkspaceStorageSettingH\x00R\x0estorageSetting\x12\\\n" +
-	"\x14memo_related_setting\x18\x05 \x01(\v2(.memos.store.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSettingB\a\n" +
+	"\x14memo_related_setting\x18\x05 \x01(\v2(.memos.store.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSetting\x12@\n" +
+	"\n" +
+	"ai_setting\x18\x06 \x01(\v2\x1f.memos.store.WorkspaceAISettingH\x00R\taiSettingB\a\n" +
 	"\x05value\"]\n" +
 	"\x15WorkspaceBasicSetting\x12\x1d\n" +
 	"\n" +
@@ -967,13 +1162,29 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x1adisable_markdown_shortcuts\x18\b \x01(\bR\x18disableMarkdownShortcuts\x127\n" +
 	"\x18enable_blur_nsfw_content\x18\t \x01(\bR\x15enableBlurNsfwContent\x12\x1b\n" +
 	"\tnsfw_tags\x18\n" +
-	" \x03(\tR\bnsfwTags*s\n" +
+	" \x03(\tR\bnsfwTags\"\xfc\x01\n" +
+	"\x12WorkspaceAISetting\x12\x17\n" +
+	"\aapi_key\x18\x01 \x01(\tR\x06apiKey\x12\x1a\n" +
+	"\bendpoint\x18\x02 \x01(\tR\bendpoint\x12 \n" +
+	"\vtemperature\x18\x03 \x01(\x01R\vtemperature\x12\x1d\n" +
+	"\n" +
+	"max_tokens\x18\x04 \x01(\x05R\tmaxTokens\x12\x18\n" +
+	"\aenabled\x18\x05 \x01(\bR\aenabled\x12,\n" +
+	"\x06agents\x18\x06 \x03(\v2\x14.memos.store.AIAgentR\x06agents\x12(\n" +
+	"\x10default_agent_id\x18\a \x01(\tR\x0edefaultAgentId\"n\n" +
+	"\aAIAgent\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1d\n" +
+	"\n" +
+	"created_ts\x18\x04 \x01(\x03R\tcreatedTs*{\n" +
 	"\x13WorkspaceSettingKey\x12%\n" +
 	"!WORKSPACE_SETTING_KEY_UNSPECIFIED\x10\x00\x12\t\n" +
 	"\x05BASIC\x10\x01\x12\v\n" +
 	"\aGENERAL\x10\x02\x12\v\n" +
 	"\aSTORAGE\x10\x03\x12\x10\n" +
-	"\fMEMO_RELATED\x10\x04B\xa0\x01\n" +
+	"\fMEMO_RELATED\x10\x04\x12\x06\n" +
+	"\x02AI\x10\x05B\xa0\x01\n" +
 	"\x0fcom.memos.storeB\x15WorkspaceSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
 
 var (
@@ -989,7 +1200,7 @@ func file_store_workspace_setting_proto_rawDescGZIP() []byte {
 }
 
 var file_store_workspace_setting_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_store_workspace_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_store_workspace_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_store_workspace_setting_proto_goTypes = []any{
 	(WorkspaceSettingKey)(0),                 // 0: memos.store.WorkspaceSettingKey
 	(WorkspaceStorageSetting_StorageType)(0), // 1: memos.store.WorkspaceStorageSetting.StorageType
@@ -1001,22 +1212,26 @@ var file_store_workspace_setting_proto_goTypes = []any{
 	(*StorageS3Config)(nil),                  // 7: memos.store.StorageS3Config
 	(*StorageOSSConfig)(nil),                 // 8: memos.store.StorageOSSConfig
 	(*WorkspaceMemoRelatedSetting)(nil),      // 9: memos.store.WorkspaceMemoRelatedSetting
+	(*WorkspaceAISetting)(nil),               // 10: memos.store.WorkspaceAISetting
+	(*AIAgent)(nil),                          // 11: memos.store.AIAgent
 }
 var file_store_workspace_setting_proto_depIdxs = []int32{
-	0, // 0: memos.store.WorkspaceSetting.key:type_name -> memos.store.WorkspaceSettingKey
-	3, // 1: memos.store.WorkspaceSetting.basic_setting:type_name -> memos.store.WorkspaceBasicSetting
-	4, // 2: memos.store.WorkspaceSetting.general_setting:type_name -> memos.store.WorkspaceGeneralSetting
-	6, // 3: memos.store.WorkspaceSetting.storage_setting:type_name -> memos.store.WorkspaceStorageSetting
-	9, // 4: memos.store.WorkspaceSetting.memo_related_setting:type_name -> memos.store.WorkspaceMemoRelatedSetting
-	5, // 5: memos.store.WorkspaceGeneralSetting.custom_profile:type_name -> memos.store.WorkspaceCustomProfile
-	1, // 6: memos.store.WorkspaceStorageSetting.storage_type:type_name -> memos.store.WorkspaceStorageSetting.StorageType
-	7, // 7: memos.store.WorkspaceStorageSetting.s3_config:type_name -> memos.store.StorageS3Config
-	8, // 8: memos.store.WorkspaceStorageSetting.oss_config:type_name -> memos.store.StorageOSSConfig
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	0,  // 0: memos.store.WorkspaceSetting.key:type_name -> memos.store.WorkspaceSettingKey
+	3,  // 1: memos.store.WorkspaceSetting.basic_setting:type_name -> memos.store.WorkspaceBasicSetting
+	4,  // 2: memos.store.WorkspaceSetting.general_setting:type_name -> memos.store.WorkspaceGeneralSetting
+	6,  // 3: memos.store.WorkspaceSetting.storage_setting:type_name -> memos.store.WorkspaceStorageSetting
+	9,  // 4: memos.store.WorkspaceSetting.memo_related_setting:type_name -> memos.store.WorkspaceMemoRelatedSetting
+	10, // 5: memos.store.WorkspaceSetting.ai_setting:type_name -> memos.store.WorkspaceAISetting
+	5,  // 6: memos.store.WorkspaceGeneralSetting.custom_profile:type_name -> memos.store.WorkspaceCustomProfile
+	1,  // 7: memos.store.WorkspaceStorageSetting.storage_type:type_name -> memos.store.WorkspaceStorageSetting.StorageType
+	7,  // 8: memos.store.WorkspaceStorageSetting.s3_config:type_name -> memos.store.StorageS3Config
+	8,  // 9: memos.store.WorkspaceStorageSetting.oss_config:type_name -> memos.store.StorageOSSConfig
+	11, // 10: memos.store.WorkspaceAISetting.agents:type_name -> memos.store.AIAgent
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_store_workspace_setting_proto_init() }
@@ -1029,6 +1244,7 @@ func file_store_workspace_setting_proto_init() {
 		(*WorkspaceSetting_GeneralSetting)(nil),
 		(*WorkspaceSetting_StorageSetting)(nil),
 		(*WorkspaceSetting_MemoRelatedSetting)(nil),
+		(*WorkspaceSetting_AiSetting)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1036,7 +1252,7 @@ func file_store_workspace_setting_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_store_workspace_setting_proto_rawDesc), len(file_store_workspace_setting_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

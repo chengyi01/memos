@@ -69,4 +69,16 @@ type Driver interface {
 	UpsertReaction(ctx context.Context, create *Reaction) (*Reaction, error)
 	ListReactions(ctx context.Context, find *FindReaction) ([]*Reaction, error)
 	DeleteReaction(ctx context.Context, delete *DeleteReaction) error
+
+	// Conversation model related methods.
+	CreateConversation(ctx context.Context, create *Conversation) (*Conversation, error)
+	ListConversations(ctx context.Context, find *FindConversation) ([]*Conversation, error)
+	UpdateConversation(ctx context.Context, update *UpdateConversation) (*Conversation, error)
+	DeleteConversation(ctx context.Context, uid string) error
+
+	// Message model related methods.
+	CreateMessage(ctx context.Context, create *Message) (*Message, error)
+	ListMessages(ctx context.Context, find *FindMessage) ([]*Message, error)
+	CreateMessageAttachment(ctx context.Context, create *MessageAttachment) error
+	ListMessageAttachments(ctx context.Context, messageID int32) ([]*Attachment, error)
 }

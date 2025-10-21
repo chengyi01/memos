@@ -380,6 +380,11 @@
       "url-suffix-placeholder": "自定义链接后缀，可选",
       "warning-text": "您确定要删除存储服务“{{name}}”吗？（此操作不可逆）"
     },
+    "ai-agent": "AI助手",
+    "save": "保存",
+    "save-success": "保存成功",
+    "save-failed": "保存失败",
+    "saving": "保存中...",
     "system": "系统",
     "system-section": {
       "additional-script": "自定义脚本",
@@ -429,7 +434,7 @@
       "sunday": "周日",
       "week-start-day": "周开始日"
     },
-    "ai-agent": {
+    "ai-agent-section": {
       "title": "AI智能体",
       "description": "配置阿里云百炼AI智能体，为用户提供AI对话功能",
       "enabled": "启用AI功能",
@@ -445,15 +450,40 @@
       "temperature-hint": "控制回复的随机性，0=确定性，2=创造性",
       "max-tokens": "最大Token数",
       "max-tokens-hint": "AI回复的最大长度",
+      "test": "测试",
       "test-connection": "测试连接",
-      "test-success": "连接成功",
-      "test-failed": "连接失败",
+      "test-success": "测试成功",
+      "test-failed": "测试失败",
       "testing": "测试中...",
+      "test-agent-hint": "测试此智能体的连接",
       "help-title": "如何获取配置信息？",
       "help-step1": "登录阿里云百炼控制台",
       "help-step2": "创建或选择一个智能体应用",
       "help-step3": "在应用详情页获取Agent ID",
-      "help-step4": "在API密钥管理页面创建API Key"
+      "help-step4": "在API密钥管理页面创建API Key",
+      "help-step5": "可以添加多个智能体，用户在对话时可以切换",
+      "agents-title": "智能体列表",
+      "agents-description": "管理可用的AI智能体，用户可以在对话中切换",
+      "add-agent": "添加智能体",
+      "edit-agent": "编辑智能体",
+      "agent-name": "智能体名称",
+      "agent-name-placeholder": "例如: 通用助手",
+      "agent-description": "描述",
+      "agent-description-placeholder": "描述这个智能体的特点或用途",
+      "no-agents": "暂无智能体，点击上方按钮添加",
+      "default": "默认",
+      "set-default": "设为默认",
+      "default-agent-set": "已设置默认智能体",
+      "confirm-delete": "确定要删除这个智能体吗？",
+      "agent-added": "智能体已添加",
+      "agent-updated": "智能体已更新",
+      "agent-deleted": "智能体已删除",
+      "error": {
+        "missing-credentials": "请先填写API Key和Agent ID",
+        "missing-api-key": "请先填写API Key",
+        "missing-agent-info": "请填写智能体ID和名称",
+        "duplicate-id": "智能体ID已存在"
+      }
     }
   },
   "ai-chat": {
@@ -465,7 +495,13 @@
     "thinking": "AI正在思考...",
     "send": "发送",
     "upload-attachment": "上传附件",
+    "select-agent": "选择智能体",
+    "current-agent": "当前智能体",
+    "switch-agent": "切换智能体",
+    "switched-to": "已切换到",
+    "conversation-created": "已创建新会话",
     "error": {
+      "create-failed": "创建会话失败",
       "not-configured": "管理员还未配置AI功能",
       "send-failed": "发送失败，请重试",
       "rate-limit": "请求过于频繁，请稍后再试",

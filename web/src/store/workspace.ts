@@ -30,6 +30,13 @@ class LocalState {
     );
   }
 
+  get aiSetting() {
+    return (
+      this.settings.find((setting) => setting.name === `${workspaceSettingNamePrefix}${WorkspaceSetting_Key.AI}`)?.aiSetting ||
+      undefined
+    );
+  }
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -92,20 +99,43 @@ const workspaceStore = (() => {
     );
   };
 
+  const fetchAISettingIfNeeded = async () => {
+    // 如果 AI 设置尚未加载，尝试加载
+    if (!state.aiSetting) {
+      try {
+        await fetchWorkspaceSetting(WorkspaceSetting_Key.AI);
+      } catch (error) {
+        console.warn("Failed to load AI settings:", error);
+      }
+    }
+  };
+
   return {
     state,
     fetchWorkspaceSetting,
     upsertWorkspaceSetting,
     getWorkspaceSettingByKey,
     setTheme,
+    fetchAISettingIfNeeded,
   };
 })();
 
 export const initialWorkspaceStore = async () => {
   const workspaceProfile = await workspaceServiceClient.getWorkspaceProfile({});
+  
   // Prepare workspace settings.
+  // 必需的设置（加载失败会阻塞应用）
   for (const key of [WorkspaceSetting_Key.GENERAL, WorkspaceSetting_Key.MEMO_RELATED]) {
     await workspaceStore.fetchWorkspaceSetting(key);
+  }
+
+  // 可选的设置（加载失败不阻塞应用）
+  // AI 设置可能需要特定权限，静默失败以避免阻塞应用启动
+  try {
+    await workspaceStore.fetchWorkspaceSetting(WorkspaceSetting_Key.AI);
+  } catch (error) {
+    console.warn("Failed to load AI settings (may require permissions):", error);
+    // 静默失败，不阻塞应用启动
   }
 
   const workspaceGeneralSetting = workspaceStore.state.generalSetting;

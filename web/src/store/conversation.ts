@@ -3,8 +3,20 @@ import type {
   Conversation,
   Message,
   SendMessageChunk,
-  SendMessageChunk_ChunkType,
 } from "@/types/proto/api/v1/conversation_service";
+import { SendMessageChunk_ChunkType } from "@/types/proto/api/v1/conversation_service";
+import { conversationServiceClient } from "@/grpcweb";
+import { workspaceStore } from "./";
+
+/**
+ * AIAgent represents a single AI agent configuration
+ */
+export interface AIAgent {
+  id: string;
+  name: string;
+  description: string;
+  createdTs: number;
+}
 
 /**
  * ConversationStore manages AI chat conversations and messages
@@ -26,8 +38,101 @@ class ConversationStore {
   /** Error message if any operation fails */
   error: string | null = null;
 
+  /** Currently selected agent ID */
+  selectedAgentId: string = "";
+
+  /** List of available agents from workspace settings */
+  get availableAgents(): AIAgent[] {
+    try {
+      const aiSetting = (workspaceStore as any).state?.aiSetting;
+      if (!aiSetting || !aiSetting.agents || aiSetting.agents.length === 0) {
+        // 如果 AI 设置不可用（如权限不足），返回硬编码的默认智能体
+        return this.getFallbackAgents();
+      }
+      return aiSetting.agents;
+    } catch (e) {
+      // workspaceStore not yet initialized，返回硬编码的默认智能体
+      return this.getFallbackAgents();
+    }
+  }
+
+  /** 获取后备智能体列表（当 AI 设置不可用时使用）*/
+  private getFallbackAgents(): AIAgent[] {
+    return [
+      {
+        id: "39231835c6a644338413dcdae97dbf9e",
+        name: "默认智能体",
+        description: "系统默认 AI 助手",
+        createdTs: Date.now(),
+      }
+    ];
+  }
+
+  /** Get default agent ID from workspace settings */
+  get defaultAgentId(): string {
+    try {
+      const aiSetting = (workspaceStore as any).state?.aiSetting;
+      return aiSetting?.defaultAgentId || "";
+    } catch (e) {
+      // workspaceStore not yet initialized
+      return "";
+    }
+  }
+
   constructor() {
     makeAutoObservable(this);
+    // 使用 setTimeout 确保 workspaceStore 已完成初始化后再加载智能体配置
+    setTimeout(async () => {
+      // 尝试加载 AI 设置（如果尚未加载）
+      await (workspaceStore as any).fetchAISettingIfNeeded?.();
+      // 初始化智能体选择
+      this.initializeSelectedAgent();
+      this.loadSelectedAgent();
+    }, 0);
+  }
+
+  /**
+   * Initialize selected agent with default from settings
+   * 在 store 构造时自动调用，确保页面打开时智能体配置已加载
+   */
+  initializeSelectedAgent() {
+    if (!this.selectedAgentId && this.defaultAgentId) {
+      this.selectedAgentId = this.defaultAgentId;
+    }
+  }
+
+  /**
+   * Set the selected agent
+   */
+  setSelectedAgent(agentId: string) {
+    this.selectedAgentId = agentId;
+    // Save preference to localStorage
+    localStorage.setItem("selectedAgentId", agentId);
+  }
+
+  /**
+   * Load selected agent from localStorage or use default
+   */
+  loadSelectedAgent() {
+    // 硬编码的默认 agent ID
+    const hardcodedDefaultAgentId = "39231835c6a644338413dcdae97dbf9e";
+    
+    const savedAgentId = localStorage.getItem("selectedAgentId");
+    
+    // 优先级：
+    // 1. localStorage 中保存的选择（用户自己选的）
+    // 2. 硬编码的默认 agent
+    // 3. 系统配置的默认 agent
+    // 4. 第一个可用的 agent
+    if (savedAgentId && this.availableAgents.some(a => a.id === savedAgentId)) {
+      this.selectedAgentId = savedAgentId;
+    } else if (this.availableAgents.some(a => a.id === hardcodedDefaultAgentId)) {
+      this.selectedAgentId = hardcodedDefaultAgentId;
+    } else if (this.defaultAgentId) {
+      this.selectedAgentId = this.defaultAgentId;
+    } else if (this.availableAgents.length > 0) {
+      this.selectedAgentId = this.availableAgents[0].id;
+    }
   }
 
   /**
@@ -38,20 +143,9 @@ class ConversationStore {
     try {
       this.error = null;
       
-      // TODO: Implement after conversationServiceClient is registered
-      // const response = await conversationServiceClient.getActiveConversation({
-      //   createIfNotExists,
-      // });
-      
-      // Mock implementation for development
-      const response: Conversation = {
-        name: "conversations/mock-001",
-        title: "新对话",
-        creatorId: 1,
-        messageCount: 0,
-        createTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-        updateTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-      };
+      const response = await conversationServiceClient.getActiveConversation({
+        createIfNotExists,
+      });
       
       runInAction(() => {
         this.activeConversation = response;
@@ -74,20 +168,9 @@ class ConversationStore {
     try {
       this.error = null;
       
-      // TODO: Implement after conversationServiceClient is registered
-      // const response = await conversationServiceClient.createConversation({
-      //   title: title || `新对话 ${new Date().toLocaleString()}`,
-      // });
-      
-      // Mock implementation for development
-      const response: Conversation = {
-        name: `conversations/mock-${Date.now()}`,
+      const response = await conversationServiceClient.createConversation({
         title: title || `新对话 ${new Date().toLocaleString()}`,
-        creatorId: 1,
-        messageCount: 0,
-        createTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-        updateTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-      };
+      });
       
       runInAction(() => {
         this.activeConversation = response;
@@ -112,18 +195,11 @@ class ConversationStore {
     try {
       this.error = null;
       
-      // TODO: Implement after conversationServiceClient is registered
-      // const response = await conversationServiceClient.listMessages({
-      //   conversation: this.activeConversation.name,
-      //   pageSize: 50,
-      //   pageToken: pageToken || "",
-      // });
-      
-      // Mock implementation for development
-      const response = {
-        messages: [] as Message[],
-        nextPageToken: "",
-      };
+      const response = await conversationServiceClient.listMessages({
+        conversation: this.activeConversation.uid,
+        pageSize: 50,
+        pageToken: pageToken || "",
+      });
       
       runInAction(() => {
         this.messages = response.messages;
@@ -144,75 +220,41 @@ class ConversationStore {
   async sendMessage(content: string, attachments: string[] = []): Promise<void> {
     if (!this.activeConversation || !content.trim()) return;
 
+    // 乐观更新：立即添加用户消息到界面（临时消息）
+    const tempMessageUid = `temp-${Date.now()}`;
+    const optimisticMessage: Message = {
+      uid: tempMessageUid,
+      conversation: this.activeConversation.uid,
+      role: "user",
+      content: content.trim(),
+      attachments: [],
+      createTime: new Date(),
+    };
+    
+    runInAction(() => {
+      this.messages.push(optimisticMessage);
+    });
+
     try {
       this.error = null;
       this.isStreaming = true;
       this.streamingContent = "";
 
-      // TODO: Implement after conversationServiceClient is registered
-      // const stream = conversationServiceClient.sendMessage({
-      //   conversation: this.activeConversation.name,
-      //   content,
-      //   attachments,
-      // });
-      //
-      // for await (const chunk of stream) {
-      //   this.handleMessageChunk(chunk);
-      // }
-      
-      // Mock implementation for development
-      // Simulate user message
-      this.handleMessageChunk({
-        type: 1, // USER_MESSAGE
-        message: {
-          name: `messages/mock-${Date.now()}`,
-          conversation: this.activeConversation.name,
-          role: "user",
-          content,
-          attachments: [],
-          createTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-        },
-        contentDelta: "",
-        error: "",
+      const stream = conversationServiceClient.sendMessage({
+        conversation: this.activeConversation.uid,
+        content,
+        attachments,
+        agentId: this.selectedAgentId,  // Pass selected agent ID
       });
-      
-      // Simulate AI response
-      await new Promise(resolve => setTimeout(resolve, 500));
-      this.handleMessageChunk({
-        type: 2, // ASSISTANT_START
-        contentDelta: "",
-        error: "",
-      });
-      
-      // Simulate streaming content
-      const mockResponse = "这是一个模拟的AI回复。实际回复将来自阿里云百炼AI。";
-      for (let i = 0; i < mockResponse.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 50));
-        this.handleMessageChunk({
-          type: 3, // ASSISTANT_CONTENT
-          contentDelta: mockResponse[i],
-          error: "",
-        });
+
+      for await (const chunk of stream) {
+        this.handleMessageChunk(chunk, tempMessageUid);
       }
       
-      // Simulate end
-      await new Promise(resolve => setTimeout(resolve, 200));
-      this.handleMessageChunk({
-        type: 4, // ASSISTANT_END
-        message: {
-          name: `messages/mock-${Date.now()}`,
-          conversation: this.activeConversation.name,
-          role: "assistant",
-          content: mockResponse,
-          attachments: [],
-          createTime: { seconds: Math.floor(Date.now() / 1000), nanos: 0 },
-        },
-        contentDelta: "",
-        error: "",
-      });
-      
     } catch (error: any) {
+      // 发送失败，移除乐观更新的消息
       runInAction(() => {
+        this.messages = this.messages.filter(m => m.uid !== tempMessageUid);
         this.error = error.message || "Failed to send message";
       });
       console.error("Failed to send message:", error);
@@ -226,32 +268,43 @@ class ConversationStore {
   /**
    * Handle a single streaming message chunk
    * @param chunk The message chunk from the server
+   * @param tempMessageUid Optional temporary message UID to replace
    */
-  private handleMessageChunk(chunk: SendMessageChunk): void {
+  private handleMessageChunk(chunk: SendMessageChunk, tempMessageUid?: string): void {
     runInAction(() => {
       switch (chunk.type) {
-        case 1: // USER_MESSAGE
+        case SendMessageChunk_ChunkType.USER_MESSAGE:
           if (chunk.message) {
-            this.messages.push(chunk.message);
+            // 如果有临时消息，替换它；否则直接添加
+            if (tempMessageUid) {
+              const tempIndex = this.messages.findIndex(m => m.uid === tempMessageUid);
+              if (tempIndex !== -1) {
+                this.messages[tempIndex] = chunk.message;
+              } else {
+                this.messages.push(chunk.message);
+              }
+            } else {
+              this.messages.push(chunk.message);
+            }
           }
           break;
           
-        case 2: // ASSISTANT_START
+        case SendMessageChunk_ChunkType.ASSISTANT_START:
           this.streamingContent = "";
           break;
           
-        case 3: // ASSISTANT_CONTENT
+        case SendMessageChunk_ChunkType.ASSISTANT_CONTENT:
           this.streamingContent += chunk.contentDelta || "";
           break;
           
-        case 4: // ASSISTANT_END
+        case SendMessageChunk_ChunkType.ASSISTANT_END:
           if (chunk.message) {
             this.messages.push(chunk.message);
           }
           this.streamingContent = "";
           break;
           
-        case 5: // ERROR
+        case SendMessageChunk_ChunkType.ERROR:
           this.error = chunk.error || "发送失败";
           break;
       }

@@ -3,11 +3,14 @@ package v1
 import (
 	"context"
 	"fmt"
+	"log/slog"
+	"time"
 
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	"github.com/usememos/memos/plugin/bailian"
 	v1pb "github.com/usememos/memos/proto/gen/api/v1"
 	storepb "github.com/usememos/memos/proto/gen/store"
 	"github.com/usememos/memos/store"
@@ -47,6 +50,9 @@ func (s *APIV1Service) GetWorkspaceSetting(ctx context.Context, request *v1pb.Ge
 		_, err = s.Store.GetWorkspaceMemoRelatedSetting(ctx)
 	case storepb.WorkspaceSettingKey_STORAGE:
 		_, err = s.Store.GetWorkspaceStorageSetting(ctx)
+	case storepb.WorkspaceSettingKey_AI:
+		// AI setting doesn't need to be pre-fetched with default value
+		// It will be retrieved directly from store
 	default:
 		return nil, status.Errorf(codes.InvalidArgument, "unsupported workspace setting key: %v", workspaceSettingKey)
 	}
@@ -64,8 +70,8 @@ func (s *APIV1Service) GetWorkspaceSetting(ctx context.Context, request *v1pb.Ge
 		return nil, status.Errorf(codes.NotFound, "workspace setting not found")
 	}
 
-	// For storage setting, only host can get it.
-	if workspaceSetting.Key == storepb.WorkspaceSettingKey_STORAGE {
+	// For storage and AI setting, only host can get it.
+	if workspaceSetting.Key == storepb.WorkspaceSettingKey_STORAGE || workspaceSetting.Key == storepb.WorkspaceSettingKey_AI {
 		user, err := s.GetCurrentUser(ctx)
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to get current user: %v", err)
@@ -119,6 +125,10 @@ func convertWorkspaceSettingFromStore(setting *storepb.WorkspaceSetting) *v1pb.W
 		workspaceSetting.Value = &v1pb.WorkspaceSetting_MemoRelatedSetting_{
 			MemoRelatedSetting: convertWorkspaceMemoRelatedSettingFromStore(setting.GetMemoRelatedSetting()),
 		}
+	case *storepb.WorkspaceSetting_AiSetting:
+		workspaceSetting.Value = &v1pb.WorkspaceSetting_AiSetting{
+			AiSetting: convertWorkspaceAISettingFromStore(setting.GetAiSetting()),
+		}
 	}
 	return workspaceSetting
 }
@@ -143,6 +153,10 @@ func convertWorkspaceSettingToStore(setting *v1pb.WorkspaceSetting) *storepb.Wor
 	case storepb.WorkspaceSettingKey_MEMO_RELATED:
 		workspaceSetting.Value = &storepb.WorkspaceSetting_MemoRelatedSetting{
 			MemoRelatedSetting: convertWorkspaceMemoRelatedSettingToStore(setting.GetMemoRelatedSetting()),
+		}
+	case storepb.WorkspaceSettingKey_AI:
+		workspaceSetting.Value = &storepb.WorkspaceSetting_AiSetting{
+			AiSetting: convertWorkspaceAISettingToStore(setting.GetAiSetting()),
 		}
 	default:
 		// Keep the default GeneralSetting value
@@ -302,6 +316,132 @@ func convertWorkspaceMemoRelatedSettingToStore(setting *v1pb.WorkspaceSetting_Me
 		EnableBlurNsfwContent:    setting.EnableBlurNsfwContent,
 		NsfwTags:                 setting.NsfwTags,
 	}
+}
+
+func convertWorkspaceAISettingFromStore(setting *storepb.WorkspaceAISetting) *v1pb.WorkspaceSetting_AISetting {
+	if setting == nil {
+		return nil
+	}
+	aiSetting := &v1pb.WorkspaceSetting_AISetting{
+		ApiKey:         setting.ApiKey,
+		Endpoint:       setting.Endpoint,
+		Temperature:    setting.Temperature,
+		MaxTokens:      setting.MaxTokens,
+		Enabled:        setting.Enabled,
+		DefaultAgentId: setting.DefaultAgentId,
+	}
+	for _, agent := range setting.Agents {
+		aiSetting.Agents = append(aiSetting.Agents, &v1pb.WorkspaceSetting_AISetting_AIAgent{
+			Id:          agent.Id,
+			Name:        agent.Name,
+			Description: agent.Description,
+			CreatedTs:   agent.CreatedTs,
+		})
+	}
+	return aiSetting
+}
+
+func convertWorkspaceAISettingToStore(setting *v1pb.WorkspaceSetting_AISetting) *storepb.WorkspaceAISetting {
+	if setting == nil {
+		return nil
+	}
+	aiSetting := &storepb.WorkspaceAISetting{
+		ApiKey:         setting.ApiKey,
+		Endpoint:       setting.Endpoint,
+		Temperature:    setting.Temperature,
+		MaxTokens:      setting.MaxTokens,
+		Enabled:        setting.Enabled,
+		DefaultAgentId: setting.DefaultAgentId,
+	}
+	for _, agent := range setting.Agents {
+		aiSetting.Agents = append(aiSetting.Agents, &storepb.AIAgent{
+			Id:          agent.Id,
+			Name:        agent.Name,
+			Description: agent.Description,
+			CreatedTs:   agent.CreatedTs,
+		})
+	}
+	return aiSetting
+}
+
+func (s *APIV1Service) TestAIAgent(ctx context.Context, request *v1pb.TestAIAgentRequest) (*v1pb.TestAIAgentResponse, error) {
+	// 1. 权限检查 - 仅管理员可测试
+	user, err := s.GetCurrentUser(ctx)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get current user: %v", err)
+	}
+	if user == nil || user.Role != store.RoleHost {
+		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+	}
+
+	// 日志：记录测试请求
+	maskedAPIKey := "***"
+	if len(request.ApiKey) > 8 {
+		maskedAPIKey = request.ApiKey[:4] + "..." + request.ApiKey[len(request.ApiKey)-4:]
+	}
+	slog.Info("Testing AI agent connection",
+		slog.String("agent_id", request.AgentId),
+		slog.String("api_key", maskedAPIKey),
+		slog.String("endpoint", request.Endpoint),
+		slog.String("user", user.Username),
+	)
+
+	// 2. 验证请求参数
+	if request.ApiKey == "" || request.AgentId == "" {
+		slog.Warn("Test AI agent failed: missing parameters")
+		return &v1pb.TestAIAgentResponse{
+			Success: false,
+			Message: "API Key and Agent ID are required",
+		}, nil
+	}
+
+	// 3. 创建临时 Bailian Client
+	client, err := bailian.NewClient(&bailian.Config{
+		APIKey:      request.ApiKey,
+		AgentID:     request.AgentId,
+		Endpoint:    request.Endpoint,
+		Temperature: 0.7,
+		MaxTokens:   100,
+	})
+	if err != nil {
+		slog.Error("Failed to create Bailian client",
+			slog.String("agent_id", request.AgentId),
+			slog.String("error", err.Error()),
+		)
+		return &v1pb.TestAIAgentResponse{
+			Success: false,
+			Message: fmt.Sprintf("Failed to create client: %v", err),
+		}, nil
+	}
+
+	// 4. 测试连接并记录耗时
+	start := time.Now()
+	err = client.TestConnection(ctx)
+	latency := time.Since(start).Milliseconds()
+
+	if err != nil {
+		slog.Error("AI agent connection test failed",
+			slog.String("agent_id", request.AgentId),
+			slog.Int64("latency_ms", latency),
+			slog.String("error", err.Error()),
+		)
+		return &v1pb.TestAIAgentResponse{
+			Success:   false,
+			Message:   fmt.Sprintf("Connection test failed: %v", err),
+			LatencyMs: int32(latency),
+		}, nil
+	}
+
+	// 5. 返回成功结果
+	slog.Info("AI agent connection test successful",
+		slog.String("agent_id", request.AgentId),
+		slog.Int64("latency_ms", latency),
+	)
+	return &v1pb.TestAIAgentResponse{
+		Success:   true,
+		Message:   "Connection successful",
+		LatencyMs: int32(latency),
+	}, nil
 }
 
 var ownerCache *v1pb.User

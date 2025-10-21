@@ -14,6 +14,8 @@ enum WorkspaceSettingKey {
   STORAGE = 3;
   // MEMO_RELATED is the key for memo related settings.
   MEMO_RELATED = 4;
+  // AI is the key for AI agent settings.
+  AI = 5;
 }
 
 message WorkspaceSetting {
@@ -23,6 +25,7 @@ message WorkspaceSetting {
     WorkspaceGeneralSetting general_setting = 3;
     WorkspaceStorageSetting storage_setting = 4;
     WorkspaceMemoRelatedSetting memo_related_setting = 5;
+    WorkspaceAISetting ai_setting = 6;
   }
 }
 
@@ -138,4 +141,34 @@ message WorkspaceMemoRelatedSetting {
   bool enable_blur_nsfw_content = 9;
   // nsfw_tags is the list of tags that mark content as NSFW for blurring.
   repeated string nsfw_tags = 10;
+}
+
+// WorkspaceAISetting is the configuration for AI agent.
+message WorkspaceAISetting {
+  // api_key is the Bailian API Key
+  string api_key = 1;
+  // endpoint is the API endpoint (default: https://dashscope.aliyuncs.com/api/v1)
+  string endpoint = 2;
+  // temperature is the default temperature (0.0-2.0)
+  double temperature = 3;
+  // max_tokens is the default max tokens per response
+  int32 max_tokens = 4;
+  // enabled indicates whether AI feature is enabled
+  bool enabled = 5;
+  // agents is the list of available AI agents
+  repeated AIAgent agents = 6;
+  // default_agent_id is the default agent ID to use
+  string default_agent_id = 7;
+}
+
+// AIAgent represents a single AI agent configuration
+message AIAgent {
+  // id is the unique identifier (agent_id from Bailian)
+  string id = 1;
+  // name is the display name of the agent
+  string name = 2;
+  // description is the description/note about the agent
+  string description = 3;
+  // created_ts is the creation timestamp
+  int64 created_ts = 4;
 }
