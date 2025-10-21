@@ -1,1 +1,1 @@
-import{J as e,j as r,Q as o}from"./index.js";import"./leaflet-vendor.js";import"./utils-vendor.js";import"./mermaid-vendor.js";import"./katex-vendor.js";const u=()=>{const{uid:t}=e();return r.jsx(o,{to:`/memos/${t}`,replace:!0})};export{u as default};
+import{K as e,j as r,W as o}from"./index.js";import"./leaflet-vendor.js";import"./utils-vendor.js";import"./mermaid-vendor.js";import"./katex-vendor.js";const u=()=>{const{uid:t}=e();return r.jsx(o,{to:`/memos/${t}`,replace:!0})};export{u as default};
