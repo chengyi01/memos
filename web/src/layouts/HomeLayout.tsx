@@ -33,7 +33,7 @@ const HomeLayout = observer(() => {
   );
 
   return (
-    <section className="@container w-full min-h-full flex flex-col justify-start items-center">
+    <section className="w-full min-h-full flex flex-col justify-start items-center">
       {/* Mobile Header */}
       {!md && (
         <MobileHeader>
