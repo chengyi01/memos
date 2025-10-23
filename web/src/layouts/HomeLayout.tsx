@@ -12,7 +12,7 @@ import { Routes } from "@/router";
 import { memoStore, userStore } from "@/store";
 
 const HomeLayout = observer(() => {
-  const { md, lg } = useResponsiveWidth();
+  const { md, lg, xl } = useResponsiveWidth();
   const currentUser = useCurrentUser();
 
   useDebounce(
@@ -54,8 +54,8 @@ const HomeLayout = observer(() => {
           "w-full h-svh overflow-y-auto",
           // Left padding for left sidebar
           lg ? "pl-72" : md ? "pl-56" : "",
-          // Right padding for AI sidebar (always visible on desktop)
-          md ? "pr-[400px]" : ""
+          // Right padding for AI sidebar (visible on xl and above)
+          xl ? "pr-[400px]" : ""
         )}
       >
         <div className={cn("w-full mx-auto px-4 sm:px-6 md:pt-6 pb-8")}>
@@ -63,8 +63,8 @@ const HomeLayout = observer(() => {
         </div>
       </div>
       
-      {/* Right Sidebar - AI Chat (always visible on desktop) */}
-      {md && <AIChatSidebar />}
+      {/* Right Sidebar - AI Chat (visible on xl and above) */}
+      {xl && <AIChatSidebar />}
     </section>
   );
 });

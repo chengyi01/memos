@@ -28,10 +28,10 @@ const MasonryView = ({ memoList, renderer, prefixElement, listMode = false }: Ma
 
   const { columns, distribution, handleHeightChange } = useMasonryLayout(memoList, listMode, containerRef, prefixElementRef);
 
-  // Create render context: automatically enable compact mode when multiple columns
+  // Create render context: always enable compact mode to show "Show more" button
   const renderContext: MemoRenderContext = useMemo(
     () => ({
-      compact: columns > 1,
+      compact: true,
       columns,
     }),
     [columns],
